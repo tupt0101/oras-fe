@@ -5,9 +5,11 @@ import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-  // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: 'https://oras-api.herokuapp.com',
+  withCredentials: true, // send cookies when cross-domain requests
+  credentials: 'same-origin',
+  timeout: 30000 // request timeout
 })
 
 // request interceptor
@@ -21,6 +23,7 @@ service.interceptors.request.use(
       // please modify it according to the actual situation
       config.headers['X-Token'] = getToken()
     }
+    // config.headers['Authorization'] = 'Basic bXktdHJ1c3RlZC1jbGllbnQ6c2VjcmV0'
     return config
   },
   error => {
