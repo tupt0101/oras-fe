@@ -57,8 +57,7 @@
         </template>
       </el-table-column> -->
       <el-table-column label="Salary" width="150px" align="center">
-        <!-- <template slot-scope="{row}"> -->
-        <template>
+        <template slot-scope="{row}">
           <span>{{ row.currency }}{{ row.salaryFrom }}-{{ row.salaryTo }}</span>
         </template>
       </el-table-column>
