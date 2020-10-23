@@ -42,13 +42,13 @@
       </el-table-column>
       <el-table-column label="Deadline" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.applyTo | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Title" min-width="150px">
         <template slot-scope="{row}">
           <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
-          <el-tag>{{ row.type | typeFilter }}</el-tag>
+          <el-tag>{{ row.title }}</el-tag>
         </template>
       </el-table-column>
       <!-- <el-table-column v-if="showReviewer" label="Reviewer" width="110px" align="center">
@@ -59,7 +59,7 @@
       <el-table-column label="Salary" width="150px" align="center">
         <!-- <template slot-scope="{row}"> -->
         <template>
-          <span>$ 1,000 - 1,200</span>
+          <span>{{ row.currency }}{{ row.salaryFrom }}-{{ row.salaryTo }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Vacancies" align="center" width="95px">
@@ -150,7 +150,7 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
+import { fetchPv, createArticle, updateArticle } from '@/api/article'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -237,7 +237,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
+      fetchOpenJobList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
 
@@ -246,9 +246,9 @@ export default {
           this.listLoading = false
         }, 1.5 * 1000)
       })
-      fetchOpenJobList().then(response => {
-        this.list = response.data
-      })
+      // fetchOpenJobList().then(response => {
+      //   this.list = response.data
+      // })
     },
     handleFilter() {
       this.listQuery.page = 1
