@@ -234,7 +234,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
+      fetchOpenJobList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
 

@@ -37,7 +37,8 @@ const actions = {
         const { data } = response
         console.log(response)
         commit('SET_TOKEN', data.token)
-        setToken(data.token)
+        setToken('e4d3935c-5792-4b2b-9023-9471efa9c32f')
+        debugger
         resolve()
       }).catch(error => {
         reject(error)
