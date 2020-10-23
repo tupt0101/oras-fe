@@ -5,8 +5,8 @@ import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
-  // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-  baseURL: 'https://oras-api.herokuapp.com',
+  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  // baseURL: 'https://oras-api.herokuapp.com',
   withCredentials: true, // send cookies when cross-domain requests
   credentials: 'same-origin',
   timeout: 30000 // request timeout
