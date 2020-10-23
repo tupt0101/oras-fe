@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <!-- <div class="filter-container">
+    <div class="filter-container">
       <el-input v-model="listQuery.title" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
         <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
@@ -14,7 +14,7 @@
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+      <!-- <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
         Add
       </el-button>
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
@@ -22,8 +22,8 @@
       </el-button>
       <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
         reviewer
-      </el-checkbox>
-    </div> -->
+      </el-checkbox> -->
+    </div>
 
     <el-table
       :key="tableKey"
@@ -35,9 +35,15 @@
       style="width: 100%;"
       @sort-change="sortChange"
     >
-      <el-table-column label="ID" prop="id" align="center" width="80" :class-name="getSortClass('id')">
+      <!-- <el-table-column label="ID" prop="id" align="center" width="80" :class-name="getSortClass('id')">
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
+        </template>
+      </el-table-column> -->
+      <el-table-column label="Title" min-width="150px">
+        <template slot-scope="{row}">
+          <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
+          <!-- <el-tag>{{ row.title }}</el-tag> -->
         </template>
       </el-table-column>
       <el-table-column label="Deadline" width="150px" align="center">
@@ -45,17 +51,6 @@
           <span>{{ row.applyTo | parseTime('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Title" min-width="150px">
-        <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
-          <!-- <el-tag>{{ row.title }}</el-tag> -->
-        </template>
-      </el-table-column>
-      <!-- <el-table-column v-if="showReviewer" label="Reviewer" width="110px" align="center">
-        <template slot-scope="{row}">
-          <span style="color:red;">{{ row.reviewer }}</span>
-        </template>
-      </el-table-column> -->
       <el-table-column label="Salary" width="240px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.currency }} {{ row.salaryFrom }} - {{ row.salaryTo }}</span>
@@ -80,22 +75,6 @@
           <span style="font-size: 24px; font-weight: bold;">5</span>
         </template>
       </el-table-column>
-      <!-- <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row,$index}">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
-            Edit
-          </el-button>
-          <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
-            Publish
-          </el-button>
-          <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
-            Draft
-          </el-button>
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
-            Delete
-          </el-button>
-        </template>
-      </el-table-column> -->
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
