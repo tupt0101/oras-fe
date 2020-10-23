@@ -42,13 +42,13 @@
       </el-table-column>
       <el-table-column label="Deadline" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.applyTo | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.applyTo | parseTime('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Title" min-width="150px">
         <template slot-scope="{row}">
           <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
-          <el-tag>{{ row.title }}</el-tag>
+          <!-- <el-tag>{{ row.title }}</el-tag> -->
         </template>
       </el-table-column>
       <!-- <el-table-column v-if="showReviewer" label="Reviewer" width="110px" align="center">
@@ -56,15 +56,14 @@
           <span style="color:red;">{{ row.reviewer }}</span>
         </template>
       </el-table-column> -->
-      <el-table-column label="Salary" width="150px" align="center">
+      <el-table-column label="Salary" width="240px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.currency }}{{ row.salaryFrom }}-{{ row.salaryTo }}</span>
+          <span>{{ row.currency }} {{ row.salaryFrom }} - {{ row.salaryTo }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Vacancies" align="center" width="95px">
         <template slot-scope="{row}">
-          <span v-if="row.pageviews" class="link-type" @click="handleFetchPv(row.pageviews)">{{ row.pageviews }}</span>
-          <span v-else>0</span>
+          <span>{{ row.vacancies }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Status" class-name="status-col" width="100">
