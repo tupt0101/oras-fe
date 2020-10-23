@@ -51,22 +51,18 @@
           <el-tag>{{ row.type | typeFilter }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="Author" width="110px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.author }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column v-if="showReviewer" label="Reviewer" width="110px" align="center">
+      <!-- <el-table-column v-if="showReviewer" label="Reviewer" width="110px" align="center">
         <template slot-scope="{row}">
           <span style="color:red;">{{ row.reviewer }}</span>
         </template>
-      </el-table-column>
-      <el-table-column label="Imp" width="80px">
-        <template slot-scope="{row}">
-          <svg-icon v-for="n in + row.importance" :key="n" icon-class="star" class="meta-item__icon" />
+      </el-table-column> -->
+      <el-table-column label="Salary" width="150px" align="center">
+        <!-- <template slot-scope="{row}"> -->
+        <template>
+          <span>$ 1,000 - 1,200</span>
         </template>
       </el-table-column>
-      <el-table-column label="Readings" align="center" width="95">
+      <el-table-column label="Vacancies" align="center" width="95px">
         <template slot-scope="{row}">
           <span v-if="row.pageviews" class="link-type" @click="handleFetchPv(row.pageviews)">{{ row.pageviews }}</span>
           <span v-else>0</span>
@@ -79,7 +75,14 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column label="Candidates" align="center" width="120px">
+        <!-- <template slot-scope="{row}"> -->
+        <template>
+          <!-- <span>{{ row.candidates }}</span> -->
+          <span style="font-size: 24px; font-weight: bold;">5</span>
+        </template>
+      </el-table-column>
+      <!-- <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
@@ -94,7 +97,7 @@
             Delete
           </el-button>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
@@ -243,7 +246,7 @@ export default {
           this.listLoading = false
         }, 1.5 * 1000)
       })
-      fetchOpenJobList(this.listQuery).then(response => {
+      fetchOpenJobList().then(response => {
         this.list = response.data
       })
     },
