@@ -52,7 +52,9 @@ module.exports = [
     url: '/vue-element-admin/user/info\.*',
     type: 'get',
     response: config => {
-      const { token } = config.query
+      // AnhHY
+      // const { token } = config.query
+      const { token } = { 'token': 'admin-token' }
       const info = users[token]
 
       // mock error
