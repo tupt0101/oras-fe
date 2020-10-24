@@ -46,7 +46,7 @@
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
-          <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
+          <el-button v-if="row.status!='open'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
             Publish
           </el-button>
           <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
@@ -64,7 +64,6 @@
 </template>
 
 <script>
-// import { fetchList } from '@/api/article'
 import { fetchJobList } from '@/api/job'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 

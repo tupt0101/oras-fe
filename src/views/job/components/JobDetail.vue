@@ -27,30 +27,33 @@
 
             <div class="postInfo-container">
               <el-row>
-                <el-col :span="8">
-                  <el-form-item label-width="60px" label="Author:" class="postInfo-container-item">
-                    <el-select v-model="postForm.author" :remote-method="getRemoteUserList" filterable default-first-option remote placeholder="Search user">
+                <el-col :span="6">
+                  <el-form-item label-width="70px" label="Deadline:" class="postInfo-container-item">
+                    <el-date-picker v-model="postForm.deadline" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="Select date and time" />
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="6">
+                  <el-form-item label-width="120px" label="Salary from:" class="postInfo-container-item">
+                    <el-select v-model="postForm.salaryFrom" :remote-method="getRemoteUserList" filterable default-first-option remote placeholder="">
                       <el-option v-for="(item,index) in userListOptions" :key="item+index" :label="item" :value="item" />
                     </el-select>
                   </el-form-item>
                 </el-col>
 
-                <el-col :span="10">
-                  <el-form-item label-width="120px" label="Publish Time:" class="postInfo-container-item">
-                    <el-date-picker v-model="displayTime" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="Select date and time" />
+                <el-col :span="6">
+                  <el-form-item label-width="120px" label="Salary to:" class="postInfo-container-item">
+                    <el-select v-model="postForm.salaryTo" :remote-method="getRemoteUserList" filterable default-first-option remote placeholder="">
+                      <el-option v-for="(item,index) in userListOptions" :key="item+index" :label="item" :value="item" />
+                    </el-select>
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="6">
-                  <el-form-item label-width="90px" label="Importance:" class="postInfo-container-item">
-                    <el-rate
-                      v-model="postForm.importance"
-                      :max="3"
-                      :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
-                      :low-threshold="1"
-                      :high-threshold="3"
-                      style="display:inline-block"
-                    />
+                  <el-form-item label-width="80px" label="Currency:" class="postInfo-container-item">
+                    <el-select v-model="postForm.currency" :remote-method="getRemoteUserList" filterable default-first-option remote placeholder="">
+                      <el-option v-for="(item,index) in userListOptions" :key="item+index" :label="item" :value="item" />
+                    </el-select>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -58,13 +61,13 @@
           </el-col>
         </el-row>
 
-        <el-form-item style="margin-bottom: 40px;" label-width="70px" label="Summary:">
-          <el-input v-model="postForm.content_short" :rows="1" type="textarea" class="article-textarea" autosize placeholder="Please enter the content" />
-          <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span>
+        <el-form-item label-width="121px" label="Job description:">
+          <!-- <el-input v-model="postForm.content_short" :rows="1" type="textarea" class="article-textarea" autosize placeholder="Please enter the content" />
+          <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span> -->
         </el-form-item>
 
-        <el-form-item prop="content" style="margin-bottom: 30px;">
-          <Tinymce ref="editor" v-model="postForm.content" :height="400" />
+        <el-form-item prop="description" style="margin-bottom: 30px;">
+          <Tinymce ref="editor" v-model="postForm.description" :height="400" />
         </el-form-item>
 
         <el-form-item prop="image_uri" style="margin-bottom: 30px;">
@@ -88,21 +91,32 @@ import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown
 
 const defaultForm = {
   status: 'draft',
-  title: '', // 文章题目
-  content: '', // 文章内容
-  content_short: '', // 文章摘要
-  source_uri: '', // 文章外链
-  image_uri: '', // 文章图片
-  display_time: undefined, // 前台展示时间
+  title: '',
+  description: '',
+  // content_short: '',
+  source_uri: '',
+  image_uri: '',
+  display_time: undefined,
   id: undefined,
-  platforms: ['a-platform'],
-  comment_disabled: false,
-  importance: 0
+  // platforms: ['a-platform'],
+  // comment_disabled: false,
+  // importance: 0
+  deadline: '',
+  salaryFrom: '',
+  salaryTo: '',
+  currency: '',
+  vacancies: 0,
+  createDate: '',
+  creatorId: ''
 }
 
 export default {
   name: 'JobDetail',
-  components: { Tinymce, MDinput, Upload, Sticky, CommentDropdown, PlatformDropdown, SourceUrlDropdown },
+  components: {
+    Tinymce,
+    MDinput,
+    Upload,
+    Sticky, CommentDropdown, PlatformDropdown, SourceUrlDropdown },
   props: {
     isEdit: {
       type: Boolean,
