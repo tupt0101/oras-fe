@@ -32,3 +32,11 @@ export function fetchJobList() {
     headers: headers
   })
 }
+
+export function fetchJob(id) {
+  return service.request({
+    url: '/v1/job-management/job/detail/',
+    method: 'get',
+    params: { id }
+  })
+}
