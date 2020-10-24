@@ -9,7 +9,7 @@
           <div class="card-panel-text">
             Open Jobs
           </div>
-          <count-to :start-val="0" :end-val="23" :duration="2000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="5" :duration="2000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -22,7 +22,7 @@
           <div class="card-panel-text">
             Candidates
           </div>
-          <count-to :start-val="0" :end-val="132" :duration="2400" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="25" :duration="2400" class="card-panel-num" />
         </div>
       </div>
     </el-col>
