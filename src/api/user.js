@@ -5,30 +5,30 @@ import axios from 'axios'
 const service = axios.create({
   // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // baseURL: 'https://oras-api.herokuapp.com',
-  // baseURL: 'http://localhost:8080/oras',
-  baseURL: 'http://localhost/oras',
+  baseURL: 'http://localhost:8080',
+  // baseURL: 'http://localhost/oras',
   withCredentials: true, // send cookies when cross-domain requests
   // credentials: 'same-origin',
   timeout: 30000 // request timeout
 })
 
 const headers = {
-  'Authorization': 'Basic bXktdHJ1c3RlZC1jbGllbnQ6c2VjcmV0',
-  'Content-Type': 'multipart/form-data'
+  'Authorization': 'Basic bXktdHJ1c3RlZC1jbGllbnQ6c2VjcmV0'
 }
 
 export function login(data) {
-  const bodyFormData = new FormData()
-  bodyFormData.append('grant_type', 'password')
-  bodyFormData.append('username', data.username)
-  bodyFormData.append('password', data.password)
+  // const bodyFormData = new FormData()
+  // bodyFormData.append('grant_type', 'password')
+  // bodyFormData.append('username', data.username)
+  // bodyFormData.append('password', data.password)
   return service.request({
     // url: '/test-api/user/login',
     // url: '/v1/account-management/accounts',
-    // url: '/login',
-    method: 'post',
+    url: '/login',
+    method: 'get',
     headers: headers,
-    data: bodyFormData
+    // data: bodyFormData
+    params: data
   })
 }
 
