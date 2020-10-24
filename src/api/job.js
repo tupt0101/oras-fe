@@ -17,6 +17,14 @@ const headers = {
   'Authorization': 'Bearer ' + getToken()
 }
 
+export function fetchJobList() {
+  return service.request({
+    url: '/v1/job-management/jobs',
+    method: 'get',
+    headers: headers
+  })
+}
+
 export function fetchOpenJobList(query) {
   return service.request({
     url: '/v1/job-management/open-jobs',
