@@ -25,7 +25,7 @@ export function login(data) {
   return service.request({
     // url: '/test-api/user/login',
     // url: '/v1/account-management/accounts',
-    url: '/login',
+    // url: '/login',
     method: 'post',
     headers: headers,
     data: bodyFormData

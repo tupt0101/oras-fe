@@ -6,48 +6,55 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-
-      <el-table-column width="180px" align="center" label="Date">
-        <template slot-scope="scope">
-          <span>{{ scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+      <el-table-column label="Title" min-width="150px">
+        <template slot-scope="{row}">
+          <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
+          <!-- <el-tag>{{ row.title }}</el-tag> -->
         </template>
       </el-table-column>
-
-      <el-table-column width="120px" align="center" label="Author">
-        <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
+      <el-table-column label="Deadline" width="150px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.applyTo | parseTime('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-
-      <el-table-column width="100px" label="Importance">
-        <template slot-scope="scope">
-          <svg-icon v-for="n in +scope.row.importance" :key="n" icon-class="star" class="meta-item__icon" />
+      <el-table-column label="Salary" width="240px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.currency }} {{ row.salaryFrom }} - {{ row.salaryTo }}</span>
         </template>
       </el-table-column>
-
-      <el-table-column class-name="status-col" label="Status" width="110">
+      <el-table-column label="Vacancies" align="center" width="95px">
+        <template slot-scope="{row}">
+          <span>{{ row.vacancies }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="Status" class-name="status-col" width="100">
         <template slot-scope="{row}">
           <el-tag :type="row.status | statusFilter">
             {{ row.status }}
           </el-tag>
         </template>
       </el-table-column>
-
-      <el-table-column min-width="300px" label="Title">
-        <template slot-scope="{row}">
-          <router-link :to="'/job/edit/'+row.id" class="link-type">
-            <span>{{ row.title }}</span>
-          </router-link>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="Actions" width="120">
-        <template slot-scope="scope">
+      <el-table-column align="center" label="Actions" width="230px" class-name="small-padding fixed-width">
+        <!-- <template slot-scope="scope">
           <router-link :to="'/job/edit/'+scope.row.id">
             <el-button type="primary" size="small" icon="el-icon-edit">
               Edit
             </el-button>
           </router-link>
+        </template> -->
+        <template slot-scope="{row,$index}">
+          <el-button type="primary" size="mini" @click="handleUpdate(row)">
+            Edit
+          </el-button>
+          <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
+            Publish
+          </el-button>
+          <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
+            Draft
+          </el-button>
+          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
+            Delete
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -57,7 +64,8 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/article'
+// import { fetchList } from '@/api/article'
+import { fetchJobList } from '@/api/job'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
@@ -90,9 +98,9 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
+      fetchJobList(this.listQuery).then(response => {
+        this.list = response.data
+        this.total = response.data
         this.listLoading = false
       })
     }

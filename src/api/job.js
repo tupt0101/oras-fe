@@ -24,3 +24,11 @@ export function fetchOpenJobList(query) {
     headers: headers
   })
 }
+
+export function fetchJobList() {
+  return service.request({
+    url: '/v1/job-management/jobs',
+    method: 'get',
+    headers: headers
+  })
+}
