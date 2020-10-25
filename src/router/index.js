@@ -142,20 +142,20 @@ export const asyncRoutes = [
       // Edit route of components
       {
         path: 'create',
-        component: () => import('@/views/example/create'),
+        component: () => import('@/views/job/create'),
         name: 'CreateJob',
         meta: { title: 'Create Job', icon: 'edit' }
       },
       {
         path: 'edit/:id(\\d+)',
-        component: () => import('@/views/example/edit'),
+        component: () => import('@/views/job/edit'),
         name: 'EditJob',
-        meta: { title: 'Edit Job', noCache: true, activeMenu: '/example/list' },
+        meta: { title: 'Edit Job', noCache: true, activeMenu: '/job/list' },
         hidden: true
       },
       {
         path: 'list',
-        component: () => import('@/views/example/list'),
+        component: () => import('@/views/job/list'),
         name: 'JobList',
         meta: { title: 'Job List', icon: 'list' }
       }
@@ -323,6 +323,19 @@ export const asyncRoutes = [
   //     }
   //   ]
   // },
+
+  {
+    path: '/setting',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/icons/index'),
+        name: 'Setting',
+        meta: { title: 'Setting', icon: 'component', noCache: true }
+      }
+    ]
+  },
 
   {
     path: '/icon',
