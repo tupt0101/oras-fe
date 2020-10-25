@@ -8,6 +8,7 @@ const service = axios.create({
   // baseURL: 'https://oras-api.herokuapp.com',
   // baseURL: 'http://localhost:8088',
   baseURL: 'http://localhost:9527/',
+  // baseURL: 'http://localhost:8080',
   // baseURL: 'http://localhost/oras',
   withCredentials: true, // send cookies when cross-domain requests
   // credentials: 'same-origin',
@@ -33,6 +34,11 @@ export function login(data) {
     method: 'get',
     headers: headers
     // data: bodyFormData
+    // url: '/login',
+    // method: 'get',
+    // headers: headers,
+    // data: bodyFormData
+    // params: data
   })
 }
 

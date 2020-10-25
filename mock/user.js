@@ -29,8 +29,9 @@ module.exports = [
     url: '/test-api/user/login',
     type: 'post',
     response: config => {
-      const { username } = config.body
-      const token = tokens[username]
+      // const { username } = config.body
+      // const token = tokens[username]
+      const token = tokens['admin']
 
       // mock error
       if (!token) {
