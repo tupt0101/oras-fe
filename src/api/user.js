@@ -1,11 +1,14 @@
 import request from '@/utils/request'
 import axios from 'axios'
 
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 // create an axios instance
 const service = axios.create({
   // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // baseURL: 'https://oras-api.herokuapp.com',
-  baseURL: 'http://localhost:8080',
+  // baseURL: 'http://localhost:8088',
+  baseURL: 'http://localhost:9527/',
+  // baseURL: 'http://localhost:8080',
   // baseURL: 'http://localhost/oras',
   withCredentials: true, // send cookies when cross-domain requests
   // credentials: 'same-origin',
@@ -13,7 +16,10 @@ const service = axios.create({
 })
 
 const headers = {
-  'Authorization': 'Basic bXktdHJ1c3RlZC1jbGllbnQ6c2VjcmV0'
+  'Authorization': 'Basic bXktdHJ1c3RlZC1jbGllbnQ6c2VjcmV0',
+  // 'Content-Type': 'multipart/form-data',
+  'Content-Type': 'application/json'
+  // 'Access-Control-Allow-Origin': '*'
 }
 
 export function login(data) {
@@ -24,11 +30,15 @@ export function login(data) {
   return service.request({
     // url: '/test-api/user/login',
     // url: '/v1/account-management/accounts',
-    url: '/login',
+    url: '/login?username=' + data.username + '&password=' + data.password,
     method: 'get',
-    headers: headers,
+    headers: headers
     // data: bodyFormData
-    params: data
+    // url: '/login',
+    // method: 'get',
+    // headers: headers,
+    // data: bodyFormData
+    // params: data
   })
 }
 
