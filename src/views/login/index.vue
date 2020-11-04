@@ -4,7 +4,10 @@
 
       <div class="title-container">
         <!-- <h1 class="title">ORAS</h1> -->
-        <h3 class="title">Login</h3>
+        <h3 class="title">
+          {{ $t('login.title') }}
+        </h3>
+        <lang-select class="set-language" />
       </div>
 
       <el-form-item prop="username">
@@ -14,7 +17,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="Username"
+          :placeholder="$t('login.username')"
           name="username"
           type="text"
           tabindex="1"
@@ -32,7 +35,7 @@
             ref="password"
             v-model="loginForm.password"
             :type="passwordType"
-            placeholder="Password"
+            :placeholder="$t('login.password')"
             name="password"
             tabindex="2"
             autocomplete="on"
@@ -46,7 +49,11 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
+        {{ $t('login.logIn') }}
+      </el-button>
+
+      <a />
 
       <!-- <div style="position:relative">
         <div class="tips">
@@ -76,11 +83,12 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
+import LangSelect from '@/components/LangSelect'
 import SocialSign from './components/SocialSignin'
 
 export default {
   name: 'Login',
-  components: { SocialSign },
+  components: { SocialSign, LangSelect },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
@@ -298,6 +306,15 @@ $light_gray:#eee;
       text-align: center;
       font-weight: bold;
     }
+  }
+
+  .set-language {
+    color: #fff;
+    position: absolute;
+    top: 3px;
+    font-size: 24px;
+    right: 0px;
+    cursor: pointer;
   }
 
   .show-pwd {
