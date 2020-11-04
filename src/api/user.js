@@ -42,11 +42,11 @@ export function login(data) {
   })
 }
 
-export function getInfo(token) {
-  return request({
-    url: '/vue-element-admin/user/info',
+export function getInfo(email) {
+  return service.request({
+    url: '/v1/account-mananagement/account-by-email',
     method: 'get',
-    params: { token }
+    params: { email }
   })
 }
 

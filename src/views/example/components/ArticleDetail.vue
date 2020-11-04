@@ -113,10 +113,10 @@ export default {
     const validateRequire = (rule, value, callback) => {
       if (value === '') {
         this.$message({
-          message: rule.field + '为必传项',
+          message: rule.field + ' is required',
           type: 'error'
         })
-        callback(new Error(rule.field + '为必传项'))
+        callback(new Error(rule.field + ' is required'))
       } else {
         callback()
       }
@@ -210,8 +210,8 @@ export default {
         if (valid) {
           this.loading = true
           this.$notify({
-            title: '成功',
-            message: '发布文章成功',
+            title: 'Success',
+            message: 'Published the post successfully',
             type: 'success',
             duration: 2000
           })
@@ -226,13 +226,13 @@ export default {
     draftForm() {
       if (this.postForm.content.length === 0 || this.postForm.title.length === 0) {
         this.$message({
-          message: '请填写必要的标题和内容',
+          message: 'Please fill in the required title and contents',
           type: 'warning'
         })
         return
       }
       this.$message({
-        message: '保存成功',
+        message: 'Saved successfully',
         type: 'success',
         showClose: true,
         duration: 1000
