@@ -53,7 +53,17 @@
         {{ $t('login.logIn') }}
       </el-button>
 
-      <a />
+      <div style="text-align: right; margin-bottom: 20px">
+        <a href="#" style="font-style: italic; color: rgb(91 104 111)">
+          {{ $t('login.forgot') }}
+        </a>
+      </div>
+
+      <div style="text-align: right">
+        <a href="#" style="font-style: italic; color: rgb(91 104 111)">
+          {{ $t('login.signup') }}
+        </a>
+      </div>
 
       <!-- <div style="position:relative">
         <div class="tips">
@@ -215,7 +225,9 @@ export default {
 
 $bg:#283443;
 $light_gray:#fff;
+$dark_gray:#889aa4;
 $cursor: #fff;
+$black: #000000;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
@@ -236,9 +248,11 @@ $cursor: #fff;
       -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
-      color: $light_gray;
+      // color: $light_gray;
+      color: $black;
       height: 47px;
-      caret-color: $cursor;
+      // caret-color: $cursor;
+      caret-color: $black;
 
       &:-webkit-autofill {
         box-shadow: 0 0 0px 1000px $bg inset !important;
@@ -248,8 +262,10 @@ $cursor: #fff;
   }
 
   .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
+    // border: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid $dark_gray;
+    // background: rgba(0, 0, 0, 0.1);
+    background: #ffffff;
     border-radius: 5px;
     color: #454545;
   }
@@ -260,20 +276,27 @@ $cursor: #fff;
 $bg:#2d3a4b;
 $dark_gray:#889aa4;
 $light_gray:#eee;
+$black: #000000;
 
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  height: 100%;
+  // background-color: $bg;
+  background-image: url('https://github.com/tupt0101/oras-fe/blob/tupt/src/assets/custom-theme/image/login-bg.jpeg');
   overflow: hidden;
+  display:flex;
+	flex-direction:column;
 
   .login-form {
     position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 160px 35px 0;
+    padding: 160px 35px;
     margin: 0 auto;
     overflow: hidden;
+    height: 100%;
+    background-color: white;
   }
 
   .tips {
@@ -301,7 +324,8 @@ $light_gray:#eee;
 
     .title {
       font-size: 26px;
-      color: $light_gray;
+      // color: $light_gray;
+      color: $black;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
@@ -309,7 +333,7 @@ $light_gray:#eee;
   }
 
   .set-language {
-    color: #fff;
+    color: #000;
     position: absolute;
     top: 3px;
     font-size: 24px;
