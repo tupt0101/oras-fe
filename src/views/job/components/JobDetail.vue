@@ -2,7 +2,7 @@
   <div class="createPost-container">
     <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
 
-      <sticky :z-index="10" :class-name="'sub-navbar '+postForm.status">
+      <sticky :z-index="10" :class-name="'sub-navbar '+ postForm.data.status">
         <CommentDropdown v-model="postForm.comment_disabled" />
         <PlatformDropdown v-model="postForm.platforms" />
         <SourceUrlDropdown v-model="postForm.source_uri" />
@@ -20,7 +20,7 @@
 
           <el-col :span="24">
             <el-form-item style="margin-bottom: 40px;" prop="title">
-              <MDinput v-model="postForm.title" :maxlength="100" name="name" required>
+              <MDinput v-model="postForm.data.title" :maxlength="100" name="name" required>
                 Title
               </MDinput>
             </el-form-item>
@@ -28,31 +28,54 @@
             <div class="postInfo-container">
               <el-row>
                 <el-col :span="6">
-                  <el-form-item label-width="70px" label="Deadline:" class="postInfo-container-item">
-                    <el-date-picker v-model="postForm.deadline" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="Select date and time" />
+                  <el-form-item label-width="70px" label="applyTo:" class="postInfo-container-item">
+                    <el-date-picker v-model="postForm.data.applyTo" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="Choose date and time" />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                  <el-form-item label-width="120px" label="Vacancies:" class="postInfo-container-item">
+                    <el-input-number v-model="postForm.data.vacancies" placeholder="00.00" />
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="6">
-                  <el-form-item label-width="120px" label="Salary from:" class="postInfo-container-item">
-                    <el-select v-model="postForm.salaryFrom" :remote-method="getRemoteUserList" filterable default-first-option remote placeholder="">
-                      <el-option v-for="(item,index) in userListOptions" :key="item+index" :label="item" :value="item" />
+                  <el-form-item label-width="120px" label="Job Type:" class="postInfo-container-item">
+                    <el-select v-model="postForm.data.jobType" :remote-method="getJobTypeList" filterable default-first-option remote placeholder="">
+                      <el-option v-for="(item,index) in jobTypeListOptions" :key="item+index" :label="item" :value="item" />
                     </el-select>
+                  </el-form-item>
+                </el-col>
+
+                <el-col :span="6">
+                  <el-form-item label-width="80px" label="Category:" class="postInfo-container-item">
+                    <el-select v-model="postForm.data.categoryId" :remote-method="getCategoryList" filterable default-first-option remote placeholder="">
+                      <el-option v-for="(item,index) in categoryListOptions" :key="item+index" :label="item.name" :value="item.id" />
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="6">
+                  <el-form-item label-width="110px" label="Salary hidden:" class="postInfo-container-item">
+                    <el-checkbox v-model="postForm.data.salaryHidden" />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                  <el-form-item label-width="120px" label="Salary from:" class="postInfo-container-item">
+                    <el-input-number v-model="postForm.data.salaryFrom" placeholder="00.00" />
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="6">
                   <el-form-item label-width="120px" label="Salary to:" class="postInfo-container-item">
-                    <el-select v-model="postForm.salaryTo" :remote-method="getRemoteUserList" filterable default-first-option remote placeholder="">
-                      <el-option v-for="(item,index) in userListOptions" :key="item+index" :label="item" :value="item" />
-                    </el-select>
+                    <el-input-number v-model="postForm.data.salaryTo" placeholder="00.00" />
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="6">
                   <el-form-item label-width="80px" label="Currency:" class="postInfo-container-item">
-                    <el-select v-model="postForm.currency" :remote-method="getRemoteUserList" filterable default-first-option remote placeholder="">
-                      <el-option v-for="(item,index) in userListOptions" :key="item+index" :label="item" :value="item" />
+                    <el-select v-model="postForm.data.currency" :remote-method="getCurrencyList" filterable default-first-option remote placeholder="">
+                      <el-option v-for="(item,index) in currencyListOptions" :key="item+index" :label="item" :value="item" />
                     </el-select>
                   </el-form-item>
                 </el-col>
@@ -62,12 +85,11 @@
         </el-row>
 
         <el-form-item label-width="121px" label="Job description:">
-          <!-- <el-input v-model="postForm.content_short" :rows="1" type="textarea" class="article-textarea" autosize placeholder="Please enter the content" />
-          <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span> -->
+          <!--          <el-input v-model="postForm.data.description" :rows="1" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" />-->
+          <!--          <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span>-->
         </el-form-item>
-
         <el-form-item prop="description" style="margin-bottom: 30px;">
-          <Tinymce ref="editor" v-model="postForm.description" :height="400" />
+          <Tinymce ref="editor" v-model="postForm.data.description" :height="400" />
         </el-form-item>
 
         <el-form-item prop="image_uri" style="margin-bottom: 30px;">
@@ -88,11 +110,10 @@ import { fetchArticle } from '@/api/article'
 import { searchUser } from '@/api/remote-search'
 // import Warning from './Warning'
 import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
+import { getUserId } from '../../../utils/auth'
+import { createJob } from '../../../api/job'
 
 const defaultForm = {
-  status: 'draft',
-  title: '',
-  description: '',
   // content_short: '',
   source_uri: '',
   image_uri: '',
@@ -101,13 +122,23 @@ const defaultForm = {
   // platforms: ['a-platform'],
   // comment_disabled: false,
   // importance: 0
-  deadline: '',
-  salaryFrom: '',
-  salaryTo: '',
-  currency: '',
-  vacancies: 0,
-  createDate: '',
-  creatorId: ''
+  data: {
+    status: 'Draft',
+    title: '',
+    description: '',
+    applyTo: '',
+    applyFrom: new Date().toISOString(),
+    salaryFrom: '',
+    salaryTo: '',
+    salaryHidden: false,
+    currency: '',
+    vacancies: 0,
+    jobType: '',
+    categoryId: '',
+    talentPoolId: 1,
+    createDate: new Date().toISOString(),
+    creatorId: getUserId()
+  }
 }
 
 export default {
@@ -127,10 +158,10 @@ export default {
     const validateRequire = (rule, value, callback) => {
       if (value === '') {
         this.$message({
-          message: rule.field + '为必传项',
+          message: rule.field + ' is required',
           type: 'error'
         })
-        callback(new Error(rule.field + '为必传项'))
+        callback(new Error(rule.field + ' is required'))
       } else {
         callback()
       }
@@ -153,9 +184,11 @@ export default {
     return {
       postForm: Object.assign({}, defaultForm),
       loading: false,
-      userListOptions: [],
+      currencyListOptions: [],
+      categoryListOptions: [],
+      jobTypeListOptions: [],
       rules: {
-        image_uri: [{ validator: validateRequire }],
+        // image_uri: [{ validator: validateRequire }],
         title: [{ validator: validateRequire }],
         content: [{ validator: validateRequire }],
         source_uri: [{ validator: validateSourceUri, trigger: 'blur' }]
@@ -165,7 +198,7 @@ export default {
   },
   computed: {
     contentShortLength() {
-      return this.postForm.content_short.length
+      return this.postForm.data.description.length
     },
     displayTime: {
       // set and get is useful when the data
@@ -198,7 +231,7 @@ export default {
         this.postForm = response.data
 
         // just for test
-        this.postForm.title += `   Article Id:${this.postForm.id}`
+        this.postForm.data.title += `   Article Id:${this.postForm.id}`
         this.postForm.content_short += `   Article Id:${this.postForm.id}`
 
         // set tagsview title
@@ -224,14 +257,19 @@ export default {
       this.$refs.postForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$notify({
-            title: '成功',
-            message: '发布文章成功',
-            type: 'success',
-            duration: 2000
+          this.postForm.data.status = 'Published'
+          createJob(this.postForm.data).then(response => {
+            this.$notify({
+              title: 'Success',
+              message: 'Published the post successfully',
+              type: 'success',
+              duration: 2000
+            })
+            this.loading = false
           })
-          this.postForm.status = 'published'
-          this.loading = false
+            .catch(() => {
+              this.loading = false
+            })
         } else {
           console.log('error submit!!')
           return false
@@ -239,25 +277,56 @@ export default {
       })
     },
     draftForm() {
-      if (this.postForm.content.length === 0 || this.postForm.title.length === 0) {
+      if (this.postForm.data.description.length === 0 || this.postForm.data.title.length === 0) {
         this.$message({
-          message: '请填写必要的标题和内容',
+          message: 'Please fill in the required title and contents',
           type: 'warning'
         })
         return
       }
-      this.$message({
-        message: '保存成功',
-        type: 'success',
-        showClose: true,
-        duration: 1000
-      })
-      this.postForm.status = 'draft'
+      this.postForm.data.status = 'Draft'
+      this.$store.dispatch()
     },
-    getRemoteUserList(query) {
+    getCurrencyList(query) {
       searchUser(query).then(response => {
         if (!response.data.items) return
-        this.userListOptions = response.data.items.map(v => v.name)
+        // anhhy
+        // this.userListOptions = response.data.items.map(v => v.name)
+        this.currencyListOptions = ['VND', 'USD', 'SGD', 'JPY', 'CNY']
+      })
+    },
+    getCategoryList(query) {
+      searchUser(query).then(response => {
+        if (!response.data.items) return
+        // anhhy
+        // this.userListOptions = response.data.items.map(v => v.name)
+        this.categoryListOptions = [{ 'id': 1, 'name': 'aaa' }, { 'id': 2, 'name': 'bbb' }, { 'id': 3, 'name': 'ccc' }]
+      })
+    },
+    getJobTypeList(query) {
+      searchUser(query).then(response => {
+        if (!response.data.items) return
+        // anhhy
+        // this.userListOptions = response.data.items.map(v => v.name)
+        this.jobTypeListOptions = ['Full-time', 'Part-time']
+      })
+    },
+
+    // create job
+    createJob(data) {
+      return new Promise((resolve, reject) => {
+        createJob(data).then(response => {
+          debugger
+          this.$message({
+            message: 'Saved successfully',
+            type: 'success',
+            showClose: true,
+            duration: 1000
+          })
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
       })
     }
   }
