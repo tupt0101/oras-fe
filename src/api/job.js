@@ -14,7 +14,7 @@ const service = axios.create({
 })
 
 const headers = {
-  'Authorization': 'Bearer ' + getToken()
+  'Authorization': getToken()
 }
 
 export function fetchOpenJobList(query) {
@@ -35,8 +35,16 @@ export function fetchJobList() {
 
 export function fetchJob(id) {
   return service.request({
-    url: '/v1/job-management/job/detail/',
+    url: '/v1/job-management/job/detail',
     method: 'get',
     params: { id }
+  })
+}
+
+export function createJob(data) {
+  return service.request({
+    url: '/v1/job-management/job',
+    method: 'post',
+    data: data
   })
 }
