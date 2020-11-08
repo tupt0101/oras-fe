@@ -7,7 +7,8 @@ const service = axios.create({
   // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // baseURL: 'https://oras-api.herokuapp.com',
   // baseURL: 'http://localhost:8080',
-  baseURL: 'http://localhost:9527/',
+  // baseURL: 'http://localhost:9527/',
+  baseURL: 'https://oras-app.herokuapp.com/',
   withCredentials: true, // send cookies when cross-domain requests
   // credentials: 'same-origin',
   timeout: 30000 // request timeout
