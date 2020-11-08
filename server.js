@@ -4,7 +4,7 @@ const path = require('path')
 
 const app = express()
 
-app.use(app.router)
+// app.use(app.router)
 
 // here we are configuring dist to serve app files
 app.use('/', serveStatic(path.join(__dirname, '/dist')))
