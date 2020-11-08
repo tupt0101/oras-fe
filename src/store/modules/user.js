@@ -1,10 +1,10 @@
 import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken, setUserId } from '@/utils/auth'
+import { getToken, setToken, removeToken, getUserId, setUserId } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
 const state = {
   token: getToken(),
-  username: '',
+  username: getUserId(),
   fullname: '',
   avatar: '',
   introduction: '',
@@ -38,12 +38,12 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ grant_type: 'password', username: username.trim(), password: password }).then(response => {
-        // const { data } = response
         const { data } = response
         console.log(response)
         commit('SET_TOKEN', data)
         commit('SET_USERNAME', username.trim())
         setToken(data)
+        setUserId(username.trim())
         resolve()
       }).catch(error => {
         reject(error)
@@ -56,7 +56,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo(state.username).then(response => {
         const { data } = response
-
+        // debugger
         if (!data) {
           reject('Verification failed, please Login again.')
         }
@@ -64,14 +64,14 @@ const actions = {
         data.roles = ['admin']
         data.introduction = 'I am a super administrator'
         data.avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
-        const { id, roles, fullname, avatar, introduction } = data
+        const { roles, fullname, avatar, introduction } = data
         // anhhy
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
           reject('getInfo: roles must be a non-null array!')
         }
-        setUserId(id)
+        // setUserId(id)
         commit('SET_ROLES', roles)
         commit('SET_NAME', fullname)
         commit('SET_AVATAR', avatar)

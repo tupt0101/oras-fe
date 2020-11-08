@@ -6,15 +6,15 @@ import { getToken } from '@/utils/auth'
 const service = axios.create({
   // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // baseURL: 'https://oras-api.herokuapp.com',
-  baseURL: 'http://localhost:8080',
-  // baseURL: 'http://localhost/oras',
+  // baseURL: 'http://localhost:8080',
+  baseURL: 'http://localhost:9527/',
   withCredentials: true, // send cookies when cross-domain requests
   // credentials: 'same-origin',
   timeout: 30000 // request timeout
 })
 
 const headers = {
-  'Authorization': getToken()
+  'Authorization': 'Bearer ' + getToken()
 }
 
 export function fetchOpenJobList(query) {
