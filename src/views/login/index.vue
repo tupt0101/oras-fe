@@ -175,6 +175,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
+          // this.$router.push({ path: '/' })
           this.$store.dispatch('user/login', this.loginForm)
             .then(() => {
               this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
@@ -283,7 +284,7 @@ $black: #000000;
   width: 100%;
   height: 100%;
   // background-color: $bg;
-  background-image: url('https://github.com/tupt0101/oras-fe/blob/tupt/src/assets/custom-theme/image/login-bg.jpeg');
+  background-image: url('../../assets/custom-theme/image/login-bg.jpeg');
   overflow: hidden;
   display:flex;
 	flex-direction:column;
