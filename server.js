@@ -4,12 +4,16 @@ const path = require('path')
 
 const app = express()
 
+app.use(app.router)
+
 // here we are configuring dist to serve app files
 app.use('/', serveStatic(path.join(__dirname, '/dist')))
 
 // this * route is to serve project on different page routes except root `/`
-app.get(/.*/, function(req, res) {
+app.get(/.*/, function(req, res, next) {
   res.sendFile(path.join(__dirname, '/dist/index.html'))
+  res.setHeader('Last-Modified', (new Date()).toUTCString())
+  next()
 })
 
 app.disable('etag')
