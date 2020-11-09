@@ -1,6 +1,7 @@
 const express = require('express')
 const serveStatic = require('serve-static')
 const path = require('path')
+// const httpProxy = require('http-proxy')
 
 const app = express()
 
@@ -19,6 +20,6 @@ app.get(/.*/, function(req, res) {
 // app.disable('etag')
 
 const port = process.env.PORT || 8080
-app.listen(port)
+// app.listen(port)
 
 console.log(`app is listening on port: ${port}`)

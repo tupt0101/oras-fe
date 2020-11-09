@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo, signup } from '@/api/user'
 import { getToken, setToken, removeToken, getUserId, setUserId } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -131,6 +131,20 @@ const actions = {
 
     // reset visited views and cached views
     dispatch('tagsView/delAllViews', null, { root: true })
+  },
+
+  // user sign up
+  signup({ commit }, userInfo) {
+    const { fullname, email, password, phoneNo, compName, location, compMail, compPhoneNo, taxCode } = userInfo
+    return new Promise((resolve, reject) => {
+      signup({ fullname: fullname, email: email, password: password, phoneNo: phoneNo, compName: compName, location: location, compMail: compMail, compPhoneNo: compPhoneNo, taxCode: taxCode }).then(response => {
+        // const { message } = response
+        console.log(response)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
 }
 

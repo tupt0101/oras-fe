@@ -81,7 +81,23 @@ export default {
     thirdparty: 'Or connect with',
     thirdpartyTips: 'Can not be simulated on local, so please combine you own business simulation! ! !',
     forgot: 'Quên mật khẩu?',
-    signup: 'Hoặc tạo ngay tài khoản của bạn.'
+    signup: 'Hoặc tạo tài khoản của bạn.'
+  },
+  register: {
+    title: 'Đăng ký tài khoản',
+    regIn: 'Đăng ký',
+    fullname: 'Họ và tên',
+    email: 'Email',
+    password: 'Mật khẩu',
+    confirmPwd: 'Xác nhận mật khẩu',
+    phoneNo: 'Số điện thoại',
+    compName: 'Tên công ty',
+    location: 'Vị trí tỉnh, thành phố',
+    compMail: 'Email công ty',
+    compPhone: 'Điện thoại công ty',
+    taxCode: 'Mã số thuế',
+    login: 'Hoặc đăng nhập bằng tài khoản của bạn.',
+    info: 'THÔNG TIN CÔNG TY'
   },
   documentation: {
     documentation: 'Documentation',

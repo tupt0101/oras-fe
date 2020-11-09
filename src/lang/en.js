@@ -74,14 +74,30 @@ export default {
   },
   login: {
     title: 'Login Form',
-    logIn: 'Login',
+    logIn: 'Sign in',
     username: 'Username',
     password: 'Password',
     any: 'any',
     thirdparty: 'Or connect with',
     thirdpartyTips: 'Can not be simulated on local, so please combine you own business simulation! ! !',
     forgot: 'Forgot password?',
-    signup: 'Or create your Account.'
+    signup: 'Or create your account.'
+  },
+  register: {
+    title: 'Register Form',
+    regIn: 'Sign up',
+    fullname: 'Fullname',
+    email: 'Email',
+    password: 'Password',
+    confirmPwd: 'Confirm password',
+    phoneNo: 'Phone number',
+    compName: 'Company name',
+    location: 'Location',
+    compMail: 'Company mail',
+    compPhone: 'Company phone number',
+    taxCode: 'Tax code',
+    login: 'Or sign in with your account.',
+    info: 'COMPANY INFORMATION'
   },
   documentation: {
     documentation: 'Documentation',

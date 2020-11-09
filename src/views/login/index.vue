@@ -60,9 +60,11 @@
       </div>
 
       <div style="text-align: right">
-        <a href="#" style="font-style: italic; color: rgb(91 104 111)">
-          {{ $t('login.signup') }}
-        </a>
+        <router-link to="/signup">
+          <p style="font-style: italic; color: rgb(91 104 111)">
+            {{ $t('login.signup') }}
+          </p>
+        </router-link>
       </div>
 
       <!-- <div style="position:relative">
@@ -291,9 +293,9 @@ $black: #000000;
 
   .login-form {
     position: relative;
-    width: 520px;
+    width: 596px;
     max-width: 100%;
-    padding: 160px 35px;
+    padding: 160px 68px;
     margin: 0 auto;
     overflow: hidden;
     height: 100%;
