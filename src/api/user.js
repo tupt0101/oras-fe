@@ -5,8 +5,9 @@ axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 // create an axios instance
 const service = axios.create({
   // url = base url + request url
-  baseURL: process.env.VUE_APP_BASE_API,
-  // baseURL: 'https://oras-api.herokuapp.com/',
+  // baseURL: process.env.VUE_APP_BASE_API,
+  baseURL: 'http://localhost:9527/',
+  // baseURL: 'https://oras-app.herokuapp.com/',
   withCredentials: true, // send cookies when cross-domain requests
   // credentials: 'same-origin',
   timeout: 30000 // request timeout
@@ -39,5 +40,13 @@ export function logout() {
   return request({
     url: '/vue-element-admin/user/logout',
     method: 'post'
+  })
+}
+
+export function signup(data) {
+  return service.request({
+    url: '/signup',
+    method: 'post',
+    headers: headers
   })
 }
