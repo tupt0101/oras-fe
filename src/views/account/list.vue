@@ -6,42 +6,50 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Package name" width="200px">
-        <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
-          <!-- <el-tag>{{ row.title }}</el-tag> -->
-        </template>
-      </el-table-column>
-      <el-table-column label="Description" min-width="150px">
-        <template slot-scope="{row}">
-          <span style="white-space: nowrap">{{ row.description }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Number of posts" align="center" width="135px">
-        <template slot-scope="{row}">
-          <span>{{ row.numOfPosts }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Duration" width="150px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.duration }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Price" width="150px" align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.currency }} {{ row.price }}</span>
-        </template>
-      </el-table-column>
-      <!-- <el-table-column label="Status" class-name="status-col" width="100">
-        <template slot-scope="{row}">
-          <el-tag :type="row.status | statusFilter">
-            {{ row.status }}
-          </el-tag>
+
+      <!-- <el-table-column width="180px" align="center" label="Date">
+        <template slot-scope="scope">
+          <span>{{ scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column> -->
-      <el-table-column align="center" label="Actions" width="120px" class-name="small-padding fixed-width">
+
+      <el-table-column min-width="300px" label="Fullname" align="center">
+        <template slot-scope="{row}">
+          <router-link :to="'/account/edit/'+row.id" class="link-type">
+            <span>{{ row.fullname }}</span>
+          </router-link>
+        </template>
+      </el-table-column>
+
+      <el-table-column width="300px" align="center" label="Company">
+        <template slot-scope="row">
+          <span>{{ row.company }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column width="300px" align="center" label="Email">
+        <template slot-scope="row">
+          <span>{{ row.email }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column width="120px" align="center" label="Role">
+        <template slot-scope="row">
+          <span>{{ row.role }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column class-name="status-col" label="Status" width="150">
+        <template slot-scope="{row}">
+          <el-tag :type="row.active | statusFilter">
+            {{ row.active }}
+          </el-tag>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="Actions" width="150">
         <template slot-scope="scope">
-          <router-link :to="'/subscription/edit/'+scope.row.id">
+          <router-link :to="'/example/edit/'+scope.row.id">
             <el-button type="primary" size="small" icon="el-icon-edit">
               <!-- Edit -->
             </el-button>
@@ -55,18 +63,17 @@
 </template>
 
 <script>
-import { fetchJobList } from '@/api/job'
+import { fetchList } from '@/api/article'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
-  name: 'PackageList',
+  name: 'AccountList',
   components: { Pagination },
   filters: {
     statusFilter(status) {
       const statusMap = {
-        published: 'success',
-        draft: 'info',
-        deleted: 'danger'
+        active: 'info',
+        deactive: 'danger'
       }
       return statusMap[status]
     }
@@ -88,9 +95,9 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchJobList(this.listQuery).then(response => {
-        this.list = response.data
-        this.total = response.data
+      fetchList(this.listQuery).then(response => {
+        this.list = response.data.items
+        this.total = response.data.total
         this.listLoading = false
       })
     }

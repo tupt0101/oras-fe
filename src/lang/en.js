@@ -93,7 +93,7 @@ export default {
     phoneNo: 'Phone number',
     compName: 'Company name',
     location: 'Location',
-    compMail: 'Company mail',
+    compEmail: 'Company mail',
     compPhone: 'Company phone number',
     taxCode: 'Tax code',
     login: 'Or sign in with your account.',

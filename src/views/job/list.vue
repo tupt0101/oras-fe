@@ -6,10 +6,15 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Title" min-width="150px">
+      <el-table-column label="Title" width="200px">
         <template slot-scope="{row}">
           <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
           <!-- <el-tag>{{ row.title }}</el-tag> -->
+        </template>
+      </el-table-column>
+      <el-table-column label="Job description" min-width="150px">
+        <template slot-scope="{row}">
+          <span style="white-space: nowrap">{{ row.description }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Deadline" width="150px" align="center">
@@ -34,15 +39,27 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Actions" width="230px" class-name="small-padding fixed-width">
-        <!-- <template slot-scope="scope">
+      <el-table-column align="center" label="Actions" width="150px" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <!-- alo YAnh -->
+          <!-- sua router to: toi api thuc hien action crud -->
           <router-link :to="'/job/edit/'+scope.row.id">
             <el-button type="primary" size="small" icon="el-icon-edit">
-              Edit
+              <!-- Edit -->
             </el-button>
           </router-link>
-        </template> -->
-        <template slot-scope="{row,$index}">
+          <router-link :to="'/job/edit/'+scope.row.id">
+            <el-button type="success" size="small" icon="el-icon-upload2">
+              <!-- Publish -->
+            </el-button>
+          </router-link>
+          <router-link :to="'/job/edit/'+scope.row.id">
+            <el-button type="danger" size="small" icon="el-icon-delete">
+              <!-- Delete -->
+            </el-button>
+          </router-link>
+        </template>
+        <!-- <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
@@ -55,7 +72,7 @@
           <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
             Delete
           </el-button>
-        </template>
+        </template> -->
       </el-table-column>
     </el-table>
 

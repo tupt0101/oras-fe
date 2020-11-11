@@ -15,43 +15,86 @@
         <el-row>
 
           <el-col :span="24">
-            <el-form-item style="margin-bottom: 40px;" prop="name">
+            <!-- <el-form-item style="margin-bottom: 40px;" prop="name">
               <MDinput v-model="postForm.data.title" :maxlength="100" name="name" required>
                 Package name
               </MDinput>
-            </el-form-item>
+            </el-form-item> -->
 
             <div class="postInfo-container">
               <el-row>
                 <el-col :span="12">
-                  <el-form-item label-width="130px" label="Number of posts:" class="postInfo-container-item">
-                    <el-input-number v-model="postForm.data.numOfPosts" placeholder="0" />
+                  <el-form-item label-width="130px" label="Fullname:" class="postInfo-container-item">
+                    <el-input v-model="postForm.data.fullname" style="width: 300px" placeholder="Please enter the fullname" />
                   </el-form-item>
                 </el-col>
 
-                <!-- alo YAnh -->
-                <!-- duration: 1 month, 3 month, 6 month... -->
                 <el-col :span="12">
-                  <el-form-item label-width="130px" label="Duration:" class="postInfo-container-item">
-                    <el-select v-model="postForm.data.duration" :remote-method="getJobTypeList" filterable default-first-option remote placeholder="">
-                      <el-option v-for="(item,index) in jobTypeListOptions" :key="item+index" :label="item" :value="item" />
-                    </el-select>
+                  <el-form-item label-width="150px" label="Password:" class="postInfo-container-item">
+                    <el-input v-model="postForm.data.password" type="password" style="width: 300px" placeholder="Please enter the password" />
                   </el-form-item>
                 </el-col>
               </el-row>
 
               <el-row>
                 <el-col :span="12">
-                  <el-form-item label-width="130px" label="Price:" class="postInfo-container-item">
-                    <el-input-number v-model="postForm.data.price" placeholder="00.00" />
+                  <el-form-item label-width="130px" label="Email:" class="postInfo-container-item">
+                    <el-input v-model="postForm.data.email" style="width: 300px" placeholder="Please enter the email" />
+                  </el-form-item>
+
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label-width="150px" label="Confirm password:" class="postInfo-container-item">
+                    <el-input v-model="postForm.data.confirmPwd" type="password" style="width: 300px" placeholder="Please confirm your password" />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label-width="130px" label="Role:" class="postInfo-container-item">
+                    <el-select v-model="postForm.data.role" :remote-method="getRoleList" style="width: 300px" filterable default-first-option remote placeholder="Select a role">
+                      <el-option v-for="(item,index) in roleListOptions" :key="item+index" :label="item" :value="item" />
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </div>
+
+            <div v-if="postForm.data.role != 'admin'" class="company-info">
+              <h4 style="margin-left: 130px">COMPANY INFORMATION</h4>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label-width="130px" label="Company name:" class="postInfo-container-item">
+                    <el-input v-model="postForm.data.compName" style="width: 300px" placeholder="Please enter the company name" />
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="12">
-                  <el-form-item label-width="130px" label="Currency:" class="postInfo-container-item">
-                    <el-select v-model="postForm.data.currency" :remote-method="getCurrencyList" filterable default-first-option remote placeholder="">
-                      <el-option v-for="(item,index) in currencyListOptions" :key="item+index" :label="item" :value="item" />
-                    </el-select>
+                  <el-form-item label-width="150px" label="Company email:" class="postInfo-container-item">
+                    <el-input v-model="postForm.data.compEmail" type="password" style="width: 300px" placeholder="Please enter the company email" />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item label-width="130px" label="Tax code:" class="postInfo-container-item">
+                    <el-input v-model="postForm.data.taxCode" style="width: 300px" placeholder="Please enter the tax code" />
+                  </el-form-item>
+
+                </el-col>
+                <el-col :span="12">
+                  <el-form-item label-width="150px" label="Phone number:" class="postInfo-container-item">
+                    <el-input v-model="postForm.data.compPhone" type="password" autosize style="width: 300px" placeholder="Please enter the company phone number" />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="24">
+                  <el-form-item label-width="130px" label="Location:" class="postInfo-container-item">
+                    <el-input v-model="postForm.data.location" style="width: 300px" placeholder="Please enter the tax code" />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -59,24 +102,26 @@
           </el-col>
         </el-row>
 
-        <el-form-item label-width="95px" label="Description:">
+        <!-- <el-form-item label-width="95px" label="Description:">
           <el-input v-model="postForm.data.description" :rows="1" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" />
           <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span>
-        </el-form-item>
+        </el-form-item> -->
       </div>
     </el-form>
   </div>
 </template>
 
 <script>
-import MDinput from '@/components/MDinput'
+// import MDinput from '@/components/MDinput'
 import Sticky from '@/components/Sticky' // 粘性header组件
 import { validURL } from '@/utils/validate'
 import { fetchArticle } from '@/api/article'
 import { searchUser } from '@/api/remote-search'
 // import Warning from './Warning'
 // import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
-import { getUserId } from '../../../utils/auth'
+// import { getUserId } from '../../../utils/auth'
+
+// @ la ref toi root folder do
 import { createJob } from '../../../api/job'
 
 const defaultForm = {
@@ -89,21 +134,22 @@ const defaultForm = {
   // comment_disabled: false,
   // importance: 0
   data: {
-    name: '',
-    numOfPosts: 0,
-    duration: '',
-    price: 0,
-    currency: '',
-    description: '',
-    createDate: new Date().toISOString(),
-    creatorId: getUserId()
+    fullname: '',
+    email: '',
+    password: '',
+    role: '',
+    compName: '',
+    compEmail: '',
+    compPhone: '',
+    taxCode: '',
+    location: ''
   }
 }
 
 export default {
   name: 'JobDetail',
   components: {
-    MDinput,
+    // MDinput,
     Sticky
   },
   props: {
@@ -142,7 +188,7 @@ export default {
     return {
       postForm: Object.assign({}, defaultForm),
       loading: false,
-      currencyListOptions: [],
+      roleListOptions: [],
       categoryListOptions: [],
       jobTypeListOptions: [],
       rules: {
@@ -245,12 +291,12 @@ export default {
       this.postForm.data.status = 'Draft'
       this.$store.dispatch()
     },
-    getCurrencyList(query) {
+    getRoleList(query) {
       searchUser(query).then(response => {
         if (!response.data.items) return
         // anhhy
         // this.userListOptions = response.data.items.map(v => v.name)
-        this.currencyListOptions = ['VND', 'USD', 'SGD', 'JPY', 'CNY']
+        this.roleListOptions = ['admin', 'user']
       })
     },
     getCategoryList(query) {

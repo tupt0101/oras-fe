@@ -6,25 +6,30 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Title" min-width="150px">
+      <el-table-column label="Account name" min-width="200px" align="center">
         <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
+          <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
           <!-- <el-tag>{{ row.title }}</el-tag> -->
         </template>
       </el-table-column>
-      <el-table-column label="Deadline" width="150px" align="center">
+      <el-table-column label="Package" width="200px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.applyTo | parseTime('{y}-{m}-{d}') }}</span>
+          <span>{{ row.package }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Salary" width="240px" align="center">
+      <el-table-column label="Purchase ID" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.currency }} {{ row.salaryFrom }} - {{ row.salaryTo }}</span>
+          <span>{{ row.purchaseId }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Vacancies" align="center" width="95px">
+      <el-table-column label="Purchase date" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.vacancies }}</span>
+          <span>{{ row.purchaseDate | parseTime('{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="Valid to" width="150px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.validTo | parseTime('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Status" class-name="status-col" width="100">
@@ -34,15 +39,15 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Actions" width="230px" class-name="small-padding fixed-width">
-        <!-- <template slot-scope="scope">
-          <router-link :to="'/job/edit/'+scope.row.id">
-            <el-button type="primary" size="small" icon="el-icon-edit">
-              Edit
+      <el-table-column align="center" label="Actions" width="150px" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <router-link :to="'/purchase/detail/'+scope.row.id">
+            <el-button type="primary" size="small" icon="el-icon-s-order">
+              <!-- View purchase detail -->
             </el-button>
           </router-link>
-        </template> -->
-        <template slot-scope="{row,$index}">
+        </template>
+        <!-- <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
@@ -55,7 +60,7 @@
           <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
             Delete
           </el-button>
-        </template>
+        </template> -->
       </el-table-column>
     </el-table>
 

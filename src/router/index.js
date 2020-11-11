@@ -303,20 +303,20 @@ export const asyncRoutes = [
       // Edit route of components
       {
         path: 'create',
-        component: () => import('@/views/example/create'),
+        component: () => import('@/views/account/create'),
         name: 'CreateJob',
         meta: { title: 'Create Account', icon: 'edit' }
       },
       {
         path: 'edit/:id(\\d+)',
-        component: () => import('@/views/example/edit'),
+        component: () => import('@/views/account/edit'),
         name: 'EditJob',
         meta: { title: 'Edit Account', noCache: true, activeMenu: '/example/list' },
         hidden: true
       },
       {
         path: 'list',
-        component: () => import('@/views/example/list'),
+        component: () => import('@/views/account/list'),
         name: 'JobList',
         meta: { title: 'Account List', icon: 'list' }
       }

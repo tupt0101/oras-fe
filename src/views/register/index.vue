@@ -134,15 +134,15 @@
         />
       </el-form-item>
 
-      <el-form-item prop="compMail">
+      <el-form-item prop="compEmail">
         <span class="svg-container">
           <svg-icon icon-class="email" />
         </span>
         <el-input
-          ref="compMail"
-          v-model="registerForm.compMail"
-          :placeholder="$t('register.compMail')"
-          name="compMail"
+          ref="compEmail"
+          v-model="registerForm.compEmail"
+          :placeholder="$t('register.compEmail')"
+          name="compEmail"
           type="text"
           tabindex="8"
           autocomplete="on"
@@ -253,7 +253,7 @@ export default {
         callback()
       }
     }
-    const validateCompMail = (rule, value, callback) => {
+    const validateCompEmail = (rule, value, callback) => {
       if (!validEmail(value)) {
         callback(new Error('Please enter a valid email.'))
       } else {
@@ -276,7 +276,7 @@ export default {
         phoneNo: '',
         compName: '',
         location: '',
-        compMail: '',
+        compEmail: '',
         compPhone: '',
         taxCode: ''
       },
@@ -288,7 +288,7 @@ export default {
         phoneNo: [{ required: true, trigger: 'blur', validator: validatePhoneNo }],
         compName: [{ required: true, trigger: 'blur', validator: validateCompName }],
         location: [{ required: true, trigger: 'blur', validator: validateLocation }],
-        compMail: [{ required: true, trigger: 'blur', validator: validateCompMail }],
+        compEmail: [{ required: true, trigger: 'blur', validator: validateCompEmail }],
         compPhone: [{ required: true, trigger: 'blur', validator: validatePhoneNo }],
         taxCode: [{ required: true, trigger: 'blur', validator: validateTaxCode }]
       },
