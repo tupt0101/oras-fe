@@ -174,7 +174,8 @@ export const asyncRoutes = [
     name: 'TalentPool',
     meta: {
       title: 'Talent Pool',
-      icon: 'el-icon-s-custom'
+      icon: 'el-icon-s-custom',
+      roles: ['admin']
     },
     children: [
       // Edit route of components
@@ -202,87 +203,6 @@ export const asyncRoutes = [
         component: () => import('@/views/example/list'),
         name: 'CandidateList',
         meta: { title: 'Candidate List', icon: 'list' }
-      }
-    ]
-  },
-
-  {
-    path: '/template',
-    component: Layout,
-    redirect: '/template/list',
-    name: 'Template',
-    meta: {
-      title: 'Template',
-      icon: 'email'
-    },
-    children: [
-      // Edit route of components
-      {
-        path: 'create',
-        component: () => import('@/views/example/create'),
-        name: 'CreateTemplate',
-        meta: { title: 'Create Template', icon: 'edit' }
-      },
-      {
-        path: 'edit/:id(\\d+)',
-        component: () => import('@/views/example/edit'),
-        name: 'EditJob',
-        meta: { title: 'Edit Template', noCache: true, activeMenu: '/example/list' },
-        hidden: true
-      },
-      {
-        path: 'list',
-        component: () => import('@/views/example/list'),
-        name: 'TemplateList',
-        meta: { title: 'Template List', icon: 'list' }
-      }
-    ]
-  },
-
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/report',
-    children: [
-      {
-        path: 'report',
-        component: () => import('@/views/dashboard/index'),
-        name: 'Report',
-        meta: { title: 'Report', icon: 'chart', affix: true }
-      }
-    ]
-  },
-
-  {
-    path: '/account',
-    component: Layout,
-    redirect: '/account/list',
-    name: 'Account',
-    meta: {
-      title: 'Account',
-      icon: 'user',
-      roles: ['admin']
-    },
-    children: [
-      // Edit route of components
-      {
-        path: 'create',
-        component: () => import('@/views/example/create'),
-        name: 'CreateJob',
-        meta: { title: 'Create Account', icon: 'edit' }
-      },
-      {
-        path: 'edit/:id(\\d+)',
-        component: () => import('@/views/example/edit'),
-        name: 'EditJob',
-        meta: { title: 'Edit Account', noCache: true, activeMenu: '/example/list' },
-        hidden: true
-      },
-      {
-        path: 'list',
-        component: () => import('@/views/example/list'),
-        name: 'JobList',
-        meta: { title: 'Account List', icon: 'list' }
       }
     ]
   },
@@ -330,6 +250,93 @@ export const asyncRoutes = [
   // },
 
   {
+    path: '/subscription',
+    component: Layout,
+    redirect: '/subscription/list',
+    name: 'Subscription',
+    meta: {
+      title: 'Subscription',
+      icon: 'shopping',
+      roles: ['admin']
+    },
+    children: [
+      // Edit route of components
+      {
+        path: 'create',
+        component: () => import('@/views/subscription/create'),
+        name: 'CreatePackage',
+        meta: { title: 'Create Package', icon: 'edit' }
+      },
+      {
+        path: 'edit/:id(\\d+)',
+        component: () => import('@/views/subscription/edit'),
+        name: 'EditPackage',
+        meta: { title: 'Edit Package', noCache: true, activeMenu: '/subscription/list' },
+        hidden: true
+      },
+      {
+        path: 'list',
+        component: () => import('@/views/subscription/list'),
+        name: 'PackageList',
+        meta: { title: 'Package List', icon: 'list' }
+      },
+      {
+        path: 'member',
+        component: () => import('@/views/subscription/member'),
+        name: 'Member',
+        meta: { title: 'Member', icon: 'peoples' }
+      }
+    ]
+  },
+
+  {
+    path: '/account',
+    component: Layout,
+    redirect: '/account/list',
+    name: 'Account',
+    meta: {
+      title: 'Account',
+      icon: 'user',
+      roles: ['admin']
+    },
+    children: [
+      // Edit route of components
+      {
+        path: 'create',
+        component: () => import('@/views/account/create'),
+        name: 'CreateJob',
+        meta: { title: 'Create Account', icon: 'edit' }
+      },
+      {
+        path: 'edit/:id(\\d+)',
+        component: () => import('@/views/account/edit'),
+        name: 'EditJob',
+        meta: { title: 'Edit Account', noCache: true, activeMenu: '/example/list' },
+        hidden: true
+      },
+      {
+        path: 'list',
+        component: () => import('@/views/account/list'),
+        name: 'JobList',
+        meta: { title: 'Account List', icon: 'list' }
+      }
+    ]
+  },
+
+  {
+    path: '/report',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/report/index'),
+        name: 'Report',
+        meta: { title: 'Report', icon: 'chart', noCache: true }
+      }
+    ]
+  },
+
+  {
     path: '/setting',
     component: Layout,
     children: [
@@ -345,6 +352,9 @@ export const asyncRoutes = [
   {
     path: '/icon',
     component: Layout,
+    meta: {
+      roles: ['admin']
+    },
     children: [
       {
         path: 'index',

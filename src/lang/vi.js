@@ -93,7 +93,7 @@ export default {
     phoneNo: 'Số điện thoại',
     compName: 'Tên công ty',
     location: 'Vị trí tỉnh, thành phố',
-    compMail: 'Email công ty',
+    compEmail: 'Email công ty',
     compPhone: 'Điện thoại công ty',
     taxCode: 'Mã số thuế',
     login: 'Hoặc đăng nhập bằng tài khoản của bạn.',
