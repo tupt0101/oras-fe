@@ -337,6 +337,23 @@ export const asyncRoutes = [
   },
 
   {
+    path: '/billing',
+    component: Layout,
+    redirect: '/billing/index',
+    meta: {
+      roles: ['user']
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/billing/index'),
+        name: 'Billing',
+        meta: { title: 'Billing', icon: 'shopping', noCache: true }
+      }
+    ]
+  },
+
+  {
     path: '/setting',
     component: Layout,
     children: [
