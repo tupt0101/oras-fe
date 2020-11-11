@@ -49,7 +49,7 @@
           <el-button v-if="row.status!='open'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
             Publish
           </el-button>
-          <el-button v-if="row.status!='Draft'" size="mini" @click="handleModifyStatus(row,'draft')">
+          <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
             Draft
           </el-button>
           <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
@@ -68,7 +68,7 @@ import { fetchJobList } from '@/api/job'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
-  name: 'ArticleList',
+  name: 'PackageList',
   components: { Pagination },
   filters: {
     statusFilter(status) {

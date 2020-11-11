@@ -206,28 +206,28 @@ export default {
   data() {
     const validateFullName = (rule, value, callback) => {
       if (value.length === 0) {
-        callback(new Error('The name can not be empty'))
+        callback(new Error('The name can not be empty.'))
       } else {
         callback()
       }
     }
     const validateEmail = (rule, value, callback) => {
       if (!validEmail(value)) {
-        callback(new Error('Please enter a valid email'))
+        callback(new Error('Please enter a valid email.'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+        callback(new Error('The password can not be less than 6 digits.'))
       } else {
         callback()
       }
     }
     const validateConfirmPwd = (rule, value, callback) => {
       if (value !== this.registerForm.password) {
-        callback(new Error('The confirmation password is invalid'))
+        callback(new Error('The confirmation password is invalid.'))
       } else {
         callback()
       }
@@ -241,21 +241,21 @@ export default {
     }
     const validateCompName = (rule, value, callback) => {
       if (value.length === 0) {
-        callback(new Error('The company name can not be empty'))
+        callback(new Error('The company name can not be empty.'))
       } else {
         callback()
       }
     }
     const validateLocation = (rule, value, callback) => {
       if (value.length === 0) {
-        callback(new Error('The location can not be empty'))
+        callback(new Error('The location can not be empty.'))
       } else {
         callback()
       }
     }
     const validateCompMail = (rule, value, callback) => {
       if (!validEmail(value)) {
-        callback(new Error('Please enter a valid email'))
+        callback(new Error('Please enter a valid email.'))
       } else {
         callback()
       }
