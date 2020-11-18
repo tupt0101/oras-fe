@@ -63,7 +63,8 @@ const actions = {
 
         data.roles = [data.role]
         data.introduction = 'I am a super administrator'
-        data.avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+        // data.avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+        data.avatar = 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/corporate-company-logo-design-template-2402e0689677112e3b2b6e0f399d7dc3_screen.jpg?ts=1561532453'
         const { roles, fullname, avatar, introduction } = data
         // anhhy
 

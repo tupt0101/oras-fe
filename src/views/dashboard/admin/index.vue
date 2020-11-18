@@ -33,6 +33,9 @@
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 6}" :xl="{span: 6}" style="margin-bottom:30px;">
         <todo-list />
       </el-col>
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 18}" :xl="{span: 18}" style="padding-right:8px;margin-bottom:30px;">
+        <open-job-list />
+      </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="padding-right:8px;margin-bottom:30px;">
         <transaction-table />
       </el-col>
@@ -51,6 +54,7 @@ import TransactionTable from './components/TransactionTable'
 import TodoList from './components/TodoList'
 // import BoxCard from './components/BoxCard'
 import OpenJobTable from './components/OpenJobTable'
+import OpenJobList from './components/OpenJobList'
 
 const lineChartData = {
   newVisitis: {
@@ -83,7 +87,8 @@ export default {
     TransactionTable,
     TodoList,
     // BoxCard,
-    OpenJobTable
+    OpenJobTable,
+    OpenJobList
   },
   data() {
     return {
