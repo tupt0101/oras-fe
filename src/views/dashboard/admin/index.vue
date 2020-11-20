@@ -27,16 +27,13 @@
     </el-row> -->
 
     <el-row :gutter="8">
-      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 18}" :xl="{span: 18}" style="padding-right:8px;margin-bottom:30px;">
+      <!-- <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 18}" :xl="{span: 18}" style="padding-right:8px;margin-bottom:30px;">
         <open-job-table />
-      </el-col>
-      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 6}" :xl="{span: 6}" style="margin-bottom:30px;">
-        <todo-list />
-      </el-col>
-      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 18}" :xl="{span: 18}" style="padding-right:8px;margin-bottom:30px;">
+      </el-col> -->
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 16}" :xl="{span: 16}" style="padding-right:8px;margin-bottom:30px;">
         <open-job-list />
       </el-col>
-      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="padding-right:8px;margin-bottom:30px;">
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 8}" :xl="{span: 8}" style="margin-bottom:30px;">
         <transaction-table />
       </el-col>
     </el-row>
@@ -51,9 +48,9 @@ import PanelGroup from './components/PanelGroup'
 // import PieChart from './components/PieChart'
 // import BarChart from './components/BarChart'
 import TransactionTable from './components/TransactionTable'
-import TodoList from './components/TodoList'
+// import TodoList from './components/TodoList'
 // import BoxCard from './components/BoxCard'
-import OpenJobTable from './components/OpenJobTable'
+// import OpenJobTable from './components/OpenJobTable'
 import OpenJobList from './components/OpenJobList'
 
 const lineChartData = {
@@ -85,9 +82,9 @@ export default {
     // PieChart,
     // BarChart,
     TransactionTable,
-    TodoList,
+    // TodoList,
     // BoxCard,
-    OpenJobTable,
+    // OpenJobTable,
     OpenJobList
   },
   data() {

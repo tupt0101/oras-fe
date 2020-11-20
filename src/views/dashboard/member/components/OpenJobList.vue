@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { fetchOpenJobList } from '@/api/job'
+import { fetchJobByCreator } from '@/api/job'
 
 export default {
   name: 'OpenJobList',
@@ -61,6 +61,11 @@ export default {
       }
     }
   },
+  computed: {
+    accountId() {
+      return this.$store.state.user.accId
+    }
+  },
   created() {
     this.getList()
   },
@@ -69,7 +74,7 @@ export default {
     //   this.$vs.loading()
       this.listLoading = true
       // debugger
-      fetchOpenJobList(this.listQuery).then(response => {
+      fetchJobByCreator(this.accountId).then(response => {
         this.list = response.data
         // this.total = response.data.total
 
@@ -78,6 +83,7 @@ export default {
           this.listLoading = false
         }, 1.5 * 1000)
       })
+      console.log(this.list.size())
     }
   }
 }

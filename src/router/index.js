@@ -163,6 +163,13 @@ export const asyncRoutes = [
         component: () => import('@/views/job/list'),
         name: 'JobList',
         meta: { title: 'Job List', icon: 'list' }
+      },
+      {
+        path: 'candidates/:id(\\d+)',
+        component: () => import('@/views/job/candidate'),
+        name: 'CandidateList',
+        meta: { title: 'Candidate List' },
+        hidden: true
       }
     ]
   },

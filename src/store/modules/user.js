@@ -3,6 +3,7 @@ import { getToken, setToken, removeToken, getUserId, setUserId } from '@/utils/a
 import router, { resetRouter } from '@/router'
 
 const state = {
+  accId: '',
   token: getToken(),
   username: getUserId(),
   fullname: '',
@@ -12,6 +13,9 @@ const state = {
 }
 
 const mutations = {
+  SET_ACCID: (state, accId) => {
+    state.accId = accId
+  },
   SET_TOKEN: (state, token) => {
     state.token = token
   },
@@ -39,7 +43,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
-        console.log(response)
         commit('SET_TOKEN', data)
         commit('SET_USERNAME', username.trim())
         setToken(data)
@@ -65,14 +68,14 @@ const actions = {
         data.introduction = 'I am a super administrator'
         // data.avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
         data.avatar = 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/corporate-company-logo-design-template-2402e0689677112e3b2b6e0f399d7dc3_screen.jpg?ts=1561532453'
-        const { roles, fullname, avatar, introduction } = data
+        const { id, roles, fullname, avatar, introduction } = data
         // anhhy
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
           reject('getInfo: roles must be a non-null array!')
         }
-        // setUserId(id)
+        commit('SET_ACCID', id)
         commit('SET_ROLES', roles)
         commit('SET_NAME', fullname)
         commit('SET_AVATAR', avatar)

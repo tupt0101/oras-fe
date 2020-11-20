@@ -25,6 +25,15 @@ export function fetchOpenJobList(query) {
   })
 }
 
+export function fetchJobByCreator(id) {
+  return service.request({
+    url: '/v1/job-management/job-by-creator-id/' + id,
+    method: 'get',
+    headers: headers
+    // params: { id },
+  })
+}
+
 export function fetchJobList() {
   return service.request({
     url: '/v1/job-management/jobs',
@@ -45,6 +54,16 @@ export function createJob(data) {
   return service.request({
     url: '/v1/job-management/job',
     method: 'post',
+    // headers: headers,
     data: data
+  })
+}
+
+export function fetchCandidateList(id) {
+  return service.request({
+    url: '/v1/candidate-management/candidates-by-job/' + id,
+    method: 'get',
+    headers: headers
+    // params: { id }
   })
 }

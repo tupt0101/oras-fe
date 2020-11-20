@@ -24,7 +24,7 @@
             <div class="postInfo-container">
               <el-row>
                 <el-col :span="12">
-                  <el-form-item label-width="130px" label="Fullname:" class="postInfo-container-item">
+                  <el-form-item label-width="130px" label="Full name:" class="postInfo-container-item">
                     <el-input v-model="postForm.data.fullname" style="width: 300px" placeholder="Please enter the fullname" />
                   </el-form-item>
                 </el-col>

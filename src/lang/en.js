@@ -86,7 +86,7 @@ export default {
   register: {
     title: 'Register Form',
     regIn: 'Sign up',
-    fullname: 'Fullname',
+    fullname: 'Full name',
     email: 'Email',
     password: 'Password',
     confirmPwd: 'Confirm password',

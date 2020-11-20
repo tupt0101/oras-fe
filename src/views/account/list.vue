@@ -13,7 +13,7 @@
         </template>
       </el-table-column> -->
 
-      <el-table-column min-width="300px" label="Fullname" align="center">
+      <el-table-column min-width="300px" label="Full name" align="center">
         <template slot-scope="{row}">
           <router-link :to="'/account/edit/'+row.id" class="link-type">
             <span>{{ row.fullname }}</span>
