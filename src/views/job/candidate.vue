@@ -3,10 +3,11 @@
     <el-row>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="title-container">
-          <strong style="font-size: 36px">Job Title Here!</strong><br>
+          <strong style="font-size: 36px">{{ list[0].jobByJobId.title }}</strong><br>
           <div style="padding: 10px 0px">
-            <strong>Compnay name</strong>
-            <span style="margin-left: 30px">Apply to: dd/mm/yyyy</span>
+            <!-- <strong>{{ list[0].companyById.name }}</strong> -->
+            <strong>Company name</strong>
+            <span style="margin-left: 30px">Apply to: {{ list[0].jobByJobId.applyTo | parseTime('{y}-{m}-{d}') }}</span>
           </div>
         </div>
       </el-col>
@@ -46,17 +47,17 @@
       </el-table-column>
       <el-table-column label="Full name" min-width="150px">
         <template slot-scope="{row}">
-          <span style="white-space: nowrap">{{ row.fullname }}</span>
+          <span style="white-space: nowrap">{{ row.candidateByCandidateId.fullname }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Email" align="center" width="240px">
         <template slot-scope="{row}">
-          <span>{{ row.email }}</span>
+          <span>{{ row.candidateByCandidateId.email }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Phone number" align="center" width="160px">
         <template slot-scope="{row}">
-          <span>{{ row.phoneNo }}</span>
+          <span>{{ row.candidateByCandidateId.phoneNo }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Apply date" width="200px" align="center">
