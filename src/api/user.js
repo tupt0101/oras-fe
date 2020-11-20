@@ -6,7 +6,6 @@ axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 const service = axios.create({
   // url = base url + request url
   // baseURL: process.env.VUE_APP_BASE_API,
-  baseURL: 'http://localhost:9527/',
   // baseURL: 'https://oras-app.herokuapp.com/',
   withCredentials: true, // send cookies when cross-domain requests
   // credentials: 'same-origin',
@@ -30,7 +29,7 @@ export function login(data) {
 
 export function getInfo(email) {
   return service.request({
-    url: '/v1/account-mananagement/account-by-email',
+    url: '/v1/account-management/account-by-email',
     method: 'get',
     params: { email }
   })
