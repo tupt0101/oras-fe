@@ -61,7 +61,7 @@ export function createJob(data) {
 
 export function fetchCandidateList(id) {
   return service.request({
-    url: '/v1/candidate-management/candidates-by-job/' + id,
+    url: '/v1/job-application-management/job-applications-by-job-id/' + id,
     method: 'get',
     headers: headers
     // params: { id }
