@@ -63,13 +63,13 @@
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
-          <el-button v-if="row.status!='open'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
+          <el-button v-if="row.status!='Published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
             Publish
           </el-button>
           <el-button v-if="row.status!='Draft'" size="mini" @click="handleModifyStatus(row,'draft')">
             Draft
           </el-button>
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
+          <el-button v-if="row.status!='Closed'" size="mini" type="danger" @click="handleDelete(row,$index)">
             Delete
           </el-button>
         </template> -->
