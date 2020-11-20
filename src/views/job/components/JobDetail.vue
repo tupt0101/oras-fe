@@ -28,7 +28,7 @@
             <div class="postInfo-container">
               <el-row>
                 <el-col :span="6">
-                  <el-form-item label-width="70px" label="applyTo:" class="postInfo-container-item">
+                  <el-form-item label-width="70px" label="Deadline:" class="postInfo-container-item">
                     <el-date-picker v-model="postForm.data.applyTo" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="Choose date and time" />
                   </el-form-item>
                 </el-col>
@@ -39,7 +39,7 @@
                 </el-col>
 
                 <el-col :span="6">
-                  <el-form-item label-width="120px" label="Job Type:" class="postInfo-container-item">
+                  <el-form-item label-width="120px" label="Job Type:" class="postInfo-container-item" prop="jobType">
                     <el-select v-model="postForm.data.jobType" :remote-method="getJobTypeList" filterable default-first-option remote placeholder="">
                       <el-option v-for="(item,index) in jobTypeListOptions" :key="item+index" :label="item" :value="item" />
                     </el-select>
@@ -106,12 +106,10 @@ import Tinymce from '@/components/Tinymce'
 import MDinput from '@/components/MDinput'
 import Sticky from '@/components/Sticky' // 粘性header组件
 import { validURL } from '@/utils/validate'
-import { fetchArticle } from '@/api/article'
-import { searchUser } from '@/api/remote-search'
-// import Warning from './Warning'
 import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
 import { getUserId } from '../../../utils/auth'
-import { createJob } from '../../../api/job'
+import { createJob, fetchCategory } from '../../../api/job'
+import { fetchJob } from '../../../api/job'
 
 const defaultForm = {
   // content_short: '',
@@ -127,7 +125,7 @@ const defaultForm = {
     title: '',
     description: '',
     applyTo: '',
-    applyFrom: new Date().toISOString(),
+    applyFrom: '',
     salaryFrom: '',
     salaryTo: '',
     salaryHidden: false,
@@ -197,9 +195,9 @@ export default {
     }
   },
   computed: {
-    contentShortLength() {
-      return this.postForm.data.description.length
-    },
+    // contentShortLength() {
+    //   return this.postForm.data.description.length
+    // },
     displayTime: {
       // set and get is useful when the data
       // returned by the back end api is different from the front end
@@ -226,13 +224,9 @@ export default {
   },
   methods: {
     fetchData(id) {
-      fetchArticle(id).then(response => {
+      fetchJob(id).then(response => {
         // auto fill data when edit
-        this.postForm = response.data
-
-        // just for test
-        this.postForm.data.title += `   Article Id:${this.postForm.id}`
-        this.postForm.content_short += `   Article Id:${this.postForm.id}`
+        this.postForm.data = response.data
 
         // set tagsview title
         this.setTagsViewTitle()
@@ -253,11 +247,19 @@ export default {
       document.title = `${title} - ${this.postForm.id}`
     },
     submitForm() {
+      if (this.postForm.data.description.length === 0 || this.postForm.data.title.length === 0) {
+        this.$message({
+          message: 'Please fill in the required title and contents',
+          type: 'warning'
+        })
+        return
+      }
       console.log(this.postForm)
       this.$refs.postForm.validate(valid => {
         if (valid) {
           this.loading = true
           this.postForm.data.status = 'Published'
+          this.postForm.data.applyFrom = new Date().toISOString()
           createJob(this.postForm.data).then(response => {
             this.$notify({
               title: 'Success',
@@ -275,6 +277,7 @@ export default {
           return false
         }
       })
+      // Post job
     },
     draftForm() {
       if (this.postForm.data.description.length === 0 || this.postForm.data.title.length === 0) {
@@ -284,50 +287,54 @@ export default {
         })
         return
       }
-      this.postForm.data.status = 'Draft'
-      this.$store.dispatch()
-    },
-    getCurrencyList(query) {
-      searchUser(query).then(response => {
-        if (!response.data.items) return
-        // anhhy
-        // this.userListOptions = response.data.items.map(v => v.name)
-        this.currencyListOptions = ['VND', 'USD', 'SGD', 'JPY', 'CNY']
+      this.$refs.postForm.validate(valid => {
+        if (valid) {
+          this.loading = true
+          this.postForm.data.status = 'Draft'
+          createJob(this.postForm.data).then(response => {
+            this.$notify({
+              title: 'Success',
+              message: 'Save the post successfully',
+              type: 'success',
+              duration: 2000
+            })
+            this.loading = false
+          })
+            .catch(() => {
+              this.loading = false
+            })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
       })
     },
     getCategoryList(query) {
-      searchUser(query).then(response => {
-        if (!response.data.items) return
-        // anhhy
-        // this.userListOptions = response.data.items.map(v => v.name)
-        this.categoryListOptions = [{ 'id': 1, 'name': 'aaa' }, { 'id': 2, 'name': 'bbb' }, { 'id': 3, 'name': 'ccc' }]
+      fetchCategory().then(response => {
+        if (!response.data) return
+        const filterList = response.data.filter(item => {
+          const lowerCase = item.name.toLowerCase()
+          return !(query && lowerCase.indexOf(query.toLowerCase()) < 0)
+        })
+        debugger
+        this.categoryListOptions = filterList.map(v => v.name)
       })
+    },
+    getCurrencyList(query) {
+      const CurrencyList = [{ 'name': 'VND' }, { 'name': 'USD' }, { 'name': 'SGD' }, { 'name': 'JPY' }, { 'name': 'CNY' }]
+      const filterList = CurrencyList.filter(item => {
+        const lowerCase = item.name.toLowerCase()
+        return !(query && lowerCase.indexOf(query.toLowerCase()) < 0)
+      })
+      this.currencyListOptions = filterList.map(v => v.name)
     },
     getJobTypeList(query) {
-      searchUser(query).then(response => {
-        if (!response.data.items) return
-        // anhhy
-        // this.userListOptions = response.data.items.map(v => v.name)
-        this.jobTypeListOptions = ['Full-time', 'Part-time']
+      const JobTypeList = [{ 'name': 'Full-time' }, { 'name': 'Part-time' }]
+      const filterList = JobTypeList.filter(item => {
+        const lowerCase = item.name.toLowerCase()
+        return !(query && lowerCase.indexOf(query.toLowerCase()) < 0)
       })
-    },
-
-    // create job
-    createJob(data) {
-      return new Promise((resolve, reject) => {
-        createJob(data).then(response => {
-          debugger
-          this.$message({
-            message: 'Saved successfully',
-            type: 'success',
-            showClose: true,
-            duration: 1000
-          })
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
+      this.jobTypeListOptions = filterList.map(v => v.name)
     }
   }
 }

@@ -57,7 +57,7 @@
           <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
             Draft
           </el-button>
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
+          <el-button v-if="row.status!='closed'" size="mini" type="danger" @click="handleDelete(row,$index)">
             Delete
           </el-button>
         </template> -->
@@ -70,7 +70,8 @@
 
 <script>
 import { fetchJobList } from '@/api/job'
-import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import Pagination from '@/components/Pagination'
+import { fetchCompanyPackage } from '../../api/article' // Secondary package based on el-pagination
 
 export default {
   name: 'PackageList',
@@ -102,7 +103,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchJobList(this.listQuery).then(response => {
+      fetchCompanyPackage().then(response => {
         this.list = response.data
         this.total = response.data
         this.listLoading = false
