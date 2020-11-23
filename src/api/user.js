@@ -15,8 +15,8 @@ const service = axios.create({
 })
 
 const headers = {
-  'Authorization': 'Bearer ' + getToken(),
-  'Content-Type': 'application/json'
+  'Authorization': 'Bearer ' + getToken()
+  // 'Content-Type': 'application/json'
   // 'Content-Type': 'multipart/form-data',
   // 'Access-Control-Allow-Origin': '*'
 }
@@ -24,12 +24,13 @@ const headers = {
 export function login(data) {
   return service.request({
     url: '/login?username=' + data.username + '&password=' + data.password,
-    method: 'get',
-    headers: headers
+    method: 'get'
+    // headers: headers
   })
 }
 
 export function getInfo(email) {
+  debugger
   return service.request({
     url: '/v1/account-management/account-by-email',
     method: 'get',
