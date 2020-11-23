@@ -29,11 +29,11 @@ export function login(data) {
   })
 }
 
-export function getInfo(email) {
+export function getInfo(email, token) {
   return service.request({
     url: '/v1/account-management/account-by-email',
     method: 'get',
-    headers: headers,
+    headers: { 'Authorization': 'Bearer ' + token },
     params: { email }
   })
 }
