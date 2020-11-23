@@ -53,9 +53,17 @@ export function fetchJob(id) {
 export function createJob(data) {
   return service.request({
     url: '/v1/job-management/job',
-    method: 'post',
+    method: data.method,
     headers: headers,
     data: data
+  })
+}
+
+export function publishJob(id) {
+  return service.request({
+    url: '/v1/job-management/job/' + id + '/publish',
+    method: 'put',
+    headers: headers
   })
 }
 

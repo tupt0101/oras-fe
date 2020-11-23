@@ -108,7 +108,7 @@ import Sticky from '@/components/Sticky' // 粘性header组件
 import { validURL } from '@/utils/validate'
 import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
 import { getUserId } from '../../../utils/auth'
-import { createJob, fetchCategory } from '../../../api/job'
+import { createJob, fetchCategory, publishJob } from '../../../api/job'
 import { fetchJob } from '../../../api/job'
 
 const defaultForm = {
@@ -215,6 +215,9 @@ export default {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
+      this.posFrom.method = 'put'
+    } else {
+      this.posFrom.method = 'post'
     }
 
     // Why need to make a copy of this.$route here?
@@ -261,23 +264,24 @@ export default {
           this.postForm.data.status = 'Published'
           this.postForm.data.applyFrom = new Date().toISOString()
           createJob(this.postForm.data).then(response => {
-            this.$notify({
-              title: 'Success',
-              message: 'Published the post successfully',
-              type: 'success',
-              duration: 2000
-            })
-            this.loading = false
-          })
-            .catch(() => {
+            this.postForm.id = response.data.id
+            publishJob(this.postForm.id).then(response => {
+              this.$notify({
+                title: 'Success',
+                message: 'Published the post successfully',
+                type: 'success',
+                duration: 2000
+              })
               this.loading = false
             })
+          }).catch(() => {
+            this.loading = false
+          })
         } else {
           console.log('error submit!!')
           return false
         }
       })
-      // Post job
     },
     draftForm() {
       if (this.postForm.data.description.length === 0 || this.postForm.data.title.length === 0) {
@@ -299,6 +303,7 @@ export default {
               duration: 2000
             })
             this.loading = false
+            this.postForm.id = response.data.id
           })
             .catch(() => {
               this.loading = false
