@@ -31,7 +31,7 @@
             </div>
             <div class="level-left">
               <div class="level-item">
-                <p class="description">{{ post.description }}</p>
+                <div class="description">{{ post.description }}</div>
               </div>
             </div>
           </div>

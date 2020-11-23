@@ -107,7 +107,7 @@ import MDinput from '@/components/MDinput'
 import Sticky from '@/components/Sticky' // 粘性header组件
 import { validURL } from '@/utils/validate'
 import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
-import { getUserId } from '../../../utils/auth'
+import { getAccountId } from '../../../utils/auth'
 import { createJob, fetchCategory, publishJob } from '../../../api/job'
 import { fetchJob } from '../../../api/job'
 
@@ -135,7 +135,7 @@ const defaultForm = {
     categoryId: '',
     talentPoolId: 1,
     createDate: new Date().toISOString(),
-    creatorId: getUserId()
+    creatorId: getAccountId()
   }
 }
 
@@ -209,6 +209,9 @@ export default {
       set(val) {
         this.postForm.display_time = new Date(val)
       }
+    },
+    accountId() {
+      return this.$store.state.user.accId
     }
   },
   created() {

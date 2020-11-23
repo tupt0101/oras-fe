@@ -26,6 +26,7 @@
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
             Search
           </el-button>
+
           <!-- <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
             Export
           </el-button> -->
@@ -35,6 +36,11 @@
           <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
             reviewer
           </el-checkbox> -->
+
+          <el-button v-waves class="filter-item" type="success" @click="rankCV">
+            Rank CV
+          </el-button>
+
         </div>
       </el-col>
     </el-row>
@@ -96,7 +102,7 @@
 </template>
 
 <script>
-import { fetchCandidateList } from '@/api/job'
+import { fetchCandidateList, fetchApplicationFromRP, rankCV } from '@/api/candidate'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
@@ -120,25 +126,37 @@ export default {
       listQuery: {
         page: 1,
         limit: 20
-      }
+      },
+      jobId: ''
     }
   },
   created() {
-    const id = this.$route.params && this.$route.params.id
-    this.getCandidateList(id)
+    this.jobId = this.$route.params && this.$route.params.id
+    this.getApplications(this.jobId)
   },
   methods: {
-    getCandidateList(id) {
-      this.listLoading = true
-      fetchCandidateList(id).then(response => {
-        this.list = response.data
-        // debugger
-        this.total = response.data
-        this.listLoading = false
-      })
-    },
     openCV(link) {
       window.open(link, '_blank')
+    },
+    getApplications() {
+      this.listLoading = true
+      fetchApplicationFromRP(this.jobId).then(response => {
+        // this.list = response
+        fetchCandidateList(this.jobId).then(response => {
+          this.list = response.data
+          // debugger
+          this.total = response.data
+          this.listLoading = false
+        })
+        // this.listLoading = false
+      })
+    },
+    rankCV() {
+      this.listLoading = true
+      rankCV(this.jobId).then(response => {
+        this.list = response.data
+        this.listLoading = false
+      })
     }
   }
 }

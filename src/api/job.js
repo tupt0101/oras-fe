@@ -83,12 +83,3 @@ export function fetchCategory() {
     headers: headers
   })
 }
-
-export function fetchCandidateList(id) {
-  return service.request({
-    url: '/v1/job-application-management/job-applications-by-job-id/' + id,
-    method: 'get',
-    headers: headers
-    // params: { id }
-  })
-}

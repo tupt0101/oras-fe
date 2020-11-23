@@ -43,20 +43,26 @@
         <template slot-scope="scope">
           <!-- alo YAnh -->
           <!-- sua router to: toi api thuc hien action crud -->
-          <router-link :to="'/job/edit/'+scope.row.id">
-            <el-button type="primary" size="small" icon="el-icon-edit">
-              <!-- Edit -->
-            </el-button>
+          <router-link :to="'/job/edit/'+scope.row.id" style="margin-right: 10px">
+            <el-tooltip content="Edit job" placement="top">
+              <el-button type="primary" size="small" icon="el-icon-edit">
+                <!-- Edit -->
+              </el-button>
+            </el-tooltip>
           </router-link>
           <router-link :to="'/job/edit/'+scope.row.id">
-            <el-button type="success" size="small" icon="el-icon-upload2">
-              <!-- Publish -->
-            </el-button>
+            <el-tooltip content="Publish job to recruitment platform" placement="top">
+              <el-button v-if="scope.row.status==='Draft'" type="success" size="small" icon="el-icon-upload2">
+                <!-- Publish -->
+              </el-button>
+            </el-tooltip>
           </router-link>
           <router-link :to="'/job/edit/'+scope.row.id">
-            <el-button type="danger" size="small" icon="el-icon-delete">
-              <!-- Delete -->
-            </el-button>
+            <el-tooltip content="Close Job" placement="top">
+              <el-button v-if="scope.row.status==='Published'" type="danger" size="small" icon="el-icon-circle-close">
+                <!-- Close -->
+              </el-button>
+            </el-tooltip>
           </router-link>
         </template>
         <!-- <template slot-scope="{row,$index}">
@@ -81,7 +87,7 @@
 </template>
 
 <script>
-import { fetchJobList } from '@/api/job'
+import { fetchJobList, fetchJobByCreator } from '@/api/job'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
@@ -108,17 +114,33 @@ export default {
       }
     }
   },
+  computed: {
+    accountId() {
+      return this.$store.state.user.accId
+    },
+    accountRole() {
+      return this.$store.state.user.roles[0]
+    }
+  },
   created() {
     this.getList()
   },
   methods: {
     getList() {
       this.listLoading = true
-      fetchJobList(this.listQuery).then(response => {
-        this.list = response.data
-        this.total = response.data
-        this.listLoading = false
-      })
+      if (this.accountRole === 'admin') {
+        fetchJobList(this.listQuery).then(response => {
+          this.list = response.data
+          this.total = response.data
+          this.listLoading = false
+        })
+      } else {
+        fetchJobByCreator(this.accountId).then(response => {
+          this.list = response.data
+          // this.total = response.data
+          this.listLoading = false
+        })
+      }
     }
   }
 }
