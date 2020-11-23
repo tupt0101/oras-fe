@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 import axios from 'axios'
+import { getToken } from '@/utils/auth'
 
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 // create an axios instance
@@ -14,7 +15,7 @@ const service = axios.create({
 })
 
 const headers = {
-  'Authorization': 'Basic bXktdHJ1c3RlZC1jbGllbnQ6c2VjcmV0',
+  'Authorization': 'Bearer ' + getToken(),
   'Content-Type': 'application/json'
   // 'Content-Type': 'multipart/form-data',
   // 'Access-Control-Allow-Origin': '*'
@@ -32,6 +33,7 @@ export function getInfo(email) {
   return service.request({
     url: '/v1/account-management/account-by-email',
     method: 'get',
+    headers: headers,
     params: { email }
   })
 }
