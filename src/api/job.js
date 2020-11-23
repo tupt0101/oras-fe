@@ -44,9 +44,9 @@ export function fetchJobList() {
 
 export function fetchJob(id) {
   return service.request({
-    url: '/v1/job-management/job/detail',
+    url: '/v1/job-management/job/' + id,
     method: 'get',
-    params: { id }
+    headers: headers
   })
 }
 
@@ -54,8 +54,16 @@ export function createJob(data) {
   return service.request({
     url: '/v1/job-management/job',
     method: 'post',
-    // headers: headers,
+    headers: headers,
     data: data
+  })
+}
+
+export function fetchCategory() {
+  return service.request({
+    url: '/v1/job-management/categories',
+    method: 'get',
+    headers: headers
   })
 }
 
