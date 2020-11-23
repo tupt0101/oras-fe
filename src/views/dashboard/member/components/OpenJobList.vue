@@ -30,10 +30,9 @@
               <span style="margin-left: 20px">Deadline: </span>{{ post.applyTo }}
             </div>
             <div class="level-left">
-              <a class="level-item">
-                <span class="icon is-small"><i class="fas fa-heart" /></span>
-                <span class="likes">{{ post.likes }}</span>
-              </a>
+              <div class="level-item">
+                <p class="description">{{ post.description }}</p>
+              </div>
             </div>
           </div>
         </article>
@@ -47,6 +46,7 @@ import { fetchJobByCreator } from '@/api/job'
 
 export default {
   name: 'OpenJobList',
+  components: { },
   data() {
     return {
       list: null,
@@ -182,16 +182,21 @@ export default {
 }
 
 .level-item {
-  padding-left: 10px;
-  color: #00d1b2;
+  margin-top: 20px;
+  // color: #00d1b2;
 }
 
 input:focus {
   border-color: #00d1b2;
 }
 
-.likes {
-  padding: 0 7.5px;
+.description {
+  text-align: justify;
+  // white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.25em;
+  height: 2.5em;
 }
 
 input {

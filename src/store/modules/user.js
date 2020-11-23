@@ -45,6 +45,7 @@ const actions = {
         const { data } = response
         commit('SET_TOKEN', data)
         commit('SET_USERNAME', username.trim())
+        debugger
         setToken(data)
         setUserId(username.trim())
         resolve()

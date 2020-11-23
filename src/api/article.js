@@ -9,7 +9,7 @@ const service = axios.create({
 })
 
 const headers = {
-  'Authorization': 'Bearer ' + getToken()
+  // 'Authorization': 'Bearer ' + getToken()
 }
 export function fetchList() {
   return service.request({
