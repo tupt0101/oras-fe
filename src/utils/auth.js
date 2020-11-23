@@ -4,10 +4,12 @@ const TokenKey = 'User-Token'
 const UserKey = 'User-Id'
 
 export function getToken() {
+  console.log('>> Get token: ', Cookies.get(TokenKey))
   return Cookies.get(TokenKey)
 }
 
 export function setToken(token) {
+  // debugger
   return Cookies.set(TokenKey, token)
 }
 

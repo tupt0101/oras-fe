@@ -30,6 +30,8 @@ export function login(data) {
 }
 
 export function getInfo(email) {
+  // debugger
+  console.log(headers)
   return service.request({
     url: '/v1/account-management/account-by-email',
     method: 'get',
