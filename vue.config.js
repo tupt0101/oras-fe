@@ -31,7 +31,7 @@ module.exports = {
   productionSourceMap: false,
   devServer: {
     // proxy: 'http://localhost:8088/',
-    proxy: 'https://oras-api.herokuapp.com/',
+    // proxy: 'https://oras-api.herokuapp.com/',
     port: port,
     open: true,
     overlay: {
