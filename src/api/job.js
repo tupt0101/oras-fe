@@ -67,6 +67,14 @@ export function publishJob(id) {
   })
 }
 
+export function closeJob(id) {
+  return service.request({
+    url: '/v1/job-management/job/' + id + '/close',
+    method: 'put',
+    headers: headers
+  })
+}
+
 export function fetchCategory() {
   return service.request({
     url: '/v1/job-management/categories',
