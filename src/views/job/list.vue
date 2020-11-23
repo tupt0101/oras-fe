@@ -59,7 +59,7 @@
           </router-link>
           <router-link :to="'/job/edit/'+scope.row.id">
             <el-tooltip content="Close Job" placement="top">
-              <el-button v-if="scope.row.status==='Published'" type="danger" size="small" icon="el-icon-remove">
+              <el-button v-if="scope.row.status==='Published'" type="danger" size="small" icon="el-icon-circle-close">
                 <!-- Close -->
               </el-button>
             </el-tooltip>

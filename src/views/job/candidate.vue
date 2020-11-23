@@ -13,7 +13,7 @@
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="filter-container" style="float: right">
-          <!-- <el-input v-model="listQuery.title" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+          <el-input v-model="listQuery.title" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
           <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
             <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
           </el-select>
@@ -25,7 +25,7 @@
           </el-select>
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
             Search
-          </el-button> -->
+          </el-button>
 
           <!-- <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
             Export
@@ -37,12 +37,10 @@
             reviewer
           </el-checkbox> -->
 
-          <el-button v-waves class="filter-item" type="primary" @click="getApplications">
-            Get applications
-          </el-button>
           <el-button v-waves class="filter-item" type="success" @click="rankCV">
             Rank CV
           </el-button>
+
         </div>
       </el-col>
     </el-row>
@@ -104,7 +102,7 @@
 </template>
 
 <script>
-import { fetchCandidateList, fetchApplicationFromRP } from '@/api/candidate'
+import { fetchCandidateList, fetchApplicationFromRP, rankCV } from '@/api/candidate'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
@@ -134,30 +132,31 @@ export default {
   },
   created() {
     this.jobId = this.$route.params && this.$route.params.id
-    this.getCandidateList(this.jobId)
+    this.getApplications(this.jobId)
   },
   methods: {
-    getCandidateList(id) {
-      this.listLoading = true
-      fetchCandidateList(id).then(response => {
-        this.list = response.data
-        // debugger
-        this.total = response.data
-        this.listLoading = false
-      })
-    },
     openCV(link) {
       window.open(link, '_blank')
     },
     getApplications() {
       this.listLoading = true
       fetchApplicationFromRP(this.jobId).then(response => {
-        this.list = response.data
-        this.listLoading = false
+        // this.list = response
+        fetchCandidateList(this.jobId).then(response => {
+          this.list = response.data
+          // debugger
+          this.total = response.data
+          this.listLoading = false
+        })
+        // this.listLoading = false
       })
     },
     rankCV() {
       this.listLoading = true
+      rankCV(this.jobId).then(response => {
+        this.list = response.data
+        this.listLoading = false
+      })
     }
   }
 }

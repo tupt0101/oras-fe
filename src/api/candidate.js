@@ -32,3 +32,11 @@ export function fetchApplicationFromRP(id) {
     headers: headers
   })
 }
+
+export function rankCV(id) {
+  return service.request({
+    url: '/v1/job-application-management/job-application-rank-cv/' + id,
+    method: 'put',
+    headers: headers
+  })
+}

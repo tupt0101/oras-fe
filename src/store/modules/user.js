@@ -1,5 +1,5 @@
 import { login, logout, getInfo, signup } from '@/api/user'
-import { getToken, setToken, removeToken, getUserId, setUserId } from '@/utils/auth'
+import { getToken, setToken, removeToken, getUserId, setUserId, setAccountId } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
 const state = {
@@ -74,6 +74,7 @@ const actions = {
           reject('getInfo: roles must be a non-null array!')
         }
         commit('SET_ACCID', id)
+        setAccountId(id)
         commit('SET_ROLES', roles)
         commit('SET_NAME', fullname)
         commit('SET_AVATAR', avatar)
