@@ -274,8 +274,10 @@ export default {
                 type: 'success',
                 duration: 2000
               })
+            }).catch(() => {
               this.loading = false
             })
+            this.loading = false
           }).catch(() => {
             this.loading = false
           })

@@ -51,7 +51,6 @@ export function fetchJob(id) {
 }
 
 export function createJob(data, method) {
-  debugger
   return service.request({
     url: '/v1/job-management/job',
     method: method,
