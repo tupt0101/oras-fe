@@ -112,7 +112,7 @@ import { createJob, fetchCategory, publishJob } from '../../../api/job'
 import { fetchJob } from '../../../api/job'
 
 const defaultForm = {
-  // content_short: '',
+  method: '',
   source_uri: '',
   image_uri: '',
   display_time: undefined,
@@ -215,9 +215,9 @@ export default {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
-      this.posFrom.method = 'put'
+      this.method = 'put'
     } else {
-      this.posFrom.method = 'post'
+      this.method = 'post'
     }
 
     // Why need to make a copy of this.$route here?
@@ -263,17 +263,21 @@ export default {
           this.loading = true
           this.postForm.data.status = 'Published'
           this.postForm.data.applyFrom = new Date().toISOString()
-          createJob(this.postForm.data).then(response => {
+          createJob(this.postForm.data, this.method).then(response => {
+            debugger
             this.postForm.id = response.data.id
             publishJob(this.postForm.id).then(response => {
+              debugger
               this.$notify({
                 title: 'Success',
                 message: 'Published the post successfully',
                 type: 'success',
                 duration: 2000
               })
+            }).catch(() => {
               this.loading = false
             })
+            this.loading = false
           }).catch(() => {
             this.loading = false
           })

@@ -45,7 +45,6 @@ const actions = {
         const { data } = response
         commit('SET_TOKEN', data)
         commit('SET_USERNAME', username.trim())
-        // debugger
         setToken(data)
         setUserId(username.trim())
         resolve()
@@ -58,13 +57,11 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.username).then(response => {
+      getInfo(state.username, state.token).then(response => {
         const { data } = response
-        // debugger
         if (!data) {
           reject('Verification failed, please Login again.')
         }
-
         data.roles = [data.role]
         data.introduction = 'I am a super administrator'
         // data.avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
