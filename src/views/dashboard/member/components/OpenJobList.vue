@@ -83,7 +83,7 @@ export default {
           this.listLoading = false
         }, 1.5 * 1000)
       })
-      console.log(this.list.size())
+      // console.log(this.list.size())
     }
   }
 }

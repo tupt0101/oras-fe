@@ -3,11 +3,11 @@
     <el-row>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="title-container">
-          <strong style="font-size: 36px">{{ list[0].jobByJobId.title }}</strong><br>
+          <strong style="font-size: 36px">{{ job.title }}</strong><br>
           <div style="padding: 10px 0px">
-            <!-- <strong>{{ list[0].companyById.name }}</strong> -->
-            <strong>Company name</strong>
-            <span style="margin-left: 30px">Apply to: {{ list[0].jobByJobId.applyTo | parseTime('{y}-{m}-{d}') }}</span>
+            <strong>{{ job.accountByCreatorId.companyById.name }}</strong>
+            <!-- <strong>Company name</strong> -->
+            <span style="margin-left: 30px">Apply to: {{ job.applyTo | parseTime('{y}-{m}-{d}') }}</span>
           </div>
         </div>
       </el-col>
@@ -45,7 +45,18 @@
       </el-col>
     </el-row>
 
-    <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
+    <el-table v-if="!list">
+      <el-table-column align="center" label="ID" width="80" />
+      <el-table-column label="Full name" min-width="150px" />
+      <el-table-column label="Email" align="center" width="240px" />
+      <el-table-column label="Phone number" align="center" width="160px" />
+      <el-table-column label="Apply date" width="200px" align="center" />
+      <el-table-column label="Source" width="180px" align="center" />
+      <el-table-column label="Status" class-name="status-col" width="100" />
+      <el-table-column align="center" label="Resume" width="90px" class-name="small-padding fixed-width" />
+      <el-table-column align="center" label="Matching Rank" width="180px" />
+    </el-table>
+    <el-table v-if="list" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
       <el-table-column align="center" label="ID" width="80">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
@@ -103,6 +114,7 @@
 
 <script>
 import { fetchCandidateList, fetchApplicationFromRP, rankCV } from '@/api/candidate'
+import { fetchJob } from '@/api/job'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
@@ -120,6 +132,7 @@ export default {
   },
   data() {
     return {
+      job: null,
       list: null,
       total: 0,
       listLoading: true,
@@ -132,9 +145,24 @@ export default {
   },
   created() {
     this.jobId = this.$route.params && this.$route.params.id
+    this.fetchData(this.jobId)
     this.getApplications(this.jobId)
   },
   methods: {
+    fetchData(id) {
+      fetchJob(id).then(response => {
+        // auto fill data when edit
+        this.job = response.data
+        debugger
+        // // set tagsview title
+        // this.setTagsViewTitle()
+
+        // // set page title
+        // this.setPageTitle()
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     openCV(link) {
       window.open(link, '_blank')
     },
