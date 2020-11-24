@@ -48,6 +48,7 @@ import TransactionTable from './components/TransactionTable'
 // import TodoList from './components/TodoList'
 // import BoxCard from './components/BoxCard'
 import OpenJobList from './components/OpenJobList'
+// import OpenJobTable from './components/OpenJobTable'
 
 const lineChartData = {
   newVisitis: {
@@ -80,6 +81,7 @@ export default {
     TransactionTable,
     // TodoList,
     // BoxCard,
+    // OpenJobTable,
     OpenJobList
   },
   data() {

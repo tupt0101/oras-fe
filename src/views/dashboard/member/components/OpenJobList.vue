@@ -5,16 +5,13 @@
         <article class="media">
           <div class="media-left">
             <figure class="image is-64x64">
-              <!-- <img :src="post.img" alt="Image"> -->
-              <!-- <img src="https://semantic-ui.com/images/avatar2/large/matthew.png" alt="Image"> -->
               <div class="candidate">
                 <p style="text-align: center">
                   <strong class="numOfCand">5</strong><br>
                   <span>Candidates</span>
                 </p>
               </div>
-              <!-- <el-button type="primary">Job</el-button> -->
-              <button class="myBtn">Job</button>
+              <button class="myBtn" @click="viewDetail(post)">View Job</button>
             </figure>
           </div>
           <div class="media-content">
@@ -25,19 +22,63 @@
               <br>
               <span>Salary: </span><span>{{ post.currency }} </span>
               <strong>{{ post.salaryFrom }} - {{ post.salaryTo }}</strong><br>
-              <!-- <small>{{ post.vacancies }}</small> -->
               <span>Vacancies: </span>{{ post.vacancies }}
+              <span style="margin-left: 20px">Posted: </span>{{ post.createDate | moment("from", "now") }}
               <span style="margin-left: 20px">Deadline: </span>{{ post.applyTo }}
             </div>
             <div class="level-left">
               <div class="level-item">
-                <div class="description">{{ post.description }}</div>
+                <!-- <div class="description">{{ post.description }}</div> -->
               </div>
             </div>
           </div>
         </article>
       </div>
     </div>
+
+    <el-dialog title="Job Detail" :visible.sync="dialogFormVisible">
+      <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 90%; margin-left:50px;">
+        <el-form-item label="Title:" prop="title" label-width="100px" style="margin-bottom: 0px">
+          <span>{{ temp.title }}</span>
+        </el-form-item>
+        <el-form-item label="Salary:" prop="salary" label-width="100px" style="margin-bottom: 0px">
+          <span>{{ temp.currency }} {{ temp.salaryFrom }} - {{ temp.salaryTo }}</span>
+        </el-form-item>
+        <el-form-item label="Vacancies:" prop="vacancies" label-width="100px" style="margin-bottom: 0px">
+          <span>{{ temp.vacancies }}</span>
+        </el-form-item>
+        <el-form-item label="Posted:" prop="posted" label-width="100px" style="margin-bottom: 0px">
+          <span>{{ temp.createDate }}</span>
+        </el-form-item>
+        <el-form-item label="Deadline:" prop="deadline" label-width="100px" style="margin-bottom: 0px">
+          <span>{{ temp.applyTo }}</span>
+        </el-form-item>
+        <el-form-item label="Description:" prop="description" label-width="100px" style="margin-bottom: 0px;">
+          <!-- <span v-html="temp.description" /> -->
+        </el-form-item>
+        <el-form-item label="" prop="description" label-width="100px" style="margin-bottom: 0px; max-height: 320px; overflow-y: scroll">
+          <span v-html="temp.description" />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <!-- <el-button @click="dialogFormVisible = false">
+          Close
+        </el-button> -->
+        <!-- <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
+          Confirm
+        </el-button> -->
+      </div>
+    </el-dialog>
+
+    <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
+      <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
+        <el-table-column prop="key" label="Channel" />
+        <el-table-column prop="pv" label="Pv" />
+      </el-table>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogPvVisible = false">Confirm</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -58,7 +99,25 @@ export default {
         title: undefined,
         type: undefined,
         sort: '+id'
-      }
+      },
+      temp: {
+        id: undefined,
+        title: '',
+        salary: 0,
+        vacancies: 0,
+        posted: '',
+        deadline: '',
+        description: '',
+        status: 'published'
+      },
+      dialogFormVisible: false,
+      dialogStatus: '',
+      textMap: {
+        update: 'Edit',
+        create: 'Create'
+      },
+      dialogPvVisible: false,
+      pvData: []
     }
   },
   computed: {
@@ -84,6 +143,15 @@ export default {
         }, 1.5 * 1000)
       })
       // console.log(this.list.size())
+    },
+    viewDetail(job) {
+      this.temp = Object.assign({}, job) // copy obj
+      // this.temp.timestamp = new Date(this.temp.timestamp)
+      this.dialogStatus = 'update'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
     }
   }
 }

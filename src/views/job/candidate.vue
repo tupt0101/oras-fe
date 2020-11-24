@@ -7,13 +7,14 @@
           <div style="padding: 10px 0px">
             <strong>{{ job.accountByCreatorId.companyById.name }}</strong>
             <!-- <strong>Company name</strong> -->
-            <span style="margin-left: 30px">Apply to: {{ job.applyTo | parseTime('{y}-{m}-{d}') }}</span>
+            <span style="margin-left: 30px">Posted: {{ job.createDate | parseTime('{y}-{m}-{d}') }}</span>
+            <span style="margin-left: 30px">Deadline: {{ job.applyTo | parseTime('{y}-{m}-{d}') }}</span>
           </div>
         </div>
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="filter-container" style="float: right">
-          <el-input v-model="listQuery.title" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+          <!-- <el-input v-model="listQuery.title" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
           <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
             <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
           </el-select>
@@ -25,7 +26,7 @@
           </el-select>
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
             Search
-          </el-button>
+          </el-button> -->
 
           <!-- <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
             Export
@@ -37,6 +38,9 @@
             reviewer
           </el-checkbox> -->
 
+          <el-button v-waves class="filter-item" type="primary" @click="refresh">
+            Refresh
+          </el-button>
           <el-button v-waves class="filter-item" type="success" @click="rankCV">
             Rank CV
           </el-button>
@@ -45,7 +49,7 @@
       </el-col>
     </el-row>
 
-    <el-table v-if="!list">
+    <el-table v-if="!list" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
       <el-table-column align="center" label="ID" width="80" />
       <el-table-column label="Full name" min-width="150px" />
       <el-table-column label="Email" align="center" width="240px" />
@@ -153,12 +157,7 @@ export default {
       fetchJob(id).then(response => {
         // auto fill data when edit
         this.job = response.data
-        debugger
-        // // set tagsview title
-        // this.setTagsViewTitle()
-
-        // // set page title
-        // this.setPageTitle()
+        // debugger
       }).catch(err => {
         console.log(err)
       })
@@ -167,6 +166,20 @@ export default {
       window.open(link, '_blank')
     },
     getApplications() {
+      this.listLoading = true
+      fetchApplicationFromRP(this.jobId).then(response => {
+        this.list = response
+        // debugger
+        fetchCandidateList(this.jobId).then(response => {
+          this.list = response.data
+          // debugger
+          this.total = response.data
+          this.listLoading = false
+        })
+        // this.listLoading = false
+      })
+    },
+    refresh() {
       this.listLoading = true
       fetchApplicationFromRP(this.jobId).then(response => {
         // this.list = response
