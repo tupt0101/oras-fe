@@ -108,8 +108,7 @@ import Sticky from '@/components/Sticky' // 粘性header组件
 import { validURL } from '@/utils/validate'
 import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
 import { getAccountId } from '../../../utils/auth'
-import { createJob, fetchCategory, publishJob } from '../../../api/job'
-import { fetchJob } from '../../../api/job'
+import { createJob, fetchCategory, publishJob, fetchJob } from '@/api/job'
 
 const defaultForm = {
   method: '',
