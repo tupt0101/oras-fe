@@ -55,9 +55,9 @@
 </template>
 
 <script>
-import { fetchJobList } from '@/api/job'
+// import { fetchJobList } from '@/api/job'
 import Pagination from '@/components/Pagination'
-import { fetchSubcriptionList, fetchSubscriptionList } from '../../api/article' // Secondary package based on el-pagination
+import { fetchSubscriptionList } from '../../api/article' // Secondary package based on el-pagination
 
 export default {
   name: 'PackageList',

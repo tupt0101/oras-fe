@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { fetchJobList } from '@/api/job'
+// import { fetchJobList } from '@/api/job'
 import Pagination from '@/components/Pagination'
 import { fetchCompanyPackage } from '../../api/article' // Secondary package based on el-pagination
 
