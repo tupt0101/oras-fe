@@ -60,7 +60,6 @@ export function createJob(data, method) {
 }
 
 export function publishJob(id) {
-  debugger
   return service.request({
     url: '/v1/job-management/job/' + id + '/publish',
     method: 'put',

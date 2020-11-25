@@ -274,7 +274,6 @@ export default {
     createJob(data) {
       return new Promise((resolve, reject) => {
         createJob(data).then(response => {
-          debugger
           this.$message({
             message: 'Saved successfully',
             type: 'success',
