@@ -232,6 +232,8 @@ export default {
       fetchJob(id).then(response => {
         // auto fill data when edit
         this.postForm.data = response.data
+        delete this.postForm.data.accountByCreatorId
+        delete this.postForm.data.talentPoolByTalentPoolId
 
         // set tagsview title
         this.setTagsViewTitle()
