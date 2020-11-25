@@ -14,13 +14,6 @@ const service = axios.create({
   timeout: 30000 // request timeout
 })
 
-const headers = {
-  'Authorization': 'Bearer ' + getToken()
-  // 'Content-Type': 'application/json'
-  // 'Content-Type': 'multipart/form-data',
-  // 'Access-Control-Allow-Origin': '*'
-}
-
 export function login(data) {
   return service.request({
     url: '/login?username=' + data.username + '&password=' + data.password,
