@@ -300,7 +300,7 @@ export default {
         if (valid) {
           this.loading = true
           this.postForm.data.status = 'Draft'
-          createJob(this.postForm.data).then(response => {
+          createJob(this.postForm.data, this.method).then(response => {
             this.$notify({
               title: 'Success',
               message: 'Save the post successfully',
