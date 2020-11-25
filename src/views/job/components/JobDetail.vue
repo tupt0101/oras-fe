@@ -266,7 +266,6 @@ export default {
           this.postForm.data.status = 'Published'
           this.postForm.data.applyFrom = new Date().toISOString()
           createJob(this.postForm.data, this.method).then(response => {
-            debugger
             this.postForm.id = response.data.id
             publishJob(this.postForm.id).then(response => {
               debugger
@@ -327,7 +326,6 @@ export default {
           const lowerCase = item.name.toLowerCase()
           return !(query && lowerCase.indexOf(query.toLowerCase()) < 0)
         })
-        debugger
         this.categoryListOptions = filterList.map(v => v.name)
       })
     },

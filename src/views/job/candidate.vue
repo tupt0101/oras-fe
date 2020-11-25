@@ -107,7 +107,7 @@
       </el-table-column>
       <el-table-column align="center" label="Matching Rank" width="180px">
         <template slot-scope="{row}">
-          <span>{{ row.score }}</span>
+          <span>{{ row.matchingRate }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -212,7 +212,7 @@ export default {
   right: 15px;
   top: 10px;
 }
-.title-containe {
+.title-container {
   padding-bottom: 10px;
 }
 </style>
