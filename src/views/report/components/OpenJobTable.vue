@@ -48,7 +48,7 @@
       </el-table-column>
       <el-table-column label="Deadline" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.applyTo | parseTime('{y}-{m}-{d}') }}</span>
+          <span>{{ row.applyTo }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Salary" width="240px" align="center">
@@ -216,7 +216,7 @@ export default {
       this.listLoading = true
       fetchOpenJobList(this.listQuery).then(response => {
         this.list = response.data
-        this.total = response.data.total
+        this.total = response.data.length
 
         // Just to simulate the time of the request
         setTimeout(() => {

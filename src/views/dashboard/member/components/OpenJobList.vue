@@ -7,7 +7,7 @@
             <figure class="image is-64x64">
               <div class="candidate">
                 <p style="text-align: center">
-                  <strong class="numOfCand">5</strong><br>
+                  <strong class="numOfCand">{{ post.totalApplication }}</strong><br>
                   <span>Candidates</span>
                 </p>
               </div>

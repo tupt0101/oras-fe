@@ -9,7 +9,7 @@
               <!-- <img src="https://semantic-ui.com/images/avatar2/large/matthew.png" alt="Image"> -->
               <div class="candidate">
                 <p style="text-align: center">
-                  <strong class="numOfCand">5</strong><br>
+                  <strong class="numOfCand">{{ post.totalApplication }}</strong><br>
                   <span>Candidates</span>
                 </p>
               </div>
@@ -68,7 +68,6 @@ export default {
     getList() {
     //   this.$vs.loading()
       this.listLoading = true
-      // debugger
       fetchOpenJobList(this.listQuery).then(response => {
         this.list = response.data
         // this.total = response.data.total

@@ -270,7 +270,6 @@ export default {
           createJob(this.postForm.data, this.method).then(response => {
             this.postForm.id = response.data.id
             publishJob(this.postForm.id).then(response => {
-              debugger
               this.$notify({
                 title: 'Success',
                 message: 'Published the post successfully',

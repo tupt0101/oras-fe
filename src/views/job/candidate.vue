@@ -157,7 +157,6 @@ export default {
       fetchJob(id).then(response => {
         // auto fill data when edit
         this.job = response.data
-        // debugger
       }).catch(err => {
         console.log(err)
       })
@@ -172,7 +171,6 @@ export default {
         // debugger
         fetchCandidateList(this.jobId).then(response => {
           this.list = response.data
-          // debugger
           this.total = response.data
           this.listLoading = false
         })
