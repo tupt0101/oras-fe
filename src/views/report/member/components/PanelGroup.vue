@@ -1,48 +1,48 @@
 <template>
   <el-row :gutter="40" class="panel-group">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('purchases')">
+      <div class="card-panel" @click="handleSetLineChartData('totalJobs')">
         <div class="card-panel-icon-wrapper icon-money">
-          <svg-icon icon-class="skill" class-name="card-panel-icon" />
+          <svg-icon icon-class="job-search" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Open Jobs
+            Total Jobs
           </div>
           <count-to :start-val="0" :end-val="5" :duration="2000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
+      <div class="card-panel" @click="handleSetLineChartData('openJobs')">
         <div class="card-panel-icon-wrapper icon-people">
-          <svg-icon icon-class="peoples" class-name="card-panel-icon" />
+          <svg-icon icon-class="hiring" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Candidates
+            Open Jobs
           </div>
           <count-to :start-val="0" :end-val="25" :duration="2400" class="card-panel-num" />
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('messages')">
+      <div class="card-panel" @click="handleSetLineChartData('applications')">
         <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="message" class-name="card-panel-icon" />
+          <svg-icon icon-class="cv" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Interview today
+            Total Applications
           </div>
           <count-to :start-val="0" :end-val="5" :duration="2800" class="card-panel-num" />
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('shoppings')">
+      <div class="card-panel" @click="handleSetLineChartData('hired')">
         <div class="card-panel-icon-wrapper icon-shopping">
-          <svg-icon icon-class="shopping" class-name="card-panel-icon" />
+          <svg-icon icon-class="businessman" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
@@ -57,14 +57,28 @@
 
 <script>
 import CountTo from 'vue-count-to'
+import { fetchPanelData } from '@/api/report'
 
 export default {
   components: {
     CountTo
   },
+  data() {
+    return {
+      panelData: null
+    }
+  },
+  created() {
+    this.getPanelData()
+  },
   methods: {
     handleSetLineChartData(type) {
       this.$emit('handleSetLineChartData', type)
+    },
+    getPanelData() {
+      fetchPanelData().then(response => {
+        this.panelData = response.data
+      })
     }
   }
 }

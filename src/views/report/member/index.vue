@@ -7,6 +7,10 @@
       <line-chart :chart-data="lineChartData" />
     </el-row>
 
+    <el-row style="background:#fff;padding:16px 16px; margin-bottom:32px;">
+      <time-to-hire />
+    </el-row>
+
     <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
@@ -34,24 +38,25 @@ import LineChart from './components/LineChart'
 import RaddarChart from './components/RaddarChart'
 import PieChart from './components/PieChart'
 import BarChart from './components/BarChart'
+import TimeToHire from './components/TimeToHire'
 // import TransactionTable from './components/TransactionTable'
 
 const lineChartData = {
-  newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145]
+  totalJobs: {
+    expectedData: [100, 120, 161, 134, 105, 160, 165, 133, 101, 99, 122, 150],
+    actualData: [120, 82, 91, 154, 162, 140, 145, 161, 134, 105, 160, 165]
   },
-  messages: {
-    expectedData: [200, 192, 120, 144, 160, 130, 140],
-    actualData: [180, 160, 151, 106, 145, 150, 130]
+  openJobs: {
+    expectedData: [200, 192, 120, 144, 160, 130, 140, 160, 151, 106, 145, 150],
+    actualData: [180, 160, 151, 106, 145, 150, 130, 144, 160, 130, 140, 160]
   },
-  purchases: {
-    expectedData: [80, 100, 121, 104, 105, 90, 100],
-    actualData: [120, 90, 100, 138, 142, 130, 130]
+  applications: {
+    expectedData: [80, 100, 121, 104, 105, 90, 100, 90, 100, 138, 142, 130],
+    actualData: [120, 90, 100, 138, 142, 130, 130, 100, 121, 104, 105, 90]
   },
-  shoppings: {
-    expectedData: [130, 140, 141, 142, 145, 150, 160],
-    actualData: [120, 82, 91, 154, 162, 140, 130]
+  hired: {
+    expectedData: [130, 140, 141, 142, 145, 150, 160, 91, 154, 162, 140, 130],
+    actualData: [120, 82, 91, 154, 162, 140, 130, 130, 140, 141, 142, 145]
   }
 }
 
@@ -62,12 +67,13 @@ export default {
     LineChart,
     RaddarChart,
     PieChart,
-    BarChart
+    BarChart,
+    TimeToHire
     // TransactionTable,
   },
   data() {
     return {
-      lineChartData: lineChartData.newVisitis
+      lineChartData: lineChartData.totalJobs
     }
   },
   methods: {

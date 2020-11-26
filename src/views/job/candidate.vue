@@ -3,14 +3,14 @@
     <el-row>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="title-container">
-          <strong style="font-size: 36px">{{ job.title }}</strong><br>
+          <strong style="font-size: 36px">{{ job && job.title }}</strong><br>
           <div style="padding: 10px 0px">
-            <strong>{{ job.accountByCreatorId.companyById.name }}</strong>
+            <strong>{{ job && job.accountByCreatorId.companyById.name }}</strong>
             <!-- <strong>Company name</strong> -->
             <!-- <span style="margin-left: 30px">Posted: {{ job.createDate | parseTime('{y}-{m}-{d}') }}</span>
             <span style="margin-left: 30px">Deadline: {{ job.applyTo | parseTime('{y}-{m}-{d}') }}</span> -->
-            <span style="margin-left: 30px">Posted: {{ job.createDate }}</span>
-            <span style="margin-left: 30px">Deadline: {{ job.applyTo }}</span>
+            <span style="margin-left: 30px">Posted: {{ job && job.createDate }}</span>
+            <span style="margin-left: 30px">Deadline: {{ job && job.applyTo }}</span>
           </div>
         </div>
       </el-col>
@@ -40,10 +40,10 @@
             reviewer
           </el-checkbox> -->
 
-          <el-button v-waves class="filter-item" type="primary" @click="refresh">
+          <el-button class="filter-item" type="primary" @click="refresh">
             Refresh
           </el-button>
-          <el-button v-waves class="filter-item" type="success" @click="rankCV">
+          <el-button class="filter-item" type="success" @click="rankCV">
             Rank CV
           </el-button>
 
@@ -165,9 +165,9 @@ export default {
     },
     getApplications() {
       this.listLoading = true
+      // debugger
       fetchApplicationFromRP(this.jobId).then(response => {
         // this.list = response
-        // debugger
         fetchCandidateList(this.jobId).then(response => {
           this.list = response.data
           // this.total = response.data
@@ -175,9 +175,9 @@ export default {
         })
         // this.listLoading = false
       })
-      setTimeout(() => {
-        this.listLoading = false
-      }, 3.0 * 1000)
+      // setTimeout(() => {
+      //   this.listLoading = false
+      // }, 3.0 * 1000)
     },
     refresh() {
       this.listLoading = true
@@ -196,6 +196,7 @@ export default {
       this.listLoading = true
       rankCV(this.jobId).then(response => {
         this.list = response.data
+        // this.list.sort(function(a, b) { return (b - a) })
         this.listLoading = false
       })
     },
