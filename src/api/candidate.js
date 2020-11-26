@@ -13,7 +13,8 @@ const service = axios.create({
 })
 
 const headers = {
-  'Authorization': 'Bearer ' + getToken()
+  'Authorization': 'Bearer ' + getToken(),
+  'Content-Type': 'application/json'
 }
 
 export function fetchCandidateList(id) {
@@ -35,8 +36,9 @@ export function fetchApplicationFromRP(id) {
 
 export function rankCV(id) {
   return service.request({
-    url: '/v1/job-application-management/job-application-rank-cv/' + id,
-    method: 'put',
-    headers: headers
+    url: '/v1/job-application-management/job-application-rank-cv',
+    method: 'post',
+    headers: headers,
+    data: id
   })
 }
