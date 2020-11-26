@@ -6,7 +6,7 @@ import { getToken } from '@/utils/auth'
 const service = axios.create({
   // url = base url + request url
   // baseURL: process.env.VUE_APP_BASE_API,
-  // baseURL: 'http://localhost:9527/',
+  // baseURL: 'http://localhost:8080/',
   baseURL: 'https://oras-api.herokuapp.com/',
   withCredentials: true, // send cookies when cross-domain requests
   // credentials: 'same-origin',
@@ -60,7 +60,6 @@ export function createJob(data, method) {
 }
 
 export function publishJob(id) {
-  debugger
   return service.request({
     url: '/v1/job-management/job/' + id + '/publish',
     method: 'put',

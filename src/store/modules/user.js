@@ -1,5 +1,5 @@
 import { login, logout, getInfo, signup } from '@/api/user'
-import { getToken, setToken, removeToken, getUserId, setUserId, setAccountId } from '@/utils/auth'
+import { getToken, setToken, removeToken, getUserId, setUserId, setAccountId, removeUserId } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
 const state = {
@@ -93,6 +93,7 @@ const actions = {
         commit('SET_TOKEN', '')
         commit('SET_ROLES', [])
         removeToken()
+        removeUserId()
         resetRouter()
 
         // reset visited views and cached views

@@ -232,6 +232,8 @@ export default {
       fetchJob(id).then(response => {
         // auto fill data when edit
         this.postForm.data = response.data
+        delete this.postForm.data.accountByCreatorId
+        delete this.postForm.data.talentPoolByTalentPoolId
 
         // set tagsview title
         this.setTagsViewTitle()
@@ -266,10 +268,8 @@ export default {
           this.postForm.data.status = 'Published'
           this.postForm.data.applyFrom = new Date().toISOString()
           createJob(this.postForm.data, this.method).then(response => {
-            debugger
             this.postForm.id = response.data.id
             publishJob(this.postForm.id).then(response => {
-              debugger
               this.$notify({
                 title: 'Success',
                 message: 'Published the post successfully',
@@ -301,7 +301,7 @@ export default {
         if (valid) {
           this.loading = true
           this.postForm.data.status = 'Draft'
-          createJob(this.postForm.data).then(response => {
+          createJob(this.postForm.data, this.method).then(response => {
             this.$notify({
               title: 'Success',
               message: 'Save the post successfully',
