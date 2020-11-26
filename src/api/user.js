@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 import axios from 'axios'
-import { getToken } from '@/utils/auth'
+// import { getToken } from '@/utils/auth'
 
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 // create an axios instance
@@ -41,7 +41,6 @@ export function logout() {
 export function signup(data) {
   return service.request({
     url: '/signup',
-    method: 'post',
-    headers: headers
+    method: 'post'
   })
 }

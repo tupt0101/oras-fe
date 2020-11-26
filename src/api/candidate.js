@@ -27,6 +27,7 @@ export function fetchCandidateList(id) {
 }
 
 export function fetchApplicationFromRP(id) {
+  // debugger
   return service.request({
     url: '/v1/job-application-management/job-applications-openjob/' + id,
     method: 'get',

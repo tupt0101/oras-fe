@@ -49,7 +49,7 @@
                 <el-col :span="6">
                   <el-form-item label-width="80px" label="Category:" class="postInfo-container-item">
                     <el-select v-model="postForm.data.categoryId" :remote-method="getCategoryList" filterable default-first-option remote placeholder="">
-                      <el-option v-for="(item,index) in categoryListOptions" :key="item+index" :label="item.name" :value="item.id" />
+                      <el-option v-for="(item,index) in categoryListOptions" :key="item+index" :label="item" :value="item" />
                     </el-select>
                   </el-form-item>
                 </el-col>

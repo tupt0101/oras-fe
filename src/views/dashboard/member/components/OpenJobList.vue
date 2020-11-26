@@ -23,7 +23,7 @@
               <span>Salary: </span><span>{{ post.currency }} </span>
               <strong>{{ post.salaryFrom }} - {{ post.salaryTo }}</strong><br>
               <span>Vacancies: </span>{{ post.vacancies }}
-              <span style="margin-left: 20px">Posted: </span>{{ post.createDate | moment("from", "now") }}
+              <span style="margin-left: 20px">Posted: </span>{{ post.createDate }}
               <span style="margin-left: 20px">Deadline: </span>{{ post.applyTo }}
             </div>
             <div class="level-left">
@@ -111,11 +111,6 @@ export default {
         status: 'published'
       },
       dialogFormVisible: false,
-      dialogStatus: '',
-      textMap: {
-        update: 'Edit',
-        create: 'Create'
-      },
       dialogPvVisible: false,
       pvData: []
     }
@@ -147,11 +142,7 @@ export default {
     viewDetail(job) {
       this.temp = Object.assign({}, job) // copy obj
       // this.temp.timestamp = new Date(this.temp.timestamp)
-      this.dialogStatus = 'update'
       this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
     }
   }
 }
