@@ -7,8 +7,10 @@
           <div style="padding: 10px 0px">
             <strong>{{ job.accountByCreatorId.companyById.name }}</strong>
             <!-- <strong>Company name</strong> -->
-            <span style="margin-left: 30px">Posted: {{ job.createDate | parseTime('{y}-{m}-{d}') }}</span>
-            <span style="margin-left: 30px">Deadline: {{ job.applyTo | parseTime('{y}-{m}-{d}') }}</span>
+            <!-- <span style="margin-left: 30px">Posted: {{ job.createDate | parseTime('{y}-{m}-{d}') }}</span>
+            <span style="margin-left: 30px">Deadline: {{ job.applyTo | parseTime('{y}-{m}-{d}') }}</span> -->
+            <span style="margin-left: 30px">Posted: {{ job.createDate }}</span>
+            <span style="margin-left: 30px">Deadline: {{ job.applyTo }}</span>
           </div>
         </div>
       </el-col>
@@ -50,7 +52,7 @@
     </el-row>
 
     <el-table v-if="!list" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="ID" width="80" />
+      <el-table-column align="center" label="No." width="80" />
       <el-table-column label="Full name" min-width="150px" />
       <el-table-column label="Email" align="center" width="240px" />
       <el-table-column label="Phone number" align="center" width="160px" />
@@ -61,11 +63,7 @@
       <el-table-column align="center" label="Matching Rank" width="180px" />
     </el-table>
     <el-table v-if="list" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="ID" width="80">
-        <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
-        </template>
-      </el-table-column>
+      <el-table-column type="index" align="center" label="No." width="80" />
       <el-table-column label="Full name" min-width="150px">
         <template slot-scope="{row}">
           <span style="white-space: nowrap">{{ row.candidateByCandidateId.fullname }}</span>
@@ -83,7 +81,8 @@
       </el-table-column>
       <el-table-column label="Apply date" width="200px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.applyDate | parseTime('{y}-{m}-{d}') }}</span>
+          <!-- <span>{{ row.applyDate | parseTime('{y}-{m}-{d}') }}</span> -->
+          <span>{{ row.applyDate }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Source" width="180px" align="center">
@@ -112,18 +111,18 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <!-- <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" /> -->
   </div>
 </template>
 
 <script>
 import { fetchCandidateList, fetchApplicationFromRP, rankCV } from '@/api/candidate'
 import { fetchJob } from '@/api/job'
-import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+// import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
   name: 'CandidateList',
-  components: { Pagination },
+  // components: { Pagination },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -138,7 +137,7 @@ export default {
     return {
       job: null,
       list: null,
-      total: 0,
+      // total: 0,
       listLoading: true,
       listQuery: {
         page: 1,
@@ -168,16 +167,18 @@ export default {
     getApplications() {
       this.listLoading = true
       fetchApplicationFromRP(this.jobId).then(response => {
-        this.list = response
+        // this.list = response
         // debugger
         fetchCandidateList(this.jobId).then(response => {
           this.list = response.data
-          // debugger
-          this.total = response.data
+          // this.total = response.data
           this.listLoading = false
         })
         // this.listLoading = false
       })
+      setTimeout(() => {
+        this.listLoading = false
+      }, 3.0 * 1000)
     },
     refresh() {
       this.listLoading = true
@@ -186,7 +187,7 @@ export default {
         fetchCandidateList(this.jobId).then(response => {
           this.list = response.data
           // debugger
-          this.total = response.data
+          // this.total = response.data
           this.listLoading = false
         })
         // this.listLoading = false
@@ -198,6 +199,10 @@ export default {
         this.list = response.data
         this.listLoading = false
       })
+    },
+    indexMethod(index) {
+      alert(index)
+      return index
     }
   }
 }
