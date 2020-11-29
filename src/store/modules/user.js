@@ -139,9 +139,33 @@ const actions = {
 
   // user sign up
   signup({ commit }, userInfo) {
-    const { fullname, email, password, phoneNo, compName, location, compMail, compPhoneNo, taxCode } = userInfo
+    const { fullname, email, password, phoneNo, compName, location, compEmail, compPhone, taxCode } = userInfo
+    debugger
+    const data = {
+      'accountEntity': {
+        'active': false,
+        'companyId': 0,
+        'email': email,
+        'fullname': fullname,
+        'id': 0,
+        'password': password,
+        'phoneNo': phoneNo,
+        'role': 'user'
+      },
+      'companyEntity': {
+        'avatar': 'https://paailajob.com/uploads/employer/profileImg/default.jpg',
+        'description': 'New company',
+        'email': compEmail,
+        'id': 0,
+        'location': location,
+        'name': compName,
+        'phoneNo': compPhone,
+        'taxCode': taxCode,
+        'verified': false
+      }
+    }
     return new Promise((resolve, reject) => {
-      signup({ fullname: fullname, email: email, password: password, phoneNo: phoneNo, compName: compName, location: location, compMail: compMail, compPhoneNo: compPhoneNo, taxCode: taxCode }).then(response => {
+      signup(data).then(response => {
         // const { message } = response
         console.log(response)
         resolve()

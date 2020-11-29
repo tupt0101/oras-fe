@@ -1,6 +1,6 @@
 <template>
   <div class="">
-
+    <h3>Time To Hire</h3>
     <el-table v-if="!list" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
       <el-table-column align="center" label="No." width="80" />
       <el-table-column label="Job Title" width="300px" />

@@ -7,7 +7,7 @@
       <line-chart :chart-data="lineChartData" />
     </el-row>
 
-    <el-row style="background:#fff;padding:16px 16px; margin-bottom:32px;">
+    <el-row style="background:#fff;padding:0px 16px 16px 16px; margin-bottom:32px;">
       <time-to-hire />
     </el-row>
 
