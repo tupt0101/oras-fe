@@ -336,14 +336,15 @@ export const asyncRoutes = [
   },
 
   {
-    path: '/checkout/:id(\\d+)',
+    path: '/checkout',
     component: Layout,
+    redirect: '/checkout/index',
     meta: {
       roles: ['user']
     },
     children: [
       {
-        path: 'index',
+        path: 'index/:id(\\d+)',
         component: () => import('@/views/checkout/index'),
         name: 'Checkout',
         meta: { title: 'Checkout', icon: 'shopping', noCache: true }

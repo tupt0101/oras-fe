@@ -53,7 +53,8 @@
             </div>
 
             <div class="text-center">
-              <router-link :to="'/checkout/' + pack.id">
+              <!-- <router-link :to="'/checkout'"> -->
+              <router-link :to="'/checkout/index/' + pack.id">
                 <el-button type="primary" style="font-weight: 700; font-size: 16px; width: 150px;">Buy Now</el-button>
               </router-link>
             </div>
