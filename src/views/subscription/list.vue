@@ -19,7 +19,7 @@
       </el-table-column>
       <el-table-column label="Number of posts" align="center" width="135px">
         <template slot-scope="{row}">
-          <span>{{ row.numOfPosts }}</span>
+          <span>{{ row.numOfPost }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Duration" width="150px" align="center">
@@ -46,6 +46,11 @@
               <!-- Edit -->
             </el-button>
           </router-link>
+          <router-link :to="'/subscription/delete/'+scope.row.id">
+            <el-button type="danger" size="small" icon="el-icon-delete">
+              <!-- Delete -->
+            </el-button>
+          </router-link>
         </template>
       </el-table-column>
     </el-table>
@@ -57,7 +62,7 @@
 <script>
 // import { fetchJobList } from '@/api/job'
 import Pagination from '@/components/Pagination'
-import { fetchSubscriptionList } from '../../api/article' // Secondary package based on el-pagination
+import { fetchPackageList } from '@/api/package' // Secondary package based on el-pagination
 
 export default {
   name: 'PackageList',
@@ -89,9 +94,9 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchSubscriptionList().then(response => {
+      fetchPackageList().then(response => {
         this.list = response.data
-        this.total = response.data
+        // this.total = response.data
         this.listLoading = false
       })
     }

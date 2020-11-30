@@ -32,3 +32,11 @@ export function fetchPackage(id) {
     headers: headers
   })
 }
+
+export function fetchCompanyPackage() {
+  return service.request({
+    url: '/v1/company-package-management/company-packages',
+    method: 'get',
+    headers: headers
+  })
+}

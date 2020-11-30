@@ -71,7 +71,7 @@
 <script>
 // import { fetchJobList } from '@/api/job'
 import Pagination from '@/components/Pagination'
-import { fetchCompanyPackage } from '../../api/article' // Secondary package based on el-pagination
+import { fetchCompanyPackage } from '@/api/package' // Secondary package based on el-pagination
 
 export default {
   name: 'PackageList',
@@ -105,7 +105,7 @@ export default {
       this.listLoading = true
       fetchCompanyPackage().then(response => {
         this.list = response.data
-        this.total = response.data
+        // this.total = response.data
         this.listLoading = false
       })
     }

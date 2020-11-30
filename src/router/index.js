@@ -301,6 +301,12 @@ export const asyncRoutes = [
         component: () => import('@/views/account/list'),
         name: 'JobList',
         meta: { title: 'Account List', icon: 'list' }
+      },
+      {
+        path: 'company',
+        component: () => import('@/views/account/company_list'),
+        name: 'CompanyList',
+        meta: { title: 'Company List', icon: 'peoples' }
       }
     ]
   },
@@ -354,14 +360,14 @@ export const asyncRoutes = [
   },
 
   {
-    path: '/setting',
+    path: '/profile',
     component: Layout,
     children: [
       {
         path: 'index',
-        component: () => import('@/views/icons/index'),
-        name: 'Setting',
-        meta: { title: 'Setting', icon: 'component', noCache: true }
+        component: () => import('@/views/profile/index'),
+        name: 'Profile',
+        meta: { title: 'Profile', icon: 'user', noCache: true }
       }
     ]
   },

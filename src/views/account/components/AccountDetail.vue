@@ -98,6 +98,15 @@
                   </el-form-item>
                 </el-col>
               </el-row>
+
+              <el-row>
+                <el-col :span="24">
+                  <el-form-item label-width="130px" label="Description:">
+                    <el-input v-model="postForm.data.description" :rows="1" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" />
+                    <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span>
+                  </el-form-item>
+                </el-col>
+              </el-row>
             </div>
           </el-col>
         </el-row>
@@ -142,7 +151,9 @@ const defaultForm = {
     compEmail: '',
     compPhone: '',
     taxCode: '',
-    location: ''
+    location: '',
+    avatar: 'https://paailajob.com/uploads/employer/profileImg/default.jpg',
+    description: ''
   }
 }
 

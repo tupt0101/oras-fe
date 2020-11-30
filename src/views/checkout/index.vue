@@ -96,7 +96,7 @@
               </div>
               <!-- <router-link :to="'/v1/paypal/pay/' + (package_ && package_.price)">
               </router-link> -->
-              <el-button type="danger" class="proceed-btn" @click="proceedPaypal('https://oras-api.herokuapp.com/v1/paypal/pay/' + (package_ && package_.price))">Complete Payment</el-button>
+              <el-button type="danger" class="proceed-btn" @click="proceedPaypal('https://oras-api.herokuapp.com/v1/paypal/pay/' + (package_ && package_.price) + '?accountId=' + accountId + '&packageId=' + (package_ && package_.id))">Complete Payment</el-button>
             </div>
           </el-card>
         </el-col>
@@ -126,6 +126,9 @@ export default {
     }
   },
   computed: {
+    accountId() {
+      return this.$store.state.user.accId
+    }
   },
   created() {
     this.packageId = this.$route.params && this.$route.params.id

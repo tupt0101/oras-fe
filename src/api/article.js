@@ -19,22 +19,6 @@ export function fetchList() {
   })
 }
 
-export function fetchSubscriptionList() {
-  return service.request({
-    url: '/v1/package-management/packages',
-    method: 'get',
-    headers: headers
-  })
-}
-
-export function fetchCompanyPackage() {
-  return service.request({
-    url: '/v1/company-package-management/company-packages',
-    method: 'get',
-    headers: headers
-  })
-}
-
 export function fetchArticle(id) {
   return request({
     url: '/vue-element-admin/article/detail',
