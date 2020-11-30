@@ -2,7 +2,7 @@ import request from '@/utils/request'
 import axios from 'axios'
 // create an axios instance
 const service = axios.create({
-  // baseURL: process.env.VUE_APP_BASE_API,
+  baseURL: process.env.VUE_APP_BASE_API,
   withCredentials: true, // send cookies when cross-domain requests
   credentials: 'same-origin',
   timeout: 30000 // request timeout
@@ -13,23 +13,7 @@ const headers = {
 }
 export function fetchList() {
   return service.request({
-    url: '/v1/account-management/accounts',
-    method: 'get',
-    headers: headers
-  })
-}
-
-export function fetchSubscriptionList() {
-  return service.request({
-    url: '/v1/package-management/packages',
-    method: 'get',
-    headers: headers
-  })
-}
-
-export function fetchCompanyPackage() {
-  return service.request({
-    url: '/v1/company-package-management/company-packages',
+    url: '/vue-element-admin/article',
     method: 'get',
     headers: headers
   })

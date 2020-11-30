@@ -16,33 +16,39 @@
       <el-table-column min-width="300px" label="Full name" align="left">
         <template slot-scope="{row}">
           <router-link :to="'/account/edit/'+row.id" class="link-type">
-            <span>{{ row.fullname }}</span>
+            <span>{{ row.name }}</span>
           </router-link>
         </template>
       </el-table-column>
 
-      <el-table-column width="300px" align="left" label="Email">
+      <el-table-column width="300px" align="left" label="Location">
+        <template slot-scope="{row}">
+          <span>{{ row.location }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column width="240px" align="left" label="Email">
         <template slot-scope="{row}">
           <span>{{ row.email }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="200px" align="center" label="Phone Number">
+      <el-table-column width="160px" align="center" label="Phone Number">
         <template slot-scope="{row}">
           <span>{{ row.phoneNo }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="120px" align="center" label="Role">
+      <el-table-column width="200px" align="center" label="Tax Code">
         <template slot-scope="{row}">
-          <span>{{ row.role }}</span>
+          <span>{{ row.taxCode }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column class-name="status-col" label="Status" width="150">
+      <el-table-column class-name="status-col" label="Status" width="120">
         <template slot-scope="{row}">
-          <el-tag :type="row.active | statusFilter">
-            {{ row.active ? 'active' : 'deactive' }}
+          <el-tag :type="row.verified | statusFilter">
+            {{ row.verified ? 'verified' : 'unverified' }}
           </el-tag>
         </template>
       </el-table-column>
@@ -54,6 +60,11 @@
               <!-- Edit -->
             </el-button>
           </router-link>
+          <!-- <router-link :to="'/account/edit/'+scope.row.id">
+            <el-button v-if="scope.row.verified===false" type="success" size="small" icon="el-icon-check">
+              Edit
+            </el-button>
+          </router-link> -->
         </template>
       </el-table-column>
     </el-table>
@@ -63,7 +74,7 @@
 </template>
 
 <script>
-import { fetchAccountList } from '@/api/account'
+import { fetchCompanyList } from '@/api/account'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
@@ -73,7 +84,8 @@ export default {
     statusFilter(status) {
       const statusMap = {
         true: 'success',
-        false: 'danger'
+        false: 'danger',
+        null: 'danger'
       }
       return statusMap[status]
     }
@@ -95,7 +107,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchAccountList().then(response => {
+      fetchCompanyList().then(response => {
         this.list = response.data
         // this.total = response.data.total
         this.listLoading = false

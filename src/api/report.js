@@ -1,4 +1,3 @@
-// import request from '@/utils/request'
 import axios from 'axios'
 import { getToken } from '@/utils/auth'
 
@@ -17,18 +16,19 @@ const headers = {
   'Authorization': 'Bearer ' + getToken()
 }
 
-export function fetchAccountList() {
+export function fetchPanelData() {
   return service.request({
-    url: '/v1/account-management/accounts',
+    url: '',
     method: 'get',
     headers: headers
   })
 }
 
-export function fetchCompanyList() {
+export function fetchHiredList() {
   return service.request({
-    url: '/v1/company-management/companies',
+    url: '',
     method: 'get',
     headers: headers
   })
 }
+

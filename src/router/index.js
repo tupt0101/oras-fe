@@ -88,31 +88,6 @@ export const constantRoutes = [
       }
     ]
   },
-  // {
-  //   path: '/documentation',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/documentation/index'),
-  //       name: 'Documentation',
-  //       meta: { title: 'Documentation', icon: 'documentation', affix: true }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/guide',
-  //   component: Layout,
-  //   redirect: '/guide/index',
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/guide/index'),
-  //       name: 'Guide',
-  //       meta: { title: 'Guide', icon: 'guide', noCache: true }
-  //     }
-  //   ]
-  // },
   {
     path: '/profile',
     component: Layout,
@@ -326,6 +301,12 @@ export const asyncRoutes = [
         component: () => import('@/views/account/list'),
         name: 'JobList',
         meta: { title: 'Account List', icon: 'list' }
+      },
+      {
+        path: 'company',
+        component: () => import('@/views/account/company_list'),
+        name: 'CompanyList',
+        meta: { title: 'Company List', icon: 'peoples' }
       }
     ]
   },
@@ -344,31 +325,49 @@ export const asyncRoutes = [
   },
 
   {
-    path: '/billing',
+    path: '/purchase',
     component: Layout,
-    redirect: '/billing/index',
+    redirect: '/purchase/index',
     meta: {
       roles: ['user']
     },
     children: [
       {
         path: 'index',
-        component: () => import('@/views/billing/index'),
-        name: 'Billing',
-        meta: { title: 'Billing', icon: 'shopping', noCache: true }
+        component: () => import('@/views/purchase/index'),
+        name: 'Purchase',
+        meta: { title: 'Purchase', icon: 'shopping', noCache: true }
       }
     ]
   },
 
   {
-    path: '/setting',
+    path: '/checkout',
+    component: Layout,
+    redirect: '/checkout/index',
+    meta: {
+      roles: ['user']
+    },
+    children: [
+      {
+        path: 'index/:id(\\d+)',
+        component: () => import('@/views/checkout/index'),
+        name: 'Checkout',
+        meta: { title: 'Checkout', icon: 'shopping', noCache: true }
+      }
+    ],
+    hidden: true
+  },
+
+  {
+    path: '/profile',
     component: Layout,
     children: [
       {
         path: 'index',
-        component: () => import('@/views/icons/index'),
-        name: 'Setting',
-        meta: { title: 'Setting', icon: 'component', noCache: true }
+        component: () => import('@/views/profile/index'),
+        name: 'Profile',
+        meta: { title: 'Profile', icon: 'user', noCache: true }
       }
     ]
   },

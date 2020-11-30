@@ -69,7 +69,7 @@
             <svg-icon icon-class="password" />
           </span>
           <el-input
-            :key="confirmPwdType"
+            :key="passwordType"
             ref="confirmPwd"
             v-model="registerForm.confirmPwd"
             type="password"
@@ -406,8 +406,8 @@ $black: #000000;
       caret-color: $black;
 
       &:-webkit-autofill {
-        box-shadow: 0 0 0px 1000px $bg inset !important;
-        -webkit-text-fill-color: $cursor !important;
+        box-shadow: 0 0 0px 1000px white inset !important;
+        -webkit-text-fill-color: black !important;
       }
     }
   }

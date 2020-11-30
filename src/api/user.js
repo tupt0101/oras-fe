@@ -39,8 +39,11 @@ export function logout() {
 }
 
 export function signup(data) {
+  debugger
   return service.request({
-    url: '/signup',
-    method: 'post'
+    url: '/v1/account-management/signup',
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' },
+    data: data
   })
 }

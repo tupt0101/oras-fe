@@ -1,3 +1,4 @@
+// import request from '@/utils/request'
 import axios from 'axios'
 import { getToken } from '@/utils/auth'
 
@@ -9,37 +10,33 @@ const service = axios.create({
   baseURL: 'https://oras-api.herokuapp.com/',
   withCredentials: true, // send cookies when cross-domain requests
   // credentials: 'same-origin',
-  timeout: 120000 // request timeout
+  timeout: 30000 // request timeout
 })
 
 const headers = {
-  'Authorization': 'Bearer ' + getToken(),
-  'Content-Type': 'application/json'
+  'Authorization': 'Bearer ' + getToken()
 }
 
-export function fetchCandidateList(id) {
+export function fetchPackageList() {
   return service.request({
-    url: '/v1/job-application-management/job-applications-by-job-id/' + id,
-    method: 'get',
-    headers: headers
-    // params: { id }
-  })
-}
-
-export function fetchApplicationFromRP(id) {
-  // debugger
-  return service.request({
-    url: '/v1/job-application-management/job-applications-openjob/' + id,
+    url: '/v1/package-management/packages',
     method: 'get',
     headers: headers
   })
 }
 
-export function rankCV(id) {
+export function fetchPackage(id) {
   return service.request({
-    url: '/v1/job-application-management/job-application-rank-cv',
-    method: 'post',
-    headers: headers,
-    data: id
+    url: '/v1/package-management/package/' + id,
+    method: 'get',
+    headers: headers
+  })
+}
+
+export function fetchCompanyPackage() {
+  return service.request({
+    url: '/v1/company-package-management/company-packages',
+    method: 'get',
+    headers: headers
   })
 }
