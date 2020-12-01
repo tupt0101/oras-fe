@@ -16,9 +16,9 @@ const headers = {
   'Authorization': 'Bearer ' + getToken()
 }
 
-export function fetchPanelData() {
+export function fetchPanelData(accId) {
   return service.request({
-    url: '',
+    url: '/v1/job-management/job-statistic-by-creator-id/' + accId,
     method: 'get',
     headers: headers
   })

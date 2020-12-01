@@ -39,7 +39,6 @@ export function logout() {
 }
 
 export function signup(data) {
-  debugger
   return service.request({
     url: '/v1/account-management/signup',
     method: 'post',

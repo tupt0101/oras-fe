@@ -193,6 +193,11 @@
       </div>
     </el-form>
 
+    <el-dialog :title="dialogTitle" :visible.sync="showDialog" width="33%">
+      <p class="message">{{ message }}</p>
+      <!-- We have received your registration information and will contact you in 24 hours (at the phone number you provide) to learn more about your business needs and better support. -->
+    </el-dialog>
+
   </div>
 </template>
 
@@ -297,7 +302,9 @@ export default {
       loading: false,
       showDialog: false,
       redirect: undefined,
-      otherQuery: {}
+      otherQuery: {},
+      dialogTitle: '',
+      message: ''
     }
   },
   watch: {
@@ -351,8 +358,12 @@ export default {
               this.$router.push({ path: this.redirect || '/login', query: this.otherQuery })
               this.loading = false
             })
-            .catch(() => {
+            .catch(err => {
               this.loading = false
+              debugger
+              this.dialogTitle = 'Something went wrong!'
+              this.message = err.response.data.message
+              this.showDialog = true
             })
         } else {
           console.log('error submit!!')
@@ -513,5 +524,10 @@ $black: #000000;
       display: none;
     }
   }
+}
+
+.message {
+  color: red;
+  font-size: 1.25em;
 }
 </style>
