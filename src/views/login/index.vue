@@ -68,8 +68,8 @@
       </div>
     </el-form>
 
-    <el-dialog title="Something went wrong!" :visible.sync="showDialog">
-      Log in fail. Check your account or contact with our customer service.
+    <el-dialog title="Something went wrong!" :visible.sync="showDialog" width="33%">
+      <p class="message">{{ message }}</p>
     </el-dialog>
   </div>
 </template>
@@ -110,7 +110,8 @@ export default {
       loading: false,
       showDialog: false,
       redirect: undefined,
-      otherQuery: {}
+      otherQuery: {},
+      message: ''
     }
   },
   watch: {
@@ -163,9 +164,9 @@ export default {
               this.loading = false
             })
             .catch(err => {
-              this.showDialog = true
-              console.log(err)
               this.loading = false
+              this.message = err.response.data.message
+              this.showDialog = true
             })
         } else {
           console.log('error submit!!')
@@ -197,7 +198,7 @@ $black: #000000;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
-    color: $cursor;
+    color: black;
   }
 }
 
@@ -328,5 +329,10 @@ $black: #000000;
       display: none;
     }
   }
+}
+
+.message {
+  color: red;
+  font-size: 1.25em;
 }
 </style>

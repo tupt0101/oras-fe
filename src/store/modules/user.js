@@ -140,10 +140,10 @@ const actions = {
   // user sign up
   signup({ commit }, userInfo) {
     const { fullname, email, password, phoneNo, compName, location, compEmail, compPhone, taxCode } = userInfo
-    debugger
+    // debugger
     const data = {
       'accountEntity': {
-        'active': false,
+        'active': true,
         'companyId': 0,
         'email': email,
         'fullname': fullname,
@@ -161,7 +161,7 @@ const actions = {
         'name': compName,
         'phoneNo': compPhone,
         'taxCode': taxCode,
-        'verified': false
+        'verified': true
       }
     }
     return new Promise((resolve, reject) => {
@@ -169,8 +169,9 @@ const actions = {
         // const { message } = response
         console.log(response)
         resolve()
-      }).catch(error => {
-        reject(error)
+      }).catch(response => {
+        debugger
+        reject(response)
       })
     })
   }

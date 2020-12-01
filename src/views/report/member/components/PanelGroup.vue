@@ -9,7 +9,7 @@
           <div class="card-panel-text">
             Total Jobs
           </div>
-          <count-to :start-val="0" :end-val="5" :duration="2000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="panelData.totalJob" :duration="2000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -22,7 +22,7 @@
           <div class="card-panel-text">
             Open Jobs
           </div>
-          <count-to :start-val="0" :end-val="25" :duration="2400" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="panelData.totalPublishJob" :duration="2400" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -35,7 +35,7 @@
           <div class="card-panel-text">
             Total Applications
           </div>
-          <count-to :start-val="0" :end-val="5" :duration="2800" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="panelData.totalCandidate" :duration="2800" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -48,7 +48,7 @@
           <div class="card-panel-text">
             Hired
           </div>
-          <count-to :start-val="0" :end-val="14" :duration="3200" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="panelData.totalHiredCandidate" :duration="3200" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -68,6 +68,11 @@ export default {
       panelData: null
     }
   },
+  computed: {
+    accountId() {
+      return this.$store.state.user.accId
+    }
+  },
   created() {
     this.getPanelData()
   },
@@ -76,7 +81,8 @@ export default {
       this.$emit('handleSetLineChartData', type)
     },
     getPanelData() {
-      fetchPanelData().then(response => {
+      fetchPanelData(this.accountId).then(response => {
+        debugger
         this.panelData = response.data
       })
     }
