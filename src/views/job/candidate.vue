@@ -111,12 +111,12 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getApplications" />
   </div>
 </template>
 
 <script>
-import { fetchCandidateList, fetchApplicationFromRP, rankCV } from '@/api/candidate'
+import { fetchCandidateList, fetchApplicationFromRP, rankCV, fetchTotalCandidate } from '@/api/candidate'
 import { fetchJob } from '@/api/job'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
@@ -149,6 +149,7 @@ export default {
   created() {
     this.jobId = this.$route.params && this.$route.params.id
     this.fetchData(this.jobId)
+    this.getTotal(this.jobId)
     this.getApplications(this.jobId)
   },
   methods: {
@@ -163,33 +164,28 @@ export default {
     openCV(link) {
       window.open(link, '_blank')
     },
+    getTotal() {
+      fetchTotalCandidate(this.jobId).then(response => {
+        this.total = response.data.length
+      })
+    },
     getApplications() {
       this.listLoading = true
       // debugger
-      fetchApplicationFromRP(this.jobId).then(response => {
-        // this.list = response
-        fetchCandidateList(this.jobId).then(response => {
-          this.list = response.data
-          this.total = this.list.lenght
-          this.listLoading = false
-        })
-        // this.listLoading = false
+      fetchCandidateList(this.jobId, this.listQuery).then(response => {
+        this.list = response.data
+        this.listLoading = false
       })
-      // setTimeout(() => {
-      //   this.listLoading = false
-      // }, 3.0 * 1000)
     },
     refresh() {
       this.listLoading = true
       fetchApplicationFromRP(this.jobId).then(response => {
         // this.list = response
-        fetchCandidateList(this.jobId).then(response => {
+        fetchCandidateList(this.jobId, this.listQuery).then(response => {
           this.list = response.data
           // debugger
-          // this.total = response.data
           this.listLoading = false
         })
-        // this.listLoading = false
       })
     },
     rankCV() {
