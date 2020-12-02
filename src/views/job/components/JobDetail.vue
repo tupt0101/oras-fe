@@ -34,7 +34,7 @@
                 </el-col>
                 <el-col :span="6">
                   <el-form-item label-width="120px" label="Vacancies:" class="postInfo-container-item">
-                    <el-input-number v-model="postForm.data.vacancies" placeholder="00.00" />
+                    <el-input-number v-model="postForm.data.vacancies" placeholder="1" />
                   </el-form-item>
                 </el-col>
 
@@ -48,7 +48,7 @@
 
                 <el-col :span="6">
                   <el-form-item label-width="80px" label="Category:" class="postInfo-container-item">
-                    <el-select v-model="postForm.data.categoryId" :remote-method="getCategoryList" filterable default-first-option remote placeholder="">
+                    <el-select v-model="postForm.data.category" :remote-method="getCategoryList" filterable default-first-option remote placeholder="">
                       <el-option v-for="(item,index) in categoryListOptions" :key="item+index" :label="item" :value="item" />
                     </el-select>
                   </el-form-item>
@@ -130,9 +130,9 @@ const defaultForm = {
     salaryTo: '',
     salaryHidden: false,
     currency: '',
-    vacancies: 0,
+    vacancies: 1,
     jobType: '',
-    categoryId: '',
+    category: '',
     talentPoolId: 1,
     createDate: new Date().toISOString(),
     creatorId: getAccountId()
@@ -312,7 +312,11 @@ export default {
             this.loading = false
             this.postForm.id = response.data.id
           })
-            .catch(() => {
+            .catch(error => {
+              this.$message({
+                message: error.response.data.message,
+                type: 'warning'
+              })
               this.loading = false
             })
         } else {

@@ -14,7 +14,7 @@
       </el-table-column>
       <el-table-column label="Job description" min-width="150px">
         <template slot-scope="{row}">
-          <span style="white-space: nowrap">{{ row.description }}</span>
+          <span style="white-space: nowrap">{{ stripHtml(row.description) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Deadline" width="200px" align="center">
@@ -126,6 +126,11 @@ export default {
     this.getList()
   },
   methods: {
+    stripHtml(html) {
+      const tmp = document.createElement('DIV')
+      tmp.innerHTML = html
+      return tmp.textContent || tmp.innerText || ''
+    },
     getList() {
       this.listLoading = true
       if (this.accountRole === 'admin') {
