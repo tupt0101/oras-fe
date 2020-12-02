@@ -17,12 +17,12 @@
           <span style="white-space: nowrap">{{ row.description }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Deadline" width="150px" align="center">
+      <el-table-column label="Deadline" width="200px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.applyTo | parseTime('{y}-{m}-{d}') }}</span>
+          <span>{{ (new Date(row.applyTo)).toLocaleString() }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Salary" width="240px" align="center">
+      <el-table-column label="Salary" width="200px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.currency }} {{ row.salaryFrom }} - {{ row.salaryTo }}</span>
         </template>

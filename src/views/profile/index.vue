@@ -13,8 +13,11 @@
               <el-tab-pane label="Activity" name="activity">
                 <activity />
               </el-tab-pane>
-              <el-tab-pane label="Account" name="account">
+              <el-tab-pane label="Edit Account" name="account">
                 <account :user="user" />
+              </el-tab-pane>
+              <el-tab-pane label="Edit Company" name="company">
+                <company :user="user" />
               </el-tab-pane>
             </el-tabs>
           </el-card>
@@ -30,12 +33,16 @@ import { mapGetters } from 'vuex'
 import UserCard from './components/UserCard'
 import Activity from './components/Activity'
 import Account from './components/Account'
+import Company from './components/Company'
 
 export default {
   name: 'Profile',
-  components: { UserCard,
+  components: {
+    UserCard,
     Activity,
-    Account },
+    Account,
+    Company
+  },
   data() {
     return {
       user: {},
