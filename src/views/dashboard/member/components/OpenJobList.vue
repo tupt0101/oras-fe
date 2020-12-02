@@ -84,7 +84,7 @@
 
 <script>
 import { fetchOpenJobByCreator } from '../../../../api/job'
-import { fetchApplicationFromRP } from '../../../../api/candidate'
+// import { fetchApplicationFromRP } from '../../../../api/candidate'
 
 export default {
   name: 'OpenJobList',

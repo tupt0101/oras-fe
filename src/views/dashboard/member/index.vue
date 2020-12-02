@@ -31,7 +31,7 @@
         <open-job-list />
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 8}" :xl="{span: 8}" style="margin-bottom:30px;">
-        <transaction-table />
+        <!-- <transaction-table /> -->
       </el-col>
     </el-row>
   </div>
@@ -44,7 +44,7 @@
 // import RaddarChart from './components/RaddarChart'
 // import PieChart from './components/PieChart'
 // import BarChart from './components/BarChart'
-import TransactionTable from './components/TransactionTable'
+// import TransactionTable from './components/TransactionTable'
 // import TodoList from './components/TodoList'
 // import BoxCard from './components/BoxCard'
 import OpenJobList from './components/OpenJobList'
@@ -78,7 +78,7 @@ export default {
     // RaddarChart,
     // PieChart,
     // BarChart,
-    TransactionTable,
+    // TransactionTable,
     // TodoList,
     // BoxCard,
     // OpenJobTable,
