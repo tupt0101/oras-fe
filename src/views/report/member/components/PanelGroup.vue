@@ -9,7 +9,7 @@
           <div class="card-panel-text">
             Total Jobs
           </div>
-          <count-to :start-val="0" :end-val="panelData.totalJob" :duration="2000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="panelData && panelData.totalJob" :duration="2000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -22,7 +22,7 @@
           <div class="card-panel-text">
             Open Jobs
           </div>
-          <count-to :start-val="0" :end-val="panelData.totalPublishJob" :duration="2400" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="panelData && panelData.totalPublishJob" :duration="2400" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -35,7 +35,7 @@
           <div class="card-panel-text">
             Total Applications
           </div>
-          <count-to :start-val="0" :end-val="panelData.totalCandidate" :duration="2800" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="panelData && panelData.totalCandidate" :duration="2800" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -48,7 +48,7 @@
           <div class="card-panel-text">
             Hired
           </div>
-          <count-to :start-val="0" :end-val="panelData.totalHiredCandidate" :duration="3200" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="panelData && panelData.totalHiredCandidate" :duration="3200" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -82,7 +82,6 @@ export default {
     },
     getPanelData() {
       fetchPanelData(this.accountId).then(response => {
-        debugger
         this.panelData = response.data
       })
     }
