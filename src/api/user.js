@@ -6,40 +6,36 @@ axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 // create an axios instance
 const service = axios.create({
   // url = base url + request url
-  // baseURL: process.env.VUE_APP_BASE_API,
-  // baseURL: 'http://localhost:8080/',
-  baseURL: 'https://oras-api.herokuapp.com/',
+  baseURL: process.env.VUE_APP_BASE_API,
   withCredentials: true, // send cookies when cross-domain requests
   // credentials: 'same-origin',
   timeout: 30000 // request timeout
 })
 
 export function login(data) {
-  return service.request({
+  return request({
     url: '/login?username=' + data.username + '&password=' + data.password,
     method: 'get'
-    // headers: headers
   })
 }
 
 export function getInfo(email, token) {
-  return service.request({
+  return request({
     url: '/v1/account-management/account-by-email',
     method: 'get',
-    headers: { 'Authorization': 'Bearer ' + token },
     params: { email }
   })
 }
 
 export function logout() {
-  return request({
+  return service.request({
     url: '/vue-element-admin/user/logout',
     method: 'post'
   })
 }
 
 export function signup(data) {
-  return service.request({
+  return request({
     url: '/v1/account-management/signup',
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
