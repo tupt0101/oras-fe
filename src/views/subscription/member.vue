@@ -8,13 +8,13 @@
       </el-table-column>
       <el-table-column label="Account name" min-width="200px" align="center">
         <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
+          <span class="link-type" @click="handleUpdate(row)">{{ row.accountById.fullname }}</span>
           <!-- <el-tag>{{ row.title }}</el-tag> -->
         </template>
       </el-table-column>
       <el-table-column label="Package" width="200px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.package }}</span>
+          <span>{{ row.packageById.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Purchase ID" width="150px" align="center">
@@ -24,18 +24,18 @@
       </el-table-column>
       <el-table-column label="Purchase date" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.purchaseDate | parseTime('{y}-{m}-{d}') }}</span>
+          <span>{{ new Date(row.purchaseById.purchaseDate).toLocaleString() }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Valid to" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.validTo | parseTime('{y}-{m}-{d}') }}</span>
+          <span>{{ new Date(row.validTo).toLocaleString() }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Status" class-name="status-col" width="100">
         <template slot-scope="{row}">
           <el-tag :type="row.status | statusFilter">
-            {{ row.status }}
+            {{ row.purchaseById.status }}
           </el-tag>
         </template>
       </el-table-column>

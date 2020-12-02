@@ -83,8 +83,8 @@
 </template>
 
 <script>
-import { fetchJobByCreator } from '@/api/job'
-import { fetchApplicationFromRP } from '@/api/candidate'
+import { fetchOpenJobByCreator } from '../../../../api/job'
+import { fetchApplicationFromRP } from '../../../../api/candidate'
 
 export default {
   name: 'OpenJobList',
@@ -122,23 +122,23 @@ export default {
     }
   },
   created() {
-    this.updateApplications()
+    // this.updateApplications()
     this.getList()
   },
   methods: {
-    updateApplications() {
-      this.listLoading = true
-      // debugger
-      fetchApplicationFromRP(this.jobId).then(response => {
-        // this.list = response
-        this.listLoading = false
-      })
-    },
+    // updateApplications() {
+    //   this.listLoading = true
+    //   debugger
+    //   fetchApplicationFromRP(this.jobId).then(response => {
+    //     // this.list = response
+    //     this.listLoading = false
+    //   })
+    // },
     getList() {
     //   this.$vs.loading()
       this.listLoading = true
       // debugger
-      fetchJobByCreator(this.accountId).then(response => {
+      fetchOpenJobByCreator(this.accountId).then(response => {
         this.list = response.data
         // this.total = response.data.total
 
