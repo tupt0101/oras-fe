@@ -23,8 +23,8 @@
               <span>Salary: </span><span>{{ post.currency }} </span>
               <strong>{{ post.salaryFrom }} - {{ post.salaryTo }}</strong><br>
               <span>Vacancies: </span>{{ post.vacancies }}
-              <span style="margin-left: 20px">Posted: </span>{{ post.createDate }}
-              <span style="margin-left: 20px">Deadline: </span>{{ post.applyTo }}
+              <span style="margin-left: 20px">Posted: </span>{{ (new Date(post.createDate)).toLocaleString() }}
+              <span style="margin-left: 20px">Deadline: </span>{{ (new Date(post.applyTo)).toLocaleString() }}
             </div>
             <div class="level-left">
               <div class="level-item">
@@ -48,10 +48,10 @@
           <span>{{ temp.vacancies }}</span>
         </el-form-item>
         <el-form-item label="Posted:" prop="posted" label-width="100px" style="margin-bottom: 0px">
-          <span>{{ temp.createDate }}</span>
+          <span>{{ (new Date(temp.createDate)).toLocaleString() }}</span>
         </el-form-item>
         <el-form-item label="Deadline:" prop="deadline" label-width="100px" style="margin-bottom: 0px">
-          <span>{{ temp.applyTo }}</span>
+          <span>{{ (new Date(temp.applyTo)).toLocaleString() }}</span>
         </el-form-item>
         <el-form-item label="Description:" prop="description" label-width="100px" style="margin-bottom: 0px;">
           <!-- <span v-html="temp.description" /> -->

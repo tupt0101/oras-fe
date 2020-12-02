@@ -8,6 +8,10 @@
     </el-row>
 
     <el-row style="background:#fff;padding:0px 16px 16px 16px; margin-bottom:32px;">
+      <candidate-status />
+    </el-row>
+
+    <el-row style="background:#fff;padding:0px 16px 16px 16px; margin-bottom:32px;">
       <time-to-hire />
     </el-row>
 
@@ -39,6 +43,7 @@ import RaddarChart from './components/RaddarChart'
 import PieChart from './components/PieChart'
 import BarChart from './components/BarChart'
 import TimeToHire from './components/TimeToHire'
+import CandidateStatus from './components/CandidateStatus'
 // import TransactionTable from './components/TransactionTable'
 
 const lineChartData = {
@@ -68,7 +73,8 @@ export default {
     RaddarChart,
     PieChart,
     BarChart,
-    TimeToHire
+    TimeToHire,
+    CandidateStatus
     // TransactionTable,
   },
   data() {

@@ -196,7 +196,7 @@ $dark_gray:#889aa4;
 $cursor: #fff;
 $black: #000000;
 
-@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
+@supports (-webkit-mask: none) and (not (cater-color: $black)) {
   .login-container .el-input input {
     color: black;
   }
@@ -216,7 +216,7 @@ $black: #000000;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
       // color: $light_gray;
-      color: $black;
+      color: $black !important;
       height: 47px;
       // caret-color: $cursor;
       caret-color: $black;

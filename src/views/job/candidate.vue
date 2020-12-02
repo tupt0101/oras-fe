@@ -9,8 +9,8 @@
             <!-- <strong>Company name</strong> -->
             <!-- <span style="margin-left: 30px">Posted: {{ job.createDate | parseTime('{y}-{m}-{d}') }}</span>
             <span style="margin-left: 30px">Deadline: {{ job.applyTo | parseTime('{y}-{m}-{d}') }}</span> -->
-            <span style="margin-left: 30px">Posted: {{ job && job.createDate }}</span>
-            <span style="margin-left: 30px">Deadline: {{ job && job.applyTo }}</span>
+            <span style="margin-left: 30px">Posted: {{ job && (new Date(job.createDate)).toLocaleString() }}</span>
+            <span style="margin-left: 30px">Deadline: {{ job && (new Date(job.applyTo)).toLocaleString() }}</span>
           </div>
         </div>
       </el-col>
@@ -82,7 +82,7 @@
       <el-table-column label="Apply date" width="200px" align="center">
         <template slot-scope="{row}">
           <!-- <span>{{ row.applyDate | parseTime('{y}-{m}-{d}') }}</span> -->
-          <span>{{ row.applyDate }}</span>
+          <span>{{ (new Date(row.applyDate)).toLocaleString() }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Source" width="180px" align="center">
@@ -111,18 +111,18 @@
       </el-table-column>
     </el-table>
 
-    <!-- <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" /> -->
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
   </div>
 </template>
 
 <script>
 import { fetchCandidateList, fetchApplicationFromRP, rankCV } from '@/api/candidate'
 import { fetchJob } from '@/api/job'
-// import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
   name: 'CandidateList',
-  // components: { Pagination },
+  components: { Pagination },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -137,11 +137,11 @@ export default {
     return {
       job: null,
       list: null,
-      // total: 0,
+      total: 0,
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 20
+        limit: 10
       },
       jobId: ''
     }
@@ -170,7 +170,7 @@ export default {
         // this.list = response
         fetchCandidateList(this.jobId).then(response => {
           this.list = response.data
-          // this.total = response.data
+          this.total = this.list.lenght
           this.listLoading = false
         })
         // this.listLoading = false

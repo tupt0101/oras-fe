@@ -24,9 +24,17 @@ export function fetchPanelData(accId) {
   })
 }
 
-export function fetchHiredList() {
+export function fetchHiredList(accId) {
   return service.request({
-    url: '',
+    url: '/v1/report-management/time-to-hire/' + accId,
+    method: 'get',
+    headers: headers
+  })
+}
+
+export function fetchCandidateStatus(accId) {
+  return service.request({
+    url: '/v1/report-management/candidate-of-job/' + accId,
     method: 'get',
     headers: headers
   })

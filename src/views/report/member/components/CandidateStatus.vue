@@ -1,13 +1,13 @@
 <template>
   <div class="">
-    <h2 class="title">Time To Hire</h2>
+    <h2 class="title">Candidate Status</h2>
     <el-table v-if="!list" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
       <el-table-column align="center" label="No." width="80" />
-      <el-table-column label="Job Title" width="300px" />
-      <el-table-column label="Hired Candidate" min-width="300px" />
-      <el-table-column label="Apply date" width="200px" align="center" />
-      <el-table-column label="Hired date" width="200px" align="center" />
-      <el-table-column label="Time To Hire" width="250px" align="center" />
+      <el-table-column label="Job Title" min-width="300px" />
+      <el-table-column label="Duration" width="300px" align="center" />
+      <el-table-column label="Total Applications" width="200px" />
+      <el-table-column label="Hired" width="200px" align="center" />
+      <el-table-column label="Reject" width="200px" align="center" />
     </el-table>
     <el-table
       v-if="list"
@@ -23,30 +23,29 @@
           <span>{{ row.id }}</span>
         </template> -->
       </el-table-column>
-      <el-table-column label="Job Title" width="300px">
+      <el-table-column label="Job Title" min-width="300px">
         <template slot-scope="{row}">
-          <span>{{ row.jobTitle }}</span>
+          <span>{{ row.job.title }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Hired Candidate" min-width="300px">
+      <el-table-column label="Duration" width="300px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.hiredCandidate.fullname }} ({{ row.hiredCandidate.email }})</span>
+          <span>{{ (new Date(row.job.createDate)).toLocaleDateString() }} - {{ (new Date(row.job.applyTo)).toLocaleDateString() }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Apply Date" width="200px" align="center">
+      <el-table-column label="Total Applications" width="200px" align="center">
         <template slot-scope="{row}">
-          <!-- <span>{{ row.applyDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span> -->
-          <span>{{ (new Date(row.applyDate)).toLocaleString() }}</span>
+          <span>{{ row.totalApplication }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Hired Date" width="200px" align="center">
+      <el-table-column label="Hired" width="200px" align="center">
         <template slot-scope="{row}">
-          <span>{{ (new Date(row.hiredDate)).toLocaleString() }}</span>
+          <span>{{ row.hired }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Time To Hire" width="200px" align="center">
+      <el-table-column label="Reject" width="200px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.timeToHired }} days</span>
+          <span>{{ row.timeToHired || 0 }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -54,7 +53,7 @@
 </template>
 
 <script>
-import { fetchHiredList } from '@/api/report'
+import { fetchCandidateStatus } from '@/api/report'
 import waves from '@/directive/waves' // waves directive
 
 export default {
@@ -89,7 +88,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchHiredList(this.accountId).then(response => {
+      fetchCandidateStatus(this.accountId).then(response => {
         this.list = response.data
         this.listLoading = false
       })
