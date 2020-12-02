@@ -74,7 +74,7 @@ service.interceptors.response.use(
     }
   },
   error => {
-    debugger
+    // debugger
     console.log('err' + error) // for debug
     // Message({
     //   message: error.response.data.message,
