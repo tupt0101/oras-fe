@@ -97,6 +97,11 @@
         </el-form-item> -->
       </div>
     </el-form>
+
+    <el-dialog :visible.sync="showDialog" width="33%">
+      <span slot="title"><svg-icon class-name="size-icon" :icon-class="hasError ? 'failed' : 'success'" /> {{ dialogTitle }}</span>
+      <p class="message" v-html="message" />
+    </el-dialog>
   </div>
 </template>
 
@@ -191,7 +196,11 @@ export default {
         content: [{ validator: validateRequire }],
         source_uri: [{ validator: validateSourceUri, trigger: 'blur' }]
       },
-      tempRoute: {}
+      tempRoute: {},
+      message: '',
+      showDialog: false,
+      btnLoading: false,
+      hasError: false
     }
   },
   computed: {
@@ -277,7 +286,13 @@ export default {
                 type: 'success',
                 duration: 2000
               })
-            }).catch(() => {
+            }).catch(err => {
+              this.dialogTitle = err.response.data.message
+              this.hasError = true
+              if (err.response.data.status === 402) {
+                this.message = 'You have run out of job posts.<br>Please try to select and purchase other packages!'
+              }
+              this.showDialog = true
               this.loading = false
             })
             this.loading = false
@@ -392,4 +407,10 @@ export default {
     border-bottom: 1px solid #bfcbd9;
   }
 }
+
+.message {
+  margin-left: 10px;
+  font-size: 1.15em;
+}
+
 </style>
