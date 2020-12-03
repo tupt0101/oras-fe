@@ -17,7 +17,10 @@
                 <account :user="user" />
               </el-tab-pane>
               <el-tab-pane label="Edit Company" name="company">
-                <company :user="user" />
+                <company :company="company" />
+              </el-tab-pane>
+              <el-tab-pane label="Billing" name="billing">
+                <billing v-if="currPackage" :curr-package="currPackage" />
               </el-tab-pane>
             </el-tabs>
           </el-card>
@@ -34,6 +37,9 @@ import UserCard from './components/UserCard'
 import Activity from './components/Activity'
 import Account from './components/Account'
 import Company from './components/Company'
+import Billing from './components/Billing'
+
+import { getCurrentPackage } from '@/api/package'
 
 export default {
   name: 'Profile',
@@ -41,11 +47,14 @@ export default {
     UserCard,
     Activity,
     Account,
-    Company
+    Company,
+    Billing
   },
   data() {
     return {
       user: {},
+      company: {},
+      currPackage: {},
       activeTab: 'activity'
     }
   },
@@ -55,10 +64,14 @@ export default {
       'avatar',
       'roles',
       'username'
-    ])
+    ]),
+    accountId() {
+      return this.$store.state.user.accId
+    }
   },
   created() {
     this.getUser()
+    this.getPackage()
   },
   methods: {
     getUser() {
@@ -68,6 +81,15 @@ export default {
         email: this.email,
         avatar: this.avatar
       }
+    },
+    getPackage() {
+      getCurrentPackage(this.accountId)
+        .then(response => {
+          this.currPackage = response.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }

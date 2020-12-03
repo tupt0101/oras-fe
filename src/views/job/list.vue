@@ -44,18 +44,18 @@
         <template slot-scope="scope">
           <!-- alo YAnh -->
           <!-- sua router to: toi api thuc hien action crud -->
-          <router-link :to="'/job/edit/'+scope.row.id" style="margin-right: 10px">
+          <router-link :to="'/job/edit/'+scope.row.id">
             <el-tooltip content="Edit job" placement="top">
               <el-button v-if="scope.row.status!=='Published'" type="primary" size="small" icon="el-icon-edit">
                 <!-- Edit -->
               </el-button>
             </el-tooltip>
           </router-link>
-            <el-tooltip content="Publish job to recruitment platform" placement="top">
-              <el-button v-if="scope.row.status==='Draft'" type="success" size="small" icon="el-icon-upload2" @click="handlePublishJob(scope.row.id)">
-                <!-- Publish -->
-              </el-button>
-            </el-tooltip>
+          <el-tooltip content="Publish job to recruitment platform" placement="top">
+            <el-button v-if="scope.row.status==='Draft'" type="success" size="small" icon="el-icon-upload2" @click="handlePublishJob(scope.row.id)">
+              <!-- Publish -->
+            </el-button>
+          </el-tooltip>
           <el-tooltip content="Close Job" placement="top">
             <el-button v-if="scope.row.status==='Published'" type="danger" size="small" icon="el-icon-circle-close" @click="handleCloseJob(scope.row.id)">
               <!-- Close -->
@@ -78,6 +78,11 @@
         </template> -->
       </el-table-column>
     </el-table>
+
+    <el-dialog :visible.sync="showDialog" width="33%">
+      <span slot="title"><svg-icon class-name="size-icon" :icon-class="hasError ? 'failed' : 'success'" /> {{ dialogTitle }}</span>
+      <p class="message" v-html="message" />
+    </el-dialog>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
   </div>
@@ -109,7 +114,11 @@ export default {
       listQuery: {
         page: 1,
         limit: 20
-      }
+      },
+      message: '',
+      showDialog: false,
+      btnLoading: false,
+      hasError: false
     }
   },
   computed: {
@@ -133,7 +142,13 @@ export default {
           duration: 2000
         })
         this.loading = false
-      }).catch(() => {
+      }).catch(err => {
+        this.dialogTitle = err.response.data.message
+        this.hasError = true
+        if (err.response.data.status === 402) {
+          this.message = 'You have run out of job posts.<br>Please try to select and purchase other packages!'
+        }
+        this.showDialog = true
         this.loading = false
       })
     },
@@ -183,5 +198,10 @@ export default {
   position: absolute;
   right: 15px;
   top: 10px;
+}
+
+.message {
+  margin-left: 10px;
+  font-size: 1.15em;
 }
 </style>
