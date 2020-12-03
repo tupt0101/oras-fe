@@ -8,8 +8,9 @@
       </el-table-column>
       <el-table-column label="Title" width="200px">
         <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
-          <!-- <el-tag>{{ row.title }}</el-tag> -->
+          <router-link :to="'/job/candidates/'+ row.id">
+            <span class="link-type">{{ row.title }}</span>
+          </router-link>
         </template>
       </el-table-column>
       <el-table-column label="Job description" min-width="150px">
