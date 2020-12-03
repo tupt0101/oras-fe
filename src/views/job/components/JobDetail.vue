@@ -266,7 +266,6 @@ export default {
       this.$refs.postForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.postForm.data.status = 'Published'
           this.postForm.data.applyFrom = new Date().toISOString()
           createJob(this.postForm.data, this.method).then(response => {
             this.postForm.id = response.data.id

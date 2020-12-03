@@ -46,25 +46,21 @@
           <!-- sua router to: toi api thuc hien action crud -->
           <router-link :to="'/job/edit/'+scope.row.id" style="margin-right: 10px">
             <el-tooltip content="Edit job" placement="top">
-              <el-button type="primary" size="small" icon="el-icon-edit">
+              <el-button v-if="scope.row.status!=='Published'" type="primary" size="small" icon="el-icon-edit">
                 <!-- Edit -->
               </el-button>
             </el-tooltip>
           </router-link>
-          <router-link :to="'/job/edit/'+scope.row.id">
             <el-tooltip content="Publish job to recruitment platform" placement="top">
-              <el-button v-if="scope.row.status==='Draft'" type="success" size="small" icon="el-icon-upload2">
+              <el-button v-if="scope.row.status==='Draft'" type="success" size="small" icon="el-icon-upload2" @click="handlePublishJob(scope.row.id)">
                 <!-- Publish -->
               </el-button>
             </el-tooltip>
-          </router-link>
-          <router-link :to="'/job/edit/'+scope.row.id">
-            <el-tooltip content="Close Job" placement="top">
-              <el-button v-if="scope.row.status==='Published'" type="danger" size="small" icon="el-icon-circle-close">
-                <!-- Close -->
-              </el-button>
-            </el-tooltip>
-          </router-link>
+          <el-tooltip content="Close Job" placement="top">
+            <el-button v-if="scope.row.status==='Published'" type="danger" size="small" icon="el-icon-circle-close" @click="handleCloseJob(scope.row.id)">
+              <!-- Close -->
+            </el-button>
+          </el-tooltip>
         </template>
         <!-- <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
@@ -89,7 +85,8 @@
 
 <script>
 import { fetchJobList, fetchJobByCreator } from '@/api/job'
-import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import Pagination from '@/components/Pagination'
+import { closeJob, publishJob } from '../../api/job' // Secondary package based on el-pagination
 
 export default {
   name: 'ArticleList',
@@ -127,6 +124,32 @@ export default {
     this.getList()
   },
   methods: {
+    handlePublishJob(id) {
+      publishJob(id).then(response => {
+        this.$notify({
+          title: 'Success',
+          message: 'Publish the post successfully',
+          type: 'success',
+          duration: 2000
+        })
+        this.loading = false
+      }).catch(() => {
+        this.loading = false
+      })
+    },
+    handleCloseJob(id) {
+      closeJob(id).then(response => {
+        this.$notify({
+          title: 'Success',
+          message: 'Close the post successfully',
+          type: 'success',
+          duration: 2000
+        })
+        this.loading = false
+      }).catch(() => {
+        this.loading = false
+      })
+    },
     stripHtml(html) {
       const tmp = document.createElement('DIV')
       tmp.innerHTML = html
