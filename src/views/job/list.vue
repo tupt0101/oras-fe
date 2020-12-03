@@ -6,7 +6,7 @@
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Title" width="200px">
+      <el-table-column label="Title" width="250px">
         <template slot-scope="{row}">
           <router-link :to="'/job/candidates/'+ row.id">
             <span class="link-type">{{ row.title }}</span>
@@ -52,7 +52,7 @@
             </el-tooltip>
           </router-link>
           <el-tooltip content="Publish job to recruitment platform" placement="top">
-            <el-button v-if="scope.row.status==='Draft'" type="success" size="small" icon="el-icon-upload2" @click="handlePublishJob(scope.row.id)">
+            <el-button v-if="scope.row.status==='Draft'" style="margin-left: 10px" type="success" size="small" icon="el-icon-upload2" @click="handlePublishJob(scope.row.id)">
               <!-- Publish -->
             </el-button>
           </el-tooltip>
@@ -62,20 +62,6 @@
             </el-button>
           </el-tooltip>
         </template>
-        <!-- <template slot-scope="{row,$index}">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
-            Edit
-          </el-button>
-          <el-button v-if="row.status!='Published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
-            Publish
-          </el-button>
-          <el-button v-if="row.status!='Draft'" size="mini" @click="handleModifyStatus(row,'draft')">
-            Draft
-          </el-button>
-          <el-button v-if="row.status!='Closed'" size="mini" type="danger" @click="handleDelete(row,$index)">
-            Delete
-          </el-button>
-        </template> -->
       </el-table-column>
     </el-table>
 

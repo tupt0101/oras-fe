@@ -146,6 +146,17 @@ export default {
         this.avgSalaryData.userData = response.data.map(cat => cat.averageSalary)
       })
     },
+    // async getJobData() {
+    //   const response = await fetch(
+    //     `/v1/report-management/total-application-of-account-by-category/${this.accountId}`,
+    //     {
+    //       method: 'get'
+    //     })
+
+    //   const filteredData = await response.data.filter(item => item.numOfPost > 0)
+    //   this.jobByCate.category = filteredData.map(item => item.category)
+    //   this.jobByCate.userData = filteredData.map(item => ({ value: item.numOfPost, name: item.category }))
+    // },
     getJobData() {
       fetchJobByCategoryOfAccount(this.accountId).then(response => {
         const filteredData = response.data.filter(item => item.numOfPost > 0)

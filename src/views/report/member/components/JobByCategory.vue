@@ -32,23 +32,31 @@ export default {
       chart: null
     }
   },
+  created() {
+    this.$nextTick(() => {
+      console.log('created: ', this.chartData)
+      this.initChart()
+    })
+  },
   mounted() {
     this.$nextTick(() => {
-      console.log(this.chartData)
-      this.initChart(this.chartData)
+      console.log('mounted: ', this.chartData)
+      this.initChart()
     })
   },
   beforeDestroy() {
     if (!this.chart) {
       return
     }
-    this.chart.dispose()
-    this.chart = null
+    // this.chart.dispose()
+    // this.chart = null
   },
   methods: {
-    initChart({ category, userData } = {}) {
+    initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
-
+      this.setOptions(this.chartData)
+    },
+    setOptions({ category, userData } = {}) {
       this.chart.setOption({
         tooltip: {
           trigger: 'item',
