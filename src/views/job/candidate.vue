@@ -41,7 +41,7 @@
           </el-checkbox> -->
 
           <el-button class="filter-item" type="primary" @click="refresh">
-            Refresh
+            Get applications
           </el-button>
           <el-button class="filter-item" type="success" @click="rankCV">
             Rank CV
@@ -51,7 +51,7 @@
       </el-col>
     </el-row>
 
-    <el-table v-if="!list" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
+    <el-table v-if="!list" v-loading="listLoading" border fit highlight-current-row style="width: 100%">
       <el-table-column align="center" label="No." width="80" />
       <el-table-column label="Full name" min-width="150px" />
       <el-table-column label="Email" align="center" width="240px" />
