@@ -1,4 +1,4 @@
-import { login, logout, getInfo, signup } from '@/api/user'
+import { login, getInfo, signup } from '@/api/user'
 import { getToken, setToken, removeToken, getUserId, setUserId, setAccountId, removeUserId } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -89,21 +89,13 @@ const actions = {
   // user logout
   logout({ commit, state, dispatch }) {
     return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        commit('SET_TOKEN', '')
-        commit('SET_ROLES', [])
-        removeToken()
-        removeUserId()
-        resetRouter()
+      commit('SET_TOKEN', '')
+      commit('SET_ROLES', [])
+      removeToken()
+      removeUserId()
+      resetRouter()
 
-        // reset visited views and cached views
-        // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
-        dispatch('tagsView/delAllViews', null, { root: true })
-
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
+      resolve()
     })
   },
 
@@ -140,7 +132,6 @@ const actions = {
   // user sign up
   signup({ commit }, userInfo) {
     const { fullname, email, password, phoneNo, compName, location, compEmail, compPhone, taxCode } = userInfo
-    // debugger
     const data = {
       'accountEntity': {
         'active': true,
@@ -170,7 +161,6 @@ const actions = {
         console.log(response)
         resolve()
       }).catch(response => {
-        debugger
         reject(response)
       })
     })

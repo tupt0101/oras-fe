@@ -13,14 +13,22 @@
             <span style="font-weight: 700; color: #5D677A;">{{ pack.name }}</span>
           </div>
 
-          <div class="price-container">
+          <div class="price-container" style="height: 93px">
             <div class="box-center">
               <div class="text-center">
-                <span class="price">{{ pack.currency }}{{ pack.price }}</span>
-                <span class="unit">/{{ pack.duration }}</span>
+                <span v-if="pack.price > 0">
+                  <span class="price">{{ pack.currency }}{{ pack.price }}</span>
+                  <!-- <span class="unit">/{{ pack.duration }}</span> -->
+                  <span class="unit">/month</span>
+                </span>
+                <span v-if="pack.price === 0">
+                  <span class="price">Trial<br>Package</span>
+                </span>
               </div>
               <div class="text-center">
-                <p class="tag">ENTRY</p>
+                <p v-if="pack.tag === 'ENTRY'" class="tag entry">{{ pack.tag }}</p>
+                <p v-if="pack.tag === 'MOST POPULAR'" class="tag popular">{{ pack.tag }}</p>
+                <p v-if="pack.tag === 'MOST SAVING'" class="tag saving">{{ pack.tag }}</p>
               </div>
             </div>
           </div>
@@ -30,7 +38,7 @@
               <div class="user-bio-section-header">
                 <!-- <svg-icon icon-class="list" /><span>Detail</span> -->
               </div>
-              <div class="user-bio-section-body">
+              <div class="user-bio-section-body" style="height: 170px">
                 <div class="text-muted">
                   <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> {{ pack.numOfPost }} Jobs per Month
                 </div>
@@ -40,40 +48,61 @@
                 <div class="text-muted">
                   <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> Application Alerts
                 </div>
-                <div class="text-muted">
-                  <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> Matches Candidate using AI
+                <div v-if="pack.price !== 0" class="text-muted">
+                  <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> Screen Resume using AI
                 </div>
                 <div class="text-muted">
-                  <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> Sort, Rank and Comment on Candidates
+                  <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> Sort and Comment on Candidates
                 </div>
-                <div class="text-muted">
+                <div v-if="pack.price !== 0" class="text-muted">
                   <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> View Recruitment Report
                 </div>
               </div>
             </div>
 
             <div class="text-center">
-              <!-- <router-link :to="'/checkout'"> -->
-              <router-link :to="'/checkout/index/' + pack.id">
-                <el-button type="primary" style="font-weight: 700; font-size: 16px; width: 150px;">Buy Now</el-button>
-              </router-link>
+              <div v-if="pack.price !== 0">
+                <router-link :to="'/checkout/index/' + pack.id">
+                  <el-button class="myBtn" type="primary">Buy Now</el-button>
+                </router-link>
+                <div class="package-note">*Billed monthly</div>
+              </div>
+              <div v-if="pack.price === 0">
+                <el-button :loading="btnLoading" class="myBtn" type="success" @click="getStarterPackage">Get Free</el-button>
+                <div class="package-note">*Only first-time member</div>
+              </div>
             </div>
           </div>
         </el-card>
       </el-col>
     </el-row>
 
+    <el-dialog :visible.sync="showDialog" width="33%">
+      <span slot="title"><svg-icon class-name="size-icon" :icon-class="hasError ? 'failed' : 'success'" /> {{ dialogTitle }}</span>
+      <p class="message" v-html="message" />
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
-import { fetchPackageList } from '@/api/package'
+import { fetchPackageList, getStarterPack } from '@/api/package'
 
 export default {
   data() {
     return {
       list: null,
-      listLoading: false
+      listLoading: false,
+      dialogTitle: '',
+      message: '',
+      showDialog: false,
+      btnLoading: false,
+      hasError: false
+    }
+  },
+  computed: {
+    accountId() {
+      return this.$store.state.user.accId
     }
   },
   created() {
@@ -86,6 +115,25 @@ export default {
         this.list = response.data
         this.listLoading = false
       })
+    },
+    getStarterPackage() {
+      this.btnLoading = true
+      getStarterPack(this.accountId)
+        .then(response => {
+          this.dialogTitle = 'Register Successfully!'
+          this.message = 'You can publish ' + response.data.numOfPost + ' free job post until the end of ' + response.data.validTo
+          this.showDialog = true
+          this.btnLoading = false
+        })
+        .catch(err => {
+          this.dialogTitle = 'Something went wrong!'
+          this.hasError = true
+          if (err.response.data.status === 406) {
+            this.message = 'This trial package is one-time use only.<br>Please try to select and purchase other packages!'
+          }
+          this.showDialog = true
+          this.btnLoading = false
+        })
     }
   }
 }
@@ -152,13 +200,24 @@ export default {
 
   .tag {
     color: white;
-    font-size: 0.6875rem;
+    font-size: 0.8rem;
     text-transform: uppercase;
     display: inline-block;
-    padding: 2px 30px;
+    padding: 4px 30px;
     border-radius: 10px;
     margin-bottom: 12px;
+  }
+
+  .entry {
     background-color: #287ab9;
+  }
+
+  .popular {
+    background-color: #85ce3f;
+  }
+
+  .saving {
+    background-color: #FDB816;
   }
 
   .box-social {
@@ -200,5 +259,21 @@ export default {
       font-weight: bold;
     }
   }
+}
+
+.message {
+  margin-left: 10px;
+  font-size: 1.15em;
+}
+
+.myBtn {
+  font-weight: 700;
+  font-size: 16px;
+  width: 150px;
+}
+
+.package-note {
+  margin-top: 10px;
+  font-size: 0.7rem;
 }
 </style>

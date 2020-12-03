@@ -1,8 +1,15 @@
 import request from '@/utils/request'
 
-export function fetchCandidateList(id) {
+export function fetchTotalCandidate(jobId) {
   return request({
-    url: '/v1/job-application-management/job-applications-by-job-id/' + id,
+    url: '/v1/job-application-management/job-applications-by-job-id/' + jobId,
+    method: 'get'
+  })
+}
+
+export function fetchCandidateList(jobId, query) {
+  return request({
+    url: '/v1/job-application-management/job-applications-by-job-id?jobId=' + jobId + '&numOfElement=' + query.limit + '&page=' + query.page,
     method: 'get'
   })
 }

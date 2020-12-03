@@ -360,7 +360,6 @@ export default {
             })
             .catch(err => {
               this.loading = false
-              debugger
               this.dialogTitle = 'Something went wrong!'
               this.message = err.response.data.message
               this.showDialog = true
