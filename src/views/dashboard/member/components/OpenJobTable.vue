@@ -216,7 +216,7 @@ export default {
       this.listLoading = true
       fetchOpenJobList(this.listQuery).then(response => {
         this.list = response.data
-        this.total = response.data.total
+        this.total = response.data.length
 
         // Just to simulate the time of the request
         setTimeout(() => {

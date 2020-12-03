@@ -7,9 +7,25 @@ export function fetchAccountList() {
   })
 }
 
+export function fetchAccount(id) {
+  return request({
+    url: '/v1/account-management/account/' + id,
+    method: 'get'
+  })
+}
+
 export function fetchCompanyList() {
   return request({
     url: '/v1/company-management/companies',
     method: 'get'
+  })
+}
+
+export function createAccount(data, method) {
+  debugger
+  return request({
+    url: '/v1/account-management/account',
+    method: method,
+    data: data
   })
 }

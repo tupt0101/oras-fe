@@ -136,7 +136,7 @@ export default {
       if (this.accountRole === 'admin') {
         fetchJobList(this.listQuery).then(response => {
           this.list = response.data
-          this.total = response.data
+          this.total = response.data.length
           this.listLoading = false
         })
       } else {
