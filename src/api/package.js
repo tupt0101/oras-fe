@@ -20,3 +20,10 @@ export function fetchCompanyPackage() {
     method: 'get'
   })
 }
+
+export function getStarterPack(id) {
+  return request({
+    url: '/v1/account-package-management/starter-package/' + id,
+    method: 'post'
+  })
+}

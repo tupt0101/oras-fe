@@ -137,7 +137,6 @@ export default {
     getList() {
     //   this.$vs.loading()
       this.listLoading = true
-      // debugger
       fetchOpenJobByCreator(this.accountId).then(response => {
         this.list = response.data
         // this.total = response.data.total

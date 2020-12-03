@@ -61,29 +61,48 @@
             </div>
 
             <div class="text-center">
-              <router-link v-if="pack.price !== 0" :to="'/checkout/index/' + pack.id">
-                <el-button type="primary" style="font-weight: 700; font-size: 16px; width: 150px;">Buy Now</el-button>
-              </router-link>
-              <router-link v-if="pack.price === 0" :to="'/checkout/index/' + pack.id">
-                <el-button type="success" style="font-weight: 700; font-size: 16px; width: 150px;">Get Free</el-button>
-              </router-link>
+              <div v-if="pack.price !== 0">
+                <router-link :to="'/checkout/index/' + pack.id">
+                  <el-button class="myBtn" type="primary">Buy Now</el-button>
+                </router-link>
+                <div class="package-note">*Billed monthly</div>
+              </div>
+              <div v-if="pack.price === 0">
+                <el-button :loading="btnLoading" class="myBtn" type="success" @click="getStarterPackage">Get Free</el-button>
+                <div class="package-note">*Only first-time member</div>
+              </div>
             </div>
           </div>
         </el-card>
       </el-col>
     </el-row>
 
+    <el-dialog :visible.sync="showDialog" width="33%">
+      <span slot="title"><svg-icon class-name="size-icon" :icon-class="hasError ? 'failed' : 'success'" /> {{ dialogTitle }}</span>
+      <p class="message" v-html="message" />
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
-import { fetchPackageList } from '@/api/package'
+import { fetchPackageList, getStarterPack } from '@/api/package'
 
 export default {
   data() {
     return {
       list: null,
-      listLoading: false
+      listLoading: false,
+      dialogTitle: '',
+      message: '',
+      showDialog: false,
+      btnLoading: false,
+      hasError: false
+    }
+  },
+  computed: {
+    accountId() {
+      return this.$store.state.user.accId
     }
   },
   created() {
@@ -96,6 +115,25 @@ export default {
         this.list = response.data
         this.listLoading = false
       })
+    },
+    getStarterPackage() {
+      this.btnLoading = true
+      getStarterPack(this.accountId)
+        .then(response => {
+          this.dialogTitle = 'Register Successfully!'
+          this.message = 'You can publish ' + response.data.numOfPost + ' free job post until the end of ' + response.data.validTo
+          this.showDialog = true
+          this.btnLoading = false
+        })
+        .catch(err => {
+          this.dialogTitle = 'Something went wrong!'
+          this.hasError = true
+          if (err.response.data.status === 406) {
+            this.message = 'This trial package is one-time use only.<br>Please try to select and purchase other packages!'
+          }
+          this.showDialog = true
+          this.btnLoading = false
+        })
     }
   }
 }
@@ -221,5 +259,21 @@ export default {
       font-weight: bold;
     }
   }
+}
+
+.message {
+  margin-left: 10px;
+  font-size: 1.15em;
+}
+
+.myBtn {
+  font-weight: 700;
+  font-size: 16px;
+  width: 150px;
+}
+
+.package-note {
+  margin-top: 10px;
+  font-size: 0.7rem;
 }
 </style>

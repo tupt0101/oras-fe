@@ -171,7 +171,6 @@ export default {
     },
     getApplications() {
       this.listLoading = true
-      // debugger
       fetchCandidateList(this.jobId, this.listQuery).then(response => {
         this.list = response.data
         this.listLoading = false
@@ -183,7 +182,6 @@ export default {
         // this.list = response
         fetchCandidateList(this.jobId, this.listQuery).then(response => {
           this.list = response.data
-          // debugger
           this.listLoading = false
         })
       })
