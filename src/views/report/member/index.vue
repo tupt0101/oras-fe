@@ -12,7 +12,7 @@
     </el-row>
 
     <el-row :gutter="32">
-      <el-col :xs="24" :sm="24" :lg="8">
+      <!-- <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
           <raddar-chart />
         </div>
@@ -21,12 +21,7 @@
         <div class="chart-wrapper">
           <pie-chart />
         </div>
-      </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
-        <div class="chart-wrapper">
-          <bar-chart />
-        </div>
-      </el-col>
+      </el-col> -->
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
           <h2 class="title">Number of jobs by category</h2>
@@ -41,6 +36,14 @@
       </el-col>
     </el-row>
 
+    <el-row>
+      <el-col :xs="24" :sm="24" :lg="12">
+        <div class="chart-wrapper">
+          <bar-chart :style="barchartStyle" :chart-data="avgSalaryData" />
+        </div>
+      </el-col>
+    </el-row>
+
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <!-- <line-chart :chart-data="lineChartData" /> -->
       <average-salary v-if="avgSalaryData" :chart-data="avgSalaryData" />
@@ -50,12 +53,12 @@
 </template>
 
 <script>
-import TransactionTable from './components/TransactionTable'
+// import TransactionTable from './components/TransactionTable'
 import PanelGroup from './components/PanelGroup'
-import LineChart from './components/LineChart'
+// import LineChart from './components/LineChart'
 import AverageSalary from './components/AvgSalary'
-import RaddarChart from './components/RaddarChart'
-import PieChart from './components/PieChart'
+// import RaddarChart from './components/RaddarChart'
+// import PieChart from './components/PieChart'
 import BarChart from './components/BarChart'
 import TimeToHire from './components/TimeToHire'
 import CandidateStatus from './components/CandidateStatus'
@@ -91,12 +94,12 @@ const lineChartData = {
 export default {
   name: 'DashboardAdmin',
   components: {
-    TransactionTable,
+    // TransactionTable,
     PanelGroup,
-    LineChart,
+    // LineChart,
     AverageSalary,
-    RaddarChart,
-    PieChart,
+    // RaddarChart,
+    // PieChart,
     BarChart,
     TimeToHire,
     CandidateStatus,
@@ -118,6 +121,10 @@ export default {
       candidateByCate: {
         category: [],
         userData: []
+      },
+      barchartStyle: {
+        width: '100%',
+        height: '400px'
       }
     }
   },
@@ -141,24 +148,15 @@ export default {
     },
     getSalaryData() {
       fetchAverageSalary(this.baseCurrency).then(response => {
-        this.avgSalaryData.category = response.data.map(cat => cat.category)
+        debugger
         this.avgSalaryData.systemData = response.data.map(cat => cat.averageSalary)
       })
       fetchAverageSalaryOfAccount(this.accountId, this.baseCurrency).then(response => {
-        this.avgSalaryData.userData = response.data.map(cat => cat.averageSalary)
+        const filteredData = response.data.filter(item => item.averageSalary > 0)
+        this.avgSalaryData.category = filteredData.map(cat => cat.category)
+        this.avgSalaryData.userData = filteredData.map(cat => cat.averageSalary)
       })
     },
-    // async getJobData() {
-    //   const response = await fetch(
-    //     `/v1/report-management/total-application-of-account-by-category/${this.accountId}`,
-    //     {
-    //       method: 'get'
-    //     })
-
-    //   const filteredData = await response.data.filter(item => item.numOfPost > 0)
-    //   this.jobByCate.category = filteredData.map(item => item.category)
-    //   this.jobByCate.userData = filteredData.map(item => ({ value: item.numOfPost, name: item.category }))
-    // },
     getJobData() {
       fetchJobByCategoryOfAccount(this.accountId).then(response => {
         const filteredData = response.data.filter(item => item.numOfPost > 0)
