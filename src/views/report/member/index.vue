@@ -12,7 +12,7 @@
     </el-row>
 
     <el-row :gutter="32">
-      <!-- <el-col :xs="24" :sm="24" :lg="8">
+      <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
           <raddar-chart />
         </div>
@@ -21,7 +21,7 @@
         <div class="chart-wrapper">
           <pie-chart />
         </div>
-      </el-col> -->
+      </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
           <bar-chart />
@@ -29,11 +29,13 @@
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
+          <h2 class="title">Number of jobs by category</h2>
           <job-by-category v-if="jobByCate" :chart-data="jobByCate" />
         </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
+          <h2 class="title">Number of applications by category</h2>
           <candidate-by-category v-if="candidateByCate" :chart-data="candidateByCate" />
         </div>
       </el-col>
@@ -48,12 +50,12 @@
 </template>
 
 <script>
-// import TransactionTable from './components/TransactionTable'
+import TransactionTable from './components/TransactionTable'
 import PanelGroup from './components/PanelGroup'
-// import LineChart from './components/LineChart'
+import LineChart from './components/LineChart'
 import AverageSalary from './components/AvgSalary'
-// import RaddarChart from './components/RaddarChart'
-// import PieChart from './components/PieChart'
+import RaddarChart from './components/RaddarChart'
+import PieChart from './components/PieChart'
 import BarChart from './components/BarChart'
 import TimeToHire from './components/TimeToHire'
 import CandidateStatus from './components/CandidateStatus'
@@ -89,12 +91,12 @@ const lineChartData = {
 export default {
   name: 'DashboardAdmin',
   components: {
-    // TransactionTable,
+    TransactionTable,
     PanelGroup,
-    // LineChart,
+    LineChart,
     AverageSalary,
-    // RaddarChart,
-    // PieChart,
+    RaddarChart,
+    PieChart,
     BarChart,
     TimeToHire,
     CandidateStatus,
@@ -180,6 +182,14 @@ export default {
   padding: 32px;
   background-color: rgb(240, 242, 245);
   position: relative;
+
+  .title {
+    color: #182642;
+    line-height: 1.25;
+    text-decoration: none;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
 
   .github-corner {
     position: absolute;

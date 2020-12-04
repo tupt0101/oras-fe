@@ -178,6 +178,9 @@ export default {
       fetchCandidateList(this.jobId, this.listQuery).then(response => {
         this.list = response.data
         this.listLoading = false
+      }).catch(err => {
+        this.listLoading = false
+        console.log(err)
       })
     },
     refresh() {
@@ -188,6 +191,10 @@ export default {
           this.list = response.data
           this.listLoading = false
         })
+        this.getTotal(this.jobId)
+      }).catch(err => {
+        this.listLoading = false
+        console.log(err)
       })
     },
     rankCV() {
@@ -196,6 +203,9 @@ export default {
         this.list = response.data
         // this.list.sort(function(a, b) { return (b - a) })
         this.listLoading = false
+      }).catch(err => {
+        this.listLoading = false
+        console.log(err)
       })
     },
     indexMethod(index) {
