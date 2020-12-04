@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchPanelData(accId) {
   return request({
-    url: '/v1/job-management/job-statistic-by-creator-id/' + accId,
+    url: '/v1/report-management/job-statistic-by-creator-id/' + accId,
     method: 'get'
   })
 }
