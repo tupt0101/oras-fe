@@ -27,3 +27,17 @@ export function getStarterPack(id) {
     method: 'post'
   })
 }
+
+export function getCurrentPackage(id) {
+  return request({
+    url: '/v1/account-package-management/current-account-package-by-account-id/' + id,
+    method: 'get'
+  })
+}
+
+export function cancelPackage(id) {
+  return request({
+    url: '/v1/account-package-management/cancel-account-package/' + id,
+    method: 'put'
+  })
+}

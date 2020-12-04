@@ -121,7 +121,7 @@ export default {
       getStarterPack(this.accountId)
         .then(response => {
           this.dialogTitle = 'Register Successfully!'
-          this.message = 'You can publish ' + response.data.numOfPost + ' free job post until the end of ' + response.data.validTo
+          this.message = 'You can publish ' + response.data.numOfPost + ' free job post until the end of ' + (new Date(response.data.validTo)).toLocaleString('en-US', { dateStyle: 'long' })
           this.showDialog = true
           this.btnLoading = false
         })

@@ -114,7 +114,7 @@
 
                 <el-col :span="12">
                   <el-form-item prop="compEmail" label-width="150px" label="Company email:" class="postInfo-container-item">
-                    <el-input v-model="postForm.companyById.email" autocomplete="on" tabindex="9" type="text" maxlength="50" style="width: 300px" placeholder="Please enter the company email"/>
+                    <el-input v-model="postForm.companyById.email" autocomplete="on" tabindex="9" type="text" maxlength="50" style="width: 300px" placeholder="Please enter the company email" />
                   </el-form-item>
                 </el-col>
               </el-row>
