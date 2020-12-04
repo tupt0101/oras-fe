@@ -11,7 +11,7 @@ const service = axios.create({
   // baseURL: 'https://oras-api.herokuapp.com/',
   withCredentials: true, // send cookies when cross-domain requests
   // credentials: 'same-origin',
-  timeout: 30000 // request timeout
+  timeout: 120000 // request timeout
 })
 // request interceptor
 service.interceptors.request.use(

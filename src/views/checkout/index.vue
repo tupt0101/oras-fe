@@ -19,42 +19,7 @@
                   </span>
                 </el-radio>
               </span>
-              <br>
-              <span class="radio-button">
-                <el-radio :label="2">
-                  <span class="radio-label">
-                    <span style="font-size: 16px;">Add new Card</span>
-                  </span>
-                </el-radio>
-              </span>
             </el-radio-group>
-            <el-card>
-              <el-form>
-                <el-form-item>
-                  <el-input v-model.trim="card.name" placeholder="Name on Card" />
-                </el-form-item>
-                <el-form-item>
-                  <el-input v-model.trim="card.number" placeholder="Card Number" />
-                </el-form-item>
-                <div>
-                  <el-row :gutter="10">
-                    <el-col :lg="12">
-                      <el-form-item>
-                        <el-input v-model.trim="card.expired" placeholder="MM / YY" />
-                      </el-form-item>
-                    </el-col>
-                    <el-col :lg="12">
-                      <el-form-item>
-                        <el-input v-model.trim="card.cvv" placeholder="Security Code" />
-                      </el-form-item>
-                    </el-col>
-                  </el-row>
-                </div>
-                <el-form-item>
-                  <!-- <el-button type="primary" @click="submit">Update</el-button> -->
-                </el-form-item>
-              </el-form>
-            </el-card>
           </div>
         </el-col>
 

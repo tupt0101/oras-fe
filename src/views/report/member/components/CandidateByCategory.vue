@@ -32,15 +32,21 @@ export default {
       chart: null
     }
   },
+  watch: {
+    chartData: {
+      deep: true,
+      handler(val) {
+        this.setOptions(val)
+      }
+    }
+  },
   created() {
     this.$nextTick(() => {
-      console.log('created: ', this.chartData)
       this.initChart()
     })
   },
   mounted() {
     this.$nextTick(() => {
-      console.log('mounted: ', this.chartData)
       this.initChart()
     })
   },
@@ -73,7 +79,7 @@ export default {
         },
         series: [
           {
-            name: 'JOB POST BY CATEGORY',
+            name: 'NUMBER OF APPLICATIONS BY CATEGORY',
             type: 'pie',
             roseType: 'radius',
             radius: [15, 95],
