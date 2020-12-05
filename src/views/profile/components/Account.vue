@@ -4,7 +4,7 @@
       <el-input v-model.trim="user.name" />
     </el-form-item>
     <el-form-item label="Email">
-      <el-input v-model.trim="user.email" />
+      <el-input v-model.trim="user.email" disabled />
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submit">Update</el-button>
