@@ -42,3 +42,10 @@ export function signup(data) {
     data: data
   })
 }
+
+export function fetchActivities(id) {
+  return request({
+    url: '/v1/activity-management/activity-by-creator-id/' + id,
+    method: 'get'
+  })
+}

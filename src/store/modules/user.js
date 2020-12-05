@@ -6,7 +6,7 @@ const state = {
   accId: '',
   token: getToken(),
   username: getUserId(),
-  fullname: '',
+  name: '',
   avatar: '',
   introduction: '',
   roles: []
@@ -26,7 +26,7 @@ const mutations = {
     state.introduction = introduction
   },
   SET_NAME: (state, fullname) => {
-    state.fullname = fullname
+    state.name = fullname
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
@@ -64,7 +64,6 @@ const actions = {
         }
         data.roles = [data.role]
         data.introduction = 'I am a super administrator'
-        // data.avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
         data.avatar = 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/corporate-company-logo-design-template-2402e0689677112e3b2b6e0f399d7dc3_screen.jpg?ts=1561532453'
         const { id, roles, fullname, avatar, introduction } = data
         // anhhy
@@ -89,6 +88,7 @@ const actions = {
   // user logout
   logout({ commit, state, dispatch }) {
     return new Promise((resolve, reject) => {
+      commit('SET_ACCID', '')
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
       removeToken()

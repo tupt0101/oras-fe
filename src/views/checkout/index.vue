@@ -35,7 +35,7 @@
                   <tbody>
                     <tr>
                       <td class="item">{{ package_ && package_.name }} Package</td>
-                      <td class="amount">{{ package_ && package_.currency }} {{ package_ && package_.price }}</td>
+                      <td class="amount">{{ package_ && package_.currency }} {{ package_ && package_.price | toThousandFilter }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -43,7 +43,7 @@
                   <tbody>
                     <tr>
                       <td class="title">Total</td>
-                      <td class="total-amount">{{ package_ && package_.currency }} {{ package_ && package_.price }}</td>
+                      <td class="total-amount">{{ package_ && package_.currency }} {{ package_ && package_.price | toThousandFilter }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -59,8 +59,6 @@
                   By completing your purchase you agree to these <a href="https://www.udemy.com/terms/" class="bold" target="_blank" rel="noopener noreferrer">Terms of Service</a>.
                 </span>
               </div>
-              <!-- <router-link :to="'/v1/paypal/pay/' + (package_ && package_.price)">
-              </router-link> -->
               <el-button type="danger" class="proceed-btn" @click="proceedPaypal('https://oras-api.herokuapp.com/v1/paypal/pay/' + (package_ && package_.price) + '?accountId=' + accountId + '&packageId=' + (package_ && package_.id))">Complete Payment</el-button>
             </div>
           </el-card>

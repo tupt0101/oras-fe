@@ -29,7 +29,7 @@
       </el-table-column>
       <el-table-column label="Price" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.currency }} {{ row.price }}</span>
+          <span>{{ row.currency }} {{ row.price | toThousandFilter }}</span>
         </template>
       </el-table-column>
       <!-- <el-table-column label="Status" class-name="status-col" width="100">

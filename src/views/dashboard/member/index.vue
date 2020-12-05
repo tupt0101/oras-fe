@@ -25,9 +25,14 @@
         </div>
       </el-col>
     </el-row> -->
+    <el-row>
+      <div class="banner-wrapper">
+        <banner />
+      </div>
+    </el-row>
 
     <el-row :gutter="8">
-      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 16}" :xl="{span: 16}" style="padding-right:8px;margin-bottom:30px;">
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 24}" :xl="{span: 24}" style="padding-right:8px; margin: auto; margin-bottom:30px;">
         <open-job-list />
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 8}" :xl="{span: 8}" style="margin-bottom:30px;">
@@ -47,8 +52,9 @@
 // import TransactionTable from './components/TransactionTable'
 // import TodoList from './components/TodoList'
 // import BoxCard from './components/BoxCard'
-import OpenJobList from './components/OpenJobList'
 // import OpenJobTable from './components/OpenJobTable'
+import OpenJobList from './components/OpenJobList'
+import Banner from './components/Banner'
 
 const lineChartData = {
   newVisitis: {
@@ -82,7 +88,8 @@ export default {
     // TodoList,
     // BoxCard,
     // OpenJobTable,
-    OpenJobList
+    OpenJobList,
+    Banner
   },
   data() {
     return {
@@ -115,6 +122,11 @@ export default {
     padding: 16px 16px 0;
     margin-bottom: 32px;
   }
+
+  // .banner-wrapper {
+  //   padding: 16px 16px 0;
+  //   margin-bottom: 32px;
+  // }
 }
 
 @media (max-width:1024px) {

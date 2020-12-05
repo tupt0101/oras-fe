@@ -70,7 +70,7 @@ export default {
         legend: {
           left: 'center',
           bottom: '5',
-          data: ['user', 'ORAS']
+          data: ['User', 'ORAS']
           // data: category
         },
         grid: {
@@ -94,7 +94,7 @@ export default {
           }
         }],
         series: [{
-          name: 'user',
+          name: 'User',
           type: 'bar',
           barWidth: '35%',
           data: userData,
