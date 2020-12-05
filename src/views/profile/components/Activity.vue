@@ -1,10 +1,10 @@
 <template>
   <div class="block timeline-container">
     <el-timeline>
-      <el-timeline-item v-for="(item,index) of timeline" :key="index" :timestamp="item.timestamp" placement="top">
+      <el-timeline-item v-for="(item,index) of listActivity" :key="index" :timestamp="(new Date(item.time)).toLocaleDateString()" placement="top">
         <el-card>
-          <h4>{{ item.title }}</h4>
-          <p>{{ item.content }}</p>
+          <h3>{{ item.title }}</h3>
+          <p style="font-style: italic">By {{ item.accountById.fullname }} at {{ (new Date(item.time)).toLocaleString() }}</p>
         </el-card>
       </el-timeline-item>
     </el-timeline>
@@ -12,51 +12,26 @@
 </template>
 
 <script>
+import { fetchActivities } from '@/api/user'
 export default {
   data() {
     return {
-      timeline: [
-        {
-          timestamp: '2019/4/20',
-          title: 'Update Github template',
-          content: 'PanJiaChen committed 2019/4/20 20:46'
-        },
-        {
-          timestamp: '2019/4/21',
-          title: 'Update Github template',
-          content: 'PanJiaChen committed 2019/4/21 20:46'
-        },
-        {
-          timestamp: '2019/4/22',
-          title: 'Build Template',
-          content: 'PanJiaChen committed 2019/4/22 20:46'
-        },
-        {
-          timestamp: '2019/4/23',
-          title: 'Release New Version',
-          content: 'PanJiaChen committed 2019/4/23 20:46'
-        },
-        {
-          timestamp: '2019/4/20',
-          title: 'Update Github template',
-          content: 'PanJiaChen committed 2019/4/20 20:46'
-        },
-        {
-          timestamp: '2019/4/21',
-          title: 'Update Github template',
-          content: 'PanJiaChen committed 2019/4/21 20:46'
-        },
-        {
-          timestamp: '2019/4/22',
-          title: 'Build Template',
-          content: 'PanJiaChen committed 2019/4/22 20:46'
-        },
-        {
-          timestamp: '2019/4/23',
-          title: 'Release New Version',
-          content: 'PanJiaChen committed 2019/4/23 20:46'
-        }
-      ]
+      listActivity: null
+    }
+  },
+  computed: {
+    accountId() {
+      return this.$store.state.user.accId
+    }
+  },
+  created() {
+    this.getActivities()
+  },
+  methods: {
+    getActivities() {
+      fetchActivities(this.accountId).then(response => {
+        this.listActivity = response.data.sort((a, b) => b.timestamp - a.timestamp)
+      })
     }
   }
 }

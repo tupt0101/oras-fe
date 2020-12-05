@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div v-for="post in list" :key="post.id" class="list" :post="post">
       <div class="box">
         <article class="media">
@@ -158,6 +158,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container {
+  width: 1180px;
+  margin: auto;
+  margin-top: 30px;
+}
 
 .list {
   max-width: 100%;
@@ -247,6 +252,7 @@ export default {
   border: #1890ff;
   border-radius: 3px;
   padding: 10px;
+  cursor: pointer;
 }
 
 .level-item {

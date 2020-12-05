@@ -85,9 +85,9 @@ export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        published: 'success',
-        draft: 'info',
-        deleted: 'danger'
+        Published: 'success',
+        Draft: 'info',
+        Closed: 'danger'
       }
       return statusMap[status]
     }

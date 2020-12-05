@@ -63,10 +63,10 @@ export default {
       this.chart = echarts.init(this.$el, 'macarons')
       this.setOptions(this.chartData)
     },
-    setOptions({ category, systemData, userData } = {}) {
+    setOptions({ month, userData } = {}) {
       this.chart.setOption({
         xAxis: {
-          data: category,
+          data: month,
           boundaryGap: false,
           axisTick: {
             show: false
@@ -92,10 +92,11 @@ export default {
           }
         },
         legend: {
-          data: ['system', 'user']
+          // data: ['system', 'user']
+          data: ['user']
         },
         series: [{
-          name: 'system', itemStyle: {
+          name: 'user', itemStyle: {
             normal: {
               color: '#FF005A',
               lineStyle: {
@@ -106,30 +107,31 @@ export default {
           },
           smooth: true,
           type: 'line',
-          data: systemData,
-          animationDuration: 2800,
-          animationEasing: 'cubicInOut'
-        },
-        {
-          name: 'user',
-          smooth: true,
-          type: 'line',
-          itemStyle: {
-            normal: {
-              color: '#3888fa',
-              lineStyle: {
-                color: '#3888fa',
-                width: 2
-              },
-              areaStyle: {
-                color: '#f3f8ff'
-              }
-            }
-          },
           data: userData,
           animationDuration: 2800,
-          animationEasing: 'quadraticOut'
-        }]
+          animationEasing: 'cubicInOut'
+        }
+        // {
+        //   name: 'user',
+        //   smooth: true,
+        //   type: 'line',
+        //   itemStyle: {
+        //     normal: {
+        //       color: '#3888fa',
+        //       lineStyle: {
+        //         color: '#3888fa',
+        //         width: 2
+        //       },
+        //       areaStyle: {
+        //         color: '#f3f8ff'
+        //       }
+        //     }
+        //   },
+        //   data: userData,
+        //   animationDuration: 2800,
+        //   animationEasing: 'quadraticOut'
+        // }
+        ]
       })
     }
   }

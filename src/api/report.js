@@ -30,7 +30,7 @@ export function fetchAverageSalary(base) {
 
 export function fetchAverageSalaryOfAccount(id, base) {
   return request({
-    url: '/v1/report-management/average-salary-of-account-by-category/' + id + '/' + base,
+    url: '/v1/report-management/system-user-salary-by-category/' + id + '/' + base,
     method: 'get'
   })
 }
@@ -62,3 +62,18 @@ export function fetchCandidateByCategoryOfAccount(id) {
     method: 'get'
   })
 }
+
+export function fetchTransactionOfAccount(id) {
+  return request({
+    url: '/v1/account-package-management/account-package-by-account-id/' + id,
+    method: 'get'
+  })
+}
+
+export function fetchPurchaseByMonthAccount(id, year) {
+  return request({
+    url: '/v1/report-management/account-purchase-report/' + id + '/' + year,
+    method: 'get'
+  })
+}
+

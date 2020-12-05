@@ -298,19 +298,6 @@ export const asyncRoutes = [
   },
 
   {
-    path: '/report',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/report/index'),
-        name: 'Report',
-        meta: { title: 'Report', icon: 'chart', noCache: true }
-      }
-    ]
-  },
-
-  {
     path: '/purchase',
     component: Layout,
     redirect: '/purchase/index',
@@ -343,6 +330,19 @@ export const asyncRoutes = [
       }
     ],
     hidden: true
+  },
+
+  {
+    path: '/report',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/report/index'),
+        name: 'Report',
+        meta: { title: 'Report', icon: 'chart', noCache: true }
+      }
+    ]
   },
 
   {

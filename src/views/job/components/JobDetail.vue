@@ -108,7 +108,7 @@ import Tinymce from '@/components/Tinymce'
 import MDinput from '@/components/MDinput'
 import Sticky from '@/components/Sticky' // 粘性header组件
 import { validURL } from '@/utils/validate'
-import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
+// import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
 import { getAccountId } from '../../../utils/auth'
 import { createJob, fetchCategory, publishJob, fetchJob } from '@/api/job'
 
@@ -147,7 +147,8 @@ export default {
     Tinymce,
     MDinput,
     // Upload,
-    Sticky, CommentDropdown, PlatformDropdown, SourceUrlDropdown },
+    Sticky
+  },
   props: {
     isEdit: {
       type: Boolean,
