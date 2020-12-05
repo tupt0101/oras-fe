@@ -45,6 +45,12 @@
       <el-col :xs="24" :sm="24" :lg="24">
         <div class="chart-wrapper">
           <h2 class="title">Expenses By Month</h2>
+          <select v-model="selectedYear" @click="handleSetLineChartData">
+            <option disabled value="">Please select a year</option>
+            <option>2018</option>
+            <option>2019</option>
+            <option>2020</option>
+          </select>
           <purchase-by-month v-if="purchaseData" :chart-data="purchaseData" />
         </div>
       </el-col>
@@ -107,7 +113,7 @@ export default {
         width: '100%',
         height: '386px'
       },
-      year: '2020'
+      selectedYear: '2020'
     }
   },
   computed: {
@@ -123,12 +129,12 @@ export default {
     this.getSalaryData()
     this.getJobData()
     this.getCandidateData()
-    this.getPurchaseData()
+    this.getPurchaseData(this.selectedYear)
   },
   methods: {
-    // handleSetLineChartData(type) {
-    //   this.lineChartData = lineChartData[type]
-    // },
+    handleSetLineChartData() {
+      this.getPurchaseData(this.selectedYear)
+    },
     getSalaryData() {
       fetchAverageSalaryOfAccount(this.accountId, this.baseCurrency).then(response => {
         this.avgSalaryData.systemData = response.data.system.map(item => item.averageSalary)
@@ -148,8 +154,8 @@ export default {
         this.candidateByCate.userData = response.data.map(item => ({ value: item.numOfApplication, name: item.category }))
       })
     },
-    getPurchaseData() {
-      fetchPurchaseByMonthAccount(this.accountId, this.year).then(response => {
+    getPurchaseData(selectedYear) {
+      fetchPurchaseByMonthAccount(this.accountId, selectedYear).then(response => {
         this.purchaseData.month = response.data.map(item => item.month)
         this.purchaseData.userData = response.data.map(item => item.amount)
       })

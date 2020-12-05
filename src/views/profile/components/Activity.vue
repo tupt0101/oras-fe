@@ -3,8 +3,8 @@
     <el-timeline>
       <el-timeline-item v-for="(item,index) of listActivity" :key="index" :timestamp="(new Date(item.time)).toLocaleDateString()" placement="top">
         <el-card>
-          <h4>{{ item.title }}</h4>
-          <p>{{ item.accountById.fullname }}</p>
+          <h3>{{ item.title }}</h3>
+          <p style="font-style: italic">By {{ item.accountById.fullname }} at {{ (new Date(item.time)).toLocaleString() }}</p>
         </el-card>
       </el-timeline-item>
     </el-timeline>

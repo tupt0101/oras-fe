@@ -1,40 +1,44 @@
 <template>
-  <el-row :gutter="20">
-    <el-form>
+  <el-form>
+    <el-row :gutter="20">
       <el-col :lg="12">
-        <el-form-item label="Name">
-          <el-input v-model.trim="user.name" />
+        <el-form-item label="Current Password">
+          <el-input v-model.trim="pw.curPassword" />
         </el-form-item>
       </el-col>
+    </el-row>
+    <el-row>
       <el-col :lg="12">
-        <el-form-item label="Email">
-          <el-input v-model.trim="user.email" disabled />
+        <el-form-item label="New Password">
+          <el-input v-model.trim="pw.newPassword" />
         </el-form-item>
       </el-col>
+    </el-row>
+    <el-row>
       <el-col :lg="12">
-        <el-form-item label="Phone number">
-          <el-input v-model.trim="user.phoneNo" />
+        <el-form-item label="Confirm Password">
+          <el-input v-model.trim="pw.confirmPassword" />
         </el-form-item>
       </el-col>
+    </el-row>
+    <el-row>
       <el-col :lg="24">
         <el-form-item>
           <el-button type="primary" @click="submit">Update</el-button>
         </el-form-item>
       </el-col>
-    </el-form>
-  </el-row>
+    </el-row>
+  </el-form>
 </template>
 
 <script>
 export default {
-  props: {
-    user: {
-      type: Object,
-      default: () => {
-        return {
-          name: '',
-          email: ''
-        }
+  data() {
+    return {
+      pw: {
+        curPassword: '',
+        newPassword: '',
+        confirmPassword: ''
       }
     }
   },
