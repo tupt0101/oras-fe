@@ -28,6 +28,13 @@
           <span>{{ row.job.title }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="Job Status" width="150px" align="center">
+        <template slot-scope="{row}">
+          <el-tag :type="row.job.status | statusFilter">
+            {{ row.job.status }}
+          </el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="Duration" width="300px" align="center">
         <template slot-scope="{row}">
           <span>{{ (new Date(row.job.createDate)).toLocaleDateString() }} - {{ (new Date(row.job.applyTo)).toLocaleDateString() }}</span>
@@ -62,9 +69,9 @@ export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        published: 'success',
-        draft: 'info',
-        deleted: 'danger'
+        Published: 'success',
+        Draft: 'info',
+        Closed: 'danger'
       }
       return statusMap[status]
     }

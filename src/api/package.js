@@ -41,3 +41,10 @@ export function cancelPackage(id) {
     method: 'put'
   })
 }
+
+export function checkValidAccount(url) {
+  return request({
+    url: url,
+    method: 'get'
+  })
+}

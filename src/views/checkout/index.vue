@@ -35,7 +35,7 @@
                   <tbody>
                     <tr>
                       <td class="item">{{ package_ && package_.name }} Package</td>
-                      <td class="amount">{{ package_ && package_.currency }} {{ package_ && package_.price }}</td>
+                      <td class="amount">{{ package_ && package_.currency }} {{ package_ && package_.price | toThousandFilter }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -43,7 +43,7 @@
                   <tbody>
                     <tr>
                       <td class="title">Total</td>
-                      <td class="total-amount">{{ package_ && package_.currency }} {{ package_ && package_.price }}</td>
+                      <td class="total-amount">{{ package_ && package_.currency }} {{ package_ && package_.price | toThousandFilter }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -56,23 +56,27 @@
             <div class="">
               <div class="legal-message">
                 <span>
-                  By completing your purchase you agree to these <a href="https://www.udemy.com/terms/" class="bold" target="_blank" rel="noopener noreferrer">Terms of Service</a>.
+                  By completing your purchase you agree to these <a href="#" class="bold" target="_blank" rel="noopener noreferrer">Terms of Service</a>.
                 </span>
               </div>
-              <!-- <router-link :to="'/v1/paypal/pay/' + (package_ && package_.price)">
-              </router-link> -->
-              <el-button type="danger" class="proceed-btn" @click="proceedPaypal('https://oras-api.herokuapp.com/v1/paypal/pay/' + (package_ && package_.price) + '?accountId=' + accountId + '&packageId=' + (package_ && package_.id))">Complete Payment</el-button>
+              <el-button type="danger" :loading="btnLoading" class="proceed-btn" @click="proceedPaypal('v1/paypal/pay/' + (package_ && package_.price) + '?accountId=' + accountId + '&packageId=' + (package_ && package_.id))">Complete Payment</el-button>
             </div>
           </el-card>
         </el-col>
 
       </el-row>
     </div>
+
+    <el-dialog :visible.sync="showDialog" width="33%">
+      <span slot="title"><svg-icon class-name="size-icon" :icon-class="hasError ? 'failed' : 'success'" /> {{ dialogTitle }}</span>
+      <p class="message" v-html="message" />
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
-import { fetchPackage } from '@/api/package'
+import { fetchPackage, checkValidAccount } from '@/api/package'
 
 export default {
   name: 'Checkout',
@@ -87,7 +91,13 @@ export default {
         cvv: ''
       },
       activeTab: 'activity',
-      selectMethod: 1
+      selectMethod: 1,
+      dialogTitle: '',
+      message: '',
+      showDialog: false,
+      btnLoading: false,
+      hasError: false,
+      baseURL: process.env.VUE_APP_BASE_API
     }
   },
   computed: {
@@ -106,7 +116,20 @@ export default {
       })
     },
     proceedPaypal(link) {
-      window.open(link, '_self')
+      this.btnLoading = true
+      checkValidAccount(link)
+        .then(response => {
+          window.open(this.baseURL + link, '_self')
+        })
+        .catch(err => {
+          this.dialogTitle = 'Something went wrong!'
+          this.hasError = true
+          if (err.response.data.status === 406) {
+            this.message = 'You have to use up your number of posts or cancel your current package in order to purchase a new one.'
+          }
+          this.showDialog = true
+          this.btnLoading = false
+        })
     }
   }
 }

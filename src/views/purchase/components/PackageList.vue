@@ -17,7 +17,7 @@
             <div class="box-center">
               <div class="text-center">
                 <span v-if="pack.price > 0">
-                  <span class="price">{{ pack.currency }}{{ pack.price }}</span>
+                  <span class="price">{{ pack.currency }}{{ pack.price | toThousandFilter }}</span>
                   <!-- <span class="unit">/{{ pack.duration }}</span> -->
                   <span class="unit">/month</span>
                 </span>

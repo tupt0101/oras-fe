@@ -19,6 +19,9 @@
               <el-tab-pane label="Edit Company" name="company">
                 <company :company="company" />
               </el-tab-pane>
+              <el-tab-pane label="Change Password" name="changePassword">
+                <change-password />
+              </el-tab-pane>
               <el-tab-pane label="Billing" name="billing">
                 <billing v-if="currPackage" :curr-package="currPackage" />
               </el-tab-pane>
@@ -37,9 +40,11 @@ import UserCard from './components/UserCard'
 import Activity from './components/Activity'
 import Account from './components/Account'
 import Company from './components/Company'
+import ChangePassword from './components/ChangePassword'
 import Billing from './components/Billing'
 
 import { getCurrentPackage } from '@/api/package'
+import { fetchAccountData } from '@/api/user'
 
 export default {
   name: 'Profile',
@@ -48,6 +53,7 @@ export default {
     Activity,
     Account,
     Company,
+    ChangePassword,
     Billing
   },
   data() {
@@ -55,12 +61,13 @@ export default {
       user: {},
       company: {},
       currPackage: {},
-      activeTab: 'activity'
+      activeTab: 'activity',
+      account: null
     }
   },
   computed: {
     ...mapGetters([
-      'fullname',
+      'name',
       'avatar',
       'roles',
       'username'
@@ -70,17 +77,29 @@ export default {
     }
   },
   created() {
-    this.getUser()
+    this.getAccountData()
     this.getPackage()
   },
   methods: {
-    getUser() {
-      this.user = {
-        name: this.fullname,
-        role: this.roles.join(' | '),
-        email: this.email,
-        avatar: this.avatar
-      }
+    getAccountData() {
+      fetchAccountData(this.accountId).then(response => {
+        this.account = response.data
+        this.user = {
+          name: this.account.fullname,
+          role: this.account.role,
+          email: this.account.email,
+          phoneNo: this.account.phoneNo,
+          avatar: this.avatar
+        }
+        this.company = {
+          name: this.account.companyById.name,
+          email: this.account.companyById.email,
+          phoneNo: this.account.companyById.phoneNo,
+          location: this.account.companyById.location,
+          taxCode: this.account.companyById.taxCode,
+          description: this.account.companyById.description
+        }
+      })
     },
     getPackage() {
       getCurrentPackage(this.accountId)
