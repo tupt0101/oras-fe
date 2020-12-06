@@ -42,7 +42,7 @@ export default {
       type: Object,
       default: () => {
         return {
-          name: '',
+          fullname: '',
           role: '',
           email: '',
           phoneNo: '',

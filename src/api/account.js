@@ -21,6 +21,22 @@ export function fetchAccount(id) {
   })
 }
 
+export function updateAccount(data) {
+  return request({
+    url: '/v1/account-management/update-account',
+    method: 'put',
+    data: data
+  })
+}
+
+export function changePassword(data) {
+  return request({
+    url: '/v1/account-management/change-password',
+    method: 'put',
+    data: data
+  })
+}
+
 export function fetchCompanyList() {
   return request({
     url: '/v1/company-management/companies',
@@ -32,6 +48,14 @@ export function fetchCompanyListWithPagination(query) {
   return request({
     url: '/v1/company-management/companies-paging?numOfElement=' + query.limit + '&page=' + query.page,
     method: 'get'
+  })
+}
+
+export function updateCompany(data) {
+  return request({
+    url: '/v1/company-management/company',
+    method: 'put',
+    data: data
   })
 }
 

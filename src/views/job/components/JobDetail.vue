@@ -198,13 +198,11 @@ export default {
       message: '',
       showDialog: false,
       btnLoading: false,
-      hasError: false
+      hasError: false,
+      dialogTitle: ''
     }
   },
   computed: {
-    // contentShortLength() {
-    //   return this.postForm.data.description.length
-    // },
     displayTime: {
       // set and get is useful when the data
       // returned by the back end api is different from the front end
@@ -269,7 +267,6 @@ export default {
         })
         return
       }
-      console.log(this.postForm)
       this.$refs.postForm.validate(valid => {
         if (valid) {
           this.loading = true
