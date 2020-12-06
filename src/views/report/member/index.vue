@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-editor-container">
 
-    <panel-group @handleSetLineChartData="handleSetLineChartData" />
+    <panel-group />
 
     <el-row style="background:#fff;padding:0px 16px 16px 16px; margin-bottom:32px;">
       <candidate-status />
