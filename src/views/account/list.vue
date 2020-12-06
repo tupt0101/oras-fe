@@ -58,12 +58,12 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getAccountList" />
   </div>
 </template>
 
 <script>
-import { fetchAccountList } from '@/api/account'
+import { fetchAccountList, fetchAccountListWithPagination } from '@/api/account'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
@@ -85,19 +85,26 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 20
+        limit: 10
       }
     }
   },
   created() {
-    this.getList()
+    this.getTotal()
+    this.getAccountList()
   },
   methods: {
-    getList() {
+    getTotal() {
       this.listLoading = true
       fetchAccountList().then(response => {
+        this.total = response.data.length
+        this.listLoading = false
+      })
+    },
+    getAccountList() {
+      this.listLoading = true
+      fetchAccountListWithPagination(this.listQuery).then(response => {
         this.list = response.data
-        // this.total = response.data.total
         this.listLoading = false
       })
     }

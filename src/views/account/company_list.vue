@@ -69,12 +69,12 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getCompanyList" />
   </div>
 </template>
 
 <script>
-import { fetchCompanyList } from '@/api/account'
+import { fetchCompanyList, fetchCompanyListWithPagination } from '@/api/account'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
@@ -97,19 +97,26 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 20
+        limit: 10
       }
     }
   },
   created() {
-    this.getList()
+    this.getTotal()
+    this.getCompanyList()
   },
   methods: {
-    getList() {
+    getTotal() {
       this.listLoading = true
       fetchCompanyList().then(response => {
+        this.total = response.data.length
+        this.listLoading = false
+      })
+    },
+    getCompanyList() {
+      this.listLoading = true
+      fetchCompanyListWithPagination(this.listQuery).then(response => {
         this.list = response.data
-        // this.total = response.data.total
         this.listLoading = false
       })
     }

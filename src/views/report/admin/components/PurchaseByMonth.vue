@@ -33,7 +33,9 @@ export default {
   },
   data() {
     return {
-      chart: null
+      chart: null,
+      category: null,
+      data: null
     }
   },
   watch: {
@@ -61,10 +63,10 @@ export default {
       this.chart = echarts.init(this.$el, 'macarons')
       this.setOptions(this.chartData)
     },
-    setOptions({ expectedData, actualData } = {}) {
+    setOptions({ month, userData } = {}) {
       this.chart.setOption({
         xAxis: {
-          data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          data: month,
           boundaryGap: false,
           axisTick: {
             show: false
@@ -90,10 +92,11 @@ export default {
           }
         },
         legend: {
-          data: ['expected', 'actual']
+          // data: ['system', 'user']
+          data: ['user']
         },
         series: [{
-          name: 'expected', itemStyle: {
+          name: 'user', itemStyle: {
             normal: {
               color: '#FF005A',
               lineStyle: {
@@ -104,30 +107,31 @@ export default {
           },
           smooth: true,
           type: 'line',
-          data: expectedData,
+          data: userData,
           animationDuration: 2800,
           animationEasing: 'cubicInOut'
-        },
-        {
-          name: 'actual',
-          smooth: true,
-          type: 'line',
-          itemStyle: {
-            normal: {
-              color: '#3888fa',
-              lineStyle: {
-                color: '#3888fa',
-                width: 2
-              },
-              areaStyle: {
-                color: '#f3f8ff'
-              }
-            }
-          },
-          data: actualData,
-          animationDuration: 2800,
-          animationEasing: 'quadraticOut'
-        }]
+        }
+        // {
+        //   name: 'user',
+        //   smooth: true,
+        //   type: 'line',
+        //   itemStyle: {
+        //     normal: {
+        //       color: '#3888fa',
+        //       lineStyle: {
+        //         color: '#3888fa',
+        //         width: 2
+        //       },
+        //       areaStyle: {
+        //         color: '#f3f8ff'
+        //       }
+        //     }
+        //   },
+        //   data: userData,
+        //   animationDuration: 2800,
+        //   animationEasing: 'quadraticOut'
+        // }
+        ]
       })
     }
   }

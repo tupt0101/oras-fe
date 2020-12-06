@@ -7,6 +7,13 @@ export function fetchAccountList() {
   })
 }
 
+export function fetchAccountListWithPagination(query) {
+  return request({
+    url: '/v1/account-management/accounts-paging?numOfElement=' + query.limit + '&page=' + query.page,
+    method: 'get'
+  })
+}
+
 export function fetchAccount(id) {
   return request({
     url: '/v1/account-management/account/' + id,
@@ -17,6 +24,13 @@ export function fetchAccount(id) {
 export function fetchCompanyList() {
   return request({
     url: '/v1/company-management/companies',
+    method: 'get'
+  })
+}
+
+export function fetchCompanyListWithPagination(query) {
+  return request({
+    url: '/v1/company-management/companies-paging?numOfElement=' + query.limit + '&page=' + query.page,
     method: 'get'
   })
 }

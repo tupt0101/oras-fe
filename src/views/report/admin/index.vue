@@ -1,26 +1,57 @@
 <template>
   <div class="dashboard-editor-container">
 
-    <!-- <panel-group @handleSetLineChartData="handleSetLineChartData" /> -->
+    <panel-group />
 
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <line-chart :chart-data="lineChartData" />
+    <el-row style="background:#fff;padding:0px 16px 16px 16px; margin-bottom:32px;">
+      <candidate-status />
+    </el-row>
+
+    <el-row style="background:#fff;padding:0px 16px 16px 16px; margin-bottom:32px;">
+      <time-to-hire />
     </el-row>
 
     <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
-          <raddar-chart />
+          <h2 class="title">Number of Jobs by Category</h2>
+          <job-by-category v-if="jobByCate" :chart-data="jobByCate" />
         </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
-          <pie-chart />
+          <h2 class="title">Number of Applications by Category</h2>
+          <candidate-by-category v-if="candidateByCate" :chart-data="candidateByCate" />
         </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
-          <bar-chart />
+          <h2 class="title">Compare Avarage Salary by Category</h2>
+          <avg-salary-by-category style="barchartStyle" :chart-data="avgSalaryData" />
+        </div>
+      </el-col>
+    </el-row>
+
+    <el-row>
+      <el-col :xs="24" :sm="24" :lg="16">
+        <div class="chart-wrapper">
+          <h2 class="title">Purchase History</h2>
+          <purchase-history />
+        </div>
+      </el-col>
+    </el-row>
+
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+      <el-col :xs="24" :sm="24" :lg="24">
+        <div class="chart-wrapper">
+          <h2 class="title">Expenses By Month</h2>
+          <select v-model="selectedYear" @click="handleSetLineChartData">
+            <option disabled value="">Please select a year</option>
+            <option>2018</option>
+            <option>2019</option>
+            <option>2020</option>
+          </select>
+          <purchase-by-month v-if="purchaseData" :chart-data="purchaseData" />
         </div>
       </el-col>
     </el-row>
@@ -29,50 +60,105 @@
 </template>
 
 <script>
-// import PanelGroup from './components/PanelGroup'
-import LineChart from './components/LineChart'
-import RaddarChart from './components/RaddarChart'
-import PieChart from './components/PieChart'
-import BarChart from './components/BarChart'
-// import TransactionTable from './components/TransactionTable'
+import PurchaseHistory from './components/PurchaseHistory'
+import PanelGroup from './components/PanelGroup'
+// import LineChart from './components/LineChart'
+import PurchaseByMonth from './components/PurchaseByMonth'
+import TimeToHire from './components/TimeToHire'
+import CandidateStatus from './components/CandidateStatus'
+import JobByCategory from './components/JobByCategory'
+import CandidateByCategory from './components/CandidateByCategory'
+import AvgSalaryByCategory from './components/AvgSalaryByCategory'
 
-const lineChartData = {
-  newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145]
-  },
-  messages: {
-    expectedData: [200, 192, 120, 144, 160, 130, 140],
-    actualData: [180, 160, 151, 106, 145, 150, 130]
-  },
-  purchases: {
-    expectedData: [80, 100, 121, 104, 105, 90, 100],
-    actualData: [120, 90, 100, 138, 142, 130, 130]
-  },
-  shoppings: {
-    expectedData: [130, 140, 141, 142, 145, 150, 160],
-    actualData: [120, 82, 91, 154, 162, 140, 130]
-  }
-}
+import {
+  fetchAverageSalaryOfAccount,
+  fetchJobByCategoryOfAccount,
+  fetchCandidateByCategoryOfAccount,
+  fetchPurchaseByMonthAccount
+} from '@/api/report'
 
 export default {
   name: 'DashboardAdmin',
   components: {
-    // PanelGroup,
-    LineChart,
-    RaddarChart,
-    PieChart,
-    BarChart
-    // TransactionTable,
+    PurchaseHistory,
+    PanelGroup,
+    // LineChart,
+    PurchaseByMonth,
+    TimeToHire,
+    CandidateStatus,
+    JobByCategory,
+    CandidateByCategory,
+    AvgSalaryByCategory
   },
   data() {
     return {
-      lineChartData: lineChartData.newVisitis
+      avgSalaryData: {
+        category: [],
+        systemData: [],
+        userData: []
+      },
+      jobByCate: {
+        category: [],
+        userData: []
+      },
+      candidateByCate: {
+        category: [],
+        userData: []
+      },
+      purchaseData: {
+        month: [],
+        userData: []
+      },
+      barchartStyle: {
+        width: '100%',
+        height: '386px'
+      },
+      selectedYear: '2020'
     }
   },
+  computed: {
+    accountId() {
+      return this.$store.state.user.accId
+    },
+    baseCurrency() {
+      const lang = this.$store.getters.language
+      return lang === 'vi' ? 'vnd' : 'usd'
+    }
+  },
+  created() {
+    this.getSalaryData()
+    this.getJobData()
+    this.getCandidateData()
+    this.getPurchaseData(this.selectedYear)
+  },
   methods: {
-    handleSetLineChartData(type) {
-      this.lineChartData = lineChartData[type]
+    handleSetLineChartData() {
+      this.getPurchaseData(this.selectedYear)
+    },
+    getSalaryData() {
+      fetchAverageSalaryOfAccount(this.accountId, this.baseCurrency).then(response => {
+        this.avgSalaryData.systemData = response.data.system.map(item => item.averageSalary)
+        this.avgSalaryData.userData = response.data.user.map(item => item.averageSalary)
+        this.avgSalaryData.category = response.data.user.map(item => item.category)
+      })
+    },
+    getJobData() {
+      fetchJobByCategoryOfAccount(this.accountId).then(response => {
+        this.jobByCate.category = response.data.map(item => item.category)
+        this.jobByCate.userData = response.data.map(item => ({ value: item.numOfPost, name: item.category }))
+      })
+    },
+    getCandidateData() {
+      fetchCandidateByCategoryOfAccount(this.accountId).then(response => {
+        this.candidateByCate.category = response.data.map(item => item.category)
+        this.candidateByCate.userData = response.data.map(item => ({ value: item.numOfApplication, name: item.category }))
+      })
+    },
+    getPurchaseData(selectedYear) {
+      fetchPurchaseByMonthAccount(this.accountId, selectedYear).then(response => {
+        this.purchaseData.month = response.data.map(item => item.month)
+        this.purchaseData.userData = response.data.map(item => item.amount)
+      })
     }
   }
 }
@@ -83,6 +169,14 @@ export default {
   padding: 32px;
   background-color: rgb(240, 242, 245);
   position: relative;
+
+  .title {
+    color: #182642;
+    line-height: 1.25;
+    text-decoration: none;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
 
   .github-corner {
     position: absolute;
