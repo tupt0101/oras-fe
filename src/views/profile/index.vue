@@ -19,9 +19,9 @@
               <el-tab-pane label="Edit Company" name="company">
                 <company :company="company" />
               </el-tab-pane>
-              <el-tab-pane label="Change Password" name="changePassword">
-                <change-password />
-              </el-tab-pane>
+<!--              <el-tab-pane label="Change Password" name="changePassword">-->
+<!--                <change-password />-->
+<!--              </el-tab-pane>-->
               <el-tab-pane label="Billing" name="billing">
                 <billing v-if="currPackage" :curr-package="currPackage" />
               </el-tab-pane>
@@ -67,7 +67,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'name',
+      'fullname',
       'avatar',
       'roles',
       'username'
@@ -85,13 +85,15 @@ export default {
       fetchAccountData(this.accountId).then(response => {
         this.account = response.data
         this.user = {
-          name: this.account.fullname,
+          id: this.account.id,
+          fullname: this.account.fullname,
           role: this.account.role,
           email: this.account.email,
           phoneNo: this.account.phoneNo,
           avatar: this.avatar
         }
         this.company = {
+          id: this.account.companyId,
           name: this.account.companyById.name,
           email: this.account.companyById.email,
           phoneNo: this.account.companyById.phoneNo,
