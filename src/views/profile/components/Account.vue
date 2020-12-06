@@ -2,7 +2,7 @@
   <div>
     <el-form>
       <el-form-item label="Email:">
-        <input v-model.trim="user.email" readonly="readonly" style="border: 0 none;" />
+        <el-input v-model.trim="user.email" readonly="readonly" style="border: 0 none;" />
       </el-form-item>
     </el-form>
     <el-checkbox v-model="checkChangeInfo">I want to change my information</el-checkbox>
