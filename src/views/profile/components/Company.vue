@@ -3,7 +3,7 @@
     <el-form>
       <el-col :lg="12">
         <el-form-item label="Name">
-          <el-input v-model.trim="company.name" />
+      <el-input v-model="company.name" />
         </el-form-item>
       </el-col>
       <el-col :lg="12">
@@ -18,7 +18,7 @@
       </el-col>
       <el-col :lg="12">
         <el-form-item label="Location">
-          <el-input v-model.trim="company.location" />
+      <el-input v-model="company.location" />
         </el-form-item>
       </el-col>
       <el-col :lg="12">
@@ -28,7 +28,7 @@
       </el-col>
       <el-col :lg="24">
         <el-form-item label="Description">
-          <el-input v-model.trim="company.description" />
+      <el-input v-model="company.description" />
         </el-form-item>
       </el-col>
       <el-col :lg="24">
@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import { updateCompany } from '../../../api/account'
+
 export default {
   props: {
     company: {
@@ -59,10 +61,19 @@ export default {
   },
   methods: {
     submit() {
-      this.$message({
-        message: 'User information has been updated successfully',
-        type: 'success',
-        duration: 5 * 1000
+      updateCompany(this.company).then(response => {
+        this.$message({
+          message: 'Company information has been updated successfully',
+          type: 'success',
+          duration: 5 * 1000
+        })
+      }).catch(err => {
+        this.$message({
+          message: err.response.data.message,
+          type: 'error',
+          duration: 5 * 1000
+        })
+        console.log(err)
       })
     }
   }

@@ -1,5 +1,14 @@
 import { login, getInfo, signup } from '@/api/user'
-import { getToken, setToken, removeToken, getUserId, setUserId, setAccountId, removeUserId } from '@/utils/auth'
+import {
+  getToken,
+  setToken,
+  removeToken,
+  getUserId,
+  setUserId,
+  setAccountId,
+  removeUserId,
+  removeAccountId
+} from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
 const state = {
@@ -66,7 +75,6 @@ const actions = {
         data.introduction = 'I am a super administrator'
         data.avatar = 'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/corporate-company-logo-design-template-2402e0689677112e3b2b6e0f399d7dc3_screen.jpg?ts=1561532453'
         const { id, roles, fullname, avatar, introduction } = data
-        // anhhy
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
@@ -93,6 +101,7 @@ const actions = {
       commit('SET_ROLES', [])
       removeToken()
       removeUserId()
+      removeAccountId()
       resetRouter()
 
       resolve()

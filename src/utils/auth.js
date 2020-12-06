@@ -36,3 +36,7 @@ export function getAccountId() {
 export function setAccountId(AccountId) {
   return Cookies.set(AccountKey, AccountId)
 }
+
+export function removeAccountId() {
+  return Cookies.remove(AccountKey)
+}

@@ -104,7 +104,8 @@ export default {
       message: '',
       showDialog: false,
       btnLoading: false,
-      hasError: false
+      hasError: false,
+      dialogTitle: ''
     }
   },
   computed: {
