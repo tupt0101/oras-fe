@@ -3,7 +3,7 @@
     <el-form ref="infoForm" :model="infoForm" :rules="rules">
       <el-col :lg="12">
         <el-form-item label="Name" prop="compName">
-      <el-input v-model="company.name" />
+          <el-input v-model="company.name" />
         </el-form-item>
       </el-col>
       <el-col :lg="12">
@@ -18,7 +18,7 @@
       </el-col>
       <el-col :lg="12">
         <el-form-item label="Location" prop="location">
-      <el-input v-model="company.location" />
+          <el-input v-model="company.location" />
         </el-form-item>
       </el-col>
       <el-col :lg="12">
@@ -28,7 +28,7 @@
       </el-col>
       <el-col :lg="24">
         <el-form-item label="Description" prop="description">
-      <el-input v-model="company.description" />
+          <el-input v-model="company.description" />
         </el-form-item>
       </el-col>
       <el-col :lg="24">

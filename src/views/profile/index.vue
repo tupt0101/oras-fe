@@ -19,9 +19,9 @@
               <el-tab-pane label="Edit Company" name="company">
                 <company :company="company" />
               </el-tab-pane>
-<!--              <el-tab-pane label="Change Password" name="changePassword">-->
-<!--                <change-password />-->
-<!--              </el-tab-pane>-->
+              <!-- <el-tab-pane label="Change Password" name="changePassword">
+                <change-password />
+              </el-tab-pane> -->
               <el-tab-pane label="Billing" name="billing">
                 <billing v-if="currPackage" :curr-package="currPackage" />
               </el-tab-pane>
@@ -40,7 +40,7 @@ import UserCard from './components/UserCard'
 import Activity from './components/Activity'
 import Account from './components/Account'
 import Company from './components/Company'
-import ChangePassword from './components/ChangePassword'
+// import ChangePassword from './components/ChangePassword'
 import Billing from './components/Billing'
 
 import { getCurrentPackage } from '@/api/package'
@@ -53,7 +53,7 @@ export default {
     Activity,
     Account,
     Company,
-    ChangePassword,
+    // ChangePassword,
     Billing
   },
   data() {
