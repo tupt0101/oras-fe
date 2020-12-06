@@ -157,6 +157,11 @@ export default {
               duration: 5 * 1000
             })
           }).catch(err => {
+            this.$message({
+              message: 'Unexpected error occurs',
+              type: 'error',
+              duration: 5 * 1000
+            })
             console.log(err)
           })
         } else {
@@ -168,7 +173,6 @@ export default {
     changePassword() {
       this.$refs.passwordData.validate(valid => {
         if (valid) {
-          debugger
           changePassword(this.user).then(response => {
             this.$message({
               message: 'Password has been updated successfully',
