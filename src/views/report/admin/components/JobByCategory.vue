@@ -65,7 +65,7 @@ export default {
       this.chart = echarts.init(this.$el, 'macarons')
       this.setOptions(this.chartData)
     },
-    setOptions({ category, userData } = {}) {
+    setOptions({ category, systemData } = {}) {
       this.chart.setOption({
         tooltip: {
           trigger: 'item',
@@ -83,7 +83,7 @@ export default {
             roseType: 'radius',
             radius: [15, 95],
             center: ['50%', '38%'],
-            data: userData,
+            data: systemData,
             animationEasing: 'cubicInOut',
             animationDuration: 2600
           }

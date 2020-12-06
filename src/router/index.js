@@ -66,6 +66,11 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/reset-password',
+    component: () => import('@/views/reset-password/index'),
+    hidden: true
+  },
+  {
     path: '/404',
     component: () => import('@/views/error-page/404'),
     hidden: true
@@ -135,45 +140,45 @@ export const asyncRoutes = [
     ]
   },
 
-  {
-    path: '/talent-pool',
-    component: Layout,
-    redirect: '/talent-pool/list',
-    name: 'TalentPool',
-    meta: {
-      title: 'Talent Pool',
-      icon: 'el-icon-s-custom',
-      roles: ['admin']
-    },
-    children: [
-      // Edit route of components
-      {
-        path: 'create',
-        component: () => import('@/views/example/create'),
-        name: 'CreateTalentPool',
-        meta: { title: 'Create Talent Pool', icon: 'edit' }
-      },
-      {
-        path: 'edit/:id(\\d+)',
-        component: () => import('@/views/example/edit'),
-        name: 'EditTalentPool',
-        meta: { title: 'Edit Talent Pool', noCache: true, activeMenu: '/example/list' },
-        hidden: true
-      },
-      {
-        path: 'list',
-        component: () => import('@/views/example/list'),
-        name: 'TalentPoolList',
-        meta: { title: 'Talent Pool List', icon: 'list' }
-      },
-      {
-        path: 'candidate-list',
-        component: () => import('@/views/example/list'),
-        name: 'CandidateList',
-        meta: { title: 'Candidate List', icon: 'list' }
-      }
-    ]
-  },
+  // {
+  //   path: '/talent-pool',
+  //   component: Layout,
+  //   redirect: '/talent-pool/list',
+  //   name: 'TalentPool',
+  //   meta: {
+  //     title: 'Talent Pool',
+  //     icon: 'el-icon-s-custom',
+  //     roles: ['admin']
+  //   },
+  //   children: [
+  //     // Edit route of components
+  //     {
+  //       path: 'create',
+  //       component: () => import('@/views/example/create'),
+  //       name: 'CreateTalentPool',
+  //       meta: { title: 'Create Talent Pool', icon: 'edit' }
+  //     },
+  //     {
+  //       path: 'edit/:id(\\d+)',
+  //       component: () => import('@/views/example/edit'),
+  //       name: 'EditTalentPool',
+  //       meta: { title: 'Edit Talent Pool', noCache: true, activeMenu: '/example/list' },
+  //       hidden: true
+  //     },
+  //     {
+  //       path: 'list',
+  //       component: () => import('@/views/example/list'),
+  //       name: 'TalentPoolList',
+  //       meta: { title: 'Talent Pool List', icon: 'list' }
+  //     },
+  //     {
+  //       path: 'candidate-list',
+  //       component: () => import('@/views/example/list'),
+  //       name: 'CandidateList',
+  //       meta: { title: 'Candidate List', icon: 'list' }
+  //     }
+  //   ]
+  // },
 
   // {
   //   path: '/permission',

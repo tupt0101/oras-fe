@@ -9,7 +9,7 @@
           <div class="card-panel-text">
             Total Jobs
           </div>
-          <count-to :start-val="0" :end-val="panelData && panelData.totalJob" :duration="2000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="panelData && panelData.totalJobs" :duration="2000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -22,7 +22,7 @@
           <div class="card-panel-text">
             Open Jobs
           </div>
-          <count-to :start-val="0" :end-val="panelData && panelData.totalPublishJob" :duration="2400" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="panelData && panelData.openJobs" :duration="2400" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -35,7 +35,7 @@
           <div class="card-panel-text">
             Total Applications
           </div>
-          <count-to :start-val="0" :end-val="panelData && panelData.totalCandidate" :duration="2800" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="panelData && panelData.candidate" :duration="2800" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -46,9 +46,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Hired
+            Users
           </div>
-          <count-to :start-val="0" :end-val="panelData && panelData.totalHiredCandidate" :duration="3200" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="panelData && panelData.user" :duration="3200" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -57,7 +57,7 @@
 
 <script>
 import CountTo from 'vue-count-to'
-import { fetchPanelData } from '@/api/report'
+import { fetchPanelDataForAdmin } from '@/api/report'
 
 export default {
   components: {
@@ -68,20 +68,12 @@ export default {
       panelData: null
     }
   },
-  computed: {
-    accountId() {
-      return this.$store.state.user.accId
-    }
-  },
   created() {
     this.getPanelData()
   },
   methods: {
-    // handleSetLineChartData(type) {
-    //   this.$emit('handleSetLineChartData', type)
-    // },
     getPanelData() {
-      fetchPanelData(this.accountId).then(response => {
+      fetchPanelDataForAdmin().then(response => {
         this.panelData = response.data
       })
     }

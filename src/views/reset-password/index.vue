@@ -3,11 +3,9 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
-        <!-- <h1 class="title">ORAS</h1> -->
         <h3 class="title">
-          {{ $t('login.title') }}
+          {{ $t('resetPw.title') }}
         </h3>
-        <lang-select class="set-language" />
       </div>
 
       <el-form-item prop="username">
@@ -17,7 +15,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          :placeholder="$t('login.username')"
+          :placeholder="$t('resetPw.username')"
           name="username"
           type="text"
           tabindex="1"
@@ -25,38 +23,14 @@
         />
       </el-form-item>
 
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-        <el-form-item prop="password">
-          <span class="svg-container">
-            <svg-icon icon-class="password" />
-          </span>
-          <el-input
-            :key="passwordType"
-            ref="password"
-            v-model="loginForm.password"
-            :type="passwordType"
-            :placeholder="$t('login.password')"
-            name="password"
-            tabindex="2"
-            autocomplete="on"
-            @keyup.native="checkCapslock"
-            @blur="capsTooltip = false"
-            @keyup.enter.native="handleLogin"
-          />
-          <span class="show-pwd" @click="showPwd">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-          </span>
-        </el-form-item>
-      </el-tooltip>
-
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
-        {{ $t('login.logIn') }}
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleResetPassword">
+        {{ $t('resetPw.resetBtn') }}
       </el-button>
 
       <div style="text-align: right; margin-bottom: 20px">
-        <router-link to="/reset-password">
+        <router-link to="/login?redirect=%2Fdashboard">
           <p style="font-style: italic; color: rgb(91 104 111)">
-            {{ $t('login.forgot') }}
+            {{ $t('resetPw.login') }}
           </p>
         </router-link>
       </div>
@@ -64,25 +38,25 @@
       <div style="text-align: right">
         <router-link to="/signup">
           <p style="font-style: italic; color: rgb(91 104 111)">
-            {{ $t('login.signup') }}
+            {{ $t('resetPw.signup') }}
           </p>
         </router-link>
       </div>
     </el-form>
 
-    <el-dialog title="Something went wrong!" :visible.sync="showDialog" width="33%">
-      <p class="message">{{ message }}</p>
+    <el-dialog :visible.sync="showDialog" width="33%">
+      <span slot="title"><svg-icon class-name="size-icon" :icon-class="hasError ? 'failed' : 'success'" /> {{ dialogTitle }}</span>
+      <p class="message" v-html="message" />
     </el-dialog>
   </div>
 </template>
 
 <script>
 import { validEmail } from '@/utils/validate'
-import LangSelect from '@/components/LangSelect'
+import { resetPassword } from '@/api/user'
 
 export default {
-  name: 'Login',
-  components: { LangSelect },
+  name: 'ResetPassword',
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validEmail(value)) {
@@ -91,29 +65,20 @@ export default {
         callback()
       }
     }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
-      } else {
-        callback()
-      }
-    }
     return {
       loginForm: {
-        username: '',
-        password: ''
+        username: ''
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [{ required: true, trigger: 'blur', validator: validateUsername }]
       },
-      passwordType: 'password',
-      capsTooltip: false,
       loading: false,
-      showDialog: false,
       redirect: undefined,
       otherQuery: {},
-      message: ''
+      dialogTitle: '',
+      message: '',
+      showDialog: false,
+      hasError: false
     }
   },
   watch: {
@@ -142,33 +107,25 @@ export default {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
-    checkCapslock(e) {
-      const { key } = e
-      this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
-    },
-    showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
-      } else {
-        this.passwordType = 'password'
-      }
-      this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
-    },
-    handleLogin() {
+    handleResetPassword() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+          resetPassword(this.loginForm.username)
+            .then(response => {
+              this.dialogTitle = 'Reset Password Successfully!'
+              this.message = 'We have sent you a new password at <i>' + this.loginForm.username + '</i>.<br>Please use that password to log in.'
+              this.showDialog = true
               this.loading = false
             })
             .catch(err => {
-              this.loading = false
-              this.message = err.response.data.message
+              this.dialogTitle = 'Something went wrong!'
+              this.hasError = true
+              if (err.response.data.status === 400) {
+                this.message = 'The email you entered is not registered in our system.<br>Please try again!'
+              }
               this.showDialog = true
+              this.loading = false
             })
         } else {
           console.log('error submit!!')
@@ -334,7 +291,7 @@ $black: #000000;
 }
 
 .message {
-  color: red;
-  font-size: 1.25em;
+  margin-left: 10px;
+  font-size: 1.15em;
 }
 </style>

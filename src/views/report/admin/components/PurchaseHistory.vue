@@ -1,44 +1,50 @@
 <template>
-  <el-table :data="list" style="width: 100%;padding-top: 15px;">
-    <el-table-column label="Package name" min-width="200">
-      <template slot-scope="scope">
-        {{ scope.row.packageById.name }} Package
-      </template>
-    </el-table-column>
-    <el-table-column label="Number of Posts" width="150" align="center">
-      <template slot-scope="scope">
-        {{ scope.row.packageById.numOfPost }}
-      </template>
-    </el-table-column>
-    <el-table-column label="Amount" width="195" align="center">
-      <template slot-scope="scope">
-        $ {{ scope.row.purchaseById && scope.row.purchaseById.amount | toThousandFilter }}
-      </template>
-    </el-table-column>
-    <el-table-column label="Purchase Date" width="195" align="center">
-      <template slot-scope="scope">
-        {{ scope.row.purchaseById && new Date(scope.row.purchaseById.purchaseDate).toLocaleString() }}
-      </template>
-    </el-table-column>
-    <el-table-column label="Valid to" width="195" align="center">
-      <template slot-scope="scope">
-        {{ new Date(scope.row.validTo).toLocaleString() }}
-      </template>
-    </el-table-column>
-    <el-table-column label="Status" width="100" align="center">
-      <template slot-scope="{row}">
-        <el-tag :type="row.expired | statusFilter">
-          {{ row.expired ? 'expired' : 'valid' }}
-        </el-tag>
-      </template>
-    </el-table-column>
-  </el-table>
+  <div>
+    <el-table v-loading="listLoading" :data="list" style="width: 100%;padding-top: 15px;">
+      <el-table-column label="Package name" min-width="200">
+        <template slot-scope="scope">
+          {{ scope.row.packageById.name }} Package
+        </template>
+      </el-table-column>
+      <el-table-column label="Number of Posts" width="150" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.packageById.numOfPost }}
+        </template>
+      </el-table-column>
+      <el-table-column label="Amount" width="195" align="center">
+        <template slot-scope="scope">
+          $ {{ scope.row.purchaseById && scope.row.purchaseById.amount | toThousandFilter }}
+        </template>
+      </el-table-column>
+      <el-table-column label="Purchase Date" width="195" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.purchaseById && new Date(scope.row.purchaseById.purchaseDate).toLocaleString() }}
+        </template>
+      </el-table-column>
+      <el-table-column label="Valid to" width="195" align="center">
+        <template slot-scope="scope">
+          {{ new Date(scope.row.validTo).toLocaleString() }}
+        </template>
+      </el-table-column>
+      <el-table-column label="Status" width="100" align="center">
+        <template slot-scope="{row}">
+          <el-tag :type="row.expired | statusFilter">
+            {{ row.expired ? 'expired' : 'valid' }}
+          </el-tag>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+  </div>
 </template>
 
 <script>
-import { fetchTransactionOfAccount } from '@/api/report'
+import Pagination from '@/components/Pagination'
+import { fetchAccountPackage, fetchAccountPackageWithPagination } from '@/api/package'
 
 export default {
+  components: { Pagination },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -53,22 +59,33 @@ export default {
   },
   data() {
     return {
-      list: null
-    }
-  },
-  computed: {
-    accountId() {
-      return this.$store.state.user.accId
+      list: null,
+      total: 0,
+      listLoading: true,
+      listQuery: {
+        page: 1,
+        limit: 10
+      }
     }
   },
   created() {
-    this.fetchTransactionData()
+    this.getTotal()
+    this.getList()
   },
   methods: {
-    fetchTransactionData() {
-      fetchTransactionOfAccount(this.accountId).then(response => {
+    getTotal() {
+      this.listLoading = true
+      fetchAccountPackage().then(response => {
+        this.total = response.data.length
+        this.listLoading = false
+      })
+    },
+    getList() {
+      this.listLoading = true
+      fetchAccountPackageWithPagination(this.listQuery).then(response => {
         // this.list = response.data.items.slice(0, 8)
         this.list = response.data
+        this.listLoading = false
       })
     }
   }

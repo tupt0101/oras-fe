@@ -81,6 +81,7 @@ export default {
     thirdparty: 'Or connect with',
     thirdpartyTips: 'Can not be simulated on local, so please combine you own business simulation! ! !',
     forgot: 'Forgot password?',
+    signin: 'Try to login again.',
     signup: 'Or create your account.'
   },
   register: {
@@ -98,6 +99,13 @@ export default {
     taxCode: 'Tax code',
     login: 'Or sign in with your account.',
     info: 'COMPANY INFORMATION'
+  },
+  resetPw: {
+    title: 'Reset Password Form',
+    username: 'Username',
+    resetBtn: 'Reset',
+    login: 'Back to Login page.',
+    signup: 'Or create your account.'
   },
   documentation: {
     documentation: 'Documentation',

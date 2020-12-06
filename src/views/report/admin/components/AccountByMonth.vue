@@ -93,10 +93,10 @@ export default {
         },
         legend: {
           // data: ['system', 'user']
-          data: ['user']
+          data: ['ORAS']
         },
         series: [{
-          name: 'user', itemStyle: {
+          name: 'ORAS', itemStyle: {
             normal: {
               color: '#FF005A',
               lineStyle: {

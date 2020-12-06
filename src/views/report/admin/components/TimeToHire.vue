@@ -19,9 +19,9 @@
       style="width: 100%;"
     >
       <el-table-column label="No." prop="id" type="index" align="center" width="80">
-        <!-- <template slot-scope="{row}">
-          <span>{{ row.id }}</span>
-        </template> -->
+        <template slot-scope="{scope}">
+          <span>{{ scope.$index + 1 }}</span>
+        </template>
       </el-table-column>
       <el-table-column label="Job Title" width="300px">
         <template slot-scope="{row}">

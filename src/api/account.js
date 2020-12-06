@@ -36,7 +36,6 @@ export function fetchCompanyListWithPagination(query) {
 }
 
 export function createAccount(data, method) {
-  debugger
   return request({
     url: '/v1/account-management/account',
     method: method,
