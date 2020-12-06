@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function fetchOpenJobList(query) {
+export function fetchOpenJobList() {
   return request({
     url: '/v1/job-management/open-jobs',
     method: 'get'

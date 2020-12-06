@@ -1,29 +1,34 @@
 <template>
   <div class="dashboard-editor-container">
 
-    <el-row :gutter="8">
-      <!-- <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 18}" :xl="{span: 18}" style="padding-right:8px;margin-bottom:30px;">
-        <open-job-table />
-      </el-col> -->
+    <el-row>
+      <div class="banner-wrapper">
+        <banner />
+      </div>
+    </el-row>
+
+    <!-- <el-row :gutter="8">
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="padding-right:8px;margin-bottom:30px;">
         <open-job-list />
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="margin-bottom:30px;">
         <transaction-table />
       </el-col>
-    </el-row>
+    </el-row> -->
   </div>
 </template>
 
 <script>
-import TransactionTable from './components/TransactionTable'
-import OpenJobList from './components/OpenJobList'
+import Banner from './components/Banner'
+// import OpenJobList from './components/OpenJobList'
+// import TransactionTable from './components/TransactionTable'
 
 export default {
   name: 'DashboardAdmin',
   components: {
-    TransactionTable,
-    OpenJobList
+    // TransactionTable,
+    // OpenJobList,
+    Banner
   }
 }
 </script>
@@ -31,7 +36,8 @@ export default {
 <style lang="scss" scoped>
 .dashboard-editor-container {
   padding: 32px;
-  background-color: rgb(240, 242, 245);
+  // background-color: rgb(240, 242, 245);
+  background-color: #fff;
   position: relative;
 
   .github-corner {

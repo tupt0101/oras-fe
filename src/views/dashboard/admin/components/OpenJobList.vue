@@ -1,12 +1,10 @@
 <template>
-  <div>
+  <div style="margin-top: 30px">
     <div v-for="post in list" :key="post.id" class="list" :post="post">
       <div class="box">
         <article class="media">
           <div class="media-left">
             <figure class="image is-64x64">
-              <!-- <img :src="post.img" alt="Image"> -->
-              <!-- <img src="https://semantic-ui.com/images/avatar2/large/matthew.png" alt="Image"> -->
               <div class="candidate">
                 <p style="text-align: center">
                   <strong class="numOfCand">{{ post.totalApplication }}</strong><br>
@@ -68,14 +66,10 @@ export default {
     getList() {
     //   this.$vs.loading()
       this.listLoading = true
-      fetchOpenJobList(this.listQuery).then(response => {
+      fetchOpenJobList().then(response => {
         this.list = response.data
         // this.total = response.data.total
-
-        // Just to simulate the time of the request
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1.5 * 1000)
+        this.listLoading = false
       })
     }
   }

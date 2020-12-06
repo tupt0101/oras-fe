@@ -3,10 +3,10 @@
     <div class="bg" />
     <div class="wrapper">
       <div class="content">
-        <h1 class="title">Welcome to ORAS!</h1>
-        <h2 class="sub-title">Find, contact, and hire<br>high-quality candidates<br>faster than ever.</h2>
-        <router-link :to="'/purchase/index'" class="button">
-          <span>Check your plans</span>
+        <h1 class="title">Welcome, Administator!</h1>
+        <h2 class="sub-title">Take a quick look<br>at how your ORAS performs.</h2>
+        <router-link :to="'/report/index'" class="button">
+          <span>View report</span>
         </router-link>
       </div>
     </div>

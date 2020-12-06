@@ -14,9 +14,9 @@
 
         <notification class="right-menu-item hover-effect" />
 
-        <el-tooltip content="Global Size" effect="dark" placement="bottom">
+        <!-- <el-tooltip content="Global Size" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
-        </el-tooltip>
+        </el-tooltip> -->
 
       </template>
 
@@ -53,7 +53,7 @@ import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 // import ErrorLog from '@/components/ErrorLog'
 // import Screenfull from '@/components/Screenfull'
-import SizeSelect from '@/components/SizeSelect'
+// import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
 import Notification from '@/components/Notification'
 
@@ -63,7 +63,7 @@ export default {
     Hamburger,
     // ErrorLog,
     // Screenfull,
-    SizeSelect,
+    // SizeSelect,
     Search,
     Notification
   },
