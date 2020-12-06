@@ -70,12 +70,12 @@
       <p class="message" v-html="message" />
     </el-dialog>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getJobList" />
   </div>
 </template>
 
 <script>
-import { fetchJobList, fetchJobByCreator } from '@/api/job'
+import { fetchJobListWithPagination, fetchJobByCreatorWithPagination, fetchJobList, fetchJobByCreator } from '@/api/job'
 import Pagination from '@/components/Pagination'
 import { closeJob, publishJob } from '../../api/job' // Secondary package based on el-pagination
 
@@ -99,7 +99,7 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 20
+        limit: 10
       },
       message: '',
       showDialog: false,
@@ -117,7 +117,8 @@ export default {
     }
   },
   created() {
-    this.getList()
+    this.getTotal()
+    this.getJobList()
   },
   methods: {
     handlePublishJob(id) {
@@ -157,18 +158,30 @@ export default {
       tmp.innerHTML = html
       return tmp.textContent || tmp.innerText || ''
     },
-    getList() {
+    getTotal() {
       this.listLoading = true
       if (this.accountRole === 'admin') {
-        fetchJobList(this.listQuery).then(response => {
-          this.list = response.data
+        fetchJobList().then(response => {
           this.total = response.data.length
           this.listLoading = false
         })
       } else {
         fetchJobByCreator(this.accountId).then(response => {
+          this.total = response.data.length
+          this.listLoading = false
+        })
+      }
+    },
+    getJobList() {
+      this.listLoading = true
+      if (this.accountRole === 'admin') {
+        fetchJobListWithPagination(this.listQuery).then(response => {
           this.list = response.data
-          // this.total = response.data
+          this.listLoading = false
+        })
+      } else {
+        fetchJobByCreatorWithPagination(this.accountId, this.listQuery).then(response => {
+          this.list = response.data
           this.listLoading = false
         })
       }

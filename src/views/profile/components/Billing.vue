@@ -40,7 +40,6 @@ export default {
     cancelCurrentPackage() {
       cancelPackage(this.accountId)
         .then(response => {
-          debugger
           this.$router.push({ name: 'Profile' })
           this.$message({
             message: 'Your package has been canceled successfully',

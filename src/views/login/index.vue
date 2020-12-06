@@ -54,9 +54,11 @@
       </el-button>
 
       <div style="text-align: right; margin-bottom: 20px">
-        <a href="#" style="font-style: italic; color: rgb(91 104 111)">
-          {{ $t('login.forgot') }}
-        </a>
+        <router-link to="/reset-password">
+          <p style="font-style: italic; color: rgb(91 104 111)">
+            {{ $t('login.forgot') }}
+          </p>
+        </router-link>
       </div>
 
       <div style="text-align: right">

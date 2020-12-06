@@ -3,13 +3,17 @@
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
       <el-table-column align="center" label="ID" width="80">
         <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
+          <span>{{ scope.$index + 1 }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Account name" min-width="200px" align="center">
+      <el-table-column label="Account name" min-width="200px" align="left">
         <template slot-scope="{row}">
           <span class="link-type" @click="handleUpdate(row)">{{ row.accountById.fullname }}</span>
-          <!-- <el-tag>{{ row.title }}</el-tag> -->
+        </template>
+      </el-table-column>
+      <el-table-column label="Company" width="250px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.accountById.companyById.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Package" width="200px" align="center">
@@ -22,20 +26,20 @@
           <span>{{ row.purchaseId }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Purchase date" width="150px" align="center">
+      <el-table-column label="Purchase date" width="200px" align="center">
         <template slot-scope="{row}">
-          <span>{{ new Date(row.purchaseById.purchaseDate).toLocaleString() }}</span>
+          <span>{{ row.purchaseById && new Date(row.purchaseById.purchaseDate).toLocaleString() }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Valid to" width="150px" align="center">
+      <el-table-column label="Valid to" width="200px" align="center">
         <template slot-scope="{row}">
           <span>{{ new Date(row.validTo).toLocaleString() }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Status" class-name="status-col" width="100">
         <template slot-scope="{row}">
-          <el-tag :type="row.status | statusFilter">
-            {{ row.purchaseById.status }}
+          <el-tag :type="row.expired | statusFilter">
+            {{ row.expired ? 'expired' : 'valid' }}
           </el-tag>
         </template>
       </el-table-column>
@@ -71,7 +75,7 @@
 <script>
 // import { fetchJobList } from '@/api/job'
 import Pagination from '@/components/Pagination'
-import { fetchCompanyPackage } from '@/api/package' // Secondary package based on el-pagination
+import { fetchAccountPackage, fetchAccountPackageWithPagination } from '@/api/package' // Secondary package based on el-pagination
 
 export default {
   name: 'PackageList',
@@ -79,9 +83,8 @@ export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        published: 'success',
-        draft: 'info',
-        deleted: 'danger'
+        false: 'success',
+        true: 'danger'
       }
       return statusMap[status]
     }
@@ -93,19 +96,26 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 20
+        limit: 10
       }
     }
   },
   created() {
+    this.getTotal()
     this.getList()
   },
   methods: {
+    getTotal() {
+      this.listLoading = true
+      fetchAccountPackage().then(response => {
+        this.total = response.data.length
+        this.listLoading = false
+      })
+    },
     getList() {
       this.listLoading = true
-      fetchCompanyPackage().then(response => {
+      fetchAccountPackageWithPagination(this.listQuery).then(response => {
         this.list = response.data
-        // this.total = response.data
         this.listLoading = false
       })
     }

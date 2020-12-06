@@ -6,11 +6,11 @@
 
     <div class="user-profile">
       <div class="box-center">
-        <pan-thumb :image="user.avatar" :height="'100px'" :width="'100px'" :hoverable="false" />
+        <pan-thumb :image="user && user.avatar" :height="'100px'" :width="'100px'" :hoverable="false" />
       </div>
       <div class="box-center">
-        <div class="user-name text-center">{{ user.fullname }}</div>
-        <div class="user-role text-center text-muted">{{ user.role | uppercaseFirst }}</div>
+        <div class="user-name text-center">{{ user && user.name }}</div>
+        <div class="user-role text-center text-muted">{{ user && user.role }}</div>
       </div>
     </div>
 
@@ -21,10 +21,10 @@
         </div>
         <div class="user-bio-section-body">
           <div class="text-muted">
-            <p><svg-icon icon-class="email" /><span style="margin-left: 20px">{{ user.email }}</span></p>
+            <p><svg-icon icon-class="email" /><span style="margin-left: 20px">{{ user && user.email }}</span></p>
           </div>
           <div class="text-muted">
-            <p><svg-icon icon-class="telephone" /><span style="margin-left: 20px">{{ user.phoneNo }}</span></p>
+            <p><svg-icon icon-class="telephone" /><span style="margin-left: 20px">{{ user && user.phoneNo }}</span></p>
           </div>
         </div>
       </div>

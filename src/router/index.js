@@ -7,9 +7,9 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
-import tableRouter from './modules/table'
+// import componentsRouter from './modules/components'
+// import chartsRouter from './modules/charts'
+// import tableRouter from './modules/table'
 // import nestedRouter from './modules/nested'
 
 /**
@@ -63,6 +63,11 @@ export const constantRoutes = [
   {
     path: '/signup',
     component: () => import('@/views/register/index'),
+    hidden: true
+  },
+  {
+    path: '/reset-password',
+    component: () => import('@/views/reset-password/index'),
     hidden: true
   },
   {
@@ -135,45 +140,45 @@ export const asyncRoutes = [
     ]
   },
 
-  {
-    path: '/talent-pool',
-    component: Layout,
-    redirect: '/talent-pool/list',
-    name: 'TalentPool',
-    meta: {
-      title: 'Talent Pool',
-      icon: 'el-icon-s-custom',
-      roles: ['admin']
-    },
-    children: [
-      // Edit route of components
-      {
-        path: 'create',
-        component: () => import('@/views/example/create'),
-        name: 'CreateTalentPool',
-        meta: { title: 'Create Talent Pool', icon: 'edit' }
-      },
-      {
-        path: 'edit/:id(\\d+)',
-        component: () => import('@/views/example/edit'),
-        name: 'EditTalentPool',
-        meta: { title: 'Edit Talent Pool', noCache: true, activeMenu: '/example/list' },
-        hidden: true
-      },
-      {
-        path: 'list',
-        component: () => import('@/views/example/list'),
-        name: 'TalentPoolList',
-        meta: { title: 'Talent Pool List', icon: 'list' }
-      },
-      {
-        path: 'candidate-list',
-        component: () => import('@/views/example/list'),
-        name: 'CandidateList',
-        meta: { title: 'Candidate List', icon: 'list' }
-      }
-    ]
-  },
+  // {
+  //   path: '/talent-pool',
+  //   component: Layout,
+  //   redirect: '/talent-pool/list',
+  //   name: 'TalentPool',
+  //   meta: {
+  //     title: 'Talent Pool',
+  //     icon: 'el-icon-s-custom',
+  //     roles: ['admin']
+  //   },
+  //   children: [
+  //     // Edit route of components
+  //     {
+  //       path: 'create',
+  //       component: () => import('@/views/example/create'),
+  //       name: 'CreateTalentPool',
+  //       meta: { title: 'Create Talent Pool', icon: 'edit' }
+  //     },
+  //     {
+  //       path: 'edit/:id(\\d+)',
+  //       component: () => import('@/views/example/edit'),
+  //       name: 'EditTalentPool',
+  //       meta: { title: 'Edit Talent Pool', noCache: true, activeMenu: '/example/list' },
+  //       hidden: true
+  //     },
+  //     {
+  //       path: 'list',
+  //       component: () => import('@/views/example/list'),
+  //       name: 'TalentPoolList',
+  //       meta: { title: 'Talent Pool List', icon: 'list' }
+  //     },
+  //     {
+  //       path: 'candidate-list',
+  //       component: () => import('@/views/example/list'),
+  //       name: 'CandidateList',
+  //       meta: { title: 'Candidate List', icon: 'list' }
+  //     }
+  //   ]
+  // },
 
   // {
   //   path: '/permission',
@@ -360,27 +365,27 @@ export const asyncRoutes = [
     ]
   },
 
-  {
-    path: '/icon',
-    component: Layout,
-    meta: {
-      roles: ['admin']
-    },
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/icons/index'),
-        name: 'Icons',
-        meta: { title: 'Icons', icon: 'icon', noCache: true }
-      }
-    ]
-  },
+  // {
+  //   path: '/icon',
+  //   component: Layout,
+  //   meta: {
+  //     roles: ['admin']
+  //   },
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/icons/index'),
+  //       name: 'Icons',
+  //       meta: { title: 'Icons', icon: 'icon', noCache: true }
+  //     }
+  //   ]
+  // },
 
   /** when your routing map is too long, you can split it into small modules **/
-  componentsRouter,
-  chartsRouter,
+  // componentsRouter,
+  // chartsRouter,
   // nestedRouter,
-  tableRouter,
+  // tableRouter,
 
   // {
   //   path: '/tab',

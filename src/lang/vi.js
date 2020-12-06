@@ -81,6 +81,7 @@ export default {
     thirdparty: 'Or connect with',
     thirdpartyTips: 'Can not be simulated on local, so please combine you own business simulation! ! !',
     forgot: 'Quên mật khẩu?',
+    signin: 'Thử đăng nhập lại.',
     signup: 'Hoặc tạo tài khoản của bạn.'
   },
   register: {
@@ -98,6 +99,13 @@ export default {
     taxCode: 'Mã số thuế',
     login: 'Hoặc đăng nhập bằng tài khoản của bạn.',
     info: 'THÔNG TIN CÔNG TY'
+  },
+  resetPw: {
+    title: 'Lấy lại mật khẩu',
+    username: 'Tên đăng nhập',
+    resetBtn: 'Gửi đi',
+    login: 'Quay về trang đăng nhập.',
+    signup: 'Hoặc tạo tài khoản của bạn.'
   },
   documentation: {
     documentation: 'Documentation',

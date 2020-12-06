@@ -7,6 +7,13 @@ export function fetchPanelData(accId) {
   })
 }
 
+export function fetchPanelDataForAdmin() {
+  return request({
+    url: '/v1/report-management/system-statistic',
+    method: 'get'
+  })
+}
+
 export function fetchHiredList(accId) {
   return request({
     url: '/v1/report-management/time-to-hire/' + accId,
@@ -37,7 +44,7 @@ export function fetchAverageSalaryOfAccount(id, base) {
 
 export function fetchJobByCategory() {
   return request({
-    url: '',
+    url: '/v1/report-management/total-post-by-category',
     method: 'get'
   })
 }
@@ -70,6 +77,13 @@ export function fetchTransactionOfAccount(id) {
   })
 }
 
+export function fetchPurchaseByMonth(year) {
+  return request({
+    url: '/v1/report-management/purchase-report/' + year,
+    method: 'get'
+  })
+}
+
 export function fetchPurchaseByMonthAccount(id, year) {
   return request({
     url: '/v1/report-management/account-purchase-report/' + id + '/' + year,
@@ -77,3 +91,16 @@ export function fetchPurchaseByMonthAccount(id, year) {
   })
 }
 
+export function fetchAccountByMonth(year) {
+  return request({
+    url: '/v1/report-management/account-report/' + year,
+    method: 'get'
+  })
+}
+
+export function fetchBuyByPackage() {
+  return request({
+    url: '/v1/report-management/package-report',
+    method: 'get'
+  })
+}

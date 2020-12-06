@@ -1,15 +1,8 @@
 import request from '@/utils/request'
 
-export function fetchOpenJobList(query) {
+export function fetchOpenJobList() {
   return request({
     url: '/v1/job-management/open-jobs',
-    method: 'get'
-  })
-}
-
-export function fetchJobByCreator(id) {
-  return request({
-    url: '/v1/job-management/job-by-creator-id/' + id,
     method: 'get'
   })
 }
@@ -24,6 +17,27 @@ export function fetchOpenJobByCreator(id) {
 export function fetchJobList() {
   return request({
     url: '/v1/job-management/jobs',
+    method: 'get'
+  })
+}
+
+export function fetchJobListWithPagination(query) {
+  return request({
+    url: '/v1/job-management/jobs-paging?numOfElement=' + query.limit + '&page=' + query.page,
+    method: 'get'
+  })
+}
+
+export function fetchJobByCreator(id) {
+  return request({
+    url: '/v1/job-management/job-by-creator-id/' + id,
+    method: 'get'
+  })
+}
+
+export function fetchJobByCreatorWithPagination(id, query) {
+  return request({
+    url: '/v1/job-management/job-by-creator-id?id=' + id + '&numOfElement=' + query.limit + '&page=' + query.page,
     method: 'get'
   })
 }

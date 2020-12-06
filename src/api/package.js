@@ -14,9 +14,16 @@ export function fetchPackage(id) {
   })
 }
 
-export function fetchCompanyPackage() {
+export function fetchAccountPackage() {
   return request({
     url: '/v1/account-package-management/account-packages',
+    method: 'get'
+  })
+}
+
+export function fetchAccountPackageWithPagination(query) {
+  return request({
+    url: '/v1/account-package-management/account-packages-paging?numOfElement=' + query.limit + '&page=' + query.page,
     method: 'get'
   })
 }

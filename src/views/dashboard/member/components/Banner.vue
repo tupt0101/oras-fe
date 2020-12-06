@@ -3,7 +3,8 @@
     <div class="bg" />
     <div class="wrapper">
       <div class="content">
-        <h1 class="title">Find, contact, and hire<br>high-quality candidates<br>faster than ever.</h1>
+        <h1 class="title">Welcome to ORAS!</h1>
+        <h2 class="sub-title">Find, contact, and hire<br>high-quality candidates<br>faster than ever.</h2>
         <router-link :to="'/purchase/index'" class="button">
           <span>Check your plans</span>
         </router-link>
@@ -33,6 +34,11 @@
 .title {
   font-size: 3em;
   line-height: 68px;
+}
+
+.sub-title {
+  font-size: 2.5em;
+  line-height: 50px;
 }
 
 .bg {

@@ -24,6 +24,13 @@ export function signup(data) {
   })
 }
 
+export function resetPassword(email) {
+  return request({
+    url: '/v1/account-management/reset-password/' + email,
+    method: 'post'
+  })
+}
+
 export function fetchAccountData(id) {
   return request({
     url: '/v1/account-management/account/' + id,

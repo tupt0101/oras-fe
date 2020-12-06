@@ -65,7 +65,7 @@
     <el-table v-if="list" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
       <el-table-column type="index" align="center" label="No." width="80">
         <template slot-scope="scope">
-          <span>{{ scope.row.$index }}</span>
+          <span>{{ scope.$index + 1 }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Full name" min-width="150px">
