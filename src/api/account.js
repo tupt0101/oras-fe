@@ -21,6 +21,14 @@ export function fetchAccount(id) {
   })
 }
 
+export function createAccount(data, method) {
+  return request({
+    url: '/v1/account-management/account',
+    method: method,
+    data: data
+  })
+}
+
 export function updateAccount(data) {
   return request({
     url: '/v1/account-management/update-account',
@@ -59,10 +67,9 @@ export function updateCompany(data) {
   })
 }
 
-export function createAccount(data, method) {
+export function verifyCompany(id) {
   return request({
-    url: '/v1/account-management/account',
-    method: method,
-    data: data
+    url: '/v1/company-management/company/verify/' + id,
+    method: 'put'
   })
 }

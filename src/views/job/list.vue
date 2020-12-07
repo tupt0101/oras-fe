@@ -137,7 +137,7 @@ export default {
           duration: 2000
         })
         this.loading = false
-        this.$router.go(0)
+        this.getJobList()
       }).catch(err => {
         this.dialogTitle = err.response.data.message
         this.hasError = true
@@ -157,7 +157,7 @@ export default {
           duration: 2000
         })
         this.loading = false
-        this.$router.go(0)
+        this.getJobList()
       }).catch(() => {
         this.loading = false
       })

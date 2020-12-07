@@ -100,7 +100,9 @@ export default {
           phoneNo: this.account.companyById.phoneNo,
           location: this.account.companyById.location,
           taxCode: this.account.companyById.taxCode,
-          description: this.account.companyById.description
+          description: this.account.companyById.description,
+          avatar: this.account.companyById.avatar,
+          openjobCompanyId: this.account.companyById.openjobCompanyId
         }
       })
     },
