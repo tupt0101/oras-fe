@@ -16,13 +16,13 @@
               <el-tab-pane label="Edit Account" name="account">
                 <account :user="user" />
               </el-tab-pane>
-              <el-tab-pane label="Edit Company" name="company">
+              <el-tab-pane v-if="user.role !== 'admin'" label="Edit Company" name="company">
                 <company :company="company" />
               </el-tab-pane>
               <!-- <el-tab-pane label="Change Password" name="changePassword">
                 <change-password />
               </el-tab-pane> -->
-              <el-tab-pane label="Billing" name="billing">
+              <el-tab-pane v-if="user.role !== 'admin'" label="Billing" name="billing">
                 <billing v-if="currPackage" :curr-package="currPackage" />
               </el-tab-pane>
             </el-tabs>

@@ -351,6 +351,7 @@ export default {
                 type: 'success',
                 duration: 2000
               })
+              this.$router.push('/job/list')
             }).catch(err => {
               this.dialogTitle = err.response.data.message
               this.hasError = true
@@ -361,7 +362,6 @@ export default {
               this.loading = false
             })
             this.loading = false
-            this.$router.back()
           }).catch(() => {
             this.loading = false
           })
@@ -430,7 +430,7 @@ export default {
       this.currencyListOptions = filterList.map(v => v.name)
     },
     getJobTypeList(query) {
-      const JobTypeList = [{ 'name': 'Full-time' }, { 'name': 'Part-time' }]
+      const JobTypeList = [{ 'name': 'Full-time' }, { 'name': 'Part-time' }, { 'name': 'Internship' }]
       const filterList = JobTypeList.filter(item => {
         const lowerCase = item.name.toLowerCase()
         return !(query && lowerCase.indexOf(query.toLowerCase()) < 0)

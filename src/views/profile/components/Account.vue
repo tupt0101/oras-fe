@@ -158,6 +158,7 @@ export default {
               type: 'success',
               duration: 5 * 1000
             })
+            this.$router.go(0)
           }).catch(err => {
             this.$message({
               message: 'Unexpected error occurs',

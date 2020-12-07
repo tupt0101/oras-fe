@@ -5,7 +5,6 @@ const UserKey = 'User-Id'
 const AccountKey = 'Account-Id'
 
 export function getToken() {
-  console.log('>> Get token: ', Cookies.get(TokenKey))
   return Cookies.get(TokenKey)
 }
 
