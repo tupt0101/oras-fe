@@ -14,6 +14,8 @@
 
         <notification class="right-menu-item hover-effect" />
 
+        <lang-select class="set-language right-menu-item hover-effect" />
+
         <!-- <el-tooltip content="Global Size" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip> -->
@@ -56,6 +58,7 @@ import Hamburger from '@/components/Hamburger'
 // import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
 import Notification from '@/components/Notification'
+import LangSelect from '@/components/LangSelect'
 
 export default {
   components: {
@@ -65,7 +68,8 @@ export default {
     // Screenfull,
     // SizeSelect,
     Search,
-    Notification
+    Notification,
+    LangSelect
   },
   computed: {
     ...mapGetters([
@@ -141,6 +145,15 @@ export default {
           background: rgba(0, 0, 0, .025)
         }
       }
+    }
+
+    .set-language {
+      // color: #000;
+      // position: absolute;
+      // top: 3px;
+      // font-size: 24px;
+      // right: 0px;
+      cursor: pointer;
     }
 
     .avatar-container {
