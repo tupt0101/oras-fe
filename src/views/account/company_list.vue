@@ -42,7 +42,7 @@
       <el-table-column class-name="status-col" label="Status" width="120">
         <template slot-scope="{row}">
           <el-tag :type="row.verified | statusFilter">
-            {{ row.verified ? 'verified' : 'unverified' }}
+            {{ row.verified ? 'Verified' : 'Unverified' }}
           </el-tag>
         </template>
       </el-table-column>
@@ -88,7 +88,7 @@
         </el-form-item> -->
         <el-form-item label="Status: " label-width="150px" style="margin-bottom: 0px">
           <el-tag :type="temp.verified | statusFilter">
-            {{ temp.verified ? 'verified' : 'unverified' }}
+            {{ temp.verified ? 'Verified' : 'Unverified' }}
           </el-tag>
         </el-form-item>
       </el-form>
