@@ -1,23 +1,17 @@
 <template>
   <div class="app-container">
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="ID" width="80">
+      <el-table-column align="center" label="No." width="80">
         <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
+          <span>{{ scope.$index + 1 }}</span>
         </template>
       </el-table-column>
 
-      <!-- <el-table-column width="180px" align="center" label="Date">
-        <template slot-scope="scope">
-          <span>{{ scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
-        </template>
-      </el-table-column> -->
-
-      <el-table-column min-width="300px" label="Full name" align="left">
+      <el-table-column min-width="300px" label="Company name" align="left">
         <template slot-scope="{row}">
-          <router-link :to="'/account/edit/'+row.id" class="link-type">
+          <div class="link-type" @click="viewDetail(row)">
             <span>{{ row.name }}</span>
-          </router-link>
+          </div>
         </template>
       </el-table-column>
 
@@ -69,6 +63,45 @@
       </el-table-column>
     </el-table>
 
+    <el-dialog title="Company Detail" :visible.sync="dialogFormVisible">
+      <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 90%; margin-left:50px;">
+        <el-form-item label="Company name:" label-width="150px" style="margin-bottom: 0px">
+          <span>{{ temp.name }}</span>
+        </el-form-item>
+        <el-form-item label="Location:" label-width="150px" style="margin-bottom: 0px">
+          <span>{{ temp.location }}</span>
+        </el-form-item>
+        <el-form-item label="Email:" label-width="150px" style="margin-bottom: 0px">
+          <span>{{ temp.email }}</span>
+        </el-form-item>
+        <el-form-item label="Phone Number:" label-width="150px" style="margin-bottom: 0px">
+          <span>{{ temp.phoneNo }}</span>
+        </el-form-item>
+        <el-form-item label="Tax code:" label-width="150px" style="margin-bottom: 0px">
+          <span>{{ temp.taxCode }}</span>
+        </el-form-item>
+        <el-form-item label="Description:" label-width="150px" style="margin-bottom: 0px;">
+          <span v-html="temp.description" />
+        </el-form-item>
+        <!-- <el-form-item label="" label-width="120px" style="margin-bottom: 0px; max-height: 320px; overflow-y: scroll">
+          <span v-html="temp.description" />
+        </el-form-item> -->
+        <el-form-item label="Status: " label-width="150px" style="margin-bottom: 0px">
+          <el-tag :type="temp.verified | statusFilter">
+            {{ temp.verified ? 'verified' : 'unverified' }}
+          </el-tag>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">
+          Close
+        </el-button>
+        <el-button v-if="!temp.verified" type="success" @click="handleVerifyCompany(temp.id)">
+          Verify
+        </el-button>
+      </div>
+    </el-dialog>
+
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getCompanyList" />
   </div>
 </template>
@@ -98,7 +131,19 @@ export default {
       listQuery: {
         page: 1,
         limit: 10
-      }
+      },
+      temp: {
+        id: undefined,
+        name: '',
+        location: 0,
+        email: 0,
+        phoneNo: '',
+        taxCode: '',
+        description: '',
+        avatar: '',
+        verified: ''
+      },
+      dialogFormVisible: false
     }
   },
   created() {
@@ -119,6 +164,14 @@ export default {
         this.list = response.data
         this.listLoading = false
       })
+    },
+    viewDetail(company) {
+      this.temp = Object.assign({}, company) // copy obj
+      // this.temp.timestamp = new Date(this.temp.timestamp)
+      this.dialogFormVisible = true
+    },
+    handleVerifyCompany(id) {
+      return id
     }
   }
 }

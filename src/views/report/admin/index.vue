@@ -6,7 +6,7 @@
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-col :xs="24" :sm="24" :lg="24">
         <div class="chart-wrapper">
-          <h2 class="title">Accounts By Month</h2>
+          <h2 class="title">Users By Month</h2>
           <select v-model="selectedYearForAccount" @click="handleSetAccountData">
             <option disabled value="">Please select a year</option>
             <option>2018</option>
