@@ -395,7 +395,7 @@ export default {
             if (this.isReopen) {
               this.$router.push('/job/edit/' + response.data.id)
             } else {
-              this.$router.go(0)
+              this.fetchData(response.data.id)
             }
           })
             .catch(error => {

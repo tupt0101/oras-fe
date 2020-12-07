@@ -22,39 +22,39 @@
             </el-form-item>
 
             <div class="postInfo-container">
-<!--              <el-row>-->
-                <el-col :span="24">
-                  <el-form-item label-width="130px" label="Number of posts:" class="postInfo-container-item">
-                    <el-input-number v-model="postForm.numOfPost" placeholder="0" />
-                  </el-form-item>
-                </el-col>
+              <!--              <el-row>-->
+              <el-col :span="24">
+                <el-form-item label-width="130px" label="Number of posts:" class="postInfo-container-item">
+                  <el-input-number v-model="postForm.numOfPost" placeholder="0" />
+                </el-form-item>
+              </el-col>
 
-                <!-- alo YAnh -->
-                <!-- duration: 1 month, 3 month, 6 month... -->
-<!--                <el-col :span="12">-->
-<!--                  <el-form-item label-width="130px" label="Duration:" class="postInfo-container-item">-->
-<!--                    <el-select v-model="postForm.duration" :remote-method="getDurationList" filterable default-first-option remote placeholder="">-->
-<!--                      <el-option v-for="(item,index) in durationListOptions" :key="item+index" :label="item" :value="item" />-->
-<!--                    </el-select>-->
-<!--                  </el-form-item>-->
-<!--                </el-col>-->
-<!--              </el-row>-->
+              <!-- alo YAnh -->
+              <!-- duration: 1 month, 3 month, 6 month... -->
+              <!--                <el-col :span="12">-->
+              <!--                  <el-form-item label-width="130px" label="Duration:" class="postInfo-container-item">-->
+              <!--                    <el-select v-model="postForm.duration" :remote-method="getDurationList" filterable default-first-option remote placeholder="">-->
+              <!--                      <el-option v-for="(item,index) in durationListOptions" :key="item+index" :label="item" :value="item" />-->
+              <!--                    </el-select>-->
+              <!--                  </el-form-item>-->
+              <!--                </el-col>-->
+              <!--              </el-row>-->
 
-<!--              <el-row>-->
-                <el-col :span="24">
-                  <el-form-item label-width="130px" label="Price:" class="postInfo-container-item">
-                    <el-input-number v-model="postForm.price" placeholder="00.00" />
-                  </el-form-item>
-                </el-col>
+              <!--              <el-row>-->
+              <el-col :span="24">
+                <el-form-item label-width="130px" label="Price:" class="postInfo-container-item">
+                  <el-input-number v-model="postForm.price" placeholder="00.00" />
+                </el-form-item>
+              </el-col>
 
-                <el-col :span="24">
-                  <el-form-item label-width="130px" label="Currency:" class="postInfo-container-item">
-                    <el-select v-model="postForm.currency" :remote-method="getCurrencyList" filterable default-first-option remote placeholder="">
-                      <el-option v-for="(item,index) in currencyListOptions" :key="item+index" :label="item" :value="item" />
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-<!--              </el-row>-->
+              <el-col :span="24">
+                <el-form-item label-width="130px" label="Currency:" class="postInfo-container-item">
+                  <el-select v-model="postForm.currency" :remote-method="getCurrencyList" filterable default-first-option remote placeholder="">
+                    <el-option v-for="(item,index) in currencyListOptions" :key="item+index" :label="item" :value="item" />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <!--              </el-row>-->
             </div>
           </el-col>
         </el-row>
@@ -71,11 +71,9 @@
 <script>
 import MDinput from '@/components/MDinput'
 import Sticky from '@/components/Sticky' // 粘性header组件
-import { validURL } from '@/utils/validate'
 // import Warning from './Warning'
 // import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
 import { getUserId } from '../../../utils/auth'
-import { createJob } from '../../../api/job'
 import { editPackage, fetchPackage } from '../../../api/package'
 
 const defaultForm = {
@@ -132,7 +130,7 @@ export default {
       rules: {
         // image_uri: [{ validator: validateRequire }],
         title: [{ validator: validateRequire }],
-        content: [{ validator: validateRequire }],
+        content: [{ validator: validateRequire }]
       },
       tempRoute: {}
     }

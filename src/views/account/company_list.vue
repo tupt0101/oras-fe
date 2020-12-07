@@ -108,7 +108,8 @@
 
 <script>
 import { fetchCompanyList, fetchCompanyListWithPagination } from '@/api/account'
-import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import Pagination from '@/components/Pagination'
+import { verifyCompany } from '../../api/account' // Secondary package based on el-pagination
 
 export default {
   name: 'AccountList',
@@ -171,7 +172,10 @@ export default {
       this.dialogFormVisible = true
     },
     handleVerifyCompany(id) {
-      return id
+      verifyCompany(id).then(response => {
+        this.getCompanyList()
+        this.dialogFormVisible = false
+      })
     }
   }
 }
