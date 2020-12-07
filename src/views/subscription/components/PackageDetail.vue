@@ -2,7 +2,7 @@
   <div class="createPost-container">
     <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
 
-      <sticky :z-index="10" :class-name="'sub-navbar '+ postForm.data.status">
+      <sticky :z-index="10" :class-name="'sub-navbar '+ postForm.status">
         <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
           Save
         </el-button>
@@ -16,51 +16,51 @@
 
           <el-col :span="24">
             <el-form-item style="margin-bottom: 40px;" prop="name">
-              <MDinput v-model="postForm.data.title" :maxlength="100" name="name" required>
+              <MDinput v-model="postForm.name" :maxlength="100" name="name" required>
                 Package name
               </MDinput>
             </el-form-item>
 
             <div class="postInfo-container">
-              <el-row>
-                <el-col :span="12">
+<!--              <el-row>-->
+                <el-col :span="24">
                   <el-form-item label-width="130px" label="Number of posts:" class="postInfo-container-item">
-                    <el-input-number v-model="postForm.data.numOfPosts" placeholder="0" />
+                    <el-input-number v-model="postForm.numOfPost" placeholder="0" />
                   </el-form-item>
                 </el-col>
 
                 <!-- alo YAnh -->
                 <!-- duration: 1 month, 3 month, 6 month... -->
-                <el-col :span="12">
-                  <el-form-item label-width="130px" label="Duration:" class="postInfo-container-item">
-                    <el-select v-model="postForm.data.duration" :remote-method="getJobTypeList" filterable default-first-option remote placeholder="">
-                      <el-option v-for="(item,index) in jobTypeListOptions" :key="item+index" :label="item" :value="item" />
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-              </el-row>
+<!--                <el-col :span="12">-->
+<!--                  <el-form-item label-width="130px" label="Duration:" class="postInfo-container-item">-->
+<!--                    <el-select v-model="postForm.duration" :remote-method="getDurationList" filterable default-first-option remote placeholder="">-->
+<!--                      <el-option v-for="(item,index) in durationListOptions" :key="item+index" :label="item" :value="item" />-->
+<!--                    </el-select>-->
+<!--                  </el-form-item>-->
+<!--                </el-col>-->
+<!--              </el-row>-->
 
-              <el-row>
-                <el-col :span="12">
+<!--              <el-row>-->
+                <el-col :span="24">
                   <el-form-item label-width="130px" label="Price:" class="postInfo-container-item">
-                    <el-input-number v-model="postForm.data.price" placeholder="00.00" />
+                    <el-input-number v-model="postForm.price" placeholder="00.00" />
                   </el-form-item>
                 </el-col>
 
-                <el-col :span="12">
+                <el-col :span="24">
                   <el-form-item label-width="130px" label="Currency:" class="postInfo-container-item">
-                    <el-select v-model="postForm.data.currency" :remote-method="getCurrencyList" filterable default-first-option remote placeholder="">
+                    <el-select v-model="postForm.currency" :remote-method="getCurrencyList" filterable default-first-option remote placeholder="">
                       <el-option v-for="(item,index) in currencyListOptions" :key="item+index" :label="item" :value="item" />
                     </el-select>
                   </el-form-item>
                 </el-col>
-              </el-row>
+<!--              </el-row>-->
             </div>
           </el-col>
         </el-row>
 
         <el-form-item label-width="95px" label="Description:">
-          <el-input v-model="postForm.data.description" :rows="1" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" />
+          <el-input v-model="postForm.description" :rows="1" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" />
           <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span>
         </el-form-item>
       </div>
@@ -72,14 +72,14 @@
 import MDinput from '@/components/MDinput'
 import Sticky from '@/components/Sticky' // 粘性header组件
 import { validURL } from '@/utils/validate'
-import { fetchArticle } from '@/api/article'
-import { searchUser } from '@/api/remote-search'
 // import Warning from './Warning'
 // import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
 import { getUserId } from '../../../utils/auth'
 import { createJob } from '../../../api/job'
+import { editPackage, fetchPackage } from '../../../api/package'
 
 const defaultForm = {
+  method: '',
   // content_short: '',
   source_uri: '',
   image_uri: '',
@@ -90,7 +90,7 @@ const defaultForm = {
   // importance: 0
   data: {
     name: '',
-    numOfPosts: 0,
+    numOfPost: 0,
     duration: '',
     price: 0,
     currency: '',
@@ -124,39 +124,22 @@ export default {
         callback()
       }
     }
-    const validateSourceUri = (rule, value, callback) => {
-      if (value) {
-        if (validURL(value)) {
-          callback()
-        } else {
-          this.$message({
-            message: '外链url填写不正确',
-            type: 'error'
-          })
-          callback(new Error('外链url填写不正确'))
-        }
-      } else {
-        callback()
-      }
-    }
     return {
-      postForm: Object.assign({}, defaultForm),
+      postForm: Object.assign({}, defaultForm.data),
       loading: false,
       currencyListOptions: [],
-      categoryListOptions: [],
-      jobTypeListOptions: [],
+      durationListOptions: [],
       rules: {
         // image_uri: [{ validator: validateRequire }],
         title: [{ validator: validateRequire }],
         content: [{ validator: validateRequire }],
-        source_uri: [{ validator: validateSourceUri, trigger: 'blur' }]
       },
       tempRoute: {}
     }
   },
   computed: {
     contentShortLength() {
-      return this.postForm.data.description.length
+      return this.postForm.description.length
     },
     displayTime: {
       // set and get is useful when the data
@@ -172,9 +155,14 @@ export default {
     }
   },
   created() {
+    this.getCurrencyList('')
+    this.getDurationList('')
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
       this.fetchData(id)
+      this.method = 'put'
+    } else {
+      this.method = 'post'
     }
 
     // Why need to make a copy of this.$route here?
@@ -184,14 +172,9 @@ export default {
   },
   methods: {
     fetchData(id) {
-      fetchArticle(id).then(response => {
+      fetchPackage(id).then(response => {
         // auto fill data when edit
         this.postForm = response.data
-
-        // just for test
-        this.postForm.data.title += `   Article Id:${this.postForm.id}`
-        this.postForm.content_short += `   Article Id:${this.postForm.id}`
-
         // set tagsview title
         this.setTagsViewTitle()
 
@@ -202,32 +185,46 @@ export default {
       })
     },
     setTagsViewTitle() {
-      const title = 'Edit Article'
+      const title = 'Edit Package'
       const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.postForm.id}` })
       this.$store.dispatch('tagsView/updateVisitedView', route)
     },
     setPageTitle() {
-      const title = 'Edit Article'
+      const title = 'Edit Package'
       document.title = `${title} - ${this.postForm.id}`
     },
     submitForm() {
-      console.log(this.postForm)
+      if (this.postForm.description.length === 0 || this.postForm.name.length === 0) {
+        this.$message({
+          message: 'Please fill in the required title and contents',
+          type: 'warning'
+        })
+        return
+      }
       this.$refs.postForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.postForm.data.status = 'Published'
-          createJob(this.postForm.data).then(response => {
+          this.postForm.createDate = new Date().toISOString()
+          this.postForm.duration = '30 days'
+          let msg = ''
+          if (this.isEdit) {
+            msg = 'Save package successfully'
+          } else {
+            msg = 'Create new package successfully'
+          }
+          editPackage(this.postForm, this.method).then(response => {
+            this.postForm.id = response.data.id
             this.$notify({
               title: 'Success',
-              message: 'Published the post successfully',
+              message: msg,
               type: 'success',
               duration: 2000
             })
             this.loading = false
+            this.$router.back()
+          }).catch(() => {
+            this.loading = false
           })
-            .catch(() => {
-              this.loading = false
-            })
         } else {
           console.log('error submit!!')
           return false
@@ -235,56 +232,31 @@ export default {
       })
     },
     draftForm() {
-      if (this.postForm.data.description.length === 0 || this.postForm.data.title.length === 0) {
+      if (this.postForm.description.length === 0 || this.postForm.name.length === 0) {
         this.$message({
           message: 'Please fill in the required title and contents',
           type: 'warning'
         })
         return
       }
-      this.postForm.data.status = 'Draft'
+      this.postForm.status = 'Draft'
       this.$store.dispatch()
     },
     getCurrencyList(query) {
-      searchUser(query).then(response => {
-        if (!response.data.items) return
-        // anhhy
-        // this.userListOptions = response.data.items.map(v => v.name)
-        this.currencyListOptions = ['VND', 'USD', 'SGD', 'JPY', 'CNY']
+      const CurrencyList = [{ 'name': 'VND' }, { 'name': 'USD' }, { 'name': 'SGD' }, { 'name': 'EUR' }, { 'name': 'JPY' }, { 'name': 'CNY' }]
+      const filterList = CurrencyList.filter(item => {
+        const lowerCase = item.name.toLowerCase()
+        return !(query && lowerCase.indexOf(query.toLowerCase()) < 0)
       })
+      this.currencyListOptions = filterList.map(v => v.name)
     },
-    getCategoryList(query) {
-      searchUser(query).then(response => {
-        if (!response.data.items) return
-        // anhhy
-        // this.userListOptions = response.data.items.map(v => v.name)
-        this.categoryListOptions = [{ 'id': 1, 'name': 'aaa' }, { 'id': 2, 'name': 'bbb' }, { 'id': 3, 'name': 'ccc' }]
+    getDurationList(query) {
+      const durationList = [{ 'name': '30 days' }, { 'name': '90 days' }, { 'name': '6 months' }, { 'name': '12 months' }]
+      const filterList = durationList.filter(item => {
+        const lowerCase = item.name.toLowerCase()
+        return !(query && lowerCase.indexOf(query.toLowerCase()) < 0)
       })
-    },
-    getJobTypeList(query) {
-      searchUser(query).then(response => {
-        if (!response.data.items) return
-        // anhhy
-        // this.userListOptions = response.data.items.map(v => v.name)
-        this.jobTypeListOptions = ['Full-time', 'Part-time']
-      })
-    },
-
-    // create job
-    createJob(data) {
-      return new Promise((resolve, reject) => {
-        createJob(data).then(response => {
-          this.$message({
-            message: 'Saved successfully',
-            type: 'success',
-            showClose: true,
-            duration: 1000
-          })
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
+      this.durationListOptions = filterList.map(v => v.name)
     }
   }
 }

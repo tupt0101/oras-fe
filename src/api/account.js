@@ -31,7 +31,7 @@ export function updateAccount(data) {
 
 export function changePassword(data) {
   return request({
-    url: '/v1/account-management/change-password',
+    url: '/v1/account-management/change-password-account',
     method: 'put',
     data: data
   })

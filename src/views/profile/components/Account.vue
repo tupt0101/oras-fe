@@ -24,7 +24,7 @@
           <el-input
             :key="passwordType"
             ref="password"
-            v-model="passwordData.currentPwd"
+            v-model="passwordData.currentPassword"
             type="password"
             placeholder="Enter your current password"
             name="password"
@@ -39,7 +39,7 @@
           <el-input
             :key="passwordType"
             ref="password"
-            v-model="passwordData.newPwd"
+            v-model="passwordData.newPassword"
             type="password"
             placeholder="Enter new password"
             name="password"
@@ -73,6 +73,7 @@
 <script>
 import { changePassword, updateAccount } from '../../../api/account'
 import { validDigits } from '../../../utils/validate'
+import { getAccountId } from '../../../utils/auth'
 
 export default {
   props: {
@@ -89,24 +90,24 @@ export default {
   },
   data() {
     const validateCurPassword = (rule, value, callback) => {
-      if (this.passwordData.currentPwd.length < 6) {
+      if (this.passwordData.currentPassword.length < 6) {
         callback(new Error('The current password can not be empty.'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (this.passwordData.newPwd.length < 6) {
+      if (this.passwordData.newPassword.length < 6) {
         callback(new Error('The password can not be less than 6 digits.'))
       } else {
         callback()
       }
     }
     const validateConfirmPwd = (rule, value, callback) => {
-      if (!this.confirmPwd && !this.passwordData.newPwd.length) {
-        this.confirmPwd = this.passwordData.newPwd
+      if (!this.confirmPwd && !this.passwordData.newPassword.length) {
+        this.confirmPwd = this.passwordData.newPassword
       }
-      if (this.confirmPwd !== this.passwordData.newPwd) {
+      if (this.confirmPwd !== this.passwordData.newPassword) {
         callback(new Error('The confirmation password is not matched.'))
       } else {
         callback()
@@ -130,8 +131,9 @@ export default {
       checkChangeInfo: false,
       checkChangePwd: false,
       passwordData: {
-        currentPwd: '',
-        newPwd: ''
+        accountId: getAccountId(),
+        currentPassword: '',
+        newPassword: ''
       },
       confirmPwd: '',
       infoForm: Object.assign({}, this.user),
@@ -173,7 +175,7 @@ export default {
     changePassword() {
       this.$refs.passwordData.validate(valid => {
         if (valid) {
-          changePassword(this.user).then(response => {
+          changePassword(this.passwordData).then(response => {
             this.$message({
               message: 'Password has been updated successfully',
               type: 'success',
