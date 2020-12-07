@@ -199,7 +199,7 @@ export default {
     },
     rankCV() {
       this.listLoading = true
-      rankCV(this.jobId).then(response => {
+      rankCV(this.jobId, this.listQuery).then(response => {
         this.list = response.data
         // this.list.sort(function(a, b) { return (b - a) })
         this.listLoading = false

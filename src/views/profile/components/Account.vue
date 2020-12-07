@@ -91,7 +91,7 @@ export default {
   data() {
     const validateCurPassword = (rule, value, callback) => {
       if (this.passwordData.currentPassword.length < 6) {
-        callback(new Error('The current password can not be empty.'))
+        callback(new Error('The current password can not be less than 6 digits.'))
       } else {
         callback()
       }
