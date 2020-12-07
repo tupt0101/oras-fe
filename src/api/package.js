@@ -55,3 +55,11 @@ export function checkValidAccount(url) {
     method: 'get'
   })
 }
+
+export function editPackage(data, method) {
+  return request({
+    url: '/v1/package-management/package',
+    method: method,
+    data: data
+  })
+}

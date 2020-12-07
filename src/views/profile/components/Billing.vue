@@ -12,7 +12,7 @@
         <el-form-item label="Expired date:" label-width="150px" style="margin-bottom: 0px">
           <span>{{ currPackage && (new Date(currPackage.validTo)).toLocaleString("en-US", {dateStyle: "long", timeStyle: "medium"}) }}</span>
         </el-form-item>
-        <el-button type="danger" @click="cancelCurrentPackage">Cancel Package</el-button>
+        <el-button type="danger" @click="cancelCurrentPackage">Cancel package</el-button>
       </el-form>
     </div>
     <div v-if="!currPackage">
@@ -46,6 +46,7 @@ export default {
             type: 'success',
             duration: 2.5 * 1000
           })
+          this.$router.go(0)
         })
         .catch(err => {
           console.log(err)

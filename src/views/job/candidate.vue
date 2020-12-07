@@ -65,7 +65,7 @@
     <el-table v-if="list" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
       <el-table-column type="index" align="center" label="No." width="80">
         <template slot-scope="scope">
-          <span>{{ scope.$index + 1 }}</span>
+          <span>{{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Full name" min-width="150px">
@@ -199,7 +199,7 @@ export default {
     },
     rankCV() {
       this.listLoading = true
-      rankCV(this.jobId).then(response => {
+      rankCV(this.jobId, this.listQuery).then(response => {
         this.list = response.data
         // this.list.sort(function(a, b) { return (b - a) })
         this.listLoading = false

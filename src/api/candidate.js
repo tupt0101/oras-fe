@@ -21,10 +21,9 @@ export function fetchApplicationFromRP(id) {
   })
 }
 
-export function rankCV(id) {
+export function rankCV(id, query) {
   return request({
-    url: '/v1/job-application-management/job-application-rank-cv',
-    method: 'post',
-    data: id
+    url: '/v1/job-application-management/job-application-rank-cv?jobId=' + id + '&numOfElement=' + query.limit + '&page=' + query.page,
+    method: 'post'
   })
 }

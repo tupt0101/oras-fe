@@ -125,6 +125,14 @@ export const asyncRoutes = [
         hidden: true
       },
       {
+        path: 'reopen/:id(\\d+)',
+        component: () => import('@/views/job/reopen'),
+        name: 'ReopenJob',
+        meta: { title: 'Reopen Job', noCache: true, activeMenu: '/job/list' },
+        hidden: true,
+        props: true
+      },
+      {
         path: 'list',
         component: () => import('@/views/job/list'),
         name: 'JobList',

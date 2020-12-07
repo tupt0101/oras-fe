@@ -3,7 +3,7 @@
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
       <el-table-column align="center" label="ID" width="80">
         <template slot-scope="scope">
-          <span>{{ scope.$index + 1 }}</span>
+          <span>{{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Title" width="250px">
@@ -46,7 +46,14 @@
           <!-- sua router to: toi api thuc hien action crud -->
           <router-link :to="'/job/edit/'+scope.row.id">
             <el-tooltip content="Edit job" placement="top">
-              <el-button v-if="scope.row.status!=='Published'" type="primary" size="small" icon="el-icon-edit">
+              <el-button v-if="scope.row.status==='Draft'" type="primary" size="small" icon="el-icon-edit">
+                <!-- Edit -->
+              </el-button>
+            </el-tooltip>
+          </router-link>
+          <router-link :to="'/job/reopen/'+scope.row.id">
+            <el-tooltip content="Reopen job" placement="top">
+              <el-button v-if="scope.row.status==='Closed'" type="primary" size="small" icon="el-icon-copy-document">
                 <!-- Edit -->
               </el-button>
             </el-tooltip>
@@ -130,6 +137,7 @@ export default {
           duration: 2000
         })
         this.loading = false
+        this.$router.go(0)
       }).catch(err => {
         this.dialogTitle = err.response.data.message
         this.hasError = true
@@ -149,6 +157,7 @@ export default {
           duration: 2000
         })
         this.loading = false
+        this.$router.go(0)
       }).catch(() => {
         this.loading = false
       })
