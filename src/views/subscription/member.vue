@@ -48,15 +48,15 @@
           </el-tag>
         </template>
       </el-table-column>
-<!--      <el-table-column align="center" label="Actions" width="150px" class-name="small-padding fixed-width">-->
-<!--        <template slot-scope="scope">-->
-<!--          <router-link :to="'/purchase/detail/'+scope.row.id">-->
-<!--            <el-button type="primary" size="small" icon="el-icon-s-order">-->
-<!--              &lt;!&ndash; View purchase detail &ndash;&gt;-->
-<!--            </el-button>-->
-<!--          </router-link>-->
-<!--        </template>-->
-        <!-- <template slot-scope="{row,$index}">
+      <!--      <el-table-column align="center" label="Actions" width="150px" class-name="small-padding fixed-width">-->
+      <!--        <template slot-scope="scope">-->
+      <!--          <router-link :to="'/purchase/detail/'+scope.row.id">-->
+      <!--            <el-button type="primary" size="small" icon="el-icon-s-order">-->
+      <!--              &lt;!&ndash; View purchase detail &ndash;&gt;-->
+      <!--            </el-button>-->
+      <!--          </router-link>-->
+      <!--        </template>-->
+      <!-- <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
@@ -70,7 +70,7 @@
             Delete
           </el-button>
         </template> -->
-<!--      </el-table-column>-->
+      <!--      </el-table-column>-->
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />

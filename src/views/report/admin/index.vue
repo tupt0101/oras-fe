@@ -36,7 +36,7 @@
     <el-row>
       <el-col :xs="24" :sm="24" :lg="24">
         <div class="chart-wrapper">
-          <h2 class="title">Avarage Salary by Category</h2>
+          <h2 class="title">Average Salary by Category</h2>
           <avg-salary-by-category style="barchartStyle" :chart-data="avgSalaryData" />
         </div>
       </el-col>
