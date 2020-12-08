@@ -112,7 +112,7 @@
       </el-table-column>
       <el-table-column align="center" label="Matching Rank" width="180px">
         <template slot-scope="{row}">
-          <span>{{ row.matchingRate }}</span>
+          <span>{{ row.matchingRate }}%</span>
         </template>
       </el-table-column>
     </el-table>
