@@ -70,7 +70,9 @@
       </el-table-column>
       <el-table-column label="Full name" min-width="150px">
         <template slot-scope="{row}">
-          <span style="white-space: nowrap">{{ row.candidateByCandidateId.fullname }}</span>
+          <div class="link-type" @click="viewDetail(row)">
+            <span style="white-space: nowrap">{{ row.candidateByCandidateId.fullname }}</span>
+          </div>
         </template>
       </el-table-column>
       <el-table-column label="Email" align="center" width="240px">
@@ -115,6 +117,42 @@
       </el-table-column>
     </el-table>
 
+    <el-dialog title="Candidate Detail" :visible.sync="dialogFormVisible">
+      <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="width: 90%; margin-left:50px;">
+        <el-form-item label="Full name:" label-width="150px" style="margin-bottom: 0px">
+          <span>{{ temp.candidateByCandidateId.fullname }}</span>
+        </el-form-item>
+        <el-form-item label="Email:" label-width="150px" style="margin-bottom: 0px">
+          <span>{{ temp.candidateByCandidateId.email }}</span>
+        </el-form-item>
+        <el-form-item label="Phone number:" label-width="150px" style="margin-bottom: 0px">
+          <span>{{ temp.candidateByCandidateId.phoneNo }}</span>
+        </el-form-item>
+        <el-form-item label="Address:" label-width="150px" style="margin-bottom: 0px">
+          <span>{{ temp.candidateByCandidateId.address }}</span>
+        </el-form-item>
+        <el-form-item label="Status: " label-width="150px" style="margin-bottom: 0px">
+          <el-tag :type="temp.status | statusFilter">
+            {{ temp.status }}
+          </el-tag>
+        </el-form-item>
+        <el-form-item label="Comment:" label-width="150px" style="margin-bottom: 0px;">
+          <el-input v-model="temp.comment" type="textarea" :rows="5" />
+        </el-form-item>
+        <!-- <el-form-item label="" label-width="120px" style="margin-bottom: 0px; max-height: 320px; overflow-y: scroll">
+          <span v-html="temp.description" />
+        </el-form-item> -->
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="handleComment(temp)">
+          Save &amp; Close
+        </el-button>
+        <el-button v-if="!(temp.status === 'Hired')" type="success" @click="handleHireCandidate(temp)">
+          Hire
+        </el-button>
+      </div>
+    </el-dialog>
+
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getApplications" />
   </div>
 </template>
@@ -130,9 +168,9 @@ export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        published: 'success',
-        draft: 'info',
-        deleted: 'danger'
+        Hired: 'success',
+        Applied: 'primary',
+        Reject: 'danger'
       }
       return statusMap[status]
     }
@@ -147,7 +185,28 @@ export default {
         page: 1,
         limit: 10
       },
-      jobId: ''
+      jobId: '',
+      temp: {
+        id: undefined,
+        candidateId: '',
+        matchingRate: 0,
+        cv: 0,
+        applyDate: '',
+        hiredDate: '',
+        source: '',
+        status: '',
+        comment: '',
+        jobId: undefined,
+        candidateByCandidateId: {
+          id: undefined,
+          fullname: '',
+          emaill: '',
+          address: '',
+          phoneNo: ''
+        },
+        jobByJobId: null
+      },
+      dialogFormVisible: false
     }
   },
   created() {
@@ -208,9 +267,16 @@ export default {
         console.log(err)
       })
     },
-    indexMethod(index) {
-      alert(index)
-      return index
+    viewDetail(candidate) {
+      this.temp = Object.assign({}, candidate) // copy obj
+      // this.temp.timestamp = new Date(this.temp.timestamp)
+      this.dialogFormVisible = true
+    },
+    handleComment(ja) {
+      console.log('comment', ja)
+    },
+    handleHireCandidate(ja) {
+      console.log('hire ', ja)
     }
   }
 }

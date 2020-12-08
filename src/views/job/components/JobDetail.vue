@@ -128,7 +128,7 @@ const defaultForm = {
     talentPoolId: 1,
     createDate: new Date().toISOString(),
     // creatorId: getAccountId()
-    creatorId: this.accountId
+    creatorId: ''
   }
 }
 
