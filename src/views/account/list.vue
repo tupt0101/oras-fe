@@ -47,18 +47,28 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="Actions" width="150">
+      <el-table-column align="center" label="Actions" width="180">
         <template slot-scope="scope">
           <router-link :to="'/account/edit/'+scope.row.id">
-            <el-tooltip content="Edit account" placement="top">
-              <el-button type="primary" size="small" icon="el-icon-edit" style="margin-right: 10px">
+            <el-tooltip content="Edit account" placement="top" style="margin-right: 10px">
+              <el-button type="primary" size="small" icon="el-icon-edit">
                 <!-- Edit -->
               </el-button>
             </el-tooltip>
           </router-link>
-          <el-tooltip content="Reset password" placement="top">
+          <el-tooltip content="Reset password" placement="top" style="margin-right: 0px">
             <el-button type="info" size="small" icon="el-icon-refresh-left" @click="handleResetPassword(scope.row.email)">
             <!-- Reset password -->
+            </el-button>
+          </el-tooltip>
+          <el-tooltip content="Deactivate account" placement="top">
+            <el-button v-if="scope.row.active" type="danger" size="small" icon="el-icon-remove-outline" @click="handleDeactivateAccount(scope.row.id)">
+            <!-- Deactivate account -->
+            </el-button>
+          </el-tooltip>
+          <el-tooltip content="Deactivate account" placement="top">
+            <el-button v-if="!scope.row.active" type="success" size="small" icon="el-icon-circle-check" @click="handleActivateAccount(scope.row.id)">
+            <!-- Activate account -->
             </el-button>
           </el-tooltip>
         </template>
@@ -130,6 +140,42 @@ export default {
         .then(response => {
           this.dialogTitle = 'Reset Password Successfully!'
           this.message = 'The password of account <i>' + email + '</i><br> has been reset.'
+          this.showDialog = true
+          this.loading = false
+        })
+        .catch(err => {
+          this.dialogTitle = 'Something went wrong!'
+          this.hasError = true
+          if (err.response.data.status === 400) {
+            this.message = 'The email you entered is not registered in our system.<br>Please try again!'
+          }
+          this.showDialog = true
+          this.loading = false
+        })
+    },
+    handleDeactivateAccount(id) {
+      resetPassword(id)
+        .then(response => {
+          this.dialogTitle = 'Reset Password Successfully!'
+          this.message = 'The account with id: <i>' + id + '</i><br> has been deactivated.'
+          this.showDialog = true
+          this.loading = false
+        })
+        .catch(err => {
+          this.dialogTitle = 'Something went wrong!'
+          this.hasError = true
+          if (err.response.data.status === 400) {
+            this.message = 'The email you entered is not registered in our system.<br>Please try again!'
+          }
+          this.showDialog = true
+          this.loading = false
+        })
+    },
+    handleActivateAccount(id) {
+      resetPassword(id)
+        .then(response => {
+          this.dialogTitle = 'Reset Password Successfully!'
+          this.message = 'The account with id: <i>' + id + '</i><br> has been activated.'
           this.showDialog = true
           this.loading = false
         })

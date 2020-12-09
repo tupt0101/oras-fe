@@ -299,13 +299,13 @@ export const asyncRoutes = [
         path: 'list',
         component: () => import('@/views/account/list'),
         name: 'JobList',
-        meta: { title: 'Account List', icon: 'list' }
+        meta: { title: 'Account List', icon: 'peoples' }
       },
       {
         path: 'company',
         component: () => import('@/views/account/company_list'),
         name: 'CompanyList',
-        meta: { title: 'Company List', icon: 'peoples' }
+        meta: { title: 'Company List', icon: 'list' }
       }
     ]
   },
