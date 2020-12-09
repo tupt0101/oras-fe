@@ -8,7 +8,7 @@
       </el-table-column>
       <el-table-column label="Account name" min-width="200px" align="left">
         <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.accountById.fullname }}</span>
+          <span>{{ row.accountById.fullname }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Company" width="250px" align="center">
@@ -21,9 +21,14 @@
           <span>{{ row.packageById.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Purchase ID" width="150px" align="center">
+      <el-table-column label="Remaining posts" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.purchaseId }}</span>
+          <span>{{ row.numOfPost }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="Price" width="150px" align="center">
+        <template slot-scope="{row}">
+          <span>USD {{ row.packageById.price }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Purchase date" width="200px" align="center">
@@ -39,19 +44,19 @@
       <el-table-column label="Status" class-name="status-col" width="100">
         <template slot-scope="{row}">
           <el-tag :type="row.expired | statusFilter">
-            {{ row.expired ? 'expired' : 'valid' }}
+            {{ row.expired ? 'Expired' : 'Valid' }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Actions" width="150px" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <router-link :to="'/purchase/detail/'+scope.row.id">
-            <el-button type="primary" size="small" icon="el-icon-s-order">
-              <!-- View purchase detail -->
-            </el-button>
-          </router-link>
-        </template>
-        <!-- <template slot-scope="{row,$index}">
+      <!--      <el-table-column align="center" label="Actions" width="150px" class-name="small-padding fixed-width">-->
+      <!--        <template slot-scope="scope">-->
+      <!--          <router-link :to="'/purchase/detail/'+scope.row.id">-->
+      <!--            <el-button type="primary" size="small" icon="el-icon-s-order">-->
+      <!--              &lt;!&ndash; View purchase detail &ndash;&gt;-->
+      <!--            </el-button>-->
+      <!--          </router-link>-->
+      <!--        </template>-->
+      <!-- <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
@@ -65,7 +70,7 @@
             Delete
           </el-button>
         </template> -->
-      </el-table-column>
+      <!--      </el-table-column>-->
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />

@@ -8,7 +8,7 @@
       </el-table-column>
       <el-table-column label="Package name" width="200px">
         <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.name }}</span>
+          <span>{{ row.name }}</span>
           <!-- <el-tag>{{ row.title }}</el-tag> -->
         </template>
       </el-table-column>

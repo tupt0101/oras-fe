@@ -42,7 +42,7 @@
       <el-table-column class-name="status-col" label="Status" width="150">
         <template slot-scope="{row}">
           <el-tag :type="row.active | statusFilter">
-            {{ row.active ? 'active' : 'deactive' }}
+            {{ row.active ? 'Active' : 'Inactive' }}
           </el-tag>
         </template>
       </el-table-column>

@@ -3,10 +3,10 @@
     <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
 
       <sticky :z-index="10" :class-name="'sub-navbar '+ postForm.status">
-        <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
+        <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="handleSubmitAction(1)">
           Publish
         </el-button>
-        <el-button v-loading="loading" type="warning" @click="draftForm">
+        <el-button v-loading="loading" type="warning" @click="handleSubmitAction(2)">
           Save
         </el-button>
       </sticky>
@@ -92,6 +92,19 @@
       <span slot="title"><svg-icon class-name="size-icon" :icon-class="hasError ? 'failed' : 'success'" /> {{ dialogTitle }}</span>
       <p class="message" v-html="message" />
     </el-dialog>
+
+    <el-dialog :visible.sync="showConfirmDialog" width="33%">
+      <span slot="title"><svg-icon class-name="size-icon" :icon-class="'warning'" /> {{ dialogTitle }}</span>
+      <p class="message" v-html="message" />
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="showConfirmDialog = false">
+          Close
+        </el-button>
+        <el-button type="success" @click="submitForm">
+          Continue
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -127,7 +140,6 @@ const defaultForm = {
     category: '',
     talentPoolId: 1,
     createDate: new Date().toISOString(),
-    // creatorId: getAccountId()
     creatorId: ''
   }
 }
@@ -176,66 +188,11 @@ export default {
       const item = rule.field
       if (value === '') {
         callback(new Error(uppercaseFirst(item) + ' is required'))
-      } else if (this.postForm.currency) {
-        console.log(this.postForm.currency)
-        console.log(this.postForm.err)
-        let isWrong = false
-        if (this.postForm.salaryFrom > this.postForm.salaryTo) {
-          isWrong = true
-        }
-        switch (this.postForm.currency) {
-          case 'VND':
-            if (this.postForm.salaryFrom < 1000000 || this.postForm.salaryTo > 1000000000) {
-              isWrong = true
-            }
-            break
-          case 'USD':
-            // https://countryeconomy.com/national-minimum-wage/usa
-            // https://www.investopedia.com/personal-finance/top-highest-paying-jobs/
-            if (this.postForm.salaryFrom < 1200 || this.postForm.salaryTo > 25000) {
-              isWrong = true
-            }
-            break
-          case 'SGD':
-            // Salaries in Singapore range from 2,140 SGD per month (minimum salary) to 37,700 SGD per month (maximum average salary, actual maximum is higher).
-            // http://www.salaryexplorer.com/salary-survey.php?loc=196&loctype=1#:~:text=Salaries%20in%20Singapore%20range%20from,%2C%20actual%20maximum%20is%20higher).
-            if (this.postForm.salaryFrom < 2100 || this.postForm.salaryTo > 40000) {
-              isWrong = true
-            }
-            break
-          case 'EUR':
-            // Minimum wages in the EU Member States ranged from €312 to €2 142 per month in July 2020.
-            // https://ec.europa.eu/eurostat/statistics-explained/index.php/Minimum_wage_statistics#:~:text=Minimum%20wages%20in%20the%20EU,per%20month%20in%20July%202020.
-            if (this.postForm.salaryFrom < 300 || this.postForm.salaryTo > 20000) {
-              isWrong = true
-            }
-            break
-          case 'JPY':
-            // Salaries in Japan range from 130,000 JPY per month (minimum salary) to 2,300,000 JPY per month (maximum average salary, actual maximum is higher).
-            // http://www.salaryexplorer.com/salary-survey.php?loc=107&loctype=1#:~:text=Salaries%20in%20Japan%20range%20from,%2C%20actual%20maximum%20is%20higher).
-            if (this.postForm.salaryFrom < 130000 || this.postForm.salaryTo > 2300000) {
-              isWrong = true
-            }
-            break
-          case 'CNY':
-            // The minimum wage in China is set locally; ranges from RMB1,120 ($161.07) per month, or RMB10. 60 ($1.52) per hour in Liaoning; to RMB2,420 ($348.02) per month, or RMB21.
-            // https://en.wikipedia.org/wiki/List_of_minimum_wages_by_country#:~:text=The%20minimum%20wage%20in%20China,)%20per%20month%2C%20or%20RMB21.
-            // Salaries in China range from 7,410 CNY per month (minimum salary) to 131,000 CNY per month (maximum average salary, actual maximum is higher).
-            // http://www.salaryexplorer.com/salary-survey.php?loc=44&loctype=1#:~:text=Salaries%20in%20China%20range%20from,%2C%20actual%20maximum%20is%20higher).
-            if (this.postForm.salaryFrom < 1100 || this.postForm.salaryTo > 131000) {
-              isWrong = true
-              break
-            }
-        }
-        if (isWrong) {
-          this.$message({
-            message: 'Salary range is not reasonable',
-            type: 'error'
-          })
-          // callback(new Error('Salary range is not reasonable'))
-        } else {
-          callback()
-        }
+      } else if (this.postForm.salaryFrom > this.postForm.salaryTo) {
+        this.$message({
+          message: 'Salary range is not reasonable',
+          type: 'error'
+        })
       } else {
         callback()
       }
@@ -248,7 +205,7 @@ export default {
       jobTypeListOptions: [],
       rules: {
         title: [{ validator: validateTitle }],
-        applyTo: [{ validator: validateRequire }],
+        // applyTo: [{ validator: validateRequire }],
         jobType: [{ validator: validateRequire }],
         category: [{ validator: validateRequire }],
         salaryFrom: [{ validator: validateCurrency, trigger: 'blur' }],
@@ -261,7 +218,12 @@ export default {
       showDialog: false,
       btnLoading: false,
       hasError: false,
-      dialogTitle: ''
+      dialogTitle: '',
+      // true la continue
+      confirmation: undefined,
+      showConfirmDialog: false,
+      action: '',
+      deadline: new Date()
     }
   },
   computed: {
@@ -330,7 +292,7 @@ export default {
       const title = 'Edit Job'
       document.title = `${title} - ${this.postForm.id}`
     },
-    submitForm() {
+    handleSubmitAction(type) {
       if (this.postForm.description.length === 0 || this.postForm.title.length === 0) {
         this.$message({
           message: 'Please fill in the required title and contents',
@@ -340,76 +302,74 @@ export default {
       }
       this.$refs.postForm.validate(valid => {
         if (valid) {
-          this.loading = true
-          this.postForm.applyFrom = new Date().toISOString()
-          this.postForm.applyTo = new Date(this.postForm.applyTo + 'Z').toISOString()
-          createJob(this.postForm, this.method).then(response => {
-            this.postForm.id = response.data.id
-            publishJob(this.postForm.id).then(response => {
-              this.$notify({
-                title: 'Success',
-                message: 'Published the post successfully',
-                type: 'success',
-                duration: 2000
-              })
-            }).catch(err => {
-              this.dialogTitle = err.response.data.message
-              this.hasError = true
-              if (err.response.data.status === 402) {
-                this.message = 'You have run out of job posts.<br>Please try to select and purchase other packages!'
-              }
-              this.showDialog = true
-              this.loading = false
-            })
-            this.loading = false
-            this.$router.back()
-          }).catch(() => {
-            this.loading = false
-          })
-        } else {
-          console.log('error submit!!')
-          return false
+          this.action = type
+          if (!this.validateSalary()) {
+            this.showConfirmDialog = true
+            this.dialogTitle = 'Warning'
+            this.message = 'This salary range is not reasonable.</br>Do you want to continue?'
+          } else {
+            this.submitForm()
+          }
         }
       })
     },
-    draftForm() {
-      if (this.postForm.description.length === 0 || this.postForm.title.length === 0) {
-        this.$message({
-          message: 'Please fill in the required title and contents',
-          type: 'warning'
-        })
-        return
+    submitForm() {
+      this.showConfirmDialog = false
+      this.loading = true
+      this.postForm.applyFrom = new Date().toISOString()
+      this.postForm.creatorId = this.accountId
+      if (typeof this.postForm.applyTo === 'object') {
+        this.postForm.applyTo = new Date(this.postForm.applyTo + 'Z').toISOString()
       }
-      this.$refs.postForm.validate(valid => {
-        if (valid) {
-          this.postForm.applyFrom = new Date().toISOString()
-          this.postForm.applyTo = new Date(this.postForm.applyTo + 'Z').toISOString()
-          this.loading = true
-          createJob(this.postForm, this.method).then(response => {
+      // API create job
+      createJob(this.postForm, this.method).then(response => {
+        this.postForm.id = response.data.id
+        if (this.action === 1) {
+          // API Publish job
+          publishJob(this.postForm.id).then(response => {
+            debugger
             this.$notify({
               title: 'Success',
-              message: 'Save the post successfully',
+              message: 'Published the post successfully',
               type: 'success',
               duration: 2000
             })
-            this.loading = false
-            if (this.isReopen) {
-              this.$router.push('/job/edit/' + response.data.id)
-            } else {
-              this.fetchData(response.data.id)
+            this.$router.push('/job/list')
+          }).catch(err => {
+            debugger
+            this.dialogTitle = err.response.data.message
+            this.hasError = true
+            if (err.response.data.status === 402) {
+              this.message = 'You have run out of job posts.<br>Please try to select and purchase other packages!'
             }
+            this.showDialog = true
           })
-            .catch(error => {
-              this.$message({
-                message: error.response.data.message,
-                type: 'warning'
-              })
-              this.loading = false
-            })
+          // end Publish job
         } else {
-          console.log('error submit!!')
-          return false
+          // Create job successful
+          this.$notify({
+            title: 'Success',
+            message: 'Save the post successfully',
+            type: 'success',
+            duration: 2000
+          })
+          if (this.isReopen) {
+            this.$router.push('/job/edit/' + response.data.id)
+          } else if (!this.isEdit) {
+            this.$router.push('/job/list')
+          } else {
+            this.fetchData(response.data.id)
+          }
+          // end Create job successful
         }
+        this.loading = false
+      }).catch(error => {
+        // create job fail
+        this.$message({
+          message: error.response.data.message,
+          type: 'warning'
+        })
+        this.loading = false
       })
     },
     getCategoryList(query) {
@@ -431,12 +391,43 @@ export default {
       this.currencyListOptions = filterList.map(v => v.name)
     },
     getJobTypeList(query) {
-      const JobTypeList = [{ 'name': 'Full-time' }, { 'name': 'Part-time' }]
+      const JobTypeList = [{ 'name': 'Full-time' }, { 'name': 'Part-time' }, { 'name': 'Internship' }]
       const filterList = JobTypeList.filter(item => {
         const lowerCase = item.name.toLowerCase()
         return !(query && lowerCase.indexOf(query.toLowerCase()) < 0)
       })
       this.jobTypeListOptions = filterList.map(v => v.name)
+    },
+    validateSalary() {
+      let min = 0
+      let max = 0
+      switch (this.postForm.currency) {
+        case 'VND':
+          min = 1000000
+          max = 1000000000
+          break
+        case 'USD':
+          min = 1000000
+          max = 1000000000
+          break
+        case 'SGD':
+          min = 1000000
+          max = 1000000000
+          break
+        case 'EUR':
+          min = 1000000
+          max = 1000000000
+          break
+        case 'JPY':
+          min = 1000000
+          max = 1000000000
+          break
+        case 'CNY':
+          min = 1000000
+          max = 1000000000
+          break
+      }
+      return (this.postForm.salaryFrom >= min && this.postForm.salaryTo <= max)
     }
   }
 }

@@ -26,7 +26,7 @@
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
-          <h2 class="title" v-text="'Avarage Salary ('+ baseCurrency.toUpperCase() +') by Category'" />
+          <h2 class="title" v-text="'Average Salary ('+ baseCurrency.toUpperCase() +') by Category'" />
           <avg-salary-by-category style="barchartStyle" :chart-data="avgSalaryData" />
         </div>
       </el-col>
