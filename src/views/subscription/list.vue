@@ -46,11 +46,9 @@
               <!-- Edit -->
             </el-button>
           </router-link>
-          <router-link :to="'/subscription/delete/'+scope.row.id">
-            <el-button type="danger" size="small" icon="el-icon-delete">
+            <el-button type="danger" size="small" icon="el-icon-delete" @click="handleDeactivatePackage(scope.row.id)">
               <!-- Delete -->
             </el-button>
-          </router-link>
         </template>
       </el-table-column>
     </el-table>
@@ -62,7 +60,8 @@
 <script>
 // import { fetchJobList } from '@/api/job'
 import Pagination from '@/components/Pagination'
-import { fetchPackageList } from '@/api/package' // Secondary package based on el-pagination
+import { fetchPackageList } from '@/api/package'
+import { deactivatePackage } from '../../api/package' // Secondary package based on el-pagination
 
 export default {
   name: 'PackageList',
@@ -98,6 +97,16 @@ export default {
         this.list = response.data
         // this.total = response.data
         this.listLoading = false
+      })
+    },
+    handleDeactivatePackage(id) {
+      deactivatePackage(id).then(response => {
+        this.$notify({
+          title: 'Success',
+          message: 'Deactivate package successfully',
+          type: 'success',
+          duration: 2000
+        })
       })
     }
   }

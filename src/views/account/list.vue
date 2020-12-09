@@ -66,7 +66,7 @@
             <!-- Deactivate account -->
             </el-button>
           </el-tooltip>
-          <el-tooltip content="Deactivate account" placement="top">
+          <el-tooltip content="Activate account" placement="top">
             <el-button v-if="!scope.row.active" type="success" size="small" icon="el-icon-circle-check" @click="handleActivateAccount(scope.row.id)">
             <!-- Activate account -->
             </el-button>

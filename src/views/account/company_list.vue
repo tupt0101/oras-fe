@@ -49,7 +49,7 @@
 
       <el-table-column align="center" label="Actions" width="150">
         <template slot-scope="scope">
-          <router-link :to="'/account/edit/'+scope.row.id">
+          <router-link :to="'/account/company/edit/'+scope.row.id">
             <el-button type="primary" size="small" icon="el-icon-edit">
               <!-- Edit -->
             </el-button>

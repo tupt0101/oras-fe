@@ -130,7 +130,6 @@ const defaultForm = {
     title: '',
     description: '',
     applyTo: '',
-    applyFrom: new Date().toISOString(),
     salaryFrom: '',
     salaryTo: '',
     salaryHidden: false,
@@ -138,7 +137,6 @@ const defaultForm = {
     vacancies: 1,
     jobType: '',
     category: '',
-    talentPoolId: 1,
     createDate: new Date().toISOString(),
     creatorId: ''
   }
@@ -327,7 +325,6 @@ export default {
         if (this.action === 1) {
           // API Publish job
           publishJob(this.postForm.id).then(response => {
-            debugger
             this.$notify({
               title: 'Success',
               message: 'Published the post successfully',
@@ -336,7 +333,6 @@ export default {
             })
             this.$router.push('/job/list')
           }).catch(err => {
-            debugger
             this.dialogTitle = err.response.data.message
             this.hasError = true
             if (err.response.data.status === 402) {

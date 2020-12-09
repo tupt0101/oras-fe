@@ -63,3 +63,11 @@ export function editPackage(data, method) {
     data: data
   })
 }
+
+export function deactivatePackage(id) {
+  return request({
+    url: '/v1/package-management/deactivate',
+    method: 'put',
+    data: id
+  })
+}

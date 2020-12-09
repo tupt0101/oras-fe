@@ -48,7 +48,7 @@
               </el-col>
 
               <el-col :span="24">
-                <el-form-item label-width="130px" label="Currency:" class="postInfo-container-item">
+                <el-form-item label-width="130px"  prop="currency" label="Currency:" class="postInfo-container-item">
                   <el-select v-model="postForm.currency" :remote-method="getCurrencyList" filterable default-first-option remote placeholder="">
                     <el-option v-for="(item,index) in currencyListOptions" :key="item+index" :label="item" :value="item" />
                   </el-select>
@@ -130,7 +130,8 @@ export default {
       rules: {
         // image_uri: [{ validator: validateRequire }],
         title: [{ validator: validateRequire }],
-        content: [{ validator: validateRequire }]
+        content: [{ validator: validateRequire }],
+        currency: [{ validator: validateRequire }]
       },
       tempRoute: {}
     }
