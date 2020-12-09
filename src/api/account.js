@@ -59,6 +59,13 @@ export function fetchCompanyListWithPagination(query) {
   })
 }
 
+export function fetchCompany(id) {
+  return request({
+    url: '/v1/company-management/company/' + id,
+    method: 'get'
+  })
+}
+
 export function updateCompany(data) {
   return request({
     url: '/v1/company-management/company',
@@ -71,5 +78,13 @@ export function verifyCompany(id) {
   return request({
     url: '/v1/company-management/company/verify/' + id,
     method: 'put'
+  })
+}
+
+export function checkCompanyName(data) {
+  return request({
+    url: '/v1/company-management/check-company-name',
+    method: 'get',
+    params: data
   })
 }

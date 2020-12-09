@@ -296,6 +296,13 @@ export const asyncRoutes = [
         hidden: true
       },
       {
+        path: 'company/edit/:id(\\d+)',
+        component: () => import('@/views/account/edit_company'),
+        name: 'EditCompany',
+        meta: { title: 'Edit Company', noCache: true, activeMenu: '/example/list' },
+        hidden: true
+      },
+      {
         path: 'list',
         component: () => import('@/views/account/list'),
         name: 'JobList',
