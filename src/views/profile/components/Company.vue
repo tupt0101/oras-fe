@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { updateCompany } from '../../../api/account'
+import { checkCompanyName, updateCompany } from '../../../api/account'
 import { validDigits, validEmail } from '../../../utils/validate'
 
 export default {
@@ -72,7 +72,13 @@ export default {
       if (this.company.name.length === 0) {
         callback(new Error('The company name can not be empty.'))
       } else {
-        callback()
+        const data = { 'id': this.company.id, 'name': this.company.name }
+        checkCompanyName(data).then(() => {
+          callback()
+        })
+          .catch(() => {
+            callback(new Error('This company name already exist.'))
+          })
       }
     }
     const validateLocation = (rule, value, callback) => {
@@ -105,6 +111,7 @@ export default {
     }
     return {
       infoForm: Object.assign({}, this.company),
+      checkName: '',
       rules: {
         compName: [{ required: true, trigger: 'blur', validator: validateCompName }],
         location: [{ required: true, trigger: 'blur', validator: validateLocation }],
@@ -114,6 +121,9 @@ export default {
         description: [{ required: true, trigger: 'blur', validator: validateDescription }]
       }
     }
+  },
+  computed: {
+
   },
   methods: {
     submit() {
