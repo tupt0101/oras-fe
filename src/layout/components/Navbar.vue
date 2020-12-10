@@ -14,7 +14,7 @@
 
         <lang-select class="set-language right-menu-item hover-effect" />
 
-        <notification class="right-menu-item hover-effect" />
+        <!-- <notification class="right-menu-item hover-effect" /> -->
 
         <!-- <el-tooltip content="Global Size" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
@@ -28,18 +28,18 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
-          <router-link to="/profile/index">
-            <el-dropdown-item>Profile</el-dropdown-item>
-          </router-link>
           <router-link to="/">
             <el-dropdown-item>Dashboard</el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
+          <router-link to="/profile/index">
+            <el-dropdown-item>Profile</el-dropdown-item>
+          </router-link>
+          <a target="_blank" href="https://github.com/tupt0101/oras-fe">
             <el-dropdown-item>Github</el-dropdown-item>
           </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
+          <!-- <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
             <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
+          </a> -->
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">Log Out</span>
           </el-dropdown-item>
@@ -57,7 +57,7 @@ import Hamburger from '@/components/Hamburger'
 // import Screenfull from '@/components/Screenfull'
 // import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
-import Notification from '@/components/Notification'
+// import Notification from '@/components/Notification'
 import LangSelect from '@/components/LangSelect'
 
 export default {
@@ -68,7 +68,7 @@ export default {
     // Screenfull,
     // SizeSelect,
     Search,
-    Notification,
+    // Notification,
     LangSelect
   },
   computed: {

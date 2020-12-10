@@ -56,19 +56,19 @@
               </el-button>
             </el-tooltip>
           </router-link>
-          <el-tooltip content="Reset password" placement="top" style="margin-right: 0px">
-            <el-button type="info" size="small" icon="el-icon-refresh-left" @click="handleResetPassword(scope.row.email)">
-            <!-- Reset password -->
-            </el-button>
-          </el-tooltip>
           <el-tooltip content="Deactivate account" placement="top">
             <el-button v-if="scope.row.active" type="danger" size="small" icon="el-icon-remove-outline" @click="handleDeactivateAccount(scope.row.id)">
             <!-- Deactivate account -->
             </el-button>
           </el-tooltip>
-          <el-tooltip content="Deactivate account" placement="top">
+          <el-tooltip content="Activate account" placement="top">
             <el-button v-if="!scope.row.active" type="success" size="small" icon="el-icon-circle-check" @click="handleActivateAccount(scope.row.id)">
             <!-- Activate account -->
+            </el-button>
+          </el-tooltip>
+          <el-tooltip content="Reset password" placement="top" style="margin-right: 0px">
+            <el-button type="info" size="small" icon="el-icon-refresh-left" @click="handleResetPassword(scope.row.email)">
+            <!-- Reset password -->
             </el-button>
           </el-tooltip>
         </template>

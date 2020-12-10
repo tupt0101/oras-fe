@@ -23,12 +23,12 @@
           <span>{{ (new Date(row.applyTo)).toLocaleString() }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Salary" width="200px" align="center">
+      <el-table-column label="Salary" width="220px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.currency }} {{ row.salaryFrom }} - {{ row.salaryTo }}</span>
+          <span>{{ row.currency }} {{ row.salaryFrom | toThousandFilter }} - {{ row.salaryTo | toThousandFilter }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Vacancies" align="center" width="95px">
+      <el-table-column label="Vacancies" align="center" width="90px">
         <template slot-scope="{row}">
           <span>{{ row.vacancies }}</span>
         </template>
@@ -59,7 +59,7 @@
             </el-tooltip>
           </router-link>
           <el-tooltip content="Publish job to recruitment platform" placement="top">
-            <el-button v-if="scope.row.status==='Draft'" style="margin-left: 10px" type="success" size="small" icon="el-icon-upload2" @click="handlePublishJob(scope.row.id)">
+            <el-button v-if="scope.row.status==='Draft'" :loading="btnLoading" style="margin-left: 10px" type="success" size="small" icon="el-icon-upload2" @click="handlePublishJob(scope.row.id)">
               <!-- Publish -->
             </el-button>
           </el-tooltip>
@@ -129,6 +129,7 @@ export default {
   },
   methods: {
     handlePublishJob(id) {
+      this.btnLoading = true
       publishJob(id).then(response => {
         this.$notify({
           title: 'Success',
@@ -136,7 +137,7 @@ export default {
           type: 'success',
           duration: 2000
         })
-        this.loading = false
+        this.btnLoading = false
         this.getJobList()
       }).catch(err => {
         this.dialogTitle = err.response.data.message
@@ -145,10 +146,11 @@ export default {
           this.message = 'You have run out of job posts.<br>Please try to select and purchase other packages!'
         }
         this.showDialog = true
-        this.loading = false
+        this.btnLoading = false
       })
     },
     handleCloseJob(id) {
+      this.btnLoading = true
       closeJob(id).then(response => {
         this.$notify({
           title: 'Success',
@@ -156,10 +158,10 @@ export default {
           type: 'success',
           duration: 2000
         })
-        this.loading = false
+        this.btnLoading = false
         this.getJobList()
       }).catch(() => {
-        this.loading = false
+        this.btnLoading = false
       })
     },
     stripHtml(html) {
