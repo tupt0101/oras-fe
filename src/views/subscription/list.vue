@@ -24,7 +24,7 @@
       </el-table-column>
       <el-table-column label="Duration" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.duration }}</span>
+          <span>{{ row.duration }} days</span>
         </template>
       </el-table-column>
       <el-table-column label="Price" width="150px" align="center">
@@ -46,9 +46,9 @@
               <!-- Edit -->
             </el-button>
           </router-link>
-            <el-button type="danger" size="small" icon="el-icon-delete" @click="handleDeactivatePackage(scope.row.id)">
-              <!-- Delete -->
-            </el-button>
+          <el-button type="danger" size="small" icon="el-icon-delete" @click="handleDeactivatePackage(scope.row.id)">
+            <!-- Delete -->
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -106,18 +106,18 @@ export default {
       this.listLoading = true
       fetchPackageList().then(response => {
         this.list = response.data
-        // this.total = response.data
         this.listLoading = false
       })
     },
     handleDeactivatePackage(id) {
-      deactivatePackage(id).then(response => {
+      deactivatePackage(id).then(() => {
         this.$notify({
           title: 'Success',
           message: 'Deactivate package successfully',
           type: 'success',
           duration: 2000
         })
+        this.getList()
       })
     }
   }

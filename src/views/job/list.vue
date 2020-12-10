@@ -54,7 +54,7 @@
       </el-table-column> -->
       <el-table-column label="Published" prop="publishDate" sortable="custom" width="120px" align="center" :class-name="getSortClass('publishDate')">
         <template slot-scope="{row}">
-          <span>{{ (new Date(row.applyFrom)).toLocaleDateString('en-GB') }}</span>
+          <span>{{ row.applyFrom && (new Date(row.applyFrom)).toLocaleDateString('en-GB') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Deadline" prop="deadline" sortable="custom" width="120px" align="center" :class-name="getSortClass('deadline')">
@@ -117,7 +117,7 @@
           <span>{{ temp.title }}</span>
         </el-form-item>
         <el-form-item label="Salary:" prop="salary" label-width="100px" style="margin-bottom: 0px">
-          <span>{{ temp.currency }} {{ temp.salaryFrom }} - {{ temp.salaryTo }}</span>
+          <span>{{ temp.currency | currencyFilter }} {{ temp.salaryFrom | toThousandFilter }} - {{ temp.salaryTo | toThousandFilter }}</span>
         </el-form-item>
         <el-form-item label="Vacancies:" prop="vacancies" label-width="100px" style="margin-bottom: 0px">
           <span>{{ temp.vacancies }}</span>

@@ -103,6 +103,7 @@ export default {
           taxCode: this.account.companyById.taxCode,
           description: this.account.companyById.description,
           avatar: this.account.companyById.avatar,
+          verified: this.account.companyById.verified,
           openjobCompanyId: this.account.companyById.openjobCompanyId
         }
       })
