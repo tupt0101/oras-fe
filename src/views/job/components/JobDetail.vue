@@ -203,7 +203,6 @@ export default {
       jobTypeListOptions: [],
       rules: {
         title: [{ validator: validateTitle }],
-        // applyTo: [{ validator: validateRequire }],
         jobType: [{ validator: validateRequire }],
         category: [{ validator: validateRequire }],
         salaryFrom: [{ validator: validateCurrency, trigger: 'blur' }],
@@ -324,7 +323,7 @@ export default {
         this.postForm.id = response.data.id
         if (this.action === 1) {
           // API Publish job
-          publishJob(this.postForm.id).then(response => {
+          publishJob(this.postForm.id).then(() => {
             this.$notify({
               title: 'Success',
               message: 'Published the post successfully',
@@ -367,6 +366,7 @@ export default {
         })
         this.loading = false
       })
+      // end create job
     },
     getCategoryList(query) {
       fetchCategory().then(response => {

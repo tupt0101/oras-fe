@@ -109,10 +109,14 @@ export default {
     const validateCompName = (rule, value, callback) => {
       if (this.postForm.name.length === 0) {
         callback(new Error('The company name can not be empty.'))
-      } else if (checkCompanyName) {
-        callback(new Error('This company already exist.'))
       } else {
-        callback()
+        const data = { 'id': this.company.id, 'name': this.company.name }
+        checkCompanyName(data).then(() => {
+          callback()
+        })
+          .catch(() => {
+            callback(new Error('This company name already exist.'))
+          })
       }
     }
     const validateLocation = (rule, value, callback) => {
@@ -205,12 +209,6 @@ export default {
           return false
         }
       })
-    },
-    checkCompanyName() {
-      const data = {'id':this.postForm.id, 'name':this.postForm.name}
-      let ret = false
-      checkCompanyName(data).then(response => ret = response.data)
-      return ret
     }
   }
 }

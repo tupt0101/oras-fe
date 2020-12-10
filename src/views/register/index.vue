@@ -203,6 +203,7 @@
 
 <script>
 import { validDigits, validEmail } from '@/utils/validate'
+import { checkCompanyName } from '../../api/account'
 // import LangSelect from '@/components/LangSelect'
 
 export default {
@@ -248,7 +249,13 @@ export default {
       if (value.length === 0) {
         callback(new Error('The company name can not be empty.'))
       } else {
-        callback()
+        const data = { 'id': this.company.id, 'name': this.company.name }
+        checkCompanyName(data).then(() => {
+          callback()
+        })
+          .catch(() => {
+            callback(new Error('This company name already exist.'))
+          })
       }
     }
     const validateLocation = (rule, value, callback) => {
