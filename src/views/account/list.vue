@@ -57,7 +57,7 @@
             </el-tooltip>
           </router-link>
           <el-tooltip content="Deactivate account" placement="top">
-            <el-button v-if="scope.row.active" type="danger" size="small" icon="el-icon-remove-outline" @click="handleDeactivateAccount(scope.row.id)">
+            <el-button v-if="scope.row.active" type="danger" size="small" icon="el-icon-remove-outline" @click="confirmDialog = true; action = 'deactivate'; rowId = scope.row.id">
             <!-- Deactivate account -->
             </el-button>
           </el-tooltip>
@@ -67,13 +67,27 @@
             </el-button>
           </el-tooltip>
           <el-tooltip content="Reset password" placement="top" style="margin-right: 0px">
-            <el-button type="info" size="small" icon="el-icon-refresh-left" @click="handleResetPassword(scope.row.email)">
+            <el-button type="info" size="small" icon="el-icon-refresh-left" @click="confirmDialog = true; action = 'reset'; rowId = scope.row.email">
             <!-- Reset password -->
             </el-button>
           </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
+
+    <el-dialog :visible.sync="confirmDialog" width="33%">
+      <span slot="title"><svg-icon class-name="size-icon" :icon-class="'warning'" /> Confirmation</span>
+      <p v-if="action === 'deactivate'" class="message">Do you really want to deactivate this account?</p>
+      <p v-if="action === 'reset'" class="message">Do you really want to reset the password of this account?</p>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="confirmDialog = false; btnLoading = false">
+          Cancel
+        </el-button>
+        <el-button type="danger" :loading="btnLoading" @click="action === 'deactivate' ? handleDeactivateAccount(rowId) : handleResetPassword(rowId)">
+          Confirm
+        </el-button>
+      </div>
+    </el-dialog>
 
     <el-dialog :visible.sync="showDialog" width="33%">
       <span slot="title"><svg-icon class-name="size-icon" :icon-class="hasError ? 'failed' : 'success'" /> {{ dialogTitle }}</span>
@@ -113,7 +127,10 @@ export default {
       dialogTitle: '',
       message: '',
       showDialog: false,
-      hasError: false
+      hasError: false,
+      action: undefined,
+      rowId: undefined,
+      confirmDialog: false
     }
   },
   created() {
@@ -136,12 +153,18 @@ export default {
       })
     },
     handleResetPassword(email) {
+      this.btnLoading = true
       resetPassword(email)
         .then(response => {
-          this.dialogTitle = 'Reset Password Successfully!'
-          this.message = 'The password of account <i>' + email + '</i><br> has been reset.'
-          this.showDialog = true
-          this.loading = false
+          this.$notify({
+            title: 'Success',
+            message: 'Reset the password successfully',
+            type: 'success',
+            duration: 2000
+          })
+          this.confirmDialog = false
+          this.btnLoading = false
+          this.getAccountList()
         })
         .catch(err => {
           this.dialogTitle = 'Something went wrong!'
@@ -154,12 +177,18 @@ export default {
         })
     },
     handleDeactivateAccount(id) {
+      this.btnLoading = true
       deactivateAccount(id)
         .then(response => {
-          this.dialogTitle = 'Reset Password Successfully!'
-          this.message = 'The account with id: <i>' + id + '</i><br> has been deactivated.'
-          this.showDialog = true
-          this.loading = false
+          this.$notify({
+            title: 'Success',
+            message: 'Deactivate account successfully',
+            type: 'success',
+            duration: 2000
+          })
+          this.confirmDialog = false
+          this.btnLoading = false
+          this.getAccountList()
         })
         .catch(err => {
           this.dialogTitle = 'Something went wrong!'
@@ -172,12 +201,17 @@ export default {
         })
     },
     handleActivateAccount(id) {
+      this.btnLoading = true
       activateAccount(id)
         .then(response => {
-          this.dialogTitle = 'Reset Password Successfully!'
-          this.message = 'The account with id: <i>' + id + '</i><br> has been activated.'
-          this.showDialog = true
-          this.loading = false
+          this.$notify({
+            title: 'Success',
+            message: 'Activate account successfully',
+            type: 'success',
+            duration: 2000
+          })
+          this.btnLoading = false
+          this.getAccountList()
         })
         .catch(err => {
           this.dialogTitle = 'Something went wrong!'
