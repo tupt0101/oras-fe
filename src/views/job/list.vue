@@ -64,7 +64,7 @@
       </el-table-column>
       <el-table-column label="Salary" width="220px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.currency }} {{ row.salaryFrom | toThousandFilter }} - {{ row.salaryTo | toThousandFilter }}</span>
+          <span>{{ row.currency | currencyFilter }} {{ row.salaryFrom | toThousandFilter }} - {{ row.salaryTo | toThousandFilter }}</span>
         </template>
       </el-table-column>
       <!-- <el-table-column label="Vacancies" align="center" width="90px">
@@ -186,6 +186,17 @@ export default {
         Closed: 'danger'
       }
       return statusMap[status]
+    },
+    currencyFilter(currency) {
+      const currencyMap = {
+        VND: '₫',
+        USD: '$',
+        EUR: '€',
+        SGD: 'S$',
+        CNY: '¥',
+        JPY: 'JP¥'
+      }
+      return currencyMap[currency]
     }
   },
   data() {
