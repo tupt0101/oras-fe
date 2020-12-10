@@ -16,11 +16,11 @@
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="filter-container">
-          <el-input v-model="listQuery.title" placeholder="Name" style="width: 250px;" class="filter-item" @keyup.enter.native="handleFilter" />
+          <el-input v-model="listQuery.title" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
           <!-- <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
             <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
           </el-select> -->
-          <el-select v-model="listQuery.status" placeholder="Status" clearable class="filter-item" style="width: 130px" @change="handleFilter">
+          <el-select v-model="listQuery.status" placeholder="Status" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
             <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
           </el-select>
           <!-- <el-select v-model="listQuery.applyDate" style="width: 140px" class="filter-item" @change="handleFilter">
@@ -133,7 +133,7 @@
       <el-table-column align="center" label="Actions" width="100px">
         <template slot-scope="scope">
           <el-tooltip content="Hire candidate" placement="top">
-            <el-button type="success" size="small" icon="el-icon-circle-check" @click="handleHireCandidate(scope.row.id)">
+            <el-button v-if="scope.row.status !== 'Hired'" type="success" size="small" icon="el-icon-circle-check" @click="handleHireCandidate(scope.row.id)">
               <!-- Hire -->
             </el-button>
           </el-tooltip>
@@ -182,7 +182,7 @@
 </template>
 
 <script>
-import { fetchCandidateList, fetchApplicationFromRP, rankCV, fetchTotalCandidate, commentOnApplication } from '@/api/candidate'
+import { fetchCandidateList, fetchApplicationFromRP, rankCV, fetchTotalCandidate, commentOnApplication, hireCandidate } from '@/api/candidate'
 import { fetchJob } from '@/api/job'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
@@ -320,7 +320,6 @@ export default {
       this.listLoading = true
       commentOnApplication(data)
         .then(response => {
-          console.log(response)
           this.$message({
             message: 'The comment has been saved.',
             type: 'success'
@@ -331,10 +330,28 @@ export default {
         })
         .catch(err => {
           console.log(err)
+          this.$message({
+            message: 'The comment can not be saved.',
+            type: 'fail'
+          })
+          this.listLoading = false
         })
     },
-    handleHireCandidate(ja) {
-      console.log('hire ', ja)
+    handleHireCandidate(id) {
+      this.listLoading = true
+      hireCandidate(id)
+        .then(response => {
+          this.listLoading = false
+          this.getApplications()
+        })
+        .catch(err => {
+          console.log(err)
+          this.$message({
+            message: 'The candidate can not be hired.',
+            type: 'fail'
+          })
+          this.listLoading = false
+        })
     },
     sortChange(data) {
       var { prop, order } = data
