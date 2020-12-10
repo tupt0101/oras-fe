@@ -196,10 +196,10 @@ export default {
       listQuery: {
         page: 1,
         limit: 10,
-        name: undefined,
-        status: undefined,
-        currency: undefined,
-        sort: '-applyDate'
+        title: '',
+        status: '',
+        currency: '',
+        sort: '-applyFrom'
         // sort: '-matchingRate'
       },
       sortPublishTemp: 'descending',
@@ -337,18 +337,18 @@ export default {
     sortByPublish(order) {
       console.log('sortByPublish')
       if (order === 'ascending') {
-        this.listQuery.sort = '+publishDate'
+        this.listQuery.sort = '+applyFrom'
       } else {
-        this.listQuery.sort = '-publishDate'
+        this.listQuery.sort = '-applyFrom'
       }
       this.handleFilter()
     },
     sortByDeadline(order) {
       console.log('sortByDeadline')
       if (order === 'ascending') {
-        this.listQuery.sort = '+deadline'
+        this.listQuery.sort = '+applyTo'
       } else {
-        this.listQuery.sort = '-deadline'
+        this.listQuery.sort = '-applyTo'
       }
       this.handleFilter()
     },
