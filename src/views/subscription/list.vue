@@ -29,7 +29,7 @@
       </el-table-column>
       <el-table-column label="Price" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.currency }} {{ row.price | toThousandFilter }}</span>
+          <span>{{ row.currency | currencyFilter }} {{ row.price | toThousandFilter }}</span>
         </template>
       </el-table-column>
       <!-- <el-table-column label="Status" class-name="status-col" width="100">
@@ -74,6 +74,17 @@ export default {
         deleted: 'danger'
       }
       return statusMap[status]
+    },
+    currencyFilter(currency) {
+      const currencyMap = {
+        VND: '₫',
+        USD: '$',
+        EUR: '€',
+        SGD: 'S$',
+        CNY: '¥',
+        JPY: 'JP¥'
+      }
+      return currencyMap[currency]
     }
   },
   data() {

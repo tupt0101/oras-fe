@@ -20,7 +20,7 @@
                 <strong class="title">{{ post.title }}</strong><br>
               </router-link>
               <br>
-              <span>Salary: </span><span>{{ post.currency }} </span>
+              <span>Salary: </span><span>{{ post.currency | currencyFilter }} </span>
               <strong>{{ post.salaryFrom }} - {{ post.salaryTo }}</strong><br>
               <span>Vacancies: </span>{{ post.vacancies }}
               <span style="margin-left: 20px">Posted: </span>{{ (new Date(post.createDate)).toLocaleString('en-GB') }}
@@ -42,7 +42,7 @@
           <span>{{ temp.title }}</span>
         </el-form-item>
         <el-form-item label="Salary:" prop="salary" label-width="100px" style="margin-bottom: 0px">
-          <span>{{ temp.currency }} {{ temp.salaryFrom }} - {{ temp.salaryTo }}</span>
+          <span>{{ temp.currency | currencyFilter }} {{ temp.salaryFrom }} - {{ temp.salaryTo }}</span>
         </el-form-item>
         <el-form-item label="Vacancies:" prop="vacancies" label-width="100px" style="margin-bottom: 0px">
           <span>{{ temp.vacancies }}</span>
@@ -89,6 +89,19 @@ import { fetchOpenJobByCreator } from '../../../../api/job'
 export default {
   name: 'OpenJobList',
   components: { },
+  filters: {
+    currencyFilter(currency) {
+      const currencyMap = {
+        VND: '₫',
+        USD: '$',
+        EUR: '€',
+        SGD: 'S$',
+        CNY: '¥',
+        JPY: 'JP¥'
+      }
+      return currencyMap[currency]
+    }
+  },
   data() {
     return {
       list: null,

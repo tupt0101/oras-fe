@@ -35,7 +35,7 @@
                   <tbody>
                     <tr>
                       <td class="item">{{ package_ && package_.name }} Package</td>
-                      <td class="amount">{{ package_ && package_.currency }} {{ package_ && package_.price | toThousandFilter }}</td>
+                      <td class="amount">{{ package_ && package_.currency | currencyFilter }} {{ package_ && package_.price | toThousandFilter }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -43,7 +43,7 @@
                   <tbody>
                     <tr>
                       <td class="title">Total</td>
-                      <td class="total-amount">{{ package_ && package_.currency }} {{ package_ && package_.price | toThousandFilter }}</td>
+                      <td class="total-amount">{{ package_ && package_.currency | currencyFilter }} {{ package_ && package_.price | toThousandFilter }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -81,6 +81,19 @@ import { fetchPackage, checkValidAccount } from '@/api/package'
 export default {
   name: 'Checkout',
   components: {},
+  filters: {
+    currencyFilter(currency) {
+      const currencyMap = {
+        VND: '₫',
+        USD: '$',
+        EUR: '€',
+        SGD: 'S$',
+        CNY: '¥',
+        JPY: 'JP¥'
+      }
+      return currencyMap[currency]
+    }
+  },
   data() {
     return {
       package_: null,

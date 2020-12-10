@@ -53,7 +53,7 @@
       </el-table-column>
       <el-table-column label="Salary" width="240px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.currency }} {{ row.salaryFrom }} - {{ row.salaryTo }}</span>
+          <span>{{ row.currency | currencyFilter }} {{ row.salaryFrom }} - {{ row.salaryTo }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Vacancies" align="center" width="95px">
@@ -162,6 +162,17 @@ export default {
     },
     typeFilter(type) {
       return calendarTypeKeyValue[type]
+    },
+    currencyFilter(currency) {
+      const currencyMap = {
+        VND: '₫',
+        USD: '$',
+        EUR: '€',
+        SGD: 'S$',
+        CNY: '¥',
+        JPY: 'JP¥'
+      }
+      return currencyMap[currency]
     }
   },
   data() {

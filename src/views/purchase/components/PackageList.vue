@@ -17,7 +17,7 @@
             <div class="box-center">
               <div class="text-center">
                 <span v-if="pack.price > 0">
-                  <span class="price">${{ pack.price | toThousandFilter }}</span>
+                  <span class="price">{{ pack.currency | currencyFilter }}{{ pack.price | toThousandFilter }}</span>
                   <!-- <span class="unit">/{{ pack.duration }}</span> -->
                   <span class="unit">/month</span>
                 </span>
@@ -89,6 +89,19 @@
 import { fetchPackageList, getStarterPack } from '@/api/package'
 
 export default {
+  filters: {
+    currencyFilter(currency) {
+      const currencyMap = {
+        VND: '₫',
+        USD: '$',
+        EUR: '€',
+        SGD: 'S$',
+        CNY: '¥',
+        JPY: 'JP¥'
+      }
+      return currencyMap[currency]
+    }
+  },
   data() {
     return {
       list: null,
