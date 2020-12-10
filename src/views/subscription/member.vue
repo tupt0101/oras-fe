@@ -28,7 +28,7 @@
       </el-table-column>
       <el-table-column label="Price" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>USD {{ row.packageById.price }}</span>
+          <span>{{ row.packageById.currency | currencyFilter }}{{ row.packageById.price }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Purchase date" width="200px" align="center">
@@ -92,6 +92,17 @@ export default {
         true: 'danger'
       }
       return statusMap[status]
+    },
+    currencyFilter(currency) {
+      const currencyMap = {
+        VND: '₫',
+        USD: '$',
+        EUR: '€',
+        SGD: 'S$',
+        CNY: '¥',
+        JPY: 'JP¥'
+      }
+      return currencyMap[currency]
     }
   },
   data() {

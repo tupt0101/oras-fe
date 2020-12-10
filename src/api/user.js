@@ -33,7 +33,7 @@ export function resetPassword(email) {
 
 export function activateAccount(id) {
   return request({
-    url: '/v1/account-management/activate-by-account-id' + id,
+    url: '/v1/account-management/activate-by-account-id/' + id,
     method: 'put'
   })
 }

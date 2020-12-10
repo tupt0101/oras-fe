@@ -204,7 +204,8 @@ export default {
         if (valid) {
           this.loading = true
           this.postForm.createDate = new Date().toISOString()
-          this.postForm.duration = '30 days'
+          this.postForm.duration = 30
+          this.postForm.active = true
           let msg = ''
           if (this.isEdit) {
             msg = 'Save package successfully'
