@@ -9,7 +9,7 @@ export function fetchTotalCandidate(jobId) {
 
 export function fetchCandidateList(jobId, query) {
   return request({
-    url: '/v1/job-application-management/job-applications-by-job-id?jobId=' + jobId + '&numOfElement=' + query.limit + '&page=' + query.page,
+    url: '/v1/job-application-management/job-applications-by-job-id?jobId=' + jobId + '&name=' + query.name + '&numOfElement=' + query.limit + '&page=' + query.page + '&sort=' + query.sort + '&status=' + query.status,
     method: 'get'
   })
 }
@@ -21,9 +21,24 @@ export function fetchApplicationFromRP(id) {
   })
 }
 
-export function rankCV(id, query) {
+export function rankCV(jobId, query) {
   return request({
-    url: '/v1/job-application-management/job-application-rank-cv?jobId=' + id + '&numOfElement=' + query.limit + '&page=' + query.page,
+    url: '/v1/job-application-management/job-application-rank-cv?jobId=' + jobId + '&name=' + query.name + '&numOfElement=' + query.limit + '&page=' + query.page + '&sort=' + query.sort + '&status=' + query.status,
     method: 'post'
+  })
+}
+
+export function commentOnApplication(data) {
+  return request({
+    url: '/v1/job-application-management/job-application',
+    method: 'put',
+    data: data
+  })
+}
+
+export function hireCandidate(id) {
+  return request({
+    url: '/v1/job-application-management/job-application/hire/' + id,
+    method: 'put'
   })
 }

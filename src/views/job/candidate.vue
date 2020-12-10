@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-row>
-      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 24}" :xl="{span: 24}">
         <div class="title-container">
           <strong style="font-size: 36px">{{ job && job.title }}</strong><br>
           <div style="padding: 10px 0px">
@@ -15,35 +15,40 @@
         </div>
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
-        <div class="filter-container" style="float: right">
-          <!-- <el-input v-model="listQuery.title" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-          <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
+        <div class="filter-container">
+          <el-input v-model="listQuery.title" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
+          <!-- <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
             <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
+          </el-select> -->
+          <el-select v-model="listQuery.status" placeholder="Status" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
+            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
           </el-select>
-          <el-select v-model="listQuery.type" placeholder="Type" clearable class="filter-item" style="width: 130px">
-            <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
+          <!-- <el-select v-model="listQuery.applyDate" style="width: 140px" class="filter-item" @change="handleFilter">
+            <el-option v-for="item in sortDate" :key="item.key" :label="item.label" :value="item.key" />
           </el-select>
-          <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
-            <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
-          </el-select>
-          <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+          <el-select v-model="listQuery.matchingRate" style="width: 140px" class="filter-item" @change="handleFilter">
+            <el-option v-for="item in sortRate" :key="item.key" :label="item.label" :value="item.key" />
+          </el-select> -->
+          <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
             Search
+          </el-button>
+          <!-- <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+            Add
           </el-button> -->
-
           <!-- <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
             Export
           </el-button> -->
-          <!-- <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-            Add
-          </el-button>
-          <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
+          <!-- <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
             reviewer
           </el-checkbox> -->
-
+        </div>
+      </el-col>
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
+        <div class="filter-container" style="float: right">
           <el-button class="filter-item" type="primary" @click="refresh">
             Get applications
           </el-button>
-          <el-button class="filter-item" type="success" @click="rankCV">
+          <el-button class="filter-item" type="warning" @click="rankCV">
             Rank CV
           </el-button>
 
@@ -62,7 +67,16 @@
       <el-table-column align="center" label="Resume" width="90px" class-name="small-padding fixed-width" />
       <el-table-column align="center" label="Matching Rank" width="180px" />
     </el-table>
-    <el-table v-if="list" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
+    <el-table
+      v-if="list"
+      v-loading="listLoading"
+      :data="list"
+      border
+      fit
+      highlight-current-row
+      style="width: 100%"
+      @sort-change="sortChange"
+    >
       <el-table-column type="index" align="center" label="No." width="80">
         <template slot-scope="scope">
           <span>{{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}</span>
@@ -85,9 +99,8 @@
           <span>{{ row.candidateByCandidateId.phoneNo }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Apply date" width="200px" align="center">
+      <el-table-column label="Apply date" prop="applyDate" sortable="custom" width="200px" align="center" :class-name="getSortClass('applyDate')">
         <template slot-scope="{row}">
-          <!-- <span>{{ row.applyDate | parseTime('{y}-{m}-{d}') }}</span> -->
           <span>{{ (new Date(row.applyDate)).toLocaleString() }}</span>
         </template>
       </el-table-column>
@@ -105,19 +118,30 @@
       </el-table-column>
       <el-table-column align="center" label="Resume" width="90px" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
-          <el-button type="primary" size="small" icon="el-icon-paperclip" @click="openCV(row.cv)">
-            <!-- Edit -->
-          </el-button>
+          <el-tooltip content="View resume" placement="top">
+            <el-button type="primary" size="small" icon="el-icon-paperclip" @click="openCV(row.cv)">
+              <!-- View -->
+            </el-button>
+          </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Matching Rank" width="180px">
+      <el-table-column align="center" label="Matching Rate" prop="matchingRate" sortable="custom" width="180px" :class-name="getSortClass('matchingRate')">
         <template slot-scope="{row}">
           <span>{{ row.matchingRate }}%</span>
         </template>
       </el-table-column>
+      <el-table-column align="center" label="Actions" width="100px">
+        <template slot-scope="scope">
+          <el-tooltip content="Hire candidate" placement="top">
+            <el-button v-if="scope.row.status !== 'Hired'" type="success" size="small" icon="el-icon-circle-check" @click="handleHireCandidate(scope.row.id)">
+              <!-- Hire -->
+            </el-button>
+          </el-tooltip>
+        </template>
+      </el-table-column>
     </el-table>
 
-    <el-dialog title="Candidate Detail" :visible.sync="dialogFormVisible">
+    <el-dialog title="Candidate Detail" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
       <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="width: 90%; margin-left:50px;">
         <el-form-item label="Full name:" label-width="150px" style="margin-bottom: 0px">
           <span>{{ temp.candidateByCandidateId.fullname }}</span>
@@ -144,11 +168,11 @@
         </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="handleComment(temp)">
-          Save &amp; Close
+        <el-button @click="dialogFormVisible = false">
+          Close
         </el-button>
-        <el-button v-if="!(temp.status === 'Hired')" type="success" @click="handleHireCandidate(temp)">
-          Hire
+        <el-button v-if="!(temp.status === 'Hired')" :loading="listLoading" type="success" @click="handleComment(temp)">
+          Save
         </el-button>
       </div>
     </el-dialog>
@@ -158,7 +182,7 @@
 </template>
 
 <script>
-import { fetchCandidateList, fetchApplicationFromRP, rankCV, fetchTotalCandidate } from '@/api/candidate'
+import { fetchCandidateList, fetchApplicationFromRP, rankCV, fetchTotalCandidate, commentOnApplication, hireCandidate } from '@/api/candidate'
 import { fetchJob } from '@/api/job'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
@@ -183,8 +207,15 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 10
+        limit: 10,
+        name: '',
+        status: '',
+        sort: '-applyDate'
+        // sort: '-matchingRate'
       },
+      sortDateTemp: 'descending',
+      sortRateTemp: 'descending',
+      statusOptions: ['Applied', 'Hired', 'Rejected'],
       jobId: '',
       temp: {
         id: undefined,
@@ -260,7 +291,6 @@ export default {
       this.listLoading = true
       rankCV(this.jobId, this.listQuery).then(response => {
         this.list = response.data
-        // this.list.sort(function(a, b) { return (b - a) })
         this.listLoading = false
       }).catch(err => {
         this.listLoading = false
@@ -274,9 +304,100 @@ export default {
     },
     handleComment(ja) {
       console.log('comment', ja)
+      const { applyDate, candidateId, comment, cv, hiredDate, id, jobId, matchingRate, source, status } = ja
+      const data = {
+        'applyDate': applyDate,
+        'candidateId': candidateId,
+        'comment': comment,
+        'cv': cv,
+        'hiredDate': hiredDate,
+        'id': id,
+        'jobId': jobId,
+        'matchingRate': matchingRate,
+        'source': source,
+        'status': status
+      }
+      this.listLoading = true
+      commentOnApplication(data)
+        .then(response => {
+          this.$message({
+            message: 'The comment has been saved.',
+            type: 'success'
+          })
+          this.listLoading = false
+          this.dialogFormVisible = false
+          this.getApplications()
+        })
+        .catch(err => {
+          console.log(err)
+          this.$message({
+            message: 'The comment can not be saved.',
+            type: 'fail'
+          })
+          this.listLoading = false
+        })
     },
-    handleHireCandidate(ja) {
-      console.log('hire ', ja)
+    handleHireCandidate(id) {
+      this.listLoading = true
+      hireCandidate(id)
+        .then(response => {
+          this.listLoading = false
+          this.getApplications()
+        })
+        .catch(err => {
+          console.log(err)
+          this.$message({
+            message: 'The candidate can not be hired.',
+            type: 'fail'
+          })
+          this.listLoading = false
+        })
+    },
+    sortChange(data) {
+      var { prop, order } = data
+      if (prop === 'applyDate') {
+        if (this.sortDateTemp === 'ascending') {
+          this.sortDateTemp = 'descending'
+        } else {
+          this.sortDateTemp = 'ascending'
+        }
+        console.log(order, this.sortDateTemp)
+        this.sortByDate(this.sortDateTemp)
+      } else if (prop === 'matchingRate') {
+        if (this.sortRateTemp === 'ascending') {
+          this.sortRateTemp = 'descending'
+        } else {
+          this.sortRateTemp = 'ascending'
+        }
+        console.log(order, this.sortRateTemp)
+        this.sortByRate(this.sortRateTemp)
+      }
+    },
+    sortByDate(order) {
+      console.log('sortByDate')
+      if (order === 'ascending') {
+        this.listQuery.sort = '+applyDate'
+      } else {
+        this.listQuery.sort = '-applyDate'
+      }
+      this.handleFilter()
+    },
+    sortByRate(order) {
+      console.log('sortByRate')
+      if (order === 'ascending') {
+        this.listQuery.sort = '+matchingRate'
+      } else {
+        this.listQuery.sort = '-matchingRate'
+      }
+      this.handleFilter()
+    },
+    handleFilter() {
+      this.listQuery.page = 1
+      this.getApplications()
+    },
+    getSortClass: function(key) {
+      const sort = this.listQuery.sort
+      return sort === `+${key}` ? 'ascending' : 'descending'
     }
   }
 }

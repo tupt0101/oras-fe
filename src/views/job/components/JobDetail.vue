@@ -403,24 +403,24 @@ export default {
           max = 1000000000
           break
         case 'USD':
-          min = 1000000
-          max = 1000000000
+          min = 50
+          max = 50000
           break
         case 'SGD':
-          min = 1000000
-          max = 1000000000
+          min = 67
+          max = 67000
           break
         case 'EUR':
-          min = 1000000
-          max = 1000000000
+          min = 42
+          max = 41433
           break
         case 'JPY':
-          min = 1000000
-          max = 1000000000
+          min = 5200
+          max = 5200000
           break
         case 'CNY':
-          min = 1000000
-          max = 1000000000
+          min = 327
+          max = 327000
           break
       }
       return (this.postForm.salaryFrom >= min && this.postForm.salaryTo <= max)

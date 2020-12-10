@@ -23,7 +23,7 @@ export function fetchJobList() {
 
 export function fetchJobListWithPagination(query) {
   return request({
-    url: '/v1/job-management/jobs-paging?numOfElement=' + query.limit + '&page=' + query.page,
+    url: '/v1/job-management/jobs-paging?&title=' + query.title + '&currency=' + query.currency + '&numOfElement=' + query.limit + '&page=' + query.page + '&sort=' + query.sort + '&status=' + query.status,
     method: 'get'
   })
 }
@@ -37,7 +37,7 @@ export function fetchJobByCreator(id) {
 
 export function fetchJobByCreatorWithPagination(id, query) {
   return request({
-    url: '/v1/job-management/job-by-creator-id?id=' + id + '&numOfElement=' + query.limit + '&page=' + query.page,
+    url: '/v1/job-management/job-by-creator-id?id=' + id + 'title=' + query.title + '&currency=' + query.currency + '&numOfElement=' + query.limit + '&page=' + query.page + '&sort=' + query.sort + '&status=' + query.status,
     method: 'get'
   })
 }

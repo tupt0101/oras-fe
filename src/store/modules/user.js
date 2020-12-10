@@ -143,7 +143,7 @@ const actions = {
     const { fullname, email, password, phoneNo, compName, location, compEmail, compPhone, taxCode } = userInfo
     const data = {
       'accountEntity': {
-        'active': true,
+        'active': false,
         'companyId': 0,
         'email': email,
         'fullname': fullname,
@@ -161,7 +161,7 @@ const actions = {
         'name': compName,
         'phoneNo': compPhone,
         'taxCode': taxCode,
-        'verified': true
+        'verified': false
       }
     }
     return new Promise((resolve, reject) => {
