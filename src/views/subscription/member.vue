@@ -33,12 +33,12 @@
       </el-table-column>
       <el-table-column label="Purchase date" width="200px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.purchaseById && new Date(row.purchaseById.purchaseDate).toLocaleString() }}</span>
+          <span>{{ row.purchaseById && new Date(row.purchaseById.purchaseDate).toLocaleString('en-GB') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Valid to" width="200px" align="center">
         <template slot-scope="{row}">
-          <span>{{ new Date(row.validTo).toLocaleString() }}</span>
+          <span>{{ new Date(row.validTo).toLocaleString('en-GB') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Status" class-name="status-col" width="100">

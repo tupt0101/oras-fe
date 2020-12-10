@@ -8,7 +8,7 @@
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="filter-container">
-          <el-input v-model="listQuery.title" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
+          <el-input v-model="listQuery.title" placeholder="Title" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
           <el-select v-model="listQuery.status" placeholder="Status" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
             <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
           </el-select>
@@ -54,12 +54,12 @@
       </el-table-column> -->
       <el-table-column label="Published" prop="publishDate" sortable="custom" width="120px" align="center" :class-name="getSortClass('publishDate')">
         <template slot-scope="{row}">
-          <span>{{ (new Date(row.applyFrom)).toLocaleDateString() }}</span>
+          <span>{{ (new Date(row.applyFrom)).toLocaleDateString('en-GB') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Deadline" prop="deadline" sortable="custom" width="120px" align="center" :class-name="getSortClass('deadline')">
         <template slot-scope="{row}">
-          <span>{{ (new Date(row.applyTo)).toLocaleDateString() }}</span>
+          <span>{{ (new Date(row.applyTo)).toLocaleDateString('en-GB') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Salary" width="220px" align="center">
@@ -123,13 +123,13 @@
           <span>{{ temp.vacancies }}</span>
         </el-form-item>
         <el-form-item label="Created:" prop="created" label-width="100px" style="margin-bottom: 0px">
-          <span>{{ (new Date(temp.createDate)).toLocaleString() }}</span>
+          <span>{{ (new Date(temp.createDate)).toLocaleString('en-GB') }}</span>
         </el-form-item>
         <el-form-item label="Published:" prop="published" label-width="100px" style="margin-bottom: 0px">
-          <span>{{ (new Date(temp.applyFrom)).toLocaleString() }}</span>
+          <span>{{ (new Date(temp.applyFrom)).toLocaleString('en-GB') }}</span>
         </el-form-item>
         <el-form-item label="Deadline:" prop="deadline" label-width="100px" style="margin-bottom: 0px">
-          <span>{{ (new Date(temp.applyTo)).toLocaleString() }}</span>
+          <span>{{ (new Date(temp.applyTo)).toLocaleString('en-GB') }}</span>
         </el-form-item>
         <el-form-item label="Description:" prop="description" label-width="100px" style="margin-bottom: 0px;">
           <!-- <span v-html="temp.description" /> -->

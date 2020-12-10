@@ -1,10 +1,10 @@
 <template>
   <div class="block timeline-container">
     <el-timeline>
-      <el-timeline-item v-for="(item,index) of listActivity" :key="index" :timestamp="(new Date(item.time)).toLocaleDateString()" placement="top">
+      <el-timeline-item v-for="(item,index) of listActivity" :key="index" :timestamp="(new Date(item.time)).toLocaleDateString('en-GB')" placement="top">
         <el-card>
           <h3>{{ item.title }}</h3>
-          <p style="font-style: italic">By {{ item.accountById.fullname }} at {{ (new Date(item.time)).toLocaleString() }}</p>
+          <p style="font-style: italic">By {{ item.accountById.fullname }} at {{ (new Date(item.time)).toLocaleString('en-GB') }}</p>
         </el-card>
       </el-timeline-item>
     </el-timeline>

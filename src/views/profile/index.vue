@@ -90,6 +90,7 @@ export default {
           fullname: this.account.fullname,
           role: this.account.role,
           email: this.account.email,
+          phone: this.account.phoneNo,
           phoneNo: this.account.phoneNo,
           avatar: this.avatar
         }

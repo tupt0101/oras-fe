@@ -37,7 +37,7 @@
       </el-table-column>
       <el-table-column label="Duration" width="300px" align="center">
         <template slot-scope="{row}">
-          <span>{{ (new Date(row.job.createDate)).toLocaleDateString() }} - {{ (new Date(row.job.applyTo)).toLocaleDateString() }}</span>
+          <span>{{ (new Date(row.job.createDate)).toLocaleDateString('en-GB') }} - {{ (new Date(row.job.applyTo)).toLocaleDateString('en-GB') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Total Applications" width="200px" align="center">

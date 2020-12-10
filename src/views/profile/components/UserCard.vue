@@ -24,7 +24,7 @@
             <p><svg-icon icon-class="email" /><span style="margin-left: 20px">{{ user && user.email }}</span></p>
           </div>
           <div class="text-muted">
-            <p><svg-icon icon-class="telephone" /><span style="margin-left: 20px">{{ user && user.phoneNo }}</span></p>
+            <p><svg-icon icon-class="telephone" /><span style="margin-left: 20px">{{ user && user.phone }}</span></p>
           </div>
         </div>
       </div>
