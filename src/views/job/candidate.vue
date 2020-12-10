@@ -9,14 +9,14 @@
             <!-- <strong>Company name</strong> -->
             <!-- <span style="margin-left: 30px">Posted: {{ job.createDate | parseTime('{y}-{m}-{d}') }}</span>
             <span style="margin-left: 30px">Deadline: {{ job.applyTo | parseTime('{y}-{m}-{d}') }}</span> -->
-            <span style="margin-left: 30px">Posted: {{ job && (new Date(job.createDate)).toLocaleString() }}</span>
-            <span style="margin-left: 30px">Deadline: {{ job && (new Date(job.applyTo)).toLocaleString() }}</span>
+            <span style="margin-left: 30px">Posted: {{ job && (new Date(job.createDate)).toLocaleString('en-GB') }}</span>
+            <span style="margin-left: 30px">Deadline: {{ job && (new Date(job.applyTo)).toLocaleString('en-GB') }}</span>
           </div>
         </div>
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="filter-container">
-          <el-input v-model="listQuery.title" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
+          <el-input v-model="listQuery.name" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
           <!-- <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
             <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
           </el-select> -->
@@ -46,7 +46,7 @@
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="filter-container" style="float: right">
           <el-button class="filter-item" type="primary" @click="refresh">
-            Get applications
+            Get application
           </el-button>
           <el-button class="filter-item" type="warning" @click="rankCV">
             Rank CV
@@ -101,7 +101,7 @@
       </el-table-column>
       <el-table-column label="Apply date" prop="applyDate" sortable="custom" width="200px" align="center" :class-name="getSortClass('applyDate')">
         <template slot-scope="{row}">
-          <span>{{ (new Date(row.applyDate)).toLocaleString() }}</span>
+          <span>{{ (new Date(row.applyDate)).toLocaleString('en-GB') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Source" width="180px" align="center">
@@ -210,8 +210,8 @@ export default {
         limit: 10,
         name: '',
         status: '',
-        sort: '-applyDate'
-        // sort: '-matchingRate'
+        // sort: '-applyDate'
+        sort: '-matchingRate'
       },
       sortDateTemp: 'descending',
       sortRateTemp: 'descending',

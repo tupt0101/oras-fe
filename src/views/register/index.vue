@@ -249,7 +249,7 @@ export default {
       if (value.length === 0) {
         callback(new Error('The company name can not be empty.'))
       } else {
-        const data = { 'id': this.company.id, 'name': this.company.name }
+        const data = { 'name': this.compName }
         checkCompanyName(data).then(() => {
           callback()
         })

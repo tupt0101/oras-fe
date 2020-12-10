@@ -17,18 +17,18 @@
     </el-table-column>
     <el-table-column label="Purchase Date" width="195" align="center">
       <template slot-scope="scope">
-        {{ scope.row.purchaseById && new Date(scope.row.purchaseById.purchaseDate).toLocaleString() }}
+        {{ scope.row.purchaseById && new Date(scope.row.purchaseById.purchaseDate).toLocaleString('en-GB') }}
       </template>
     </el-table-column>
     <el-table-column label="Valid to" width="195" align="center">
       <template slot-scope="scope">
-        {{ new Date(scope.row.validTo).toLocaleString() }}
+        {{ new Date(scope.row.validTo).toLocaleString('en-GB') }}
       </template>
     </el-table-column>
     <el-table-column label="Status" width="100" align="center">
       <template slot-scope="{row}">
         <el-tag :type="row.expired | statusFilter">
-          {{ row.expired ? 'expired' : 'valid' }}
+          {{ row.expired ? 'Expired' : 'Valid' }}
         </el-tag>
       </template>
     </el-table-column>

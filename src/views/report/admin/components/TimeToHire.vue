@@ -36,12 +36,12 @@
       <el-table-column label="Apply Date" width="200px" align="center">
         <template slot-scope="{row}">
           <!-- <span>{{ row.applyDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span> -->
-          <span>{{ (new Date(row.applyDate)).toLocaleString() }}</span>
+          <span>{{ (new Date(row.applyDate)).toLocaleString('en-GB') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Hired Date" width="200px" align="center">
         <template slot-scope="{row}">
-          <span>{{ (new Date(row.hiredDate)).toLocaleString() }}</span>
+          <span>{{ (new Date(row.hiredDate)).toLocaleString('en-GB') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Time To Hire" width="200px" align="center">

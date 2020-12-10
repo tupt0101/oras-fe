@@ -152,7 +152,7 @@ export default {
     submit() {
       this.$refs.infoForm.validate(valid => {
         if (valid) {
-          updateAccount(this.user).then(response => {
+          updateAccount(this.user).then(() => {
             this.$message({
               message: 'User information has been updated successfully',
               type: 'success',
