@@ -31,6 +31,20 @@ export function resetPassword(email) {
   })
 }
 
+export function activateAccount(id) {
+  return request({
+    url: '' + id,
+    method: 'put'
+  })
+}
+
+export function deactivateAccount(id) {
+  return request({
+    url: '/v1/account-management/deactivate-account/' + id,
+    method: 'put'
+  })
+}
+
 export function fetchAccountData(id) {
   return request({
     url: '/v1/account-management/account/' + id,

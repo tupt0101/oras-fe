@@ -86,7 +86,7 @@
 
 <script>
 import { fetchAccountList, fetchAccountListWithPagination } from '@/api/account'
-import { resetPassword } from '@/api/user'
+import { resetPassword, activateAccount, deactivateAccount } from '@/api/user'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
@@ -154,7 +154,7 @@ export default {
         })
     },
     handleDeactivateAccount(id) {
-      resetPassword(id)
+      deactivateAccount(id)
         .then(response => {
           this.dialogTitle = 'Reset Password Successfully!'
           this.message = 'The account with id: <i>' + id + '</i><br> has been deactivated.'
@@ -172,7 +172,7 @@ export default {
         })
     },
     handleActivateAccount(id) {
-      resetPassword(id)
+      activateAccount(id)
         .then(response => {
           this.dialogTitle = 'Reset Password Successfully!'
           this.message = 'The account with id: <i>' + id + '</i><br> has been activated.'

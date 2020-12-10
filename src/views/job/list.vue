@@ -103,7 +103,7 @@
             </el-button>
           </el-tooltip>
           <el-tooltip content="Close Job" placement="top">
-            <el-button v-if="scope.row.status==='Published'" type="danger" size="small" icon="el-icon-circle-close" @click="handleCloseJob(scope.row.id)">
+            <el-button v-if="scope.row.status==='Published'" type="danger" size="small" icon="el-icon-circle-close" @click="confirmDialog = true; rowId = scope.row.id">
               <!-- Close -->
             </el-button>
           </el-tooltip>
@@ -153,6 +153,19 @@
       <p class="message" v-html="message" />
     </el-dialog>
 
+    <el-dialog :visible.sync="confirmDialog" width="33%">
+      <span slot="title"><svg-icon class-name="size-icon" :icon-class="'warning'" /> Confirmation</span>
+      <p class="message">Do you really want to close this job?</p>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="confirmDialog = false">
+          Cancel
+        </el-button>
+        <el-button type="danger" :loading="btnLoading" @click="handleCloseJob(rowId)">
+          Confirm
+        </el-button>
+      </div>
+    </el-dialog>
+
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getJobList" />
   </div>
 </template>
@@ -195,6 +208,8 @@ export default {
       currencyOptions: ['VND', 'USD', 'SGD', 'EUR', 'JPY', 'CNY'],
       message: '',
       showDialog: false,
+      rowId: undefined,
+      confirmDialog: false,
       btnLoading: false,
       hasError: false,
       dialogTitle: '',
@@ -255,6 +270,7 @@ export default {
           type: 'success',
           duration: 2000
         })
+        this.confirmDialog = false
         this.btnLoading = false
         this.getJobList()
       }).catch(() => {
