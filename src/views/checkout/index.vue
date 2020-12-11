@@ -81,19 +81,6 @@ import { fetchPackage, checkValidAccount } from '@/api/package'
 export default {
   name: 'Checkout',
   components: {},
-  filters: {
-    currencyFilter(currency) {
-      const currencyMap = {
-        VND: '₫',
-        USD: '$',
-        EUR: '€',
-        SGD: 'S$',
-        CNY: '¥',
-        JPY: 'JP¥'
-      }
-      return currencyMap[currency]
-    }
-  },
   data() {
     return {
       package_: null,

@@ -1,13 +1,37 @@
 <template>
   <div class="app-container">
-    <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
+    <el-row>
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 24}" :xl="{span: 24}">
+        <div class="title-container">
+          <strong style="font-size: 36px">Company List</strong><br>
+        </div>
+      </el-col>
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
+        <div class="filter-container">
+          <el-input v-model="listQuery.name" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
+          <el-select v-model="listQuery.status" placeholder="Status" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
+            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
+          </el-select>
+          <el-button class="filter-item" type="primary" icon="el-icon-search" style="margin-right: 10px" @click="handleFilter">
+            Search
+          </el-button>
+          <router-link :to="'/job/create'">
+            <el-button class="filter-item" type="primary" icon="el-icon-edit">
+              New
+            </el-button>
+          </router-link>
+        </div>
+      </el-col>
+    </el-row>
+
+    <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%" @sort-change="sortChange">
       <el-table-column align="center" label="No." width="80">
         <template slot-scope="scope">
           <span>{{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column min-width="300px" label="Company name" align="left">
+      <el-table-column min-width="300px" label="Company name" align="left" prop="name" sortable="custom" :class-name="getSortClass('name')">
         <template slot-scope="{row}">
           <div class="link-type" @click="viewDetail(row)">
             <span>{{ row.name }}</span>
@@ -107,7 +131,7 @@
 </template>
 
 <script>
-import { fetchCompanyList, fetchCompanyListWithPagination } from '@/api/account'
+import { fetchCompanyListWithPagination } from '@/api/account'
 import Pagination from '@/components/Pagination'
 import { verifyCompany } from '../../api/account' // Secondary package based on el-pagination
 
@@ -131,8 +155,14 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 10
+        limit: 10,
+        name: '',
+        status: '',
+        role: '',
+        sort: '+name'
       },
+      sortNameTemp: 'ascending',
+      statusOptions: ['Verified', 'Unverified'],
       temp: {
         id: undefined,
         name: '',
@@ -147,22 +177,20 @@ export default {
       dialogFormVisible: false
     }
   },
+  computed: {
+    email() {
+      return this.$store.state.user.username
+    }
+  },
   created() {
-    this.getTotal()
     this.getCompanyList()
   },
   methods: {
-    getTotal() {
-      this.listLoading = true
-      fetchCompanyList().then(response => {
-        this.total = response.data.length
-        this.listLoading = false
-      })
-    },
     getCompanyList() {
       this.listLoading = true
       fetchCompanyListWithPagination(this.listQuery).then(response => {
-        this.list = response.data
+        this.list = response.data.data
+        this.total = response.data.total
         this.listLoading = false
       })
     },
@@ -172,10 +200,38 @@ export default {
       this.dialogFormVisible = true
     },
     handleVerifyCompany(id) {
-      verifyCompany(id).then(response => {
+      verifyCompany(id, this.email).then(response => {
         this.getCompanyList()
         this.dialogFormVisible = false
       })
+    },
+    sortChange(data) {
+      var { prop, order } = data
+      if (prop === 'name') {
+        if (this.sortNameTemp === 'ascending') {
+          this.sortNameTemp = 'descending'
+        } else {
+          this.sortNameTemp = 'ascending'
+        }
+        console.log(order, this.sortNameTemp)
+        this.sortByName(this.sortNameTemp)
+      }
+    },
+    sortByName(order) {
+      if (order === 'ascending') {
+        this.listQuery.sort = '+name'
+      } else {
+        this.listQuery.sort = '-name'
+      }
+      this.handleFilter()
+    },
+    handleFilter() {
+      this.listQuery.page = 1
+      this.getCompanyList()
+    },
+    getSortClass: function(key) {
+      const sort = this.listQuery.sort
+      return sort === `+${key}` ? 'ascending' : 'descending'
     }
   }
 }

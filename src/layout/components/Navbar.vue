@@ -31,8 +31,11 @@
           <!-- <router-link to="/">
             <el-dropdown-item>Dashboard</el-dropdown-item>
           </router-link> -->
+          <el-dropdown-item>
+            <strong style="font-size: 1.1em" class="disabled no-hover">Welcome, {{ accountName && accountName.split(' ')[accountName.split(' ').length - 1] }}</strong>
+          </el-dropdown-item>
           <router-link to="/profile/index">
-            <el-dropdown-item>Welcome, {{ accountName }}<br>View Profile</el-dropdown-item>
+            <el-dropdown-item>View Profile</el-dropdown-item>
           </router-link>
           <el-dropdown-item divided>
             <strong style="font-size: 1.1em" class="disabled no-hover">Manage</strong>
@@ -41,7 +44,7 @@
             <el-dropdown-item>Job List</el-dropdown-item>
           </router-link>
           <router-link to="/report/index">
-            <el-dropdown-item>Recruitment Report</el-dropdown-item>
+            <el-dropdown-item>Report</el-dropdown-item>
           </router-link>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">Sign out</span>
@@ -104,8 +107,7 @@ export default {
 
 <style lang="scss" scoped>
 .disabled {
-  pointer-events:none; //This makes it not clickable
-  opacity:0.6;         //This grays it out to look disabled
+  pointer-events:none;
 }
 
 .no-hover:hover {

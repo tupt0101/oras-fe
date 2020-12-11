@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="ID" width="80">
+      <el-table-column align="center" label="No." width="80">
         <template slot-scope="scope">
           <span>{{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}</span>
         </template>
@@ -10,6 +10,12 @@
         <template slot-scope="{row}">
           <span>{{ row.name }}</span>
           <!-- <el-tag>{{ row.title }}</el-tag> -->
+        </template>
+      </el-table-column>
+      <el-table-column label="Package name" width="180px">
+        <template slot-scope="{row}">
+          <!-- <span>{{ row.name }}</span> -->
+          <el-tag v-if="row.tag">{{ row.tag }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="Description" min-width="150px">
@@ -48,16 +54,16 @@
               </el-button>
             </el-tooltip>
           </router-link>
-          <el-tooltip content="Edit package" placement="top">
+          <el-tooltip content="Deactivate package" placement="top">
             <el-button v-if="scope.row.active" type="danger" size="small" icon="el-icon-remove-outline" @click="confirmDialog = true; rowId = scope.row.id">
               <!-- Deactivate -->
             </el-button>
           </el-tooltip>
-          <el-toolti content="Edit package" placement="top">
-            <el-button v-if="!scope.row.active" type="success" size="small" icon="el-icon-circle-check" @click="handleDeactivatePackage(scope.row.id)">
+          <el-tooltip content="Activate package" placement="top">
+            <el-button v-if="!scope.row.active" type="success" size="small" icon="el-icon-circle-check" @click="handleActivatePackage(scope.row.id)">
               <!-- Activate -->
             </el-button>
-          </el-toolti>
+          </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
@@ -95,17 +101,6 @@ export default {
         false: 'danger'
       }
       return statusMap[status]
-    },
-    currencyFilter(currency) {
-      const currencyMap = {
-        VND: '₫',
-        USD: '$',
-        EUR: '€',
-        SGD: 'S$',
-        CNY: '¥',
-        JPY: 'JP¥'
-      }
-      return currencyMap[currency]
     }
   },
   data() {
@@ -146,7 +141,7 @@ export default {
         this.getList()
       })
     },
-    handleAactivatePackage(id) {
+    handleActivatePackage(id) {
       activatePackage(id).then(() => {
         this.$notify({
           title: 'Success',

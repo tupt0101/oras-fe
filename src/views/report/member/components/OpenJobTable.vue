@@ -162,17 +162,6 @@ export default {
     },
     typeFilter(type) {
       return calendarTypeKeyValue[type]
-    },
-    currencyFilter(currency) {
-      const currencyMap = {
-        VND: '₫',
-        USD: '$',
-        EUR: '€',
-        SGD: 'S$',
-        CNY: '¥',
-        JPY: 'JP¥'
-      }
-      return currencyMap[currency]
     }
   },
   data() {

@@ -41,7 +41,7 @@
 
 <script>
 import Pagination from '@/components/Pagination'
-import { fetchAccountPackage, fetchAccountPackageWithPagination } from '@/api/package'
+import { fetchAccountPackageWithPagination } from '@/api/package'
 
 export default {
   components: { Pagination },
@@ -66,22 +66,15 @@ export default {
     }
   },
   created() {
-    this.getTotal()
     this.getList()
   },
   methods: {
-    getTotal() {
-      this.listLoading = true
-      fetchAccountPackage().then(response => {
-        this.total = response.data.length
-        this.listLoading = false
-      })
-    },
     getList() {
       this.listLoading = true
       fetchAccountPackageWithPagination(this.listQuery).then(response => {
         // this.list = response.data.items.slice(0, 8)
-        this.list = response.data
+        this.list = response.data.data
+        this.total = response.data.total
         this.listLoading = false
       })
     }

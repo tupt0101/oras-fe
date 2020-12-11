@@ -204,11 +204,9 @@
 <script>
 import { validDigits, validEmail } from '@/utils/validate'
 import { checkCompanyName } from '../../api/account'
-// import LangSelect from '@/components/LangSelect'
 
 export default {
   name: 'Register',
-  // components: { LangSelect },
   data() {
     const validateFullName = (rule, value, callback) => {
       if (value.length === 0) {

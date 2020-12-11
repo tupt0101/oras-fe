@@ -86,23 +86,10 @@
 </template>
 
 <script>
-import { fetchPackageList, getStarterPack } from '@/api/package'
+import { getStarterPack } from '@/api/package'
 import { fetchActivePackageList } from '../../../api/package'
 
 export default {
-  filters: {
-    currencyFilter(currency) {
-      const currencyMap = {
-        VND: '₫',
-        USD: '$',
-        EUR: '€',
-        SGD: 'S$',
-        CNY: '¥',
-        JPY: 'JP¥'
-      }
-      return currencyMap[currency]
-    }
-  },
   data() {
     return {
       list: null,

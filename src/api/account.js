@@ -9,7 +9,7 @@ export function fetchAccountList() {
 
 export function fetchAccountListWithPagination(query) {
   return request({
-    url: '/v1/account-management/accounts-paging?numOfElement=' + query.limit + '&page=' + query.page,
+    url: '/v1/account-management/accounts-paging?&name=' + query.name + '&status=' + query.status + '&role=' + query.role + '&numOfElement=' + query.limit + '&page=' + query.page + '&sort=' + query.sort,
     method: 'get'
   })
 }
@@ -54,7 +54,7 @@ export function fetchCompanyList() {
 
 export function fetchCompanyListWithPagination(query) {
   return request({
-    url: '/v1/company-management/companies-paging?numOfElement=' + query.limit + '&page=' + query.page,
+    url: '/v1/company-management/companies-paging?name=' + query.name + '&status=' + query.status + '&numOfElement=' + query.limit + '&page=' + query.page + '&sort=' + query.sort,
     method: 'get'
   })
 }
@@ -74,9 +74,9 @@ export function updateCompany(data) {
   })
 }
 
-export function verifyCompany(id) {
+export function verifyCompany(id, email) {
   return request({
-    url: '/v1/company-management/company/verify/' + id,
+    url: '/v1/company-management/company/verify?id=' + id + '&email=' + email,
     method: 'put'
   })
 }

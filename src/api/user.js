@@ -2,8 +2,9 @@ import request from '@/utils/request'
 
 export function login(data) {
   return request({
-    url: '/login?username=' + data.username + '&password=' + data.password,
-    method: 'get'
+    url: '/login',
+    method: 'post',
+    data: data
   })
 }
 
@@ -28,6 +29,13 @@ export function resetPassword(email) {
   return request({
     url: '/v1/account-management/reset-password/' + email,
     method: 'post'
+  })
+}
+
+export function resendConfirmationEmail(email) {
+  return request({
+    url: '/v1/account-management/resend-email?email=' + email,
+    method: 'get'
   })
 }
 
