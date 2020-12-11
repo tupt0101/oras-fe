@@ -87,6 +87,7 @@
 
 <script>
 import { fetchPackageList, getStarterPack } from '@/api/package'
+import { fetchActivePackageList } from '../../../api/package'
 
 export default {
   filters: {
@@ -124,7 +125,7 @@ export default {
   methods: {
     getPackageList() {
       this.listLoading = true
-      fetchPackageList().then(response => {
+      fetchActivePackageList().then(response => {
         this.list = response.data
         this.listLoading = false
       })
