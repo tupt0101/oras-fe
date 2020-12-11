@@ -21,9 +21,10 @@
               </router-link>
               <br>
               <span>Salary: </span><span>{{ post.currency | currencyFilter }} </span>
-              <strong>{{ post.salaryFrom }} - {{ post.salaryTo }}</strong><br>
+              <strong>{{ post.salaryFrom | toThousandFilter }} - {{ post.salaryTo | toThousandFilter }}</strong><br>
               <span>Vacancies: </span>{{ post.vacancies }}
-              <span style="margin-left: 20px">Posted: </span>{{ (new Date(post.createDate)).toLocaleString('en-GB') }}
+              <span style="margin-left: 20px">Published: </span>{{ (new Date(post.applyFrom)).toLocaleString('en-GB') }}
+              <!-- <span style="margin-left: 20px">Posted: </span>{{ post.createDate | timeAgo }} -->
               <span style="margin-left: 20px">Deadline: </span>{{ (new Date(post.applyTo)).toLocaleString('en-GB') }}
             </div>
             <div class="level-left">
@@ -47,8 +48,11 @@
         <el-form-item label="Vacancies:" prop="vacancies" label-width="100px" style="margin-bottom: 0px">
           <span>{{ temp.vacancies }}</span>
         </el-form-item>
-        <el-form-item label="Posted:" prop="posted" label-width="100px" style="margin-bottom: 0px">
+        <el-form-item label="Created:" prop="created" label-width="100px" style="margin-bottom: 0px">
           <span>{{ (new Date(temp.createDate)).toLocaleString('en-GB') }}</span>
+        </el-form-item>
+        <el-form-item label="Published:" prop="published" label-width="100px" style="margin-bottom: 0px">
+          <span>{{ (new Date(temp.applyFrom)).toLocaleString('en-GB') }}</span>
         </el-form-item>
         <el-form-item label="Deadline:" prop="deadline" label-width="100px" style="margin-bottom: 0px">
           <span>{{ (new Date(temp.applyTo)).toLocaleString('en-GB') }}</span>
@@ -89,19 +93,6 @@ import { fetchOpenJobByCreator } from '../../../../api/job'
 export default {
   name: 'OpenJobList',
   components: { },
-  filters: {
-    currencyFilter(currency) {
-      const currencyMap = {
-        VND: '₫',
-        USD: '$',
-        EUR: '€',
-        SGD: 'S$',
-        CNY: '¥',
-        JPY: 'JP¥'
-      }
-      return currencyMap[currency]
-    }
-  },
   data() {
     return {
       list: null,
@@ -119,7 +110,8 @@ export default {
         title: '',
         salary: 0,
         vacancies: 0,
-        posted: '',
+        created: '',
+        published: '',
         deadline: '',
         description: '',
         status: 'published'

@@ -82,7 +82,7 @@
           <span>{{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Full name" min-width="150px">
+      <el-table-column label="Full name" prop="fullname" sortable="custom" min-width="150px" :class-name="getSortClass('fullname')">
         <template slot-scope="{row}">
           <div class="link-type" @click="viewDetail(row)">
             <span style="white-space: nowrap">{{ row.candidateByCandidateId.fullname }}</span>
@@ -182,7 +182,7 @@
 </template>
 
 <script>
-import { fetchCandidateList, fetchApplicationFromRP, rankCV, fetchTotalCandidate, commentOnApplication, hireCandidate } from '@/api/candidate'
+import { fetchCandidateList, fetchApplicationFromRP, rankCV, commentOnApplication, hireCandidate } from '@/api/candidate'
 import { fetchJob } from '@/api/job'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
@@ -210,9 +210,9 @@ export default {
         limit: 10,
         name: '',
         status: '',
-        // sort: '-applyDate'
         sort: '-matchingRate'
       },
+      sortNameTemp: 'descending',
       sortDateTemp: 'descending',
       sortRateTemp: 'descending',
       statusOptions: ['Applied', 'Hired', 'Rejected'],
@@ -243,7 +243,6 @@ export default {
   created() {
     this.jobId = this.$route.params && this.$route.params.id
     this.fetchData(this.jobId)
-    this.getTotal(this.jobId)
     this.getApplications(this.jobId)
   },
   methods: {
@@ -258,15 +257,11 @@ export default {
     openCV(link) {
       window.open(link, '_blank')
     },
-    getTotal() {
-      fetchTotalCandidate(this.jobId).then(response => {
-        this.total = response.data.length
-      })
-    },
     getApplications() {
       this.listLoading = true
       fetchCandidateList(this.jobId, this.listQuery).then(response => {
-        this.list = response.data
+        this.list = response.data.data
+        this.total = response.data.total
         this.listLoading = false
       }).catch(err => {
         this.listLoading = false
@@ -278,10 +273,10 @@ export default {
       fetchApplicationFromRP(this.jobId).then(response => {
         // this.list = response
         fetchCandidateList(this.jobId, this.listQuery).then(response => {
-          this.list = response.data
+          this.list = response.data.data
+          this.total = response.data.total
           this.listLoading = false
         })
-        this.getTotal(this.jobId)
       }).catch(err => {
         this.listLoading = false
         console.log(err)
@@ -355,7 +350,15 @@ export default {
     },
     sortChange(data) {
       var { prop, order } = data
-      if (prop === 'applyDate') {
+      if (prop === 'fullname') {
+        if (this.sortNameTemp === 'ascending') {
+          this.sortNameTemp = 'descending'
+        } else {
+          this.sortNameTemp = 'ascending'
+        }
+        console.log(order, this.sortNameTemp)
+        this.sortByName(this.sortNameTemp)
+      } else if (prop === 'applyDate') {
         if (this.sortDateTemp === 'ascending') {
           this.sortDateTemp = 'descending'
         } else {
@@ -372,6 +375,15 @@ export default {
         console.log(order, this.sortRateTemp)
         this.sortByRate(this.sortRateTemp)
       }
+    },
+    sortByName(order) {
+      console.log('sortByName')
+      if (order === 'ascending') {
+        this.listQuery.sort = '+candidateByCandidateId.fullname'
+      } else {
+        this.listQuery.sort = '-candidateByCandidateId.fullname'
+      }
+      this.handleFilter()
     },
     sortByDate(order) {
       console.log('sortByDate')
@@ -397,6 +409,9 @@ export default {
     },
     getSortClass: function(key) {
       const sort = this.listQuery.sort
+      if (key === 'fullname') {
+        key = 'candidateByCandidateId.fullname'
+      }
       return sort === `+${key}` ? 'ascending' : 'descending'
     }
   }

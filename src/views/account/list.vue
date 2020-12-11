@@ -1,7 +1,34 @@
 <template>
   <div class="app-container">
-    <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="ID" width="80">
+    <el-row>
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 24}" :xl="{span: 24}">
+        <div class="title-container">
+          <strong style="font-size: 36px">Account List</strong><br>
+        </div>
+      </el-col>
+      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
+        <div class="filter-container">
+          <el-input v-model="listQuery.name" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
+          <el-select v-model="listQuery.status" placeholder="Status" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
+            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
+          </el-select>
+          <el-select v-model="listQuery.role" placeholder="Role" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
+            <el-option v-for="item in roleOptions" :key="item" :label="item" :value="item" />
+          </el-select>
+          <el-button class="filter-item" type="primary" icon="el-icon-search" style="margin-right: 10px" @click="handleFilter">
+            Search
+          </el-button>
+          <router-link :to="'/job/create'">
+            <el-button class="filter-item" type="primary" icon="el-icon-edit">
+              New
+            </el-button>
+          </router-link>
+        </div>
+      </el-col>
+    </el-row>
+
+    <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%" @sort-change="sortChange">
+      <el-table-column align="center" label="No." width="80">
         <template slot-scope="scope">
           <span>{{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}</span>
         </template>
@@ -13,7 +40,7 @@
         </template>
       </el-table-column> -->
 
-      <el-table-column min-width="300px" label="Full name" align="left">
+      <el-table-column min-width="300px" prop="fullname" sortable="custom" :class-name="getSortClass('fullname')" label="Full name" align="left">
         <template slot-scope="{row}">
           <router-link :to="'/account/edit/'+row.id" class="link-type">
             <span>{{ row.fullname }}</span>
@@ -36,6 +63,12 @@
       <el-table-column width="120px" align="center" label="Role">
         <template slot-scope="{row}">
           <span>{{ row.role }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column width="180px" align="center" label="Create date" prop="createDate" sortable="custom" :class-name="getSortClass('createDate')">
+        <template slot-scope="{row}">
+          <span>{{ (new Date(row.createDate)).toLocaleString('en-GB') }}</span>
         </template>
       </el-table-column>
 
@@ -99,7 +132,7 @@
 </template>
 
 <script>
-import { fetchAccountList, fetchAccountListWithPagination } from '@/api/account'
+import { fetchAccountListWithPagination } from '@/api/account'
 import { resetPassword, activateAccount, deactivateAccount } from '@/api/user'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
@@ -122,33 +155,40 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 10
+        limit: 10,
+        name: '',
+        status: '',
+        role: '',
+        sort: '-createDate'
       },
+      sortCreateTemp: 'descending',
+      sortNameTemp: 'descending',
+      statusOptions: ['Active', 'Inactive'],
+      roleOptions: ['admin', 'user'],
       dialogTitle: '',
       message: '',
       showDialog: false,
       hasError: false,
       action: undefined,
+      btnLoading: false,
       rowId: undefined,
       confirmDialog: false
     }
   },
+  computed: {
+    accountId() {
+      return this.$store.state.user.accId
+    }
+  },
   created() {
-    this.getTotal()
     this.getAccountList()
   },
   methods: {
-    getTotal() {
-      this.listLoading = true
-      fetchAccountList().then(response => {
-        this.total = response.data.length
-        this.listLoading = false
-      })
-    },
     getAccountList() {
       this.listLoading = true
       fetchAccountListWithPagination(this.listQuery).then(response => {
-        this.list = response.data
+        this.list = response.data.data.filter(acc => acc.id !== this.accountId)
+        this.total = response.data.total
         this.listLoading = false
       })
     },
@@ -222,6 +262,50 @@ export default {
           this.showDialog = true
           this.loading = false
         })
+    },
+    sortChange(data) {
+      var { prop, order } = data
+      if (prop === 'fullname') {
+        if (this.sortNameTemp === 'ascending') {
+          this.sortNameTemp = 'descending'
+        } else {
+          this.sortNameTemp = 'ascending'
+        }
+        console.log(order, this.sortNameTemp)
+        this.sortByName(this.sortNameTemp)
+      } else if (prop === 'createDate') {
+        if (this.sortCreateTemp === 'ascending') {
+          this.sortCreateTemp = 'descending'
+        } else {
+          this.sortCreateTemp = 'ascending'
+        }
+        console.log(order, this.sortCreateTemp)
+        this.sortByCreate(this.sortCreateTemp)
+      }
+    },
+    sortByCreate(order) {
+      if (order === 'ascending') {
+        this.listQuery.sort = '+createDate'
+      } else {
+        this.listQuery.sort = '-createDate'
+      }
+      this.handleFilter()
+    },
+    sortByName(order) {
+      if (order === 'ascending') {
+        this.listQuery.sort = '+fullname'
+      } else {
+        this.listQuery.sort = '-fullname'
+      }
+      this.handleFilter()
+    },
+    handleFilter() {
+      this.listQuery.page = 1
+      this.getAccountList()
+    },
+    getSortClass: function(key) {
+      const sort = this.listQuery.sort
+      return sort === `+${key}` ? 'ascending' : 'descending'
     }
   }
 }

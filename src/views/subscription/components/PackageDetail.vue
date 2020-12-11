@@ -20,12 +20,19 @@
                 Package name
               </MDinput>
             </el-form-item>
+          </el-col>
 
-            <div class="postInfo-container">
-              <!--              <el-row>-->
+          <div class="postInfo-container">
+            <el-row>
+              <el-col :span="24">
+                <el-form-item label-width="130px" prop="tag" label="Tag:" class="postInfo-container-item">
+                  <el-input v-model="postForm.tag" style="width: 300px" />
+                </el-form-item>
+              </el-col>
+
               <el-col :span="24">
                 <el-form-item label-width="130px" label="Number of posts:" class="postInfo-container-item">
-                  <el-input-number v-model="postForm.numOfPost" placeholder="0" />
+                  <el-input-number v-model="postForm.numOfPost" placeholder="0" style="width: 300px" />
                 </el-form-item>
               </el-col>
 
@@ -40,26 +47,25 @@
               <!--                </el-col>-->
               <!--              </el-row>-->
 
-              <!--              <el-row>-->
+              <!--              <el-row> -->
               <el-col :span="24">
                 <el-form-item label-width="130px" label="Price:" class="postInfo-container-item">
-                  <el-input-number v-model="postForm.price" placeholder="00.00" />
+                  <el-input-number v-model="postForm.price" placeholder="00.00" style="width: 300px" />
                 </el-form-item>
               </el-col>
 
               <el-col :span="24">
-                <el-form-item label-width="130px"  prop="currency" label="Currency:" class="postInfo-container-item">
-                  <el-select v-model="postForm.currency" :remote-method="getCurrencyList" filterable default-first-option remote placeholder="">
+                <el-form-item label-width="130px" prop="currency" label="Currency:" class="postInfo-container-item">
+                  <el-select v-model="postForm.currency" :remote-method="getCurrencyList" filterable default-first-option remote placeholder="Select currency..." style="width: 300px">
                     <el-option v-for="(item,index) in currencyListOptions" :key="item+index" :label="item" :value="item" />
                   </el-select>
                 </el-form-item>
               </el-col>
-              <!--              </el-row>-->
-            </div>
-          </el-col>
+            </el-row>
+          </div>
         </el-row>
 
-        <el-form-item label-width="95px" label="Description:">
+        <el-form-item label-width="130px" label="Description:">
           <el-input v-model="postForm.description" :rows="1" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" />
           <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span>
         </el-form-item>
@@ -88,6 +94,7 @@ const defaultForm = {
   // importance: 0
   data: {
     name: '',
+    tag: '',
     numOfPost: 0,
     duration: '',
     price: 0,

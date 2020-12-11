@@ -66,3 +66,19 @@ export function toThousandFilter(num) {
 export function uppercaseFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
+
+/**
+ * Upper case first char
+ * @param {String} currency
+ */
+export function currencyFilter(currency) {
+  const currencyMap = {
+    VND: '₫',
+    USD: '$',
+    EUR: '€',
+    SGD: 'S$',
+    CNY: '¥',
+    JPY: 'JP¥'
+  }
+  return currencyMap[currency]
+}

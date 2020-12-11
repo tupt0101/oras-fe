@@ -30,7 +30,7 @@ export function fetchAccountPackage() {
 
 export function fetchAccountPackageWithPagination(query) {
   return request({
-    url: '/v1/account-package-management/account-packages-paging?numOfElement=' + query.limit + '&page=' + query.page,
+    url: '/v1/account-package-management/account-packages-paging?name=' + query.name + '&package=' + query.package + '&status=' + query.status + '&numOfElement=' + query.limit + '&page=' + query.page + '&sort=' + query.sort,
     method: 'get'
   })
 }
@@ -74,6 +74,14 @@ export function editPackage(data, method) {
 export function deactivatePackage(id) {
   return request({
     url: '/v1/package-management/deactivate',
+    method: 'put',
+    data: id
+  })
+}
+
+export function activatePackage(id) {
+  return request({
+    url: '/v1/package-management/activate',
     method: 'put',
     data: id
   })

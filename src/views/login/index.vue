@@ -71,7 +71,8 @@
     </el-form>
 
     <el-dialog title="Something went wrong!" :visible.sync="showDialog" width="33%">
-      <p class="message">{{ message }}</p>
+      <p class="message" v-html="message" />
+      <p class="action" v-html="action" />
     </el-dialog>
   </div>
 </template>
@@ -79,6 +80,7 @@
 <script>
 import { validEmail } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
+import { resendConfirmationEmail } from '@/api/user'
 
 export default {
   name: 'Login',
@@ -113,7 +115,9 @@ export default {
       showDialog: false,
       redirect: undefined,
       otherQuery: {},
-      message: ''
+      message: '',
+      action: '',
+      baseURL: process.env.VUE_APP_BASE_API
     }
   },
   watch: {
@@ -167,6 +171,9 @@ export default {
             })
             .catch(err => {
               this.loading = false
+              if (err.response.data.status === 412) {
+                this.action = "<br><a href='#' onClick='handleResendConfirmationEmail(" + this.loginForm.username + ")'>Click here to re-send the confirmation email.</a>"
+              }
               this.message = err.response.data.message
               this.showDialog = true
             })
@@ -174,6 +181,13 @@ export default {
           console.log('error submit!!')
           return false
         }
+      })
+    },
+    handleResendConfirmationEmail(email) {
+      resendConfirmationEmail(email).then(response => {
+        console.log(response)
+        this.message = 'The confirmation was sent. Please check your email.'
+        this.action = ''
       })
     },
     getOtherQuery(query) {
@@ -336,5 +350,10 @@ $black: #000000;
 .message {
   color: red;
   font-size: 1.25em;
+}
+
+.action {
+  color: blue;
+  font-size: 1em;
 }
 </style>

@@ -28,12 +28,12 @@
     </el-row>
 
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%" @sort-change="sortChange">
-      <el-table-column align="center" label="ID" width="80">
+      <el-table-column align="center" label="No." width="80">
         <template slot-scope="scope">
           <span>{{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Title" width="250px">
+      <el-table-column label="Title" prop="title" sortable="custom" width="250px" :class-name="getSortClass('title')">
         <template slot-scope="{row}">
           <router-link :to="'/job/candidates/' + row.id">
             <span class="link-type">{{ row.title }}</span>
@@ -171,7 +171,7 @@
 </template>
 
 <script>
-import { fetchJobListWithPagination, fetchJobByCreatorWithPagination, fetchJobList, fetchJobByCreator } from '@/api/job'
+import { fetchJobListWithPagination, fetchJobByCreatorWithPagination } from '@/api/job'
 import Pagination from '@/components/Pagination'
 import { closeJob, publishJob } from '../../api/job' // Secondary package based on el-pagination
 
@@ -186,17 +186,6 @@ export default {
         Closed: 'danger'
       }
       return statusMap[status]
-    },
-    currencyFilter(currency) {
-      const currencyMap = {
-        VND: '₫',
-        USD: '$',
-        EUR: '€',
-        SGD: 'S$',
-        CNY: '¥',
-        JPY: 'JP¥'
-      }
-      return currencyMap[currency]
     }
   },
   data() {
@@ -213,6 +202,7 @@ export default {
         sort: '-applyFrom'
         // sort: '-matchingRate'
       },
+      sortTitleTemp: 'descending',
       sortPublishTemp: 'descending',
       sortDeadlineTemp: 'descending',
       statusOptions: ['Draft', 'Published', 'Closed'],
@@ -247,7 +237,6 @@ export default {
     }
   },
   created() {
-    this.getTotal()
     this.getJobList()
   },
   methods: {
@@ -293,30 +282,18 @@ export default {
       tmp.innerHTML = html
       return tmp.textContent || tmp.innerText || ''
     },
-    getTotal() {
-      this.listLoading = true
-      if (this.accountRole === 'admin') {
-        fetchJobList().then(response => {
-          this.total = response.data.length
-          this.listLoading = false
-        })
-      } else {
-        fetchJobByCreator(this.accountId).then(response => {
-          this.total = response.data.length
-          this.listLoading = false
-        })
-      }
-    },
     getJobList() {
       this.listLoading = true
       if (this.accountRole === 'admin') {
         fetchJobListWithPagination(this.listQuery).then(response => {
-          this.list = response.data
+          this.list = response.data.data
+          this.total = response.data.total
           this.listLoading = false
         })
       } else {
         fetchJobByCreatorWithPagination(this.accountId, this.listQuery).then(response => {
-          this.list = response.data
+          this.list = response.data.data
+          this.total = response.data.total
           this.listLoading = false
         })
       }
@@ -327,7 +304,15 @@ export default {
     },
     sortChange(data) {
       var { prop, order } = data
-      if (prop === 'publishDate') {
+      if (prop === 'title') {
+        if (this.sortTitleTemp === 'ascending') {
+          this.sortTitleTemp = 'descending'
+        } else {
+          this.sortTitleTemp = 'ascending'
+        }
+        console.log(order, this.sortTitleTemp)
+        this.sortByTitle(this.sortTitleTemp)
+      } else if (prop === 'publishDate') {
         if (this.sortPublishTemp === 'ascending') {
           this.sortPublishTemp = 'descending'
         } else {
@@ -344,6 +329,15 @@ export default {
         console.log(order, this.sortDeadlineTemp)
         this.sortByDeadline(this.sortDeadlineTemp)
       }
+    },
+    sortByTitle(order) {
+      console.log('sortByTitle')
+      if (order === 'ascending') {
+        this.listQuery.sort = '+title'
+      } else {
+        this.listQuery.sort = '-title'
+      }
+      this.handleFilter()
     },
     sortByPublish(order) {
       console.log('sortByPublish')
