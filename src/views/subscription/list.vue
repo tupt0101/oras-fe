@@ -32,26 +32,48 @@
           <span>{{ row.currency | currencyFilter }} {{ row.price | toThousandFilter }}</span>
         </template>
       </el-table-column>
-      <!-- <el-table-column label="Status" class-name="status-col" width="100">
+      <el-table-column label="Status" class-name="status-col" width="100">
         <template slot-scope="{row}">
-          <el-tag :type="row.status | statusFilter">
-            {{ row.status }}
+          <el-tag :type="row.active | statusFilter">
+            {{ row.active ? 'Active' : 'Inactive' }}
           </el-tag>
         </template>
-      </el-table-column> -->
-      <el-table-column align="center" label="Actions" width="120px" class-name="small-padding fixed-width">
+      </el-table-column>
+      <el-table-column align="center" label="Actions" width="150px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <router-link :to="'/subscription/edit/'+scope.row.id">
-            <el-button type="primary" size="small" icon="el-icon-edit">
-              <!-- Edit -->
-            </el-button>
+            <el-tooltip content="Edit package" placement="top">
+              <el-button type="primary" size="small" icon="el-icon-edit" style="margin-right: 10px">
+                <!-- Edit -->
+              </el-button>
+            </el-tooltip>
           </router-link>
-          <el-button type="danger" size="small" icon="el-icon-delete" @click="handleDeactivatePackage(scope.row.id)">
-            <!-- Delete -->
-          </el-button>
+          <el-tooltip content="Edit package" placement="top">
+            <el-button v-if="scope.row.active" type="danger" size="small" icon="el-icon-remove-outline" @click="confirmDialog = true; rowId = scope.row.id">
+              <!-- Deactivate -->
+            </el-button>
+          </el-tooltip>
+          <el-toolti content="Edit package" placement="top">
+            <el-button v-if="!scope.row.active" type="success" size="small" icon="el-icon-circle-check" @click="handleDeactivatePackage(scope.row.id)">
+              <!-- Activate -->
+            </el-button>
+          </el-toolti>
         </template>
       </el-table-column>
     </el-table>
+
+    <el-dialog :visible.sync="confirmDialog" width="33%">
+      <span slot="title"><svg-icon class-name="size-icon" :icon-class="'warning'" /> Confirmation</span>
+      <p class="message">Do you really want to deactivate this package?</p>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="confirmDialog = false; listLoading = false">
+          Cancel
+        </el-button>
+        <el-button type="danger" :loading="listLoading" @click="handleDeactivatePackage(rowId)">
+          Confirm
+        </el-button>
+      </div>
+    </el-dialog>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
   </div>
@@ -61,7 +83,7 @@
 // import { fetchJobList } from '@/api/job'
 import Pagination from '@/components/Pagination'
 import { fetchPackageList } from '@/api/package'
-import { deactivatePackage } from '../../api/package' // Secondary package based on el-pagination
+import { deactivatePackage, activatePackage } from '../../api/package' // Secondary package based on el-pagination
 
 export default {
   name: 'PackageList',
@@ -69,9 +91,8 @@ export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        published: 'success',
-        draft: 'info',
-        deleted: 'danger'
+        true: 'success',
+        false: 'danger'
       }
       return statusMap[status]
     },
@@ -95,7 +116,9 @@ export default {
       listQuery: {
         page: 1,
         limit: 20
-      }
+      },
+      rowId: undefined,
+      confirmDialog: false
     }
   },
   created() {
@@ -110,7 +133,21 @@ export default {
       })
     },
     handleDeactivatePackage(id) {
+      this.listLoading = true
       deactivatePackage(id).then(() => {
+        this.$notify({
+          title: 'Success',
+          message: 'Deactivate package successfully',
+          type: 'success',
+          duration: 2000
+        })
+        this.listLoading = false
+        this.confirmDialog = false
+        this.getList()
+      })
+    },
+    handleAactivatePackage(id) {
+      activatePackage(id).then(() => {
         this.$notify({
           title: 'Success',
           message: 'Deactivate package successfully',

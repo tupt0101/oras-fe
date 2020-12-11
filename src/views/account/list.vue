@@ -129,6 +129,7 @@ export default {
       showDialog: false,
       hasError: false,
       action: undefined,
+      btnLoading: false,
       rowId: undefined,
       confirmDialog: false
     }

@@ -71,3 +71,11 @@ export function deactivatePackage(id) {
     data: id
   })
 }
+
+export function activatePackage(id) {
+  return request({
+    url: '',
+    method: 'put',
+    data: id
+  })
+}
