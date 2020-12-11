@@ -7,6 +7,13 @@ export function fetchPackageList() {
   })
 }
 
+export function fetchActivePackageList() {
+  return request({
+    url: '/v1/package-management/active-packages',
+    method: 'get'
+  })
+}
+
 export function fetchPackage(id) {
   return request({
     url: '/v1/package-management/package/' + id,
