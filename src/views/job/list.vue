@@ -8,7 +8,7 @@
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="filter-container">
-          <el-input v-model="listQuery.title" placeholder="Title" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
+          <el-input v-model="listQuery.title" placeholder="Title" style="width: 250px; margin-right: 10px" class="filter-item" :maxlength="fmaxLength.titleLength" @keyup.enter.native="handleFilter" />
           <el-select v-model="listQuery.status" placeholder="Status" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
             <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
           </el-select>
@@ -173,7 +173,8 @@
 <script>
 import { fetchJobListWithPagination, fetchJobByCreatorWithPagination } from '@/api/job'
 import Pagination from '@/components/Pagination'
-import { closeJob, publishJob } from '../../api/job' // Secondary package based on el-pagination
+import { closeJob, publishJob } from '../../api/job'
+import { maxLength } from '../../store' // Secondary package based on el-pagination
 
 export default {
   name: 'ArticleList',
@@ -190,6 +191,7 @@ export default {
   },
   data() {
     return {
+      fmaxLength: maxLength,
       list: null,
       total: 0,
       listLoading: true,

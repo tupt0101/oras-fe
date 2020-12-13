@@ -171,7 +171,7 @@ export default {
       })
     },
     getJobData() {
-      fetchJobByCategory(this.accountId).then(response => {
+      fetchJobByCategory().then(response => {
         this.jobByCate.category = response.data.map(item => item.category)
         this.jobByCate.systemData = response.data.map(item => ({ value: item.numOfPost, name: item.category }))
       })

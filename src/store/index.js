@@ -17,6 +17,22 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
   return modules
 }, {})
 
+export const maxLength = {
+  emailLength: 100,
+  nameLength: 100,
+  passwordLength: 20,
+  phoneLength: 13,
+  compNameLength: 200,
+  compDesLength: 1000,
+  locationLength: 200,
+  taxCodeLength: 13,
+  titleLength: 200,
+  pkgNameLength: 50,
+  pkgDesLength: 500,
+  pkgTagLength: 50,
+  cmtLength: 500
+}
+
 const store = new Vuex.Store({
   modules,
   getters

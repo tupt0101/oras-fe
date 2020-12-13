@@ -21,6 +21,7 @@
           name="username"
           type="text"
           tabindex="1"
+          :maxlength="fmaxLength.emailLength"
           autocomplete="on"
         />
       </el-form-item>
@@ -39,6 +40,7 @@
             name="password"
             tabindex="2"
             autocomplete="on"
+            :maxlength="fmaxLength.passwordLength"
             @keyup.native="checkCapslock"
             @blur="capsTooltip = false"
             @keyup.enter.native="handleLogin"
@@ -81,6 +83,8 @@
 import { validEmail } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import { resendConfirmationEmail } from '@/api/user'
+import { maxLength } from '../../store'
+
 
 export default {
   name: 'Login',
@@ -101,6 +105,7 @@ export default {
       }
     }
     return {
+      fmaxLength: maxLength,
       loginForm: {
         username: '',
         password: ''

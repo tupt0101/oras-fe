@@ -25,7 +25,7 @@
                       :placeholder="$t('register.fullname')"
                       name="fullname"
                       type="text"
-                      maxlength="50"
+                      :maxlength="fmaxLength.nameLength"
                       tabindex="1"
                       autocomplete="on"
                     />
@@ -44,7 +44,7 @@
                         name="password"
                         tabindex="4"
                         autocomplete="on"
-                        maxlength="20"
+                        :maxlength="fmaxLength.passwordLength"
                         style="width: 300px"
                         @keyup.native="checkCapslock"
                         @blur="capsTooltip = false"
@@ -64,7 +64,7 @@
                       :placeholder="$t('register.email')"
                       name="email"
                       type="text"
-                      maxlength="50"
+                      :maxlength="fmaxLength.emailLength"
                       tabindex="2"
                       autocomplete="on"
                       :readonly="isEdit"
@@ -84,7 +84,7 @@
                         style="width: 300px"
                         tabindex="5"
                         placeholder="Please confirm your password"
-                        maxlength="20"
+                        :maxlength="fmaxLength.passwordLength"
                         @keyup.native="checkCapslock"
                         @blur="capsTooltip = false"
                       />
@@ -108,13 +108,13 @@
               <el-row>
                 <el-col :span="12">
                   <el-form-item prop="compName" label-width="130px" label="Company:" class="postInfo-container-item">
-                    <el-input v-model="postForm.companyById.name" autocomplete="on" tabindex="6" style="width: 300px" maxlength="230" placeholder="Please enter the company name" />
+                    <el-input v-model="postForm.companyById.name" autocomplete="on" tabindex="6" style="width: 300px" :maxlength="fmaxLength.compNameLength" placeholder="Please enter the company name" />
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="12">
                   <el-form-item prop="compEmail" label-width="150px" label="Company email:" class="postInfo-container-item">
-                    <el-input v-model="postForm.companyById.email" autocomplete="on" tabindex="9" type="text" maxlength="50" style="width: 300px" placeholder="Please enter the company email" />
+                    <el-input v-model="postForm.companyById.email" autocomplete="on" tabindex="9" type="text" :maxlength="fmaxLength.emailLength" style="width: 300px" placeholder="Please enter the company email" />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -122,13 +122,13 @@
               <el-row>
                 <el-col :span="12">
                   <el-form-item prop="taxCode" label-width="130px" label="Tax code:" class="postInfo-container-item">
-                    <el-input v-model="postForm.companyById.taxCode" autocomplete="on" tabindex="7" style="width: 300px" type="text" maxlength="20" placeholder="Please enter the tax code" />
+                    <el-input v-model="postForm.companyById.taxCode" autocomplete="on" tabindex="7" style="width: 300px" type="text" :maxlength="fmaxLength.taxCodeLength" placeholder="Please enter the tax code" />
                   </el-form-item>
 
                 </el-col>
                 <el-col :span="12">
                   <el-form-item prop="compPhone" label-width="150px" label="Phone number:" class="postInfo-container-item">
-                    <el-input v-model="postForm.companyById.phoneNo" autocomplete="on" tabindex="10" type="text" maxlength="16" autosize style="width: 300px" placeholder="Please enter the company phone number" />
+                    <el-input v-model="postForm.companyById.phoneNo" autocomplete="on" tabindex="10" type="text" :maxlength="fmaxLength.phoneLength" autosize style="width: 300px" placeholder="Please enter the company phone number" />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -136,7 +136,7 @@
               <el-row>
                 <el-col :span="24">
                   <el-form-item prop="location" label-width="130px" label="Location:" class="postInfo-container-item">
-                    <el-input v-model="postForm.companyById.location" autocomplete="on" tabindex="8" style="width: 300px" placeholder="Please enter the company's location" />
+                    <el-input v-model="postForm.companyById.location" autocomplete="on" :maxlength="fmaxLength.locationLength" tabindex="8" style="width: 300px" placeholder="Please enter the company's location" />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -144,7 +144,7 @@
               <el-row>
                 <el-col :span="24">
                   <el-form-item prop="description" label-width="130px" label="Description:">
-                    <el-input v-model="postForm.companyById.description" :rows="1" tabindex="11" autocomplete="on" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" />
+                    <el-input v-model="postForm.companyById.description" :rows="1" tabindex="11" :maxlength="fmaxLength.compDesLength" autocomplete="on" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -167,6 +167,7 @@ import Sticky from '@/components/Sticky' // 粘性header组件
 import { createJob } from '../../../api/job'
 import { createAccount, fetchAccount } from '../../../api/account'
 import { validDigits, validEmail } from '../../../utils/validate'
+import { maxLength } from '../../../store'
 const defaultForm = {
   // content_short: '',
   source_uri: '',
@@ -282,6 +283,7 @@ export default {
       }
     }
     return {
+      fmaxLength: maxLength,
       postForm: Object.assign({}, defaultForm),
       loading: false,
       roleListOptions: [],
