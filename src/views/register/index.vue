@@ -19,6 +19,7 @@
           v-model="registerForm.fullname"
           :placeholder="$t('register.fullname')"
           name="fulname"
+          :maxlength="fmaxLength.nameLength"
           type="text"
           tabindex="1"
           autocomplete="on"
@@ -35,6 +36,7 @@
           :placeholder="$t('register.email')"
           name="email"
           type="text"
+          :maxlength="fmaxLength.emailLength"
           tabindex="2"
           autocomplete="on"
         />
@@ -52,6 +54,7 @@
             :type="passwordType"
             :placeholder="$t('register.password')"
             name="password"
+            :maxlength="fmaxLength.passwordLength"
             tabindex="3"
             autocomplete="on"
             @keyup.native="checkCapslock"
@@ -76,6 +79,7 @@
             :placeholder="$t('register.confirmPwd')"
             name="confirmPwd"
             tabindex="4"
+            :maxlength="fmaxLength.passwordLength"
             autocomplete="on"
             @keyup.native="checkCapslock"
             @blur="capsTooltip = false"
@@ -92,6 +96,7 @@
           v-model="registerForm.phoneNo"
           :placeholder="$t('register.phoneNo')"
           name="phoneNo"
+          :maxlength="fmaxLength.phoneLength"
           type="text"
           tabindex="5"
           autocomplete="on"
@@ -113,6 +118,7 @@
           v-model="registerForm.compName"
           :placeholder="$t('register.compName')"
           name="compName"
+          :maxlength="fmaxLength.compNameLength"
           type="text"
           tabindex="6"
           autocomplete="on"
@@ -128,6 +134,7 @@
           v-model="registerForm.location"
           :placeholder="$t('register.location')"
           name="location"
+          :maxlength="fmaxLength.locationLength"
           type="text"
           tabindex="7"
           autocomplete="on"
@@ -143,6 +150,7 @@
           v-model="registerForm.compEmail"
           :placeholder="$t('register.compEmail')"
           name="compEmail"
+          :maxlength="fmaxLength.emailLength"
           type="text"
           tabindex="8"
           autocomplete="on"
@@ -158,6 +166,7 @@
           v-model="registerForm.compPhone"
           :placeholder="$t('register.compPhone')"
           name="compPhone"
+          :maxlength="fmaxLength.phoneLength"
           type="text"
           tabindex="9"
           autocomplete="on"
@@ -173,6 +182,7 @@
           v-model="registerForm.taxCode"
           :placeholder="$t('register.taxCode')"
           name="taxCode"
+          :maxlength="fmaxLength.taxCodeLength"
           type="text"
           tabindex="10"
           autocomplete="on"
@@ -204,6 +214,7 @@
 <script>
 import { validDigits, validEmail } from '@/utils/validate'
 import { checkCompanyName } from '../../api/account'
+import { maxLength } from '../../store/index'
 
 export default {
   name: 'Register',
@@ -278,6 +289,7 @@ export default {
       }
     }
     return {
+      fmaxLength: maxLength,
       registerForm: {
         fullname: '',
         email: '',

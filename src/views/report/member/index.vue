@@ -126,9 +126,13 @@ export default {
     }
   },
   created() {
+    // Average Salary (USD) by Category
     this.getSalaryData()
+    // Number of Jobs by Category
     this.getJobData()
+    // Number of Applications by Category
     this.getCandidateData()
+    // Expenses By Month
     this.getPurchaseData(this.selectedYear)
   },
   methods: {

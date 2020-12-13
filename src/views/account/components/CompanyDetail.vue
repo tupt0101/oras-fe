@@ -15,13 +15,13 @@
             <el-row>
               <el-col :span="12">
                 <el-form-item prop="compName" label-width="130px" label="Company:" class="postInfo-container-item">
-                  <el-input v-model="postForm.name" autocomplete="on" tabindex="6" style="width: 300px" maxlength="230" placeholder="Please enter the company name" />
+                  <el-input v-model="postForm.name" :maxlength="fmaxLength.compNameLength" autocomplete="on" tabindex="6" style="width: 300px" placeholder="Please enter the company name" />
                 </el-form-item>
               </el-col>
 
               <el-col :span="12">
                 <el-form-item prop="compEmail" label-width="150px" label="Company email:" class="postInfo-container-item">
-                  <el-input v-model="postForm.email" autocomplete="on" tabindex="9" type="text" maxlength="50" style="width: 300px" placeholder="Please enter the company email" />
+                  <el-input v-model="postForm.email" autocomplete="on" tabindex="9" type="text" :maxlength="fmaxLength.emailLength" style="width: 300px" placeholder="Please enter the company email" />
                 </el-form-item>
               </el-col>
             </el-row>
@@ -29,13 +29,13 @@
             <el-row>
               <el-col :span="12">
                 <el-form-item prop="taxCode" label-width="130px" label="Tax code:" class="postInfo-container-item">
-                  <el-input v-model="postForm.taxCode" autocomplete="on" tabindex="7" style="width: 300px" type="text" maxlength="20" placeholder="Please enter the tax code" />
+                  <el-input v-model="postForm.taxCode" autocomplete="on" tabindex="7" style="width: 300px" type="text" :maxlength="fmaxLength.taxCodeLength" placeholder="Please enter the tax code" />
                 </el-form-item>
 
               </el-col>
               <el-col :span="12">
                 <el-form-item prop="compPhone" label-width="150px" label="Phone number:" class="postInfo-container-item">
-                  <el-input v-model="postForm.phoneNo" autocomplete="on" tabindex="10" type="text" maxlength="16" autosize style="width: 300px" placeholder="Please enter the company phone number" />
+                  <el-input v-model="postForm.phoneNo" autocomplete="on" tabindex="10" type="text" :maxlength="fmaxLength.phoneLength" autosize style="width: 300px" placeholder="Please enter the company phone number" />
                 </el-form-item>
               </el-col>
             </el-row>
@@ -43,7 +43,7 @@
             <el-row>
               <el-col :span="24">
                 <el-form-item prop="location" label-width="130px" label="Location:" class="postInfo-container-item">
-                  <el-input v-model="postForm.location" autocomplete="on" tabindex="8" style="width: 300px" placeholder="Please enter the company's location" />
+                  <el-input v-model="postForm.location" :maxlength="fmaxLength.locationLength" autocomplete="on" tabindex="8" style="width: 300px" placeholder="Please enter the company's location" />
                 </el-form-item>
               </el-col>
             </el-row>
@@ -51,7 +51,7 @@
             <el-row>
               <el-col :span="24">
                 <el-form-item prop="description" label-width="130px" label="Description:">
-                  <el-input v-model="postForm.description" :rows="1" tabindex="11" autocomplete="on" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" />
+                  <el-input v-model="postForm.description" :rows="1" :maxlength="fmaxLength.compDesLength" tabindex="11" autocomplete="on" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" />
                 </el-form-item>
               </el-col>
             </el-row>
@@ -72,6 +72,7 @@ import Sticky from '@/components/Sticky' // 粘性header组件
 // @ la ref toi root folder do
 import { checkCompanyName, fetchCompany, updateCompany } from '../../../api/account'
 import { validDigits, validEmail } from '../../../utils/validate'
+import { maxLength } from '../../../store'
 const defaultForm = {
   // content_short: '',
   source_uri: '',
@@ -141,6 +142,7 @@ export default {
       }
     }
     return {
+      fmaxLength: maxLength,
       postForm: Object.assign({}, defaultForm),
       loading: false,
       rules: {

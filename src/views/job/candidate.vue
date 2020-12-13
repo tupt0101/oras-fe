@@ -16,7 +16,7 @@
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="filter-container">
-          <el-input v-model="listQuery.name" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
+          <el-input v-model="listQuery.name" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" :maxlength="maxLength.nameLength" @keyup.enter.native="handleFilter" />
           <!-- <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
             <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
           </el-select> -->
@@ -161,7 +161,7 @@
           </el-tag>
         </el-form-item>
         <el-form-item label="Comment:" label-width="150px" style="margin-bottom: 0px;">
-          <el-input v-model="temp.comment" type="textarea" :rows="5" />
+          <el-input v-model="temp.comment" type="textarea" :rows="5" :maxLength="fmaxLength.cmtLength"/>
         </el-form-item>
         <!-- <el-form-item label="" label-width="120px" style="margin-bottom: 0px; max-height: 320px; overflow-y: scroll">
           <span v-html="temp.description" />
@@ -184,7 +184,8 @@
 <script>
 import { fetchCandidateList, fetchApplicationFromRP, rankCV, commentOnApplication, hireCandidate } from '@/api/candidate'
 import { fetchJob } from '@/api/job'
-import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import Pagination from '@/components/Pagination'
+import { maxLength } from '../../store' // Secondary package based on el-pagination
 
 export default {
   name: 'CandidateList',
@@ -201,6 +202,7 @@ export default {
   },
   data() {
     return {
+      fmaxLength: maxLength,
       job: null,
       list: null,
       total: 0,
@@ -314,7 +316,7 @@ export default {
       }
       this.listLoading = true
       commentOnApplication(data)
-        .then(response => {
+        .then(() => {
           this.$message({
             message: 'The comment has been saved.',
             type: 'success'

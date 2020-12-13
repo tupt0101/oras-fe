@@ -3,32 +3,32 @@
     <el-form ref="infoForm" :model="infoForm" :rules="rules">
       <el-col :lg="12">
         <el-form-item label="Name" prop="compName">
-          <el-input v-model="company.name" />
+          <el-input v-model="company.name" :maxlength="fmaxLength.compNameLength" />
         </el-form-item>
       </el-col>
       <el-col :lg="12">
         <el-form-item label="Email" prop="compEmail">
-          <el-input v-model.trim="company.email" />
+          <el-input v-model.trim="company.email" :maxlength="fmaxLength.emailLength" />
         </el-form-item>
       </el-col>
       <el-col :lg="12">
         <el-form-item label="Phone number" prop="compPhone">
-          <el-input v-model.trim="company.phoneNo" />
+          <el-input v-model.trim="company.phoneNo" :maxlength="fmaxLength.phoneLength" />
         </el-form-item>
       </el-col>
       <el-col :lg="12">
         <el-form-item label="Location" prop="location">
-          <el-input v-model="company.location" />
+          <el-input v-model="company.location" :maxlength="fmaxLength.locationLength" />
         </el-form-item>
       </el-col>
       <el-col :lg="12">
         <el-form-item label="Tax code" prop="taxCode">
-          <el-input v-model.trim="company.taxCode" />
+          <el-input v-model.trim="company.taxCode" :maxlength="fmaxLength.taxCodeLength" />
         </el-form-item>
       </el-col>
       <el-col :lg="24">
         <el-form-item label="Description" prop="description">
-          <el-input v-model="company.description" />
+          <el-input v-model="company.description" :maxlength="fmaxLength.compDesLength" />
         </el-form-item>
       </el-col>
       <el-col :lg="24">
@@ -43,6 +43,7 @@
 <script>
 import { checkCompanyName, updateCompany } from '../../../api/account'
 import { validDigits, validEmail } from '../../../utils/validate'
+import { maxLength } from '../../../store'
 
 export default {
   props: {
@@ -110,6 +111,7 @@ export default {
       }
     }
     return {
+      fmaxLength: maxLength,
       infoForm: Object.assign({}, this.company),
       checkName: '',
       rules: {

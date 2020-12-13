@@ -8,7 +8,7 @@
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="filter-container">
-          <el-input v-model="listQuery.name" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
+          <el-input v-model="listQuery.name" :maxLength="fmaxLength.compNameLength" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
           <el-select v-model="listQuery.status" placeholder="Status" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
             <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
           </el-select>
@@ -133,7 +133,8 @@
 <script>
 import { fetchCompanyListWithPagination } from '@/api/account'
 import Pagination from '@/components/Pagination'
-import { verifyCompany } from '../../api/account' // Secondary package based on el-pagination
+import { verifyCompany } from '../../api/account'
+import { maxLength } from '../../store' // Secondary package based on el-pagination
 
 export default {
   name: 'AccountList',
@@ -150,6 +151,7 @@ export default {
   },
   data() {
     return {
+      fmaxLength: maxLength,
       list: null,
       total: 0,
       listLoading: true,
