@@ -70,9 +70,9 @@
       </div>
     </el-form>
 
-    <el-dialog title="Something went wrong!" :visible.sync="showDialog" width="33%">
+    <el-dialog :title="title" :visible.sync="showDialog" width="33%">
       <p class="message" v-html="message" />
-      <p class="action" v-html="action" />
+      <span v-if="resend" class="link-type" @click="handleResendConfirmationEmail(loginForm.username)">Click here to resend your confirmation email.</span>
     </el-dialog>
   </div>
 </template>
@@ -115,9 +115,9 @@ export default {
       showDialog: false,
       redirect: undefined,
       otherQuery: {},
+      title: '',
       message: '',
-      action: '',
-      baseURL: process.env.VUE_APP_BASE_API
+      resend: false
     }
   },
   watch: {
@@ -171,8 +171,9 @@ export default {
             })
             .catch(err => {
               this.loading = false
+              this.title = 'Something went wrong!'
               if (err.response.data.status === 412) {
-                this.action = "<br><a href='#' onClick='handleResendConfirmationEmail(" + this.loginForm.username + ")'>Click here to re-send the confirmation email.</a>"
+                this.resend = true
               }
               this.message = err.response.data.message
               this.showDialog = true
@@ -186,8 +187,9 @@ export default {
     handleResendConfirmationEmail(email) {
       resendConfirmationEmail(email).then(response => {
         console.log(response)
+        this.title = 'Notification'
         this.message = 'The confirmation was sent. Please check your email.'
-        this.action = ''
+        this.resend = false
       })
     },
     getOtherQuery(query) {

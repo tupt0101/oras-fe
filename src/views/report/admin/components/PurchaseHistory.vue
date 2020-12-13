@@ -1,17 +1,22 @@
 <template>
   <div>
     <el-table v-loading="listLoading" :data="list" style="width: 100%;padding-top: 15px;">
-      <el-table-column label="Package name" min-width="200">
+      <el-table-column label="No." width="50">
+        <template slot-scope="scope">
+          {{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}
+        </template>
+      </el-table-column>
+      <el-table-column label="Package name" width="200">
         <template slot-scope="scope">
           {{ scope.row.packageById.name }} Package
         </template>
       </el-table-column>
-      <el-table-column label="Number of Posts" width="150" align="center">
+      <el-table-column label="Num of Posts" width="115" align="center">
         <template slot-scope="scope">
           {{ scope.row.packageById.numOfPost }}
         </template>
       </el-table-column>
-      <el-table-column label="Amount" width="195" align="center">
+      <el-table-column label="Amount" width="190" align="center">
         <template slot-scope="scope">
           USD {{ scope.row.purchaseById && scope.row.purchaseById.amount | toThousandFilter }}
         </template>
@@ -61,7 +66,11 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 10
+        limit: 10,
+        name: '',
+        status: '',
+        package: '',
+        sort: '-validTo'
       }
     }
   },

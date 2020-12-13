@@ -120,7 +120,7 @@
         <el-button @click="dialogFormVisible = false">
           Close
         </el-button>
-        <el-button v-if="!temp.verified" type="success" @click="handleVerifyCompany(temp.id)">
+        <el-button v-if="!temp.verified" type="success" :loading="listLoading" @click="handleVerifyCompany(temp.id)">
           Verify
         </el-button>
       </div>
@@ -200,9 +200,11 @@ export default {
       this.dialogFormVisible = true
     },
     handleVerifyCompany(id) {
+      this.listLoading = true
       verifyCompany(id, this.email).then(response => {
-        this.getCompanyList()
+        this.listLoading = false
         this.dialogFormVisible = false
+        this.getCompanyList()
       })
     },
     sortChange(data) {

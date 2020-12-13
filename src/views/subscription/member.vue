@@ -132,13 +132,13 @@ export default {
         name: '',
         status: '',
         package: '',
-        sort: '-purchaseById.purchaseDate'
+        sort: '-validTo'
       },
       sortNameTemp: 'descending',
       sortPostTemp: 'descending',
       sortDateTemp: 'descending',
       statusOptions: ['Valid', 'Expired'],
-      packOptions: ['LITE', 'STANDARD', 'PRO']
+      packOptions: ['START', 'LITE', 'STANDARD', 'PRO']
     }
   },
   created() {
@@ -163,7 +163,7 @@ export default {
         }
         console.log(order, this.sortNameTemp)
         this.sortByName(this.sortNameTemp)
-      } else if (prop === 'valiTo') {
+      } else if (prop === 'validTo') {
         if (this.sortDateTemp === 'ascending') {
           this.sortDateTemp = 'descending'
         } else {
@@ -210,7 +210,7 @@ export default {
     },
     handleFilter() {
       this.listQuery.page = 1
-      this.getApplications()
+      this.getList()
     },
     getSortClass: function(key) {
       const sort = this.listQuery.sort
