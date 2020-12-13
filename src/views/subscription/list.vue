@@ -12,7 +12,7 @@
           <!-- <el-tag>{{ row.title }}</el-tag> -->
         </template>
       </el-table-column>
-      <el-table-column label="Package name" width="180px">
+      <el-table-column label="Tag" width="150px" align="center">
         <template slot-scope="{row}">
           <!-- <span>{{ row.name }}</span> -->
           <el-tag v-if="row.tag">{{ row.tag }}</el-tag>
