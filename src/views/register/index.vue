@@ -26,6 +26,7 @@
             v-model="registerForm.fullname"
             :placeholder="$t('register.fullname')"
             name="fulname"
+            :maxlength="fmaxLength.nameLength"
             type="text"
             tabindex="1"
             autocomplete="on"
@@ -42,6 +43,7 @@
             :placeholder="$t('register.email')"
             name="email"
             type="text"
+            :maxlength="fmaxLength.emailLength"
             tabindex="2"
             autocomplete="on"
           />
@@ -50,7 +52,7 @@
         <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
           <el-form-item prop="password">
             <span class="svg-container">
-              <svg-icon icon-class="password" />
+              <svg-icon icon-class="user" />
             </span>
             <el-input
               :key="passwordType"
@@ -59,6 +61,7 @@
               :type="passwordType"
               :placeholder="$t('register.password')"
               name="password"
+              :maxlength="fmaxLength.passwordLength"
               tabindex="3"
               autocomplete="on"
               @keyup.native="checkCapslock"
@@ -212,6 +215,7 @@
 <script>
 import { validDigits, validEmail } from '@/utils/validate'
 import { checkCompanyName } from '../../api/account'
+import { maxLength } from '../../store/index'
 
 export default {
   name: 'Register',
@@ -287,6 +291,7 @@ export default {
     }
     return {
       logo: 'https://oras-myfile.s3-ap-southeast-1.amazonaws.com/1607931466649-logo_2.png',
+      fmaxLength: maxLength,
       registerForm: {
         fullname: '',
         email: '',

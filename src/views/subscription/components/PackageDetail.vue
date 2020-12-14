@@ -16,7 +16,7 @@
 
           <el-col :span="24">
             <el-form-item style="margin-bottom: 40px;" prop="name">
-              <MDinput v-model="postForm.name" :maxlength="100" name="name" required>
+              <MDinput v-model="postForm.name" :maxlength="fmaxLength.pkgNameLength" name="name" required>
                 Package name
               </MDinput>
             </el-form-item>
@@ -26,7 +26,7 @@
             <el-row>
               <el-col :span="24">
                 <el-form-item label-width="130px" prop="tag" label="Tag:" class="postInfo-container-item">
-                  <el-input v-model="postForm.tag" style="width: 300px" />
+                  <el-input v-model="postForm.tag" style="width: 300px" :maxLength="fmaxLength.pkgTagLength" />
                 </el-form-item>
               </el-col>
 
@@ -66,7 +66,7 @@
         </el-row>
 
         <el-form-item label-width="130px" label="Description:">
-          <el-input v-model="postForm.description" :rows="1" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" />
+          <el-input v-model="postForm.description" :rows="1" :maxLength="fmaxLength.pkgDesLength" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" />
           <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span>
         </el-form-item>
       </div>
@@ -81,6 +81,7 @@ import Sticky from '@/components/Sticky' // 粘性header组件
 // import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
 import { getUserId } from '../../../utils/auth'
 import { editPackage, fetchPackage } from '../../../api/package'
+import { maxLength } from '../../../store'
 
 const defaultForm = {
   method: '',
@@ -130,6 +131,7 @@ export default {
       }
     }
     return {
+      fmaxLength: maxLength,
       postForm: Object.assign({}, defaultForm.data),
       loading: false,
       currencyListOptions: [],

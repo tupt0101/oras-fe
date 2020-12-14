@@ -25,6 +25,10 @@
             type="text"
             tabindex="1"
             autocomplete="on"
+            :maxlength="fmaxLength.passwordLength"
+            @keyup.native="checkCapslock"
+            @blur="capsTooltip = false"
+            @keyup.enter.native="handleLogin"
           />
         </el-form-item>
 
@@ -85,6 +89,8 @@
 import { validEmail } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import { resendConfirmationEmail } from '@/api/user'
+import { maxLength } from '../../store'
+
 
 export default {
   name: 'Login',
@@ -106,6 +112,7 @@ export default {
     }
     return {
       logo: 'https://oras-myfile.s3-ap-southeast-1.amazonaws.com/1607931466649-logo_2.png',
+      fmaxLength: maxLength,
       loginForm: {
         username: '',
         password: ''

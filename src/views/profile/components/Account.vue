@@ -8,10 +8,10 @@
     <el-checkbox v-model="checkChangeInfo">I want to change my information</el-checkbox>
     <el-form ref="infoForm" :model="infoForm" :rules="rules" :hide-required-asterisk="!checkChangeInfo">
       <el-form-item label="Name" prop="fullname">
-        <el-input v-model="user.fullname" :readonly="!checkChangeInfo" />
+        <el-input v-model="user.fullname" :readonly="!checkChangeInfo" :maxlength="fmaxLength.nameLength" />
       </el-form-item>
       <el-form-item label="Phone number" prop="phoneNo">
-        <el-input v-model.trim="user.phoneNo" :readonly="!checkChangeInfo" />
+        <el-input v-model.trim="user.phoneNo" :readonly="!checkChangeInfo" :maxlength="fmaxLength.phoneLength" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" :disabled="!checkChangeInfo" @click="submit">Update</el-button>
@@ -28,7 +28,7 @@
             type="password"
             placeholder="Enter your current password"
             name="password"
-            maxlength="20"
+            :maxlength="fmaxLength.passwordLength"
             @keyup.native="checkCapslock"
             @blur="capsTooltip = false"
           />
@@ -43,7 +43,7 @@
             type="password"
             placeholder="Enter new password"
             name="password"
-            maxlength="20"
+            :maxlength="fmaxLength.passwordLength"
             @keyup.native="checkCapslock"
             @blur="capsTooltip = false"
           />
@@ -57,7 +57,7 @@
             v-model="confirmPwd"
             type="password"
             placeholder="Confirm your new password"
-            maxlength="20"
+            :maxlength="fmaxLength.passwordLength"
             @keyup.native="checkCapslock"
             @blur="capsTooltip = false"
           />
@@ -74,6 +74,7 @@
 import { changePassword, updateAccount } from '../../../api/account'
 import { validDigits } from '../../../utils/validate'
 import { getAccountId } from '../../../utils/auth'
+import { maxLength } from '../../../store'
 
 export default {
   props: {
@@ -128,6 +129,7 @@ export default {
       }
     }
     return {
+      fmaxLength: maxLength,
       checkChangeInfo: false,
       checkChangePwd: false,
       passwordData: {
@@ -176,7 +178,7 @@ export default {
     changePassword() {
       this.$refs.passwordData.validate(valid => {
         if (valid) {
-          changePassword(this.passwordData).then(response => {
+          changePassword(this.passwordData).then(() => {
             this.$message({
               message: 'Password has been updated successfully',
               type: 'success',
