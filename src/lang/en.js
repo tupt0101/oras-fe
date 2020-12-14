@@ -85,7 +85,8 @@ export default {
     signup: 'Or create your account.'
   },
   register: {
-    title: 'Register Form',
+    title: 'Registration',
+    quote: 'Quick and easy.',
     regIn: 'Sign up',
     fullname: 'Full name',
     email: 'Email',
@@ -101,7 +102,7 @@ export default {
     info: 'COMPANY INFORMATION'
   },
   resetPw: {
-    title: 'Reset Password Form',
+    title: 'Reset Password',
     username: 'Username',
     resetBtn: 'Reset',
     login: 'Back to Login page.',

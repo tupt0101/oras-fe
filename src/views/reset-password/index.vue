@@ -1,46 +1,51 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
-
+    <el-form ref="resetForm" :model="resetForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
+      <div class="logo-container">
+        <img :src="logo" class="logo">
+      </div>
       <div class="title-container">
         <h3 class="title">
           {{ $t('resetPw.title') }}
         </h3>
       </div>
 
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
-        <el-input
-          ref="username"
-          v-model="loginForm.username"
-          :placeholder="$t('resetPw.username')"
-          name="username"
-          type="text"
-          tabindex="1"
-          autocomplete="on"
-        />
-      </el-form-item>
+      <div class="form-container">
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleResetPassword">
-        {{ $t('resetPw.resetBtn') }}
-      </el-button>
+        <el-form-item prop="username">
+          <span class="svg-container">
+            <svg-icon icon-class="user" />
+          </span>
+          <el-input
+            ref="username"
+            v-model="resetForm.username"
+            :placeholder="$t('resetPw.username')"
+            name="username"
+            type="text"
+            tabindex="1"
+            autocomplete="on"
+          />
+        </el-form-item>
 
-      <div style="text-align: right; margin-bottom: 20px">
-        <router-link to="/login?redirect=%2Fdashboard">
-          <p style="font-style: italic; color: rgb(91 104 111)">
-            {{ $t('resetPw.login') }}
-          </p>
-        </router-link>
-      </div>
+        <el-button :loading="loading" class="oras-btn" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleResetPassword">
+          {{ $t('resetPw.resetBtn') }}
+        </el-button>
 
-      <div style="text-align: right">
-        <router-link to="/signup">
-          <p style="font-style: italic; color: rgb(91 104 111)">
-            {{ $t('resetPw.signup') }}
-          </p>
-        </router-link>
+        <div style="text-align: right; margin-bottom: 20px">
+          <router-link to="/login?redirect=%2Fdashboard">
+            <p style="font-style: italic; color: rgb(91 104 111)">
+              {{ $t('resetPw.login') }}
+            </p>
+          </router-link>
+        </div>
+
+        <div style="text-align: right">
+          <router-link to="/signup">
+            <p style="font-style: italic; color: rgb(91 104 111)">
+              {{ $t('resetPw.signup') }}
+            </p>
+          </router-link>
+        </div>
       </div>
     </el-form>
 
@@ -66,7 +71,8 @@ export default {
       }
     }
     return {
-      loginForm: {
+      logo: 'https://oras-myfile.s3-ap-southeast-1.amazonaws.com/1607931466649-logo_2.png',
+      resetForm: {
         username: ''
       },
       loginRules: {
@@ -97,9 +103,9 @@ export default {
     // window.addEventListener('storage', this.afterQRScan)
   },
   mounted() {
-    // if (this.loginForm.username === '') {
+    // if (this.resetForm.username === '') {
     //   this.$refs.username.focus()
-    // } else if (this.loginForm.password === '') {
+    // } else if (this.resetForm.password === '') {
     //   this.$refs.password.focus()
     // }
   },
@@ -108,13 +114,13 @@ export default {
   },
   methods: {
     handleResetPassword() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.resetForm.validate(valid => {
         if (valid) {
           this.loading = true
-          resetPassword(this.loginForm.username)
+          resetPassword(this.resetForm.username)
             .then(response => {
               this.dialogTitle = 'Reset Password Successfully!'
-              this.message = 'We have sent you a new password at <i>' + this.loginForm.username + '</i>.<br>Please use that password to log in.'
+              this.message = 'We have sent you a new password at <i>' + this.resetForm.username + '</i>.<br>Please use that password to log in.'
               this.showDialog = true
               this.loading = false
             })
@@ -146,8 +152,6 @@ export default {
 </script>
 
 <style lang="scss">
-/* 修复input 背景不协调 和光标变色 */
-/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
 $bg:#283443;
 $light_gray:#fff;
@@ -208,8 +212,10 @@ $black: #000000;
   min-height: 100%;
   width: 100%;
   height: 100%;
-  // background-color: $bg;
-  background-image: url('../../assets/custom-theme/image/login-bg.jpeg');
+  background-image: url('../../assets/custom-theme/image/start_bg.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   overflow: hidden;
   display:flex;
 	flex-direction:column;
@@ -218,11 +224,27 @@ $black: #000000;
     position: relative;
     width: 596px;
     max-width: 100%;
-    padding: 160px 68px;
+    padding: 68px 0px 160px 0px;
     margin: 0 auto;
     overflow: hidden;
     height: 100%;
     background-color: white;
+
+    .logo-container {
+      position: relative;
+      text-align: center;
+      margin-bottom: 20px;
+
+      .logo {
+        width: 231.5;
+        height: 200px;
+      }
+    }
+
+    .form-container {
+      width: 82%;
+      margin: 0 auto;
+    }
   }
 
   .tips {
@@ -288,6 +310,14 @@ $black: #000000;
       display: none;
     }
   }
+}
+
+.oras-btn {
+  background-color: #03ac71;
+  border-color: #03ac71;
+  color: #fff;
+  font-weight: 550;
+  font-size: 1.2em;
 }
 
 .message {

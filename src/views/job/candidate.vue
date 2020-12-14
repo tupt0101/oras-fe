@@ -171,7 +171,7 @@
         <el-button @click="dialogFormVisible = false">
           Close
         </el-button>
-        <el-button v-if="!(temp.status === 'Hired')" :loading="listLoading" type="success" @click="handleComment(temp)">
+        <el-button :loading="listLoading" type="success" @click="handleComment(temp)">
           Save
         </el-button>
       </div>
