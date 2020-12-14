@@ -1,205 +1,206 @@
 <template>
   <div class="register-container">
     <el-form ref="registerForm" :model="registerForm" :rules="registerRules" class="register-form" autocomplete="on" label-position="left">
-
+      <div class="logo-container">
+        <img :src="logo" class="logo">
+      </div>
       <div class="title-container">
         <!-- <h1 class="title">ORAS</h1> -->
         <h3 class="title">
           {{ $t('register.title') }}
         </h3>
+        <p class="quote">
+          {{ $t('register.quote') }}
+        </p>
         <!-- <lang-select class="set-language" /> -->
       </div>
 
-      <el-form-item prop="fullname">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
-        <el-input
-          ref="fullname"
-          v-model="registerForm.fullname"
-          :placeholder="$t('register.fullname')"
-          name="fulname"
-          :maxlength="fmaxLength.nameLength"
-          type="text"
-          tabindex="1"
-          autocomplete="on"
-        />
-      </el-form-item>
+      <div class="form-container">
 
-      <el-form-item prop="email">
-        <span class="svg-container">
-          <svg-icon icon-class="email" />
-        </span>
-        <el-input
-          ref="email"
-          v-model="registerForm.email"
-          :placeholder="$t('register.email')"
-          name="email"
-          type="text"
-          :maxlength="fmaxLength.emailLength"
-          tabindex="2"
-          autocomplete="on"
-        />
-      </el-form-item>
-
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-        <el-form-item prop="password">
+        <el-form-item prop="fullname">
           <span class="svg-container">
-            <svg-icon icon-class="password" />
+            <svg-icon icon-class="user" />
           </span>
           <el-input
-            :key="passwordType"
-            ref="password"
-            v-model="registerForm.password"
-            :type="passwordType"
-            :placeholder="$t('register.password')"
-            name="password"
-            :maxlength="fmaxLength.passwordLength"
-            tabindex="3"
+            ref="fullname"
+            v-model="registerForm.fullname"
+            :placeholder="$t('register.fullname')"
+            name="fulname"
+            :maxlength="fmaxLength.nameLength"
+            type="text"
+            tabindex="1"
             autocomplete="on"
-            @keyup.native="checkCapslock"
-            @blur="capsTooltip = false"
           />
-          <span class="show-pwd" @click="showPwd">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-          </span>
         </el-form-item>
-      </el-tooltip>
 
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-        <el-form-item prop="confirmPwd">
+        <el-form-item prop="email">
           <span class="svg-container">
-            <svg-icon icon-class="password" />
+            <svg-icon icon-class="email" />
           </span>
           <el-input
-            :key="passwordType"
-            ref="confirmPwd"
-            v-model="registerForm.confirmPwd"
-            type="password"
-            :placeholder="$t('register.confirmPwd')"
-            name="confirmPwd"
-            tabindex="4"
-            :maxlength="fmaxLength.passwordLength"
+            ref="email"
+            v-model="registerForm.email"
+            :placeholder="$t('register.email')"
+            name="email"
+            type="text"
+            :maxlength="fmaxLength.emailLength"
+            tabindex="2"
             autocomplete="on"
-            @keyup.native="checkCapslock"
-            @blur="capsTooltip = false"
           />
         </el-form-item>
-      </el-tooltip>
 
-      <el-form-item prop="phoneNo">
-        <span class="svg-container">
-          <svg-icon icon-class="phone" />
-        </span>
-        <el-input
-          ref="phoneNo"
-          v-model="registerForm.phoneNo"
-          :placeholder="$t('register.phoneNo')"
-          name="phoneNo"
-          :maxlength="fmaxLength.phoneLength"
-          type="text"
-          tabindex="5"
-          autocomplete="on"
-        />
-      </el-form-item>
-      <br>
-      <div style="margin-bottom: 10px">
-        <span style="color: #aaa; font-size: 14px; margin-left: 15px">
-          {{ $t('register.info') }}
-        </span>
-      </div>
+        <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+          <el-form-item prop="password">
+            <span class="svg-container">
+              <svg-icon icon-class="user" />
+            </span>
+            <el-input
+              :key="passwordType"
+              ref="password"
+              v-model="registerForm.password"
+              :type="passwordType"
+              :placeholder="$t('register.password')"
+              name="password"
+              :maxlength="fmaxLength.passwordLength"
+              tabindex="3"
+              autocomplete="on"
+              @keyup.native="checkCapslock"
+              @blur="capsTooltip = false"
+            />
+            <span class="show-pwd" @click="showPwd">
+              <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+            </span>
+          </el-form-item>
+        </el-tooltip>
 
-      <el-form-item prop="compName">
-        <span class="svg-container">
-          <svg-icon icon-class="building" />
-        </span>
-        <el-input
-          ref="compName"
-          v-model="registerForm.compName"
-          :placeholder="$t('register.compName')"
-          name="compName"
-          :maxlength="fmaxLength.compNameLength"
-          type="text"
-          tabindex="6"
-          autocomplete="on"
-        />
-      </el-form-item>
+        <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+          <el-form-item prop="confirmPwd">
+            <span class="svg-container">
+              <svg-icon icon-class="password" />
+            </span>
+            <el-input
+              :key="passwordType"
+              ref="confirmPwd"
+              v-model="registerForm.confirmPwd"
+              type="password"
+              :placeholder="$t('register.confirmPwd')"
+              name="confirmPwd"
+              tabindex="4"
+              autocomplete="on"
+              @keyup.native="checkCapslock"
+              @blur="capsTooltip = false"
+            />
+          </el-form-item>
+        </el-tooltip>
 
-      <el-form-item prop="location">
-        <span class="svg-container">
-          <svg-icon icon-class="pin" />
-        </span>
-        <el-input
-          ref="location"
-          v-model="registerForm.location"
-          :placeholder="$t('register.location')"
-          name="location"
-          :maxlength="fmaxLength.locationLength"
-          type="text"
-          tabindex="7"
-          autocomplete="on"
-        />
-      </el-form-item>
+        <el-form-item prop="phoneNo">
+          <span class="svg-container">
+            <svg-icon icon-class="phone" />
+          </span>
+          <el-input
+            ref="phoneNo"
+            v-model="registerForm.phoneNo"
+            :placeholder="$t('register.phoneNo')"
+            name="phoneNo"
+            type="text"
+            tabindex="5"
+            autocomplete="on"
+          />
+        </el-form-item>
+        <br>
+        <div style="margin-bottom: 10px">
+          <span style="color: #aaa; font-size: 14px; margin-left: 15px">
+            {{ $t('register.info') }}
+          </span>
+        </div>
 
-      <el-form-item prop="compEmail">
-        <span class="svg-container">
-          <svg-icon icon-class="email" />
-        </span>
-        <el-input
-          ref="compEmail"
-          v-model="registerForm.compEmail"
-          :placeholder="$t('register.compEmail')"
-          name="compEmail"
-          :maxlength="fmaxLength.emailLength"
-          type="text"
-          tabindex="8"
-          autocomplete="on"
-        />
-      </el-form-item>
+        <el-form-item prop="compName">
+          <span class="svg-container">
+            <svg-icon icon-class="building" />
+          </span>
+          <el-input
+            ref="compName"
+            v-model="registerForm.compName"
+            :placeholder="$t('register.compName')"
+            name="compName"
+            type="text"
+            tabindex="6"
+            autocomplete="on"
+          />
+        </el-form-item>
 
-      <el-form-item prop="compPhone">
-        <span class="svg-container">
-          <svg-icon icon-class="old-typical-phone" />
-        </span>
-        <el-input
-          ref="compPhone"
-          v-model="registerForm.compPhone"
-          :placeholder="$t('register.compPhone')"
-          name="compPhone"
-          :maxlength="fmaxLength.phoneLength"
-          type="text"
-          tabindex="9"
-          autocomplete="on"
-        />
-      </el-form-item>
+        <el-form-item prop="location">
+          <span class="svg-container">
+            <svg-icon icon-class="pin" />
+          </span>
+          <el-input
+            ref="location"
+            v-model="registerForm.location"
+            :placeholder="$t('register.location')"
+            name="location"
+            type="text"
+            tabindex="7"
+            autocomplete="on"
+          />
+        </el-form-item>
 
-      <el-form-item prop="taxCode">
-        <span class="svg-container">
-          <svg-icon icon-class="taxes" />
-        </span>
-        <el-input
-          ref="taxCode"
-          v-model="registerForm.taxCode"
-          :placeholder="$t('register.taxCode')"
-          name="taxCode"
-          :maxlength="fmaxLength.taxCodeLength"
-          type="text"
-          tabindex="10"
-          autocomplete="on"
-          @keyup.enter.native="handleSignup"
-        />
-      </el-form-item>
+        <el-form-item prop="compEmail">
+          <span class="svg-container">
+            <svg-icon icon-class="email" />
+          </span>
+          <el-input
+            ref="compEmail"
+            v-model="registerForm.compEmail"
+            :placeholder="$t('register.compEmail')"
+            name="compEmail"
+            type="text"
+            tabindex="8"
+            autocomplete="on"
+          />
+        </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleSignup">
-        {{ $t('register.regIn') }}
-      </el-button>
+        <el-form-item prop="compPhone">
+          <span class="svg-container">
+            <svg-icon icon-class="old-typical-phone" />
+          </span>
+          <el-input
+            ref="compPhone"
+            v-model="registerForm.compPhone"
+            :placeholder="$t('register.compPhone')"
+            name="compPhone"
+            type="text"
+            tabindex="9"
+            autocomplete="on"
+          />
+        </el-form-item>
 
-      <div style="text-align: right">
-        <router-link to="/login?redirect=%2Fdashboard">
-          <p style="font-style: italic; color: rgb(91 104 111)">
-            {{ $t('register.login') }}
-          </p>
-        </router-link>
+        <el-form-item prop="taxCode">
+          <span class="svg-container">
+            <svg-icon icon-class="taxes" />
+          </span>
+          <el-input
+            ref="taxCode"
+            v-model="registerForm.taxCode"
+            :placeholder="$t('register.taxCode')"
+            name="taxCode"
+            type="text"
+            tabindex="10"
+            autocomplete="on"
+            @keyup.enter.native="handleSignup"
+          />
+        </el-form-item>
+
+        <el-button :loading="loading" class="oras-btn" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleSignup">
+          {{ $t('register.regIn') }}
+        </el-button>
+
+        <div style="text-align: right">
+          <router-link to="/login?redirect=%2Fdashboard">
+            <p style="font-style: italic; color: rgb(91 104 111)">
+              {{ $t('register.login') }}
+            </p>
+          </router-link>
+        </div>
       </div>
     </el-form>
 
@@ -289,6 +290,7 @@ export default {
       }
     }
     return {
+      logo: 'https://oras-myfile.s3-ap-southeast-1.amazonaws.com/1607931466649-logo_2.png',
       fmaxLength: maxLength,
       registerForm: {
         fullname: '',
@@ -460,8 +462,10 @@ $black: #000000;
   min-height: 100%;
   width: 100%;
   height: 100%;
-  // background-color: $bg;
-  background-image: url('../../assets/custom-theme/image/login-bg.jpeg');
+  background-image: url('../../assets/custom-theme/image/start_bg.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   overflow: hidden;
   display:flex;
 	flex-direction:column;
@@ -470,11 +474,27 @@ $black: #000000;
     position: relative;
     width: 596px;
     max-width: 100%;
-    padding: 160px 68px;
+    padding: 68px 0px 160px 0px;;
     margin: 0 auto;
     overflow: scroll;
     height: 100%;
     background-color: white;
+
+    .logo-container {
+      position: relative;
+      text-align: center;
+      margin-bottom: 20px;
+
+      .logo {
+        width: 231.5;
+        height: 200px;
+      }
+    }
+
+    .form-container {
+      width: 82%;
+      margin: 0 auto;
+    }
   }
 
   .tips {
@@ -504,11 +524,26 @@ $black: #000000;
       font-size: 26px;
       // color: $light_gray;
       color: $black;
-      margin: 0px auto 40px auto;
+      margin: 0px auto 15px auto;
       text-align: center;
       font-weight: bold;
     }
+
+    .quote {
+      font-size: 16px;
+      color: $black;
+      margin: 0px auto 30px auto;
+      text-align: center;
+    }
   }
+
+.oras-btn {
+  background-color: #03ac71;
+  border-color: #03ac71;
+  color: #fff;
+  font-weight: 550;
+  font-size: 1.2em;
+}
 
   .set-language {
     color: #000;

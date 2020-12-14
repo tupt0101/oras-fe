@@ -44,7 +44,7 @@
 .bg {
   width: 100%;
   height: 100%;
-  background-image: url('https://openjob-myfile.s3.ap-southeast-1.amazonaws.com/1607162432099-bg.jpg') !important;
+  background-image: url('https://oras-myfile.s3-ap-southeast-1.amazonaws.com/1607937289712-final_bg.jpg') !important;;
   position: absolute;
   left: 0;
   top: 0;

@@ -25,7 +25,8 @@ export default {
   data() {
     return {
       title: 'ORAS',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      // logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      logo: 'https://oras-myfile.s3-ap-southeast-1.amazonaws.com/1607931430490-logo_1.png'
     }
   }
 }
@@ -46,7 +47,8 @@ export default {
   width: 100%;
   height: 50px;
   line-height: 50px;
-  background: #2b2f3a;
+  // background: #2b2f3a;
+  background: #242526;
   text-align: center;
   overflow: hidden;
 
@@ -56,7 +58,7 @@ export default {
 
     & .sidebar-logo {
       width: 32px;
-      height: 32px;
+      height: 35px;
       vertical-align: middle;
       margin-right: 12px;
     }

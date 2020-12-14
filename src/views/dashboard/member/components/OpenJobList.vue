@@ -43,7 +43,7 @@
           <span>{{ temp.title }}</span>
         </el-form-item>
         <el-form-item label="Salary:" prop="salary" label-width="100px" style="margin-bottom: 0px">
-          <span>{{ temp.currency | currencyFilter }} {{ temp.salaryFrom }} - {{ temp.salaryTo }}</span>
+          <span>{{ temp.currency | currencyFilter }} {{ temp.salaryFrom | toThousandFilter }} - {{ temp.salaryTo | toThousandFilter }}</span>
         </el-form-item>
         <el-form-item label="Vacancies:" prop="vacancies" label-width="100px" style="margin-bottom: 0px">
           <span>{{ temp.vacancies }}</span>
@@ -222,11 +222,12 @@ export default {
 
 .title {
   font-size: 24px;
-  color:#0073d1;
+  // color:#0073d1;
+  color:#03ac71;
 }
 
 .content small {
-  color: #00d1b2;
+  color: #4f5857;
 }
 
 .image img {
@@ -252,9 +253,9 @@ export default {
 .image .myBtn {
   width: 100%;
   margin-top: 10px;
-  background-color: #1890ff;
+  background-color: #03ac71;
   color: white;
-  border: #1890ff;
+  border: #03ac71;
   border-radius: 3px;
   padding: 10px;
   cursor: pointer;

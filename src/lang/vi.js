@@ -85,7 +85,8 @@ export default {
     signup: 'Hoặc tạo tài khoản của bạn.'
   },
   register: {
-    title: 'Đăng ký tài khoản',
+    title: 'Đăng ký',
+    quote: 'Nhanh chóng và dễ dàng.',
     regIn: 'Đăng ký',
     fullname: 'Họ và tên',
     email: 'Email',

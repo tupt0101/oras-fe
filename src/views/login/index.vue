@@ -1,74 +1,80 @@
 <template>
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
-
+      <div class="logo-container">
+        <img :src="logo" class="logo">
+      </div>
       <div class="title-container">
         <!-- <h1 class="title">ORAS</h1> -->
         <h3 class="title">
-          {{ $t('login.title') }}
+          <!-- {{ $t('login.title') }} -->
         </h3>
         <lang-select class="set-language" />
       </div>
 
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
-        <el-input
-          ref="username"
-          v-model="loginForm.username"
-          :placeholder="$t('login.username')"
-          name="username"
-          type="text"
-          tabindex="1"
-          :maxlength="fmaxLength.emailLength"
-          autocomplete="on"
-        />
-      </el-form-item>
-
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-        <el-form-item prop="password">
+      <div class="form-container">
+        <el-form-item prop="username">
           <span class="svg-container">
-            <svg-icon icon-class="password" />
+            <svg-icon icon-class="user" />
           </span>
           <el-input
-            :key="passwordType"
-            ref="password"
-            v-model="loginForm.password"
-            :type="passwordType"
-            :placeholder="$t('login.password')"
-            name="password"
-            tabindex="2"
+            ref="username"
+            v-model="loginForm.username"
+            :placeholder="$t('login.username')"
+            name="username"
+            type="text"
+            tabindex="1"
             autocomplete="on"
             :maxlength="fmaxLength.passwordLength"
             @keyup.native="checkCapslock"
             @blur="capsTooltip = false"
             @keyup.enter.native="handleLogin"
           />
-          <span class="show-pwd" @click="showPwd">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-          </span>
         </el-form-item>
-      </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
-        {{ $t('login.logIn') }}
-      </el-button>
+        <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+          <el-form-item prop="password">
+            <span class="svg-container">
+              <svg-icon icon-class="password" />
+            </span>
+            <el-input
+              :key="passwordType"
+              ref="password"
+              v-model="loginForm.password"
+              :type="passwordType"
+              :placeholder="$t('login.password')"
+              name="password"
+              tabindex="2"
+              autocomplete="on"
+              @keyup.native="checkCapslock"
+              @blur="capsTooltip = false"
+              @keyup.enter.native="handleLogin"
+            />
+            <span class="show-pwd" @click="showPwd">
+              <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+            </span>
+          </el-form-item>
+        </el-tooltip>
 
-      <div style="text-align: right; margin-bottom: 20px">
-        <router-link to="/reset-password">
-          <p style="font-style: italic; color: rgb(91 104 111)">
-            {{ $t('login.forgot') }}
-          </p>
-        </router-link>
-      </div>
+        <el-button :loading="loading" class="oras-btn" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
+          {{ $t('login.logIn') }}
+        </el-button>
 
-      <div style="text-align: right">
-        <router-link to="/signup">
-          <p style="font-style: italic; color: rgb(91 104 111)">
-            {{ $t('login.signup') }}
-          </p>
-        </router-link>
+        <div style="text-align: right; margin-bottom: 20px">
+          <router-link to="/reset-password">
+            <p style="font-style: italic; color: rgb(91 104 111)">
+              {{ $t('login.forgot') }}
+            </p>
+          </router-link>
+        </div>
+
+        <div style="text-align: right">
+          <router-link to="/signup">
+            <p style="font-style: italic; color: rgb(91 104 111)">
+              {{ $t('login.signup') }}
+            </p>
+          </router-link>
+        </div>
       </div>
     </el-form>
 
@@ -105,6 +111,7 @@ export default {
       }
     }
     return {
+      logo: 'https://oras-myfile.s3-ap-southeast-1.amazonaws.com/1607931466649-logo_2.png',
       fmaxLength: maxLength,
       loginForm: {
         username: '',
@@ -210,8 +217,6 @@ export default {
 </script>
 
 <style lang="scss">
-/* 修复input 背景不协调 和光标变色 */
-/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
 $bg:#283443;
 $light_gray:#fff;
@@ -272,8 +277,12 @@ $black: #000000;
   min-height: 100%;
   width: 100%;
   height: 100%;
-  // background-color: $bg;
-  background-image: url('../../assets/custom-theme/image/login-bg.jpeg');
+  background-image: url('../../assets/custom-theme/image/start_bg.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  // background: rgb(0,197,129);
+  // background: linear-gradient(0deg, rgba(0,197,129,1) 0%, rgba(52,70,95,1) 90%);
   overflow: hidden;
   display:flex;
 	flex-direction:column;
@@ -282,11 +291,27 @@ $black: #000000;
     position: relative;
     width: 596px;
     max-width: 100%;
-    padding: 160px 68px;
+    padding: 68px 0px 160px 0px;
     margin: 0 auto;
     overflow: hidden;
     height: 100%;
     background-color: white;
+
+    .logo-container {
+      position: relative;
+      text-align: center;
+      margin-bottom: 20px;
+
+      .logo {
+        width: 231.5;
+        height: 200px;
+      }
+    }
+
+    .form-container {
+      width: 82%;
+      margin: 0 auto;
+    }
   }
 
   .tips {
@@ -311,6 +336,9 @@ $black: #000000;
 
   .title-container {
     position: relative;
+    width: 85%;
+    margin: 0 auto;
+    height: 40px;
 
     .title {
       font-size: 26px;
@@ -352,6 +380,14 @@ $black: #000000;
       display: none;
     }
   }
+}
+
+.oras-btn {
+  background-color: #03ac71;
+  border-color: #03ac71;
+  color: #fff;
+  font-weight: 550;
+  font-size: 1.2em;
 }
 
 .message {
