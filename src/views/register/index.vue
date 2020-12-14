@@ -476,7 +476,7 @@ $black: #000000;
     max-width: 100%;
     padding: 68px 0px 160px 0px;;
     margin: 0 auto;
-    overflow: scroll;
+    overflow-y: scroll;
     height: 100%;
     background-color: white;
 

@@ -16,7 +16,7 @@
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="filter-container">
-          <el-input v-model="listQuery.name" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" :maxlength="maxLength.nameLength" @keyup.enter.native="handleFilter" />
+          <el-input v-model="listQuery.name" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" :maxlength="fmaxLength.nameLength" @keyup.enter.native="handleFilter" />
           <!-- <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
             <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
           </el-select> -->
@@ -161,7 +161,7 @@
           </el-tag>
         </el-form-item>
         <el-form-item label="Comment:" label-width="150px" style="margin-bottom: 0px;">
-          <el-input v-model="temp.comment" type="textarea" :rows="5" :maxLength="fmaxLength.cmtLength"/>
+          <el-input v-model="temp.comment" type="textarea" :rows="5" :max-length="fmaxLength.cmtLength" />
         </el-form-item>
         <!-- <el-form-item label="" label-width="120px" style="margin-bottom: 0px; max-height: 320px; overflow-y: scroll">
           <span v-html="temp.description" />
