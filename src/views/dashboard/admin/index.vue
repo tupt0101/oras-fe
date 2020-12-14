@@ -7,27 +7,15 @@
       </div>
     </el-row>
 
-    <!-- <el-row :gutter="8">
-      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="padding-right:8px;margin-bottom:30px;">
-        <open-job-list />
-      </el-col>
-      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="margin-bottom:30px;">
-        <transaction-table />
-      </el-col>
-    </el-row> -->
   </div>
 </template>
 
 <script>
 import Banner from './components/Banner'
-// import OpenJobList from './components/OpenJobList'
-// import TransactionTable from './components/TransactionTable'
 
 export default {
   name: 'DashboardAdmin',
   components: {
-    // TransactionTable,
-    // OpenJobList,
     Banner
   }
 }

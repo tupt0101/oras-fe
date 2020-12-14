@@ -6,7 +6,8 @@
         <h1 class="title">Welcome, Administator!</h1>
         <h2 class="sub-title">Take a quick look<br>at how your ORAS performs.</h2>
         <router-link :to="'/report/index'" class="button">
-          <span>View report</span>
+          <!-- <span>View report</span> -->
+          <span>{{ $t('route.dashboard') }}</span>
         </router-link>
       </div>
     </div>
