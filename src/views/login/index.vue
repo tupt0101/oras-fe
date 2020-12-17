@@ -46,6 +46,7 @@
               name="password"
               tabindex="2"
               autocomplete="on"
+              :maxlength="fmaxLength.passwordLength"
               @keyup.native="checkCapslock"
               @blur="capsTooltip = false"
               @keyup.enter.native="handleLogin"
@@ -183,10 +184,14 @@ export default {
             .catch(err => {
               this.loading = false
               this.title = 'Something went wrong!'
-              if (err.response.data.status === 412) {
-                this.resend = true
+              if (err.response) {
+                if (err.response.data.status === 412) {
+                  this.resend = true
+                }
+                this.message = err.response.data.message
+              } else {
+                this.message = 'Network is unstable. Please check your connection.'
               }
-              this.message = err.response.data.message
               this.showDialog = true
             })
         } else {

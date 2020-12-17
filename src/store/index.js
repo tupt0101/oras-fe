@@ -18,6 +18,9 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 }, {})
 
 export const maxLength = {
+  postMax: 100,
+  jdLength: 5000,
+  priceLength: 16,
   emailLength: 100,
   nameLength: 100,
   passwordLength: 20,

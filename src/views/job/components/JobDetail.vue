@@ -17,7 +17,7 @@
 
           <el-col :span="24">
             <el-form-item style="margin-bottom: 40px;" prop="title">
-              <MDinput v-model="postForm.title" :maxlength="100" name="name" required>
+              <MDinput v-model="postForm.title" :maxlength="fmaxLength.titleLength" name="name" required>
                 Title
               </MDinput>
             </el-form-item>
@@ -59,13 +59,15 @@
                 </el-col>
                 <el-col :span="6">
                   <el-form-item label-width="120px" label="Salary from:" class="postInfo-container-item" prop="salaryFrom">
-                    <el-input-number v-model="postForm.salaryFrom" placeholder="00.00" />
+                    <el-input-number v-model="postForm.salaryFrom" placeholder="0" :maxlength="fmaxLength.priceLength" />
+<!--                    <money v-model="postForm.salaryFrom" v-bind="money" placeholder="0" :maxlength="fmaxLength.priceLength" />-->
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="6">
                   <el-form-item label-width="120px" label="Salary to:" class="postInfo-container-item" prop="salaryTo">
-                    <el-input-number v-model="postForm.salaryTo" placeholder="00.00" />
+                    <el-input-number v-model="postForm.salaryTo" placeholder="0" :maxlength="fmaxLength.priceLength" />
+<!--                    <money v-model="postForm.salaryTo" v-bind="money" placeholder="0" :maxlength="fmaxLength.priceLength" />-->
                   </el-form-item>
                 </el-col>
 
@@ -83,7 +85,7 @@
 
         <el-form-item label-width="121px" label="Job description:" />
         <el-form-item prop="description" style="margin-bottom: 30px;">
-          <Tinymce ref="editor" v-model="postForm.description" :height="400" />
+          <Tinymce ref="editor" v-model="postForm.description" :height="400" :maxlength="fmaxLength.jdLength" />
         </el-form-item>
       </div>
     </el-form>
@@ -113,10 +115,11 @@ import Tinymce from '@/components/Tinymce'
 import MDinput from '@/components/MDinput'
 import Sticky from '@/components/Sticky' // 粘性header组件
 // import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
-// import { getAccountId } from '../../../utils/auth'
 import { createJob, fetchCategory, publishJob, fetchJob } from '@/api/job'
 import { uppercaseFirst } from '../../../filters'
 import { validDigits } from '../../../utils/validate'
+import { maxLength } from '../../../store'
+import { Money } from 'v-money'
 
 const defaultForm = {
   method: '',
@@ -148,8 +151,10 @@ export default {
     Tinymce,
     MDinput,
     // Upload,
-    Sticky
+    Sticky,
+    Money
   },
+  // directives: { fmoney: VMoney },
   props: {
     isEdit: {
       type: Boolean,
@@ -186,9 +191,9 @@ export default {
       const item = rule.field
       if (value === '') {
         callback(new Error(uppercaseFirst(item) + ' is required'))
-      } else if (this.postForm.salaryFrom > this.postForm.salaryTo) {
+      } else if (this.postForm.salaryFrom > this.postForm.salaryTo || this.postForm.salaryFrom <= 0) {
         this.$message({
-          message: 'Salary range is not reasonable',
+          message: 'Salary range is wrong',
           type: 'error'
         })
       } else {
@@ -196,6 +201,15 @@ export default {
       }
     }
     return {
+      money: {
+        decimal: ',',
+        thousands: ',',
+        prefix: '',
+        suffix: '',
+        precision: 0,
+        masked: false
+      },
+      fmaxLength: maxLength,
       postForm: Object.assign({}, defaultForm.data),
       loading: false,
       currencyListOptions: [],
@@ -205,9 +219,7 @@ export default {
         title: [{ validator: validateTitle }],
         jobType: [{ validator: validateRequire }],
         category: [{ validator: validateRequire }],
-        salaryFrom: [{ validator: validateCurrency, trigger: 'blur' }],
         salaryTo: [{ validator: validateCurrency, trigger: 'blur' }],
-        currency: [{ validator: validateCurrency, trigger: 'blur' }],
         description: [{ validator: validateRequire }]
       },
       tempRoute: {},
@@ -266,6 +278,7 @@ export default {
         this.postForm = response.data
         delete this.postForm.accountByCreatorId
         delete this.postForm.talentPoolByTalentPoolId
+        delete this.postForm.applyFrom
         if (this.isReopen) {
           delete this.postForm.id
           this.postForm.status = 'Draft'
@@ -313,7 +326,6 @@ export default {
     submitForm() {
       this.showConfirmDialog = false
       this.loading = true
-      this.postForm.applyFrom = new Date().toISOString()
       this.postForm.creatorId = this.accountId
       if (typeof this.postForm.applyTo === 'object') {
         this.postForm.applyTo = new Date(this.postForm.applyTo + 'Z').toISOString()
@@ -323,6 +335,7 @@ export default {
         this.postForm.id = response.data.id
         if (this.action === 1) {
           // API Publish job
+          this.postForm.applyFrom = new Date().toISOString()
           publishJob(this.postForm.id).then(() => {
             this.$notify({
               title: 'Success',
