@@ -178,6 +178,14 @@ export default {
     changePassword() {
       this.$refs.passwordData.validate(valid => {
         if (valid) {
+          if (this.passwordData.currentPassword === this.passwordData.newPassword) {
+            this.$message({
+              message: 'The new password is the same as your current password',
+              type: 'error',
+              duration: 5 * 1000
+            })
+            return
+          }
           changePassword(this.passwordData).then(() => {
             this.$message({
               message: 'Password has been updated successfully',

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="filter-container">
-      <el-input v-model="listQuery.title" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.title" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" :maxLength="fmaxLength.titleLength" />
       <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
         <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
       </el-select>
@@ -90,7 +90,7 @@
           <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date" />
         </el-form-item>
         <el-form-item label="Title" prop="title">
-          <el-input v-model="temp.title" />
+          <el-input v-model="temp.title" :maxLength="fmaxLength.titleLength" />
         </el-form-item>
         <el-form-item label="Status">
           <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
@@ -133,6 +133,7 @@ import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 import { fetchOpenJobList } from '@/api/job'
+import { maxLength } from '../../../../store'
 
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
@@ -166,6 +167,7 @@ export default {
   },
   data() {
     return {
+      fmaxLength: maxLength,
       tableKey: 0,
       list: null,
       total: 0,

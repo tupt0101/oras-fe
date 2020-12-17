@@ -161,7 +161,7 @@
           </el-tag>
         </el-form-item>
         <el-form-item label="Comment:" label-width="150px" style="margin-bottom: 0px;">
-          <el-input v-model="temp.comment" type="textarea" :rows="5" :max-length="fmaxLength.cmtLength" />
+          <el-input v-model="temp.comment" type="textarea" :rows="5" :maxLength="fmaxLength.cmtLength" />
         </el-form-item>
         <!-- <el-form-item label="" label-width="120px" style="margin-bottom: 0px; max-height: 320px; overflow-y: scroll">
           <span v-html="temp.description" />

@@ -21,13 +21,14 @@
             v-model="resetForm.username"
             :placeholder="$t('resetPw.username')"
             name="username"
+            :maxlength="fmaxLength.emailLength"
             type="text"
             tabindex="1"
             autocomplete="on"
           />
         </el-form-item>
 
-        <el-button :loading="loading" class="oras-btn" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleResetPassword">
+        <el-button :loading="loading" class="oras-btn" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleResetPassword" >
           {{ $t('resetPw.resetBtn') }}
         </el-button>
 
@@ -59,6 +60,7 @@
 <script>
 import { validEmail } from '@/utils/validate'
 import { resetPassword } from '@/api/user'
+import { maxLength } from '../../store'
 
 export default {
   name: 'ResetPassword',
@@ -71,6 +73,7 @@ export default {
       }
     }
     return {
+      fmaxLength: maxLength,
       logo: 'https://oras-myfile.s3-ap-southeast-1.amazonaws.com/1607931466649-logo_2.png',
       resetForm: {
         username: ''
@@ -118,7 +121,7 @@ export default {
         if (valid) {
           this.loading = true
           resetPassword(this.resetForm.username)
-            .then(response => {
+            .then(() => {
               this.dialogTitle = 'Reset Password Successfully!'
               this.message = 'We have sent you a new password at <i>' + this.resetForm.username + '</i>.<br>Please use that password to log in.'
               this.showDialog = true
@@ -127,8 +130,10 @@ export default {
             .catch(err => {
               this.dialogTitle = 'Something went wrong!'
               this.hasError = true
-              if (err.response.data.status === 400) {
+              if (err.response && err.response.data.status === 400) {
                 this.message = 'The email you entered is not registered in our system.<br>Please try again!'
+              } else {
+                this.message = 'Network is unstable. Please check your connection.'
               }
               this.showDialog = true
               this.loading = false

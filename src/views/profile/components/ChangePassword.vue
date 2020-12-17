@@ -3,21 +3,21 @@
     <el-row :gutter="20">
       <el-col :lg="12">
         <el-form-item label="Current Password">
-          <el-input v-model.trim="pw.curPassword" />
+          <el-input v-model.trim="pw.curPassword" :maxlength="fmaxLength.passwordLength" />
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
       <el-col :lg="12">
         <el-form-item label="New Password">
-          <el-input v-model.trim="pw.newPassword" />
+          <el-input v-model.trim="pw.newPassword" :maxlength="fmaxLength.passwordLength" />
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
       <el-col :lg="12">
         <el-form-item label="Confirm Password">
-          <el-input v-model.trim="pw.confirmPassword" />
+          <el-input v-model.trim="pw.confirmPassword" :maxlength="fmaxLength.passwordLength" />
         </el-form-item>
       </el-col>
     </el-row>
@@ -32,9 +32,12 @@
 </template>
 
 <script>
+import { maxLength } from '../../../store'
+
 export default {
   data() {
     return {
+      fmaxLength: maxLength,
       pw: {
         curPassword: '',
         newPassword: '',
