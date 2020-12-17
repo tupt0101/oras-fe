@@ -8,18 +8,18 @@
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="filter-container">
-          <el-input v-model="listQuery.name" :maxLength="fmaxLength.compNameLength" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
+          <el-input v-model="listQuery.name" :max-length="fmaxLength.compNameLength" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
           <el-select v-model="listQuery.status" placeholder="Status" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
             <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
           </el-select>
           <el-button class="filter-item" type="primary" icon="el-icon-search" style="margin-right: 10px" @click="handleFilter">
             Search
           </el-button>
-          <router-link :to="'/job/create'">
+          <!-- <router-link :to="'/job/create'">
             <el-button class="filter-item" type="primary" icon="el-icon-edit">
               New
             </el-button>
-          </router-link>
+          </router-link> -->
         </div>
       </el-col>
     </el-row>
@@ -31,49 +31,61 @@
         </template>
       </el-table-column>
 
-      <el-table-column min-width="300px" label="Company name" align="left" prop="name" sortable="custom" :class-name="getSortClass('name')">
+      <el-table-column min-width="250px" label="Company name" align="left" prop="name" sortable="custom" :class-name="getSortClass('name')">
         <template slot-scope="{row}">
           <div class="link-type" @click="viewDetail(row)">
-            <span>{{ row.name }}</span>
+            <span>{{ row && row.companyById.name }}</span>
           </div>
         </template>
       </el-table-column>
 
-      <el-table-column width="300px" align="left" label="Location">
+      <el-table-column width="200px" align="center" label="Registrant">
         <template slot-scope="{row}">
-          <span>{{ row.location }}</span>
+          <span>{{ row && row.fullname }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="240px" align="left" label="Email">
+      <el-table-column width="200px" align="center" label="Location">
         <template slot-scope="{row}">
-          <span>{{ row.email }}</span>
+          <span>{{ row && row.companyById.location }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column width="200px" align="center" label="Email">
+        <template slot-scope="{row}">
+          <span>{{ row && row.companyById.email }}</span>
         </template>
       </el-table-column>
 
       <el-table-column width="160px" align="center" label="Phone Number">
         <template slot-scope="{row}">
-          <span>{{ row.phoneNo }}</span>
+          <span>{{ row && row.companyById.phoneNo }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="200px" align="center" label="Tax Code">
+      <el-table-column width="150px" align="center" label="Tax Code">
         <template slot-scope="{row}">
-          <span>{{ row.taxCode }}</span>
+          <span>{{ row && row.companyById.taxCode }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column width="170px" align="center" label="Register Date">
+        <template slot-scope="{row}">
+          <span>{{ (new Date(row.createDate)).toLocaleString('en-GB') }}</span>
         </template>
       </el-table-column>
 
       <el-table-column class-name="status-col" label="Status" width="120">
         <template slot-scope="{row}">
-          <el-tag :type="row.verified | statusFilter">
-            {{ row.verified ? 'Verified' : 'Unverified' }}
+          <el-tag :type="row && row.companyById.verified | statusFilter">
+            {{ row && row.companyById.verified ? 'Verified' : 'Unverified' }}
           </el-tag>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="Actions" width="150">
+      <el-table-column align="center" label="Actions" width="100px">
         <template slot-scope="scope">
-          <router-link :to="'/account/company/edit/'+scope.row.id">
+          <router-link :to="'/account/company/edit/'+ (scope.row && scope.row.id)">
             <el-button type="primary" size="small" icon="el-icon-edit">
               <!-- Edit -->
             </el-button>
@@ -90,29 +102,29 @@
     <el-dialog title="Company Detail" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 90%; margin-left:50px;">
         <el-form-item label="Company name:" label-width="150px" style="margin-bottom: 0px">
-          <span>{{ temp.name }}</span>
+          <span>{{ temp.companyById.name }}</span>
         </el-form-item>
         <el-form-item label="Location:" label-width="150px" style="margin-bottom: 0px">
-          <span>{{ temp.location }}</span>
+          <span>{{ temp.companyById.location }}</span>
         </el-form-item>
         <el-form-item label="Email:" label-width="150px" style="margin-bottom: 0px">
-          <span>{{ temp.email }}</span>
+          <span>{{ temp.companyById.email }}</span>
         </el-form-item>
         <el-form-item label="Phone Number:" label-width="150px" style="margin-bottom: 0px">
-          <span>{{ temp.phoneNo }}</span>
+          <span>{{ temp.companyById.phoneNo }}</span>
         </el-form-item>
         <el-form-item label="Tax code:" label-width="150px" style="margin-bottom: 0px">
-          <span>{{ temp.taxCode }}</span>
+          <span>{{ temp.companyById.taxCode }}</span>
         </el-form-item>
         <el-form-item label="Description:" label-width="150px" style="margin-bottom: 0px;">
-          <span v-html="temp.description" />
+          <span v-html="temp.companyById.description" />
         </el-form-item>
-        <!-- <el-form-item label="" label-width="120px" style="margin-bottom: 0px; max-height: 320px; overflow-y: scroll">
-          <span v-html="temp.description" />
-        </el-form-item> -->
+        <el-form-item label="Register date:" label-width="150px" style="margin-bottom: 0px">
+          <span>{{ (new Date(temp.createDate)).toLocaleString('en-GB') }}</span>
+        </el-form-item>
         <el-form-item label="Status: " label-width="150px" style="margin-bottom: 0px">
-          <el-tag :type="temp.verified | statusFilter">
-            {{ temp.verified ? 'Verified' : 'Unverified' }}
+          <el-tag :type="temp.companyById.verified | statusFilter">
+            {{ temp.companyById.verified ? 'Verified' : 'Unverified' }}
           </el-tag>
         </el-form-item>
       </el-form>
@@ -120,7 +132,7 @@
         <el-button @click="dialogFormVisible = false">
           Close
         </el-button>
-        <el-button v-if="!temp.verified" type="success" :loading="listLoading" @click="handleVerifyCompany(temp.id)">
+        <el-button v-if="!temp.companyById.verified" type="success" :loading="listLoading" @click="handleVerifyCompany(temp.companyById.id)">
           Verify
         </el-button>
       </div>
@@ -167,14 +179,14 @@ export default {
       statusOptions: ['Verified', 'Unverified'],
       temp: {
         id: undefined,
-        name: '',
-        location: 0,
-        email: 0,
+        active: false,
+        companyById: {},
+        confirmMail: 0,
+        createDate: '',
+        email: '',
+        fullname: '',
         phoneNo: '',
-        taxCode: '',
-        description: '',
-        avatar: '',
-        verified: ''
+        role: ''
       },
       dialogFormVisible: false
     }

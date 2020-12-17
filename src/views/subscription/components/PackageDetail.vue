@@ -14,25 +14,24 @@
       <div class="createPost-main-container">
         <el-row>
 
-          <el-col :span="24">
-            <el-form-item style="margin-bottom: 40px;" prop="name">
-              <MDinput v-model="postForm.name" :maxLength="fmaxLength.pkgNameLength" name="name" required>
-                Package name
-              </MDinput>
-            </el-form-item>
-          </el-col>
-
           <div class="postInfo-container">
             <el-row>
               <el-col :span="24">
+                <el-form-item style="margin-bottom: 40px;" prop="name">
+                  <MDinput v-model="postForm.name" :max-length="fmaxLength.pkgNameLength" name="name" required>
+                    Package name
+                  </MDinput>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
                 <el-form-item label-width="130px" prop="tag" label="Tag:" class="postInfo-container-item">
-                  <el-input v-model="postForm.tag" style="width: 300px" :maxLength="fmaxLength.pkgTagLength" />
+                  <el-input v-model="postForm.tag" style="width: 300px" :max-length="fmaxLength.pkgTagLength" />
                 </el-form-item>
               </el-col>
 
               <el-col :span="24">
                 <el-form-item label-width="130px" label="Number of posts:" class="postInfo-container-item">
-                  <el-input-number v-model="postForm.numOfPost" placeholder="0" style="width: 300px" :max="fmaxLength.postMax"/>
+                  <el-input-number v-model="postForm.numOfPost" placeholder="0" style="width: 300px" :max="fmaxLength.postMax" />
                 </el-form-item>
               </el-col>
 
@@ -50,8 +49,8 @@
               <!--              <el-row> -->
               <el-col :span="24">
                 <el-form-item label-width="130px" label="Price:" class="postInfo-container-item">
-                  <el-input-number v-model="postForm.price" :maxlength="fmaxLength.priceLength" placeholder="0" style="width: 300px" />
-<!--                  <money v-model="postForm.price" v-bind="money" :maxlength="fmaxLength.priceLength" placeholder="0" style="width: 300px" />-->
+                  <el-input-number v-model="postForm.price" :max-length="fmaxLength.priceLength" placeholder="0" style="width: 300px" />
+                  <!--                  <money v-model="postForm.price" v-bind="money" :maxlength="fmaxLength.priceLength" placeholder="0" style="width: 300px" />-->
                 </el-form-item>
               </el-col>
 
@@ -67,7 +66,7 @@
         </el-row>
 
         <el-form-item label-width="130px" label="Description:">
-          <el-input v-model="postForm.description" :rows="1" :maxLength="fmaxLength.pkgDesLength" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" />
+          <el-input v-model="postForm.description" :rows="1" :max-length="fmaxLength.pkgDesLength" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" />
           <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span>
         </el-form-item>
       </div>
@@ -83,7 +82,7 @@ import Sticky from '@/components/Sticky' // 粘性header组件
 import { getUserId } from '../../../utils/auth'
 import { editPackage, fetchPackage } from '../../../api/package'
 import { maxLength } from '../../../store'
-import { Money } from 'v-money'
+// import { Money } from 'v-money'
 
 const defaultForm = {
   method: '',
@@ -112,8 +111,8 @@ export default {
   name: 'JobDetail',
   components: {
     MDinput,
-    Sticky,
-    Money
+    Sticky
+    // Money
   },
   props: {
     isEdit: {
@@ -139,7 +138,7 @@ export default {
         thousands: ',',
         prefix: '',
         suffix: '',
-        precision: 0,
+        precision: 0
       },
       fmaxLength: maxLength,
       postForm: Object.assign({}, defaultForm.data),

@@ -12,13 +12,13 @@
           <el-select v-model="listQuery.status" placeholder="Status" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
             <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
           </el-select>
-          <el-select v-model="listQuery.currency" placeholder="Currency" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
+          <!-- <el-select v-model="listQuery.currency" placeholder="Currency" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
             <el-option v-for="item in currencyOptions" :key="item" :label="item" :value="item" />
-          </el-select>
+          </el-select> -->
           <el-button class="filter-item" type="primary" icon="el-icon-search" style="margin-right: 10px" @click="handleFilter">
             Search
           </el-button>
-          <router-link :to="'/job/create'">
+          <router-link v-if="accountRole !== 'admin'" :to="'/job/create'">
             <el-button class="filter-item" type="primary" icon="el-icon-edit">
               New
             </el-button>
@@ -33,7 +33,7 @@
           <span>{{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Title" prop="title" sortable="custom" width="250px" :class-name="getSortClass('title')">
+      <el-table-column label="Title" prop="title" sortable="custom" width="280px" :class-name="getSortClass('title')">
         <template slot-scope="{row}">
           <router-link :to="'/job/candidates/' + row.id">
             <span class="link-type">{{ row.title }}</span>
@@ -79,7 +79,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Actions" width="150px" class-name="small-padding fixed-width">
+      <el-table-column v-if="accountRole !== 'admin'" align="center" label="Actions" width="150px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <!-- alo YAnh -->
           <!-- sua router to: toi api thuc hien action crud -->
