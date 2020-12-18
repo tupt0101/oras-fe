@@ -25,10 +25,11 @@
             type="text"
             tabindex="1"
             autocomplete="on"
+            @keyup.enter.native="handleResetPassword"
           />
         </el-form-item>
 
-        <el-button :loading="loading" class="oras-btn" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleResetPassword" >
+        <el-button :loading="loading" class="oras-btn" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleResetPassword">
           {{ $t('resetPw.resetBtn') }}
         </el-button>
 

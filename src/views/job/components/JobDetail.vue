@@ -60,14 +60,14 @@
                 <el-col :span="6">
                   <el-form-item label-width="120px" label="Salary from:" class="postInfo-container-item" prop="salaryFrom">
                     <el-input-number v-model="postForm.salaryFrom" placeholder="0" :maxlength="fmaxLength.priceLength" />
-<!--                    <money v-model="postForm.salaryFrom" v-bind="money" placeholder="0" :maxlength="fmaxLength.priceLength" />-->
+                    <!--                    <money v-model="postForm.salaryFrom" v-bind="money" placeholder="0" :maxlength="fmaxLength.priceLength" />-->
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="6">
                   <el-form-item label-width="120px" label="Salary to:" class="postInfo-container-item" prop="salaryTo">
                     <el-input-number v-model="postForm.salaryTo" placeholder="0" :maxlength="fmaxLength.priceLength" />
-<!--                    <money v-model="postForm.salaryTo" v-bind="money" placeholder="0" :maxlength="fmaxLength.priceLength" />-->
+                    <!--                    <money v-model="postForm.salaryTo" v-bind="money" placeholder="0" :maxlength="fmaxLength.priceLength" />-->
                   </el-form-item>
                 </el-col>
 
@@ -119,7 +119,7 @@ import { createJob, fetchCategory, publishJob, fetchJob } from '@/api/job'
 import { uppercaseFirst } from '../../../filters'
 import { validDigits } from '../../../utils/validate'
 import { maxLength } from '../../../store'
-import { Money } from 'v-money'
+// import { Money } from 'v-money'
 
 const defaultForm = {
   method: '',
@@ -151,8 +151,8 @@ export default {
     Tinymce,
     MDinput,
     // Upload,
-    Sticky,
-    Money
+    Sticky
+    // Money
   },
   // directives: { fmoney: VMoney },
   props: {
