@@ -132,8 +132,9 @@ export default {
     resume: 'Resumé',
     match: 'Tỉ lệ phù hợp',
     address: 'Địa chỉ',
-    comment: 'Bình luận',
-    ttHire: 'Tuyển'
+    comment: 'Nhận xét',
+    ttHire: 'Tuyển',
+    saveCommnet: 'Lưu nhận xét'
   },
   purchase: {
     title: 'Tìm kiếm, liên hệ và tuyển ngay những ứng viên chất lượng nhanh chóng hơn bao giờ hết.',
