@@ -23,7 +23,7 @@
                 <change-password />
               </el-tab-pane> -->
               <el-tab-pane v-if="user.role !== 'admin'" :label="$t('profile.billing')" name="billing">
-                <billing v-if="currPackage" :curr-package="currPackage" />
+                <billing :curr-package="currPackage" :list-package="listPackage" />
               </el-tab-pane>
             </el-tabs>
           </el-card>
@@ -45,6 +45,7 @@ import Billing from './components/Billing'
 
 import { getCurrentPackage } from '@/api/package'
 import { fetchAccountData } from '@/api/user'
+import { fetchTransactionOfAccount } from '../../api/report'
 
 export default {
   name: 'Profile',
@@ -61,6 +62,7 @@ export default {
       user: {},
       company: {},
       currPackage: {},
+      listPackage: [],
       activeTab: 'activity',
       account: null
     }
@@ -79,6 +81,7 @@ export default {
   created() {
     this.getAccountData()
     this.getPackage()
+    this.fetchUserPkg()
   },
   methods: {
     getAccountData() {
@@ -108,10 +111,19 @@ export default {
         }
       })
     },
+    fetchUserPkg() {
+      fetchTransactionOfAccount(this.accountId).then(response => {
+        this.listPackage = response.data
+      })
+    },
     getPackage() {
       getCurrentPackage(this.accountId)
         .then(response => {
-          this.currPackage = response.data
+          if (response.data) {
+            this.currPackage = response.data
+          } else {
+            this.currPackage = {}
+          }
         })
         .catch(err => {
           console.log(err)

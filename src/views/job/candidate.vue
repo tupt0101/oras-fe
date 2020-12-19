@@ -269,8 +269,7 @@ export default {
     },
     refresh() {
       this.listLoading = true
-      fetchApplicationFromRP(this.jobId).then(response => {
-        // this.list = response
+      fetchApplicationFromRP(this.jobId).then(() => {
         fetchCandidateList(this.jobId, this.listQuery).then(response => {
           this.list = response.data.data
           this.total = response.data.total
@@ -284,7 +283,7 @@ export default {
     rankCV() {
       this.listLoading = true
       rankCV(this.jobId, this.listQuery).then(response => {
-        this.list = response.data
+        this.list = response.data.data
         this.listLoading = false
       }).catch(err => {
         this.listLoading = false
