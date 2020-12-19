@@ -169,7 +169,7 @@
           {{ $t('job.close') }}
         </el-button>
         <el-button :loading="listLoading" type="success" @click="handleComment(temp)">
-          {{ $t('job.save') }}
+          {{ $t('job.saveCommnet') }}
         </el-button>
       </div>
     </el-dialog>

@@ -133,7 +133,8 @@ export default {
     match: 'Matching Rate',
     address: 'Address',
     comment: 'Comment',
-    ttHire: 'Hire'
+    ttHire: 'Hire',
+    saveComment: 'Save Comment'
   },
   purchase: {
     title: 'Find, contact, and hire high-quality candidates faster than ever.',
