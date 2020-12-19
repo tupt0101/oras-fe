@@ -2,38 +2,38 @@
   <el-row :gutter="20">
     <el-form ref="infoForm" :model="infoForm" :rules="rules">
       <el-col :lg="12">
-        <el-form-item label="Name" prop="compName">
+        <el-form-item :label="$t('profile.name')" prop="compName">
           <el-input v-model="company.name" :maxlength="fmaxLength.compNameLength" />
         </el-form-item>
       </el-col>
       <el-col :lg="12">
-        <el-form-item label="Email" prop="compEmail">
+        <el-form-item :label="$t('profile.email')" prop="compEmail">
           <el-input v-model.trim="company.email" :maxlength="fmaxLength.emailLength" />
         </el-form-item>
       </el-col>
       <el-col :lg="12">
-        <el-form-item label="Phone number" prop="compPhone">
+        <el-form-item :label="$t('profile.phoneNo')" prop="compPhone">
           <el-input v-model.trim="company.phoneNo" :maxlength="fmaxLength.phoneLength" />
         </el-form-item>
       </el-col>
       <el-col :lg="12">
-        <el-form-item label="Location" prop="location">
+        <el-form-item :label="$t('profile.location')" prop="location">
           <el-input v-model="company.location" :maxlength="fmaxLength.locationLength" />
         </el-form-item>
       </el-col>
       <el-col :lg="12">
-        <el-form-item label="Tax code" prop="taxCode">
+        <el-form-item :label="$t('profile.tax')" prop="taxCode">
           <el-input v-model.trim="company.taxCode" :maxlength="fmaxLength.taxCodeLength" />
         </el-form-item>
       </el-col>
       <el-col :lg="24">
-        <el-form-item label="Description" prop="description">
+        <el-form-item :label="$t('profile.desc')" prop="description">
           <el-input v-model="company.description" :maxlength="fmaxLength.compDesLength" />
         </el-form-item>
       </el-col>
       <el-col :lg="24">
         <el-form-item>
-          <el-button type="primary" @click="submit">Update</el-button>
+          <el-button type="primary" @click="submit">{{ $t('profile.update') }}</el-button>
         </el-form-item>
       </el-col>
     </el-form>

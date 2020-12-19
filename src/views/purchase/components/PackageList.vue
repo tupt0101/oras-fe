@@ -2,8 +2,8 @@
   <div class="list">
     <el-row>
       <div class="heading">
-        <h2>Find, contact, and hire high-quality candidates faster than ever.</h2>
-        <p>Our subscription plans were built to fit your individual hiring needs. Bundle and save to take full advantage of some of the best AI out there, today.</p>
+        <h2>{{ $t('purchase.title') }}</h2>
+        <p>{{ $t('purchase.subTitle') }}</p>
       </div>
     </el-row>
     <el-row :gutter="10">
@@ -19,7 +19,7 @@
                 <span v-if="pack.price > 0">
                   <span class="price">{{ pack.currency | currencyFilter }}{{ pack.price | toThousandFilter }}</span>
                   <!-- <span class="unit">/{{ pack.duration }}</span> -->
-                  <span class="unit">/month</span>
+                  <span class="unit">/{{ $t('purchase.unit') }}</span>
                 </span>
                 <span v-if="pack.price === 0">
                   <span class="price">Trial<br>Package</span>
@@ -40,22 +40,22 @@
               </div>
               <div class="user-bio-section-body" style="height: 170px">
                 <div class="text-muted">
-                  <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> {{ pack.numOfPost }} Jobs per Month
+                  <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> {{ pack.numOfPost }} {{ $t('purchase.jobs') }}
                 </div>
                 <div class="text-muted">
-                  <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> Publish Jobs via OpenJob platform
+                  <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> {{ $t('purchase.publish') }}
                 </div>
                 <div class="text-muted">
-                  <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> Application Alerts
+                  <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> {{ $t('purchase.alert') }}
                 </div>
                 <div v-if="pack.price !== 0" class="text-muted">
-                  <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> Screen Resume using AI
+                  <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> {{ $t('purchase.screen') }}
                 </div>
                 <div class="text-muted">
-                  <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> Sort and Comment on Candidates
+                  <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> {{ $t('purchase.sort') }}
                 </div>
                 <div v-if="pack.price !== 0" class="text-muted">
-                  <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> View Recruitment Report
+                  <i class="el-icon-check" style="color: green; font-weight: 700; font-size: 15px" /> {{ $t('purchase.view') }}
                 </div>
               </div>
             </div>
@@ -63,13 +63,13 @@
             <div class="text-center">
               <div v-if="pack.price !== 0">
                 <router-link :to="'/checkout/index/' + pack.id">
-                  <el-button class="myBtn" type="primary">Buy Now</el-button>
+                  <el-button class="myBtn" type="primary">{{ $t('purchase.buy') }}</el-button>
                 </router-link>
-                <div class="package-note">*Billed monthly</div>
+                <div class="package-note">{{ $t('purchase.monthly') }}</div>
               </div>
               <div v-if="pack.price === 0">
-                <el-button :loading="btnLoading" class="myBtn" type="success" @click="getStarterPackage">Get Free</el-button>
-                <div class="package-note">*Only first-time member</div>
+                <el-button :loading="btnLoading" class="myBtn" type="success" @click="getStarterPackage">{{ $t('purchase.getFree') }}</el-button>
+                <div class="package-note">{{ $t('purchase.first') }}</div>
               </div>
             </div>
           </div>

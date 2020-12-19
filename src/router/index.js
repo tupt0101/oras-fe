@@ -89,8 +89,7 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
-        // meta: { title: , icon: 'dashboard', affix: true }
+        meta: { title: 'dashboard', icon: 'dashboard', affix: true }
       }
     ]
   }
@@ -107,7 +106,7 @@ export const asyncRoutes = [
     redirect: '/job/list',
     name: 'Job',
     meta: {
-      title: 'Job',
+      title: 'job',
       icon: 'el-icon-s-cooperation'
     },
     children: [
@@ -116,20 +115,20 @@ export const asyncRoutes = [
         path: 'create',
         component: () => import('@/views/job/create'),
         name: 'CreateJob',
-        meta: { title: 'New Job', icon: 'edit' }
+        meta: { title: 'newJob', icon: 'edit' }
       },
       {
         path: 'edit/:id(\\d+)',
         component: () => import('@/views/job/edit'),
         name: 'EditJob',
-        meta: { title: 'Edit Job', noCache: true, activeMenu: '/job/list' },
+        meta: { title: 'editJob', noCache: true, activeMenu: '/job/list' },
         hidden: true
       },
       {
         path: 'reopen/:id(\\d+)',
         component: () => import('@/views/job/reopen'),
         name: 'ReopenJob',
-        meta: { title: 'Reopen Job', noCache: true, activeMenu: '/job/list' },
+        meta: { title: 'reopenJob', noCache: true, activeMenu: '/job/list' },
         hidden: true,
         props: true
       },
@@ -137,99 +136,17 @@ export const asyncRoutes = [
         path: 'list',
         component: () => import('@/views/job/list'),
         name: 'JobList',
-        meta: { title: 'Job List', icon: 'list' }
+        meta: { title: 'jobList', icon: 'list' }
       },
       {
         path: 'candidates/:id(\\d+)',
         component: () => import('@/views/job/candidate'),
         name: 'CandidateList',
-        meta: { title: 'Candidate List' },
+        meta: { title: 'candidateList' },
         hidden: true
       }
     ]
   },
-
-  // {
-  //   path: '/talent-pool',
-  //   component: Layout,
-  //   redirect: '/talent-pool/list',
-  //   name: 'TalentPool',
-  //   meta: {
-  //     title: 'Talent Pool',
-  //     icon: 'el-icon-s-custom',
-  //     roles: ['admin']
-  //   },
-  //   children: [
-  //     // Edit route of components
-  //     {
-  //       path: 'create',
-  //       component: () => import('@/views/example/create'),
-  //       name: 'CreateTalentPool',
-  //       meta: { title: 'Create Talent Pool', icon: 'edit' }
-  //     },
-  //     {
-  //       path: 'edit/:id(\\d+)',
-  //       component: () => import('@/views/example/edit'),
-  //       name: 'EditTalentPool',
-  //       meta: { title: 'Edit Talent Pool', noCache: true, activeMenu: '/example/list' },
-  //       hidden: true
-  //     },
-  //     {
-  //       path: 'list',
-  //       component: () => import('@/views/example/list'),
-  //       name: 'TalentPoolList',
-  //       meta: { title: 'Talent Pool List', icon: 'list' }
-  //     },
-  //     {
-  //       path: 'candidate-list',
-  //       component: () => import('@/views/example/list'),
-  //       name: 'CandidateList',
-  //       meta: { title: 'Candidate List', icon: 'list' }
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: '/permission',
-  //   component: Layout,
-  //   redirect: '/permission/page',
-  //   alwaysShow: true, // will always show the root menu
-  //   name: 'Permission',
-  //   meta: {
-  //     title: 'PermissionZZZ',
-  //     icon: 'lock',
-  //     roles: ['admin', 'editor'] // you can set roles in root nav
-  //   },
-  //   children: [
-  //     {
-  //       path: 'page',
-  //       component: () => import('@/views/permission/page'),
-  //       name: 'PagePermission',
-  //       meta: {
-  //         title: 'Page Permission',
-  //         roles: ['admin'] // or you can only set roles in sub nav
-  //       }
-  //     },
-  //     {
-  //       path: 'directive',
-  //       component: () => import('@/views/permission/directive'),
-  //       name: 'DirectivePermission',
-  //       meta: {
-  //         title: 'Directive Permission'
-  //         // if do not set roles, means: this page does not require permission
-  //       }
-  //     },
-  //     {
-  //       path: 'role',
-  //       component: () => import('@/views/permission/role'),
-  //       name: 'RolePermission',
-  //       meta: {
-  //         title: 'Role Permission',
-  //         roles: ['admin']
-  //       }
-  //     }
-  //   ]
-  // },
 
   {
     path: '/subscription',
@@ -237,7 +154,7 @@ export const asyncRoutes = [
     redirect: '/subscription/list',
     name: 'Subscription',
     meta: {
-      title: 'Subscription',
+      title: 'subscription',
       icon: 'shopping',
       roles: ['admin']
     },
@@ -247,26 +164,26 @@ export const asyncRoutes = [
         path: 'create',
         component: () => import('@/views/subscription/create'),
         name: 'CreatePackage',
-        meta: { title: 'Create Package', icon: 'edit' }
+        meta: { title: 'createPackage', icon: 'edit' }
       },
       {
         path: 'edit/:id(\\d+)',
         component: () => import('@/views/subscription/edit'),
         name: 'EditPackage',
-        meta: { title: 'Edit Package', noCache: true, activeMenu: '/subscription/list' },
+        meta: { title: 'editPackage', noCache: true, activeMenu: '/subscription/list' },
         hidden: true
       },
       {
         path: 'list',
         component: () => import('@/views/subscription/list'),
         name: 'PackageList',
-        meta: { title: 'Package List', icon: 'list' }
+        meta: { title: 'packageList', icon: 'list' }
       },
       {
         path: 'member',
         component: () => import('@/views/subscription/member'),
         name: 'Member',
-        meta: { title: 'Member', icon: 'peoples' }
+        meta: { title: 'member', icon: 'peoples' }
       }
     ]
   },
@@ -277,7 +194,7 @@ export const asyncRoutes = [
     redirect: '/account/list',
     name: 'Account',
     meta: {
-      title: 'Account',
+      title: 'account',
       icon: 'user',
       roles: ['admin']
     },
@@ -287,33 +204,33 @@ export const asyncRoutes = [
         path: 'create',
         component: () => import('@/views/account/create'),
         name: 'CreateJob',
-        meta: { title: 'Create Account', icon: 'edit' }
+        meta: { title: 'createAccount', icon: 'edit' }
       },
       {
         path: 'edit/:id(\\d+)',
         component: () => import('@/views/account/edit'),
         name: 'EditJob',
-        meta: { title: 'Edit Account', noCache: true, activeMenu: '/example/list' },
+        meta: { title: 'editAccount', noCache: true, activeMenu: '/example/list' },
         hidden: true
       },
       {
         path: 'company/edit/:id(\\d+)',
         component: () => import('@/views/account/edit_company'),
         name: 'EditCompany',
-        meta: { title: 'Edit Company', noCache: true, activeMenu: '/example/list' },
+        meta: { title: 'editCompany', noCache: true, activeMenu: '/example/list' },
         hidden: true
       },
       {
         path: 'list',
         component: () => import('@/views/account/list'),
         name: 'JobList',
-        meta: { title: 'Account List', icon: 'peoples' }
+        meta: { title: 'accountList', icon: 'peoples' }
       },
       {
         path: 'company',
         component: () => import('@/views/account/company_list'),
         name: 'CompanyList',
-        meta: { title: 'Company List', icon: 'list' }
+        meta: { title: 'companyList', icon: 'list' }
       }
     ]
   },
@@ -330,7 +247,7 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/purchase/index'),
         name: 'Purchase',
-        meta: { title: 'Purchase', icon: 'shopping', noCache: true }
+        meta: { title: 'purchase', icon: 'shopping', noCache: true }
       }
     ]
   },
@@ -347,7 +264,7 @@ export const asyncRoutes = [
         path: 'index/:id(\\d+)',
         component: () => import('@/views/checkout/index'),
         name: 'Checkout',
-        meta: { title: 'Checkout', icon: 'shopping', noCache: true }
+        meta: { title: 'checkout', icon: 'shopping', noCache: true }
       }
     ],
     hidden: true
@@ -361,7 +278,7 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/report/index'),
         name: 'Report',
-        meta: { title: 'Report', icon: 'chart', noCache: true }
+        meta: { title: 'report', icon: 'chart', noCache: true }
       }
     ]
   },
@@ -376,7 +293,7 @@ export const asyncRoutes = [
         path: 'index',
         component: () => import('@/views/profile/index'),
         name: 'Profile',
-        meta: { title: 'Profile', icon: 'user', noCache: true }
+        meta: { title: 'profile', icon: 'user', noCache: true }
       }
     ]
   },
@@ -402,44 +319,6 @@ export const asyncRoutes = [
   // chartsRouter,
   // nestedRouter,
   // tableRouter,
-
-  // {
-  //   path: '/tab',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/tab/index'),
-  //       name: 'Tab',
-  //       meta: { title: 'Tab', icon: 'tab' }
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: '/error',
-  //   component: Layout,
-  //   redirect: 'noRedirect',
-  //   name: 'ErrorPages',
-  //   meta: {
-  //     title: 'Error Pages',
-  //     icon: '404'
-  //   },
-  //   children: [
-  //     {
-  //       path: '401',
-  //       component: () => import('@/views/error-page/401'),
-  //       name: 'Page401',
-  //       meta: { title: '401', noCache: true }
-  //     },
-  //     {
-  //       path: '404',
-  //       component: () => import('@/views/error-page/404'),
-  //       name: 'Page404',
-  //       meta: { title: '404', noCache: true }
-  //     }
-  //   ]
-  // },
 
   // {
   //   path: '/error-log',

@@ -8,10 +8,10 @@
               <div class="candidate">
                 <p style="text-align: center">
                   <strong class="numOfCand">{{ post.totalApplication }}</strong><br>
-                  <span>Candidates</span>
+                  <span>{{ $t('dashboard.candidate') }}</span>
                 </p>
               </div>
-              <button class="myBtn" @click="viewDetail(post)">View Job</button>
+              <button class="myBtn" @click="viewDetail(post)">{{ $t('dashboard.viewJob') }}</button>
             </figure>
           </div>
           <div class="media-content">
@@ -20,12 +20,12 @@
                 <strong class="title">{{ post.title }}</strong><br>
               </router-link>
               <br>
-              <span>Salary: </span><span>{{ post.currency | currencyFilter }} </span>
+              <span>{{ $t('dashboard.salary') }}: </span><span>{{ post.currency | currencyFilter }} </span>
               <strong>{{ post.salaryFrom | toThousandFilter }} - {{ post.salaryTo | toThousandFilter }}</strong><br>
-              <span>Vacancies: </span>{{ post.vacancies }}
-              <span style="margin-left: 20px">Published: </span>{{ (new Date(post.applyFrom)).toLocaleString('en-GB') }}
+              <span>{{ $t('dashboard.vacancies') }}: </span>{{ post.vacancies }}
+              <span style="margin-left: 20px">{{ $t('dashboard.published') }}: </span>{{ (new Date(post.applyFrom)).toLocaleString('en-GB') }}
               <!-- <span style="margin-left: 20px">Posted: </span>{{ post.createDate | timeAgo }} -->
-              <span style="margin-left: 20px">Deadline: </span>{{ (new Date(post.applyTo)).toLocaleString('en-GB') }}
+              <span style="margin-left: 20px">{{ $t('dashboard.deadline') }}: </span>{{ (new Date(post.applyTo)).toLocaleString('en-GB') }}
             </div>
             <div class="level-left">
               <div class="level-item">
@@ -39,50 +39,32 @@
 
     <el-dialog title="Job Detail" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 90%; margin-left:50px;">
-        <el-form-item label="Title:" prop="title" label-width="100px" style="margin-bottom: 0px">
+        <el-form-item :label="$t('dashboard.title') + ':'" prop="title" label-width="100px" style="margin-bottom: 0px">
           <span>{{ temp.title }}</span>
         </el-form-item>
-        <el-form-item label="Salary:" prop="salary" label-width="100px" style="margin-bottom: 0px">
+        <el-form-item :label="$t('dashboard.salary') + ':'" prop="salary" label-width="100px" style="margin-bottom: 0px">
           <span>{{ temp.currency | currencyFilter }} {{ temp.salaryFrom | toThousandFilter }} - {{ temp.salaryTo | toThousandFilter }}</span>
         </el-form-item>
-        <el-form-item label="Vacancies:" prop="vacancies" label-width="100px" style="margin-bottom: 0px">
+        <el-form-item :label="$t('dashboard.vacancies') + ':'" prop="vacancies" label-width="100px" style="margin-bottom: 0px">
           <span>{{ temp.vacancies }}</span>
         </el-form-item>
-        <el-form-item label="Created:" prop="created" label-width="100px" style="margin-bottom: 0px">
+        <el-form-item :label="$t('dashboard.created') + ':'" prop="created" label-width="100px" style="margin-bottom: 0px">
           <span>{{ (new Date(temp.createDate)).toLocaleString('en-GB') }}</span>
         </el-form-item>
-        <el-form-item label="Published:" prop="published" label-width="100px" style="margin-bottom: 0px">
+        <el-form-item :label="$t('dashboard.published') + ':'" prop="published" label-width="100px" style="margin-bottom: 0px">
           <span>{{ (new Date(temp.applyFrom)).toLocaleString('en-GB') }}</span>
         </el-form-item>
-        <el-form-item label="Deadline:" prop="deadline" label-width="100px" style="margin-bottom: 0px">
+        <el-form-item :label="$t('dashboard.deadline') + ':'" prop="deadline" label-width="100px" style="margin-bottom: 0px">
           <span>{{ (new Date(temp.applyTo)).toLocaleString('en-GB') }}</span>
         </el-form-item>
-        <el-form-item label="Description:" prop="description" label-width="100px" style="margin-bottom: 0px;">
+        <el-form-item :label="$t('dashboard.desc') + ':'" prop="description" label-width="100px" style="margin-bottom: 0px;">
           <!-- <span v-html="temp.description" /> -->
         </el-form-item>
         <el-form-item label="" prop="description" label-width="100px" style="margin-bottom: 0px; max-height: 320px; overflow-y: scroll">
           <span v-html="temp.description" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <!-- <el-button @click="dialogFormVisible = false">
-          Close
-        </el-button> -->
-        <!-- <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
-          Confirm
-        </el-button> -->
-      </div>
     </el-dialog>
-
-    <!-- <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
-      <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="Channel" />
-        <el-table-column prop="pv" label="Pv" />
-      </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">Confirm</el-button>
-      </span>
-    </el-dialog> -->
   </div>
 </template>
 

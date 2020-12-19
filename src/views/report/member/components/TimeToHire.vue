@@ -2,12 +2,12 @@
   <div class="">
     <h2 class="title">Time To Hire</h2>
     <el-table v-if="!list" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="No." width="80" />
-      <el-table-column label="Job Title" width="300px" />
-      <el-table-column label="Hired Candidate" min-width="300px" />
-      <el-table-column label="Apply date" width="200px" align="center" />
-      <el-table-column label="Hired date" width="200px" align="center" />
-      <el-table-column label="Time To Hire" width="250px" align="center" />
+      <el-table-column align="center" :label="$t('report.no')" width="80" />
+      <el-table-column :label="$t('report.title')" width="300px" />
+      <el-table-column :label="$t('report.fullname')" min-width="300px" />
+      <el-table-column :label="$t('report.applyDate')" width="200px" align="center" />
+      <el-table-column :label="$t('report.hiredDate')" width="200px" align="center" />
+      <el-table-column :label="$t('report.timeToHire')" width="250px" align="center" />
     </el-table>
     <el-table
       v-if="list"
@@ -18,33 +18,33 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column align="center" label="No." width="80">
+      <el-table-column align="center" :label="$t('report.no')" width="80">
         <template slot-scope="scope">
           <span>{{ scope.$index + 1 }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Job Title" width="300px">
+      <el-table-column :label="$t('report.title')" width="300px">
         <template slot-scope="{row}">
           <span>{{ row.jobTitle }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Hired Candidate" min-width="300px">
+      <el-table-column :label="$t('report.fullname')" min-width="300px">
         <template slot-scope="{row}">
           <span>{{ row.hiredCandidate.fullname }} ({{ row.hiredCandidate.email }})</span>
         </template>
       </el-table-column>
-      <el-table-column label="Apply Date" width="200px" align="center">
+      <el-table-column :label="$t('report.applyDate')" width="200px" align="center">
         <template slot-scope="{row}">
           <!-- <span>{{ row.applyDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span> -->
           <span>{{ (new Date(row.applyDate)).toLocaleString('en-GB') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Hired Date" width="200px" align="center">
+      <el-table-column :label="$t('report.hiredDate')" width="200px" align="center">
         <template slot-scope="{row}">
           <span>{{ (new Date(row.hiredDate)).toLocaleString('en-GB') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Time To Hire" width="200px" align="center">
+      <el-table-column :label="timeToHire" width="200px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.timeToHired }} days</span>
         </template>

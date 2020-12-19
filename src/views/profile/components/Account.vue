@@ -1,16 +1,16 @@
 <template>
   <div>
     <el-form>
-      <el-form-item label="Email:">
+      <el-form-item :label="$t('profile.email')">
         <el-input v-model.trim="user.email" readonly="readonly" style="border: 0 none;" />
       </el-form-item>
     </el-form>
     <el-checkbox v-model="checkChangeInfo">I want to change my information</el-checkbox>
     <el-form ref="infoForm" :model="infoForm" :rules="rules" :hide-required-asterisk="!checkChangeInfo">
-      <el-form-item label="Name" prop="fullname">
+      <el-form-item :label="$t('profile.name')" prop="fullname">
         <el-input v-model="user.fullname" :readonly="!checkChangeInfo" :maxlength="fmaxLength.nameLength" />
       </el-form-item>
-      <el-form-item label="Phone number" prop="phoneNo">
+      <el-form-item :label="$t('profile.phoneNo')" prop="phoneNo">
         <el-input v-model.trim="user.phoneNo" :readonly="!checkChangeInfo" :maxlength="fmaxLength.phoneLength" />
       </el-form-item>
       <el-form-item>
@@ -20,7 +20,7 @@
     <el-checkbox v-model="checkChangePwd">I want to change password</el-checkbox>
     <el-form v-if="checkChangePwd" ref="passwordData" :model="passwordData" :rules="rules">
       <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-        <el-form-item label="Current password" prop="curPassword">
+        <el-form-item :label="$t('profile.currPwd')" prop="curPassword">
           <el-input
             :key="passwordType"
             ref="password"
@@ -35,7 +35,7 @@
         </el-form-item>
       </el-tooltip>
       <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-        <el-form-item label="New password" prop="password">
+        <el-form-item :label="$t('profile.newPwd')" prop="password">
           <el-input
             :key="passwordType"
             ref="password"
@@ -50,7 +50,7 @@
         </el-form-item>
       </el-tooltip>
       <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-        <el-form-item label="Confirm password" prop="confirmPwd">
+        <el-form-item :label="$t('profile.cfPwd')" prop="confirmPwd">
           <el-input
             :key="passwordType"
             ref="confirmPwd"

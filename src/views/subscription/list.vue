@@ -1,65 +1,65 @@
 <template>
   <div class="app-container">
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="No." width="80">
+      <el-table-column align="center" :label="$t('package.no')" width="80">
         <template slot-scope="scope">
           <span>{{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Package name" width="200px">
+      <el-table-column :label="$t('package.name')" width="200px">
         <template slot-scope="{row}">
           <span>{{ row.name }}</span>
           <!-- <el-tag>{{ row.title }}</el-tag> -->
         </template>
       </el-table-column>
-      <el-table-column label="Tag" width="150px" align="center">
+      <el-table-column :label="$t('package.tag')" width="150px" align="center">
         <template slot-scope="{row}">
           <!-- <span>{{ row.name }}</span> -->
           <el-tag v-if="row.tag">{{ row.tag }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="Description" min-width="150px">
+      <el-table-column :label="$t('package.desc')" min-width="150px">
         <template slot-scope="{row}">
           <span style="white-space: nowrap">{{ row.description }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Number of posts" align="center" width="135px">
+      <el-table-column :label="$t('package.numOfPost')" align="center" width="135px">
         <template slot-scope="{row}">
           <span>{{ row.numOfPost }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Duration" width="150px" align="center">
+      <el-table-column :label="$t('package.duration')" width="150px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.duration }} days</span>
         </template>
       </el-table-column>
-      <el-table-column label="Price" width="150px" align="center">
+      <el-table-column :label="$t('package.price')" width="150px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.currency | currencyFilter }} {{ row.price | toThousandFilter }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Status" class-name="status-col" width="100">
+      <el-table-column :label="$t('package.status')" class-name="status-col" width="100">
         <template slot-scope="{row}">
           <el-tag :type="row.active | statusFilter">
             {{ row.active ? 'Active' : 'Inactive' }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Actions" width="150px" class-name="small-padding fixed-width">
+      <el-table-column align="center" :label="$t('package.actions')" width="150px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <router-link :to="'/subscription/edit/'+scope.row.id">
-            <el-tooltip content="Edit package" placement="top">
+            <el-tooltip :content="$t('package.ttEdit')" placement="top">
               <el-button type="primary" size="small" icon="el-icon-edit" style="margin-right: 10px">
                 <!-- Edit -->
               </el-button>
             </el-tooltip>
           </router-link>
-          <el-tooltip content="Deactivate package" placement="top">
+          <el-tooltip :content="$t('package.ttDeactivate')" placement="top">
             <el-button v-if="scope.row.active" type="danger" size="small" icon="el-icon-remove-outline" @click="confirmDialog = true; rowId = scope.row.id">
               <!-- Deactivate -->
             </el-button>
           </el-tooltip>
-          <el-tooltip content="Activate package" placement="top">
+          <el-tooltip :content="$t('package.ttActivate')" placement="top">
             <el-button v-if="!scope.row.active" type="success" size="small" icon="el-icon-circle-check" @click="handleActivatePackage(scope.row.id)">
               <!-- Activate -->
             </el-button>

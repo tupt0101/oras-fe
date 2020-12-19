@@ -3,11 +3,14 @@
     <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
 
       <sticky :z-index="10" :class-name="'sub-navbar '+ postForm.status">
-        <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="handleSubmitAction(1)">
-          Publish
+        <el-button v-loading="loading" type="info" style="width: 105px" @click="handleSubmitAction(2)">
+          {{ $t('job.cancel') }}
         </el-button>
         <el-button v-loading="loading" type="warning" @click="handleSubmitAction(2)">
-          Save
+          {{ $t('job.save') }}
+        </el-button>
+        <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="handleSubmitAction(1)">
+          {{ $t('job.publish') }}
         </el-button>
       </sticky>
 
@@ -18,25 +21,25 @@
           <el-col :span="24">
             <el-form-item style="margin-bottom: 40px;" prop="title">
               <MDinput v-model="postForm.title" :maxlength="fmaxLength.titleLength" name="name" required>
-                Title
+                {{ $t('job.title') }}
               </MDinput>
             </el-form-item>
 
             <div class="postInfo-container">
               <el-row>
                 <el-col :span="6">
-                  <el-form-item label-width="70px" label="Deadline:" class="postInfo-container-item" prop="applyTo">
+                  <el-form-item label-width="110px" :label="$t('job.deadline')" class="postInfo-container-item" prop="applyTo">
                     <el-date-picker v-model="postForm.applyTo" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="Choose date and time" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                  <el-form-item label-width="120px" label="Vacancies:" class="postInfo-container-item">
+                  <el-form-item label-width="120px" :label="$t('job.vacancies')" class="postInfo-container-item">
                     <el-input-number v-model="postForm.vacancies" placeholder="1" />
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="6">
-                  <el-form-item label-width="120px" label="Job Type:" class="postInfo-container-item" prop="jobType">
+                  <el-form-item label-width="120px" :label="$t('job.type')" class="postInfo-container-item" prop="jobType">
                     <el-select v-model="postForm.jobType" :remote-method="getJobTypeList" filterable default-first-option remote placeholder="">
                       <el-option v-for="(item,index) in jobTypeListOptions" :key="item+index" :label="item" :value="item" />
                     </el-select>
@@ -44,7 +47,7 @@
                 </el-col>
 
                 <el-col :span="6">
-                  <el-form-item label-width="80px" label="Category:" class="postInfo-container-item" prop="category">
+                  <el-form-item label-width="80px" :label="$t('job.category')" class="postInfo-container-item" prop="category">
                     <el-select v-model="postForm.category" :remote-method="getCategoryList" filterable remote placeholder="" prop="category">
                       <el-option v-for="(item,index) in categoryListOptions" :key="item+index" :label="item" :value="item" />
                     </el-select>
@@ -53,26 +56,26 @@
               </el-row>
               <el-row>
                 <el-col :span="6">
-                  <el-form-item label-width="110px" label="Salary hidden:" class="postInfo-container-item" prop="salaryHidden">
+                  <el-form-item label-width="110px" :label="$t('job.hidden')" class="postInfo-container-item" prop="salaryHidden">
                     <el-checkbox v-model="postForm.salaryHidden" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                  <el-form-item label-width="120px" label="Salary from:" class="postInfo-container-item" prop="salaryFrom">
+                  <el-form-item label-width="120px" :label="$t('job.salaryFrom')" class="postInfo-container-item" prop="salaryFrom">
                     <el-input-number v-model="postForm.salaryFrom" placeholder="0" :maxlength="fmaxLength.priceLength" />
                     <!--                    <money v-model="postForm.salaryFrom" v-bind="money" placeholder="0" :maxlength="fmaxLength.priceLength" />-->
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="6">
-                  <el-form-item label-width="120px" label="Salary to:" class="postInfo-container-item" prop="salaryTo">
+                  <el-form-item label-width="120px" :label="$t('job.salaryTo')" class="postInfo-container-item" prop="salaryTo">
                     <el-input-number v-model="postForm.salaryTo" placeholder="0" :maxlength="fmaxLength.priceLength" />
                     <!--                    <money v-model="postForm.salaryTo" v-bind="money" placeholder="0" :maxlength="fmaxLength.priceLength" />-->
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="6">
-                  <el-form-item label-width="80px" label="Currency:" class="postInfo-container-item" prop="currency">
+                  <el-form-item label-width="80px" :label="$t('job.currency')" class="postInfo-container-item" prop="currency">
                     <el-select v-model="postForm.currency" :remote-method="getCurrencyList" filterable default-first-option remote placeholder="">
                       <el-option v-for="(item,index) in currencyListOptions" :key="item+index" :label="item" :value="item" />
                     </el-select>
@@ -83,7 +86,7 @@
           </el-col>
         </el-row>
 
-        <el-form-item label-width="121px" label="Job description:" />
+        <el-form-item label-width="125px" :label="$t('job.description')" />
         <el-form-item prop="description" style="margin-bottom: 30px;">
           <Tinymce ref="editor" v-model="postForm.description" :height="400" :maxlength="fmaxLength.jdLength" />
         </el-form-item>
@@ -100,10 +103,10 @@
       <p class="message" v-html="message" />
       <div slot="footer" class="dialog-footer">
         <el-button @click="showConfirmDialog = false">
-          Close
+          {{ $t('job.close') }}
         </el-button>
         <el-button type="success" @click="submitForm">
-          Continue
+          {{ $t('job.continue') }}
         </el-button>
       </div>
     </el-dialog>
@@ -172,7 +175,7 @@ export default {
         item = 'deadline'
       }
       if (value === '') {
-        callback(new Error(uppercaseFirst(item) + ' is required'))
+        callback(new Error(uppercaseFirst(item) + ' is required.'))
       } else {
         callback()
       }
@@ -180,9 +183,9 @@ export default {
     const validateTitle = (rule, value, callback) => {
       const item = rule.field
       if (value === '') {
-        callback(new Error(uppercaseFirst(item) + ' is required'))
+        callback(new Error(uppercaseFirst(item) + ' is required.'))
       } else if (validDigits(value)) {
-        callback(new Error(uppercaseFirst(item) + ' must not be a digit'))
+        callback(new Error(uppercaseFirst(item) + ' must not be a digit.'))
       } else {
         callback()
       }
@@ -190,10 +193,10 @@ export default {
     const validateCurrency = (rule, value, callback) => {
       const item = rule.field
       if (value === '') {
-        callback(new Error(uppercaseFirst(item) + ' is required'))
+        callback(new Error(uppercaseFirst(item) + ' is required.'))
       } else if (this.postForm.salaryFrom > this.postForm.salaryTo || this.postForm.salaryFrom <= 0) {
         this.$message({
-          message: 'Salary range is wrong',
+          message: 'Salary range is not valid.',
           type: 'error'
         })
       } else {
@@ -400,7 +403,7 @@ export default {
       this.currencyListOptions = filterList.map(v => v.name)
     },
     getJobTypeList(query) {
-      const JobTypeList = [{ 'name': 'Full-time' }, { 'name': 'Part-time' }, { 'name': 'Internship' }]
+      const JobTypeList = [{ 'name': 'Full-time' }, { 'name': 'Part-time' }, { 'name': 'Internship' }, { 'name': 'Contract' }]
       const filterList = JobTypeList.filter(item => {
         const lowerCase = item.name.toLowerCase()
         return !(query && lowerCase.indexOf(query.toLowerCase()) < 0)

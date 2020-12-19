@@ -3,11 +3,10 @@
     <div class="bg" />
     <div class="wrapper">
       <div class="content">
-        <h1 class="title">Welcome, Administator!</h1>
-        <h2 class="sub-title">Take a quick look<br>at how your ORAS performs.</h2>
+        <h1 class="title">{{ $t('banner.adminTitle') }}</h1>
+        <h2 class="sub-title" v-html="$t('banner.adminSubTitle')" />
         <router-link :to="'/report/index'" class="button">
-          <!-- <span>View report</span> -->
-          <span>{{ $t('route.dashboard') }}</span>
+          <span>{{ $t('banner.report') }}</span>
         </router-link>
       </div>
     </div>

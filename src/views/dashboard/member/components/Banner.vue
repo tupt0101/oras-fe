@@ -3,10 +3,10 @@
     <div class="bg" />
     <div class="wrapper">
       <div class="content">
-        <h1 class="title">Welcome to ORAS!</h1>
-        <h2 class="sub-title">Find, contact, and hire<br>high-quality candidates<br>faster than ever.</h2>
+        <h1 class="title">{{ $t('banner.userTitle') }}</h1>
+        <h2 class="sub-title" v-html="$t('banner.userSubTitle')" />
         <router-link :to="'/purchase/index'" class="button">
-          <span>Check your plans</span>
+          <span>{{ $t('banner.purchase') }}</span>
         </router-link>
       </div>
     </div>

@@ -10,19 +10,19 @@
         <el-col :span="18" :xs="24">
           <el-card>
             <el-tabs v-model="activeTab">
-              <el-tab-pane label="Activity" name="activity">
+              <el-tab-pane :label="$t('profile.activity')" name="activity">
                 <activity />
               </el-tab-pane>
-              <el-tab-pane label="Edit Account" name="account">
+              <el-tab-pane :label="$t('profile.account')" name="account">
                 <account :user="user" />
               </el-tab-pane>
-              <el-tab-pane v-if="user.role !== 'admin'" label="Edit Company" name="company">
+              <el-tab-pane v-if="user.role !== 'admin'" :label="$t('profile.company')" name="company">
                 <company :company="company" />
               </el-tab-pane>
               <!-- <el-tab-pane label="Change Password" name="changePassword">
                 <change-password />
               </el-tab-pane> -->
-              <el-tab-pane v-if="user.role !== 'admin'" label="Billing" name="billing">
+              <el-tab-pane v-if="user.role !== 'admin'" :label="$t('profile.billing')" name="billing">
                 <billing v-if="currPackage" :curr-package="currPackage" />
               </el-tab-pane>
             </el-tabs>
