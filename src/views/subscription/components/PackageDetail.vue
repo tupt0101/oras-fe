@@ -19,18 +19,18 @@
               <el-col :span="24">
                 <el-form-item style="margin-bottom: 40px;" prop="name">
                   <MDinput v-model="postForm.name" :max-length="fmaxLength.pkgNameLength" name="name" required>
-                    Package name
+                    {{ $t('package.name') }}
                   </MDinput>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label-width="130px" prop="tag" label="Tag:" class="postInfo-container-item">
+                <el-form-item label-width="130px" prop="tag" :label="$t('package.tag') + ':'" class="postInfo-container-item">
                   <el-input v-model="postForm.tag" style="width: 300px" :max-length="fmaxLength.pkgTagLength" />
                 </el-form-item>
               </el-col>
 
               <el-col :span="24">
-                <el-form-item label-width="130px" label="Number of posts:" class="postInfo-container-item">
+                <el-form-item label-width="130px" :label="$t('package.numOfPost') + ':'" class="postInfo-container-item">
                   <el-input-number v-model="postForm.numOfPost" placeholder="0" style="width: 300px" :max="fmaxLength.postMax" />
                 </el-form-item>
               </el-col>
@@ -38,7 +38,7 @@
               <!-- alo YAnh -->
               <!-- duration: 1 month, 3 month, 6 month... -->
               <!--                <el-col :span="12">-->
-              <!--                  <el-form-item label-width="130px" label="Duration:" class="postInfo-container-item">-->
+              <!--                  <el-form-item label-width="130px" :label="Duration:" class="postInfo-container-item">-->
               <!--                    <el-select v-model="postForm.duration" :remote-method="getDurationList" filterable default-first-option remote placeholder="">-->
               <!--                      <el-option v-for="(item,index) in durationListOptions" :key="item+index" :label="item" :value="item" />-->
               <!--                    </el-select>-->
@@ -48,14 +48,14 @@
 
               <!--              <el-row> -->
               <el-col :span="24">
-                <el-form-item label-width="130px" label="Price:" class="postInfo-container-item">
+                <el-form-item label-width="130px" :label="$t('package.price') + ':'" class="postInfo-container-item">
                   <el-input-number v-model="postForm.price" :max-length="fmaxLength.priceLength" placeholder="0" style="width: 300px" />
                   <!--                  <money v-model="postForm.price" v-bind="money" :maxlength="fmaxLength.priceLength" placeholder="0" style="width: 300px" />-->
                 </el-form-item>
               </el-col>
 
               <el-col :span="24">
-                <el-form-item label-width="130px" prop="currency" label="Currency:" class="postInfo-container-item">
+                <el-form-item label-width="130px" prop="currency" :label="$t('package.currency') + ':'" class="postInfo-container-item">
                   <el-select v-model="postForm.currency" :remote-method="getCurrencyList" filterable default-first-option remote placeholder="Select currency..." style="width: 300px">
                     <el-option v-for="(item,index) in currencyListOptions" :key="item+index" :label="item" :value="item" />
                   </el-select>
@@ -65,7 +65,7 @@
           </div>
         </el-row>
 
-        <el-form-item label-width="130px" label="Description:">
+        <el-form-item label-width="130px" :label="$t('package.desc') + ':'">
           <el-input v-model="postForm.description" :rows="1" :max-length="fmaxLength.pkgDesLength" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" />
           <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span>
         </el-form-item>

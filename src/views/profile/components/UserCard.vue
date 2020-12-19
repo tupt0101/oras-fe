@@ -1,7 +1,7 @@
 <template>
   <el-card style="margin-bottom:20px;">
     <div slot="header" class="clearfix">
-      <span style="font-size: 1.5em">Profile</span>
+      <span style="font-size: 1.5em">{{ $t('profile.profile') }}</span>
     </div>
 
     <div class="user-profile">
@@ -17,7 +17,7 @@
     <div class="user-bio">
       <div class="user-education user-bio-section">
         <div class="user-bio-section-header">
-          <span style="font-size: 1.2em">Contact</span>
+          <span style="font-size: 1.2em">{{ $t('profile.contact') }}</span>
         </div>
         <div class="user-bio-section-body">
           <div class="text-muted">

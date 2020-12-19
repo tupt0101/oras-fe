@@ -1,34 +1,34 @@
 <template>
   <el-table :data="list" style="width: 100%;padding-top: 15px;">
-    <el-table-column label="Package name" min-width="200">
+    <el-table-column :label="$t('report.name')" min-width="200">
       <template slot-scope="scope">
         {{ scope.row.packageById.name }} Package
       </template>
     </el-table-column>
-    <el-table-column label="Number of Posts" width="150" align="center">
+    <el-table-column :label="$t('report.numOfPost')" width="150" align="center">
       <template slot-scope="scope">
         {{ scope.row.packageById.numOfPost }}
       </template>
     </el-table-column>
-    <el-table-column label="Amount" width="195" align="center">
+    <el-table-column :label="$t('report.amount')" width="195" align="center">
       <template slot-scope="scope">
         $ {{ scope.row.purchaseById && scope.row.purchaseById.amount | toThousandFilter }}
       </template>
     </el-table-column>
-    <el-table-column label="Purchase Date" width="195" align="center">
+    <el-table-column :label="$t('report.date')" width="195" align="center">
       <template slot-scope="scope">
         {{ scope.row.purchaseById && new Date(scope.row.purchaseById.purchaseDate).toLocaleString('en-GB') }}
       </template>
     </el-table-column>
-    <el-table-column label="Valid to" width="195" align="center">
+    <el-table-column :label="$t('report.validTo')" width="195" align="center">
       <template slot-scope="scope">
         {{ new Date(scope.row.validTo).toLocaleString('en-GB') }}
       </template>
     </el-table-column>
-    <el-table-column label="Status" width="100" align="center">
+    <el-table-column :label="$t('report.purchaseStatus')" width="100" align="center">
       <template slot-scope="{row}">
         <el-tag :type="row.expired | statusFilter">
-          {{ row.expired ? 'Expired' : 'Valid' }}
+          {{ row.expired ? $t('report.expired') : $t('report.valid') }}
         </el-tag>
       </template>
     </el-table-column>

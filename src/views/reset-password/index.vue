@@ -83,7 +83,6 @@ export default {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }]
       },
       loading: false,
-      redirect: undefined,
       otherQuery: {},
       dialogTitle: '',
       message: '',
@@ -91,27 +90,25 @@ export default {
       hasError: false
     }
   },
-  watch: {
-    $route: {
-      handler: function(route) {
-        const query = route.query
-        if (query) {
-          this.redirect = query.redirect
-          this.otherQuery = this.getOtherQuery(query)
-        }
-      },
-      immediate: true
-    }
-  },
+  // watch: {
+  //   $route: {
+  //     handler: function(route) {
+  //       const query = route.query
+  //       if (query) {
+  //         this.redirect = query.redirect
+  //         this.otherQuery = this.getOtherQuery(query)
+  //       }
+  //     },
+  //     immediate: true
+  //   }
+  // },
   created() {
     // window.addEventListener('storage', this.afterQRScan)
   },
   mounted() {
-    // if (this.resetForm.username === '') {
-    //   this.$refs.username.focus()
-    // } else if (this.resetForm.password === '') {
-    //   this.$refs.password.focus()
-    // }
+    if (this.resetForm.username === '') {
+      this.$refs.username.focus()
+    }
   },
   destroyed() {
     // window.removeEventListener('storage', this.afterQRScan)

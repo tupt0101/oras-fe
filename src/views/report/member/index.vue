@@ -14,19 +14,19 @@
     <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
-          <h2 class="title">Number of Jobs by Category</h2>
+          <h2 class="title">{{ $t('report.jobByCate') }}</h2>
           <job-by-category v-if="jobByCate" :chart-data="jobByCate" />
         </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
-          <h2 class="title">Number of Applications by Category</h2>
+          <h2 class="title">{{ $t('report.candidateByCate') }}</h2>
           <candidate-by-category v-if="candidateByCate" :chart-data="candidateByCate" />
         </div>
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
-          <h2 class="title" v-text="'Average Salary ('+ baseCurrency.toUpperCase() +') by Category'" />
+          <h2 class="title" v-text="$t('report.avgSalary') + '('+ baseCurrency.toUpperCase() + ')' + $t('report.byCate')" />
           <avg-salary-by-category style="barchartStyle" :chart-data="avgSalaryData" />
         </div>
       </el-col>
@@ -35,7 +35,7 @@
     <el-row>
       <el-col :xs="24" :sm="24" :lg="16">
         <div class="chart-wrapper">
-          <h2 class="title">Purchase History</h2>
+          <h2 class="title">{{ $t('report.purchaseHistory') }}</h2>
           <purchase-history />
         </div>
       </el-col>
@@ -44,9 +44,9 @@
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <el-col :xs="24" :sm="24" :lg="24">
         <div class="chart-wrapper">
-          <h2 class="title">Expenses By Month</h2>
+          <h2 class="title">{{ $t('report.expMonth') }}</h2>
           <select v-model="selectedYear" @click="handleSetLineChartData">
-            <option disabled value="">Please select a year</option>
+            <option disabled value="">{{ $t('report.selectYear') }}</option>
             <option>2018</option>
             <option>2019</option>
             <option>2020</option>

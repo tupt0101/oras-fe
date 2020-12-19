@@ -32,22 +32,32 @@
             <el-dropdown-item>Dashboard</el-dropdown-item>
           </router-link> -->
           <el-dropdown-item>
-            <strong style="font-size: 1.1em" class="disabled no-hover">Welcome, {{ accountName && accountName.split(' ')[accountName.split(' ').length - 1] }}</strong>
+            <strong style="font-size: 1.1em" class="disabled no-hover">{{ $t('navbar.welcome') }}, {{ accountName && accountName.split(' ')[accountName.split(' ').length - 1] }}</strong>
           </el-dropdown-item>
           <router-link to="/profile/index">
-            <el-dropdown-item>View Profile</el-dropdown-item>
+            <el-dropdown-item>
+              {{ $t('navbar.profile') }}
+            </el-dropdown-item>
           </router-link>
           <el-dropdown-item divided>
-            <strong style="font-size: 1.1em" class="disabled no-hover">Manage</strong>
+            <strong style="font-size: 1.1em" class="disabled no-hover">
+              {{ $t('navbar.manage') }}
+            </strong>
           </el-dropdown-item>
           <router-link to="/job/list">
-            <el-dropdown-item>Job List</el-dropdown-item>
+            <el-dropdown-item>
+              {{ $t('navbar.jobList') }}
+            </el-dropdown-item>
           </router-link>
           <router-link to="/report/index">
-            <el-dropdown-item>Report</el-dropdown-item>
+            <el-dropdown-item>
+              {{ $t('navbar.report') }}
+            </el-dropdown-item>
           </router-link>
           <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">Sign out</span>
+            <span style="display:block;">
+              {{ $t('navbar.logOut') }}
+            </span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>

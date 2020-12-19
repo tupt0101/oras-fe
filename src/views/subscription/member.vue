@@ -3,24 +3,24 @@
     <el-row>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 24}" :xl="{span: 24}">
         <div class="title-container">
-          <strong style="font-size: 36px">Subscriptor List</strong><br>
+          <strong style="font-size: 36px">{{ $t('package.title') }}</strong><br>
         </div>
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="filter-container">
-          <el-input v-model="listQuery.name" :maxLength="fmaxLength.nameLength" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
-          <el-select v-model="listQuery.package" placeholder="Package" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
+          <el-input v-model="listQuery.name" :max-length="fmaxLength.nameLength" :placeholder="$t('package.fullname')" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
+          <el-select v-model="listQuery.package" :placeholder="$t('package.plPackage')" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
             <el-option v-for="item in packOptions" :key="item" :label="item" :value="item" />
           </el-select>
-          <el-select v-model="listQuery.status" placeholder="Status" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
+          <el-select v-model="listQuery.status" :placeholder="$t('package.status')" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
             <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
           </el-select>
           <el-button class="filter-item" type="primary" icon="el-icon-search" style="margin-right: 10px" @click="handleFilter">
-            Search
+            {{ $t('package.search') }}
           </el-button>
           <router-link :to="'/job/create'">
             <el-button class="filter-item" type="primary" icon="el-icon-edit">
-              New
+              {{ $t('package.new') }}
             </el-button>
           </router-link>
         </div>
@@ -28,54 +28,54 @@
     </el-row>
 
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%" @sort-change="sortChange">
-      <el-table-column align="center" label="No." width="80">
+      <el-table-column align="center" :label="$t('package.no')" width="80">
         <template slot-scope="scope">
           <span>{{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Account name" prop="fullname" sortable="custom" :class-name="getSortClass('fullname')" min-width="200px" align="left">
+      <el-table-column :label="$t('package.account')" prop="fullname" sortable="custom" :class-name="getSortClass('fullname')" min-width="200px" align="left">
         <template slot-scope="{row}">
           <span>{{ row.accountById.fullname }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Company" width="250px" align="center">
+      <el-table-column :label="$t('package.company')" width="250px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.accountById.companyById.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Package" width="200px" align="center">
+      <el-table-column :label="$t('package.name')" width="200px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.packageById.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Remaining posts" prop="numOfPost" sortable="custom" :class-name="getSortClass('numOfPost')" width="160px" align="center">
+      <el-table-column :label="$t('package.rmPost')" prop="numOfPost" sortable="custom" :class-name="getSortClass('numOfPost')" width="160px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.numOfPost }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Price" width="150px" align="center">
+      <el-table-column :label="$t('package.price')" width="150px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.packageById.currency | currencyFilter }}{{ row.packageById.price }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Purchase date" width="200px" align="center">
+      <el-table-column :label="$t('package.purchaseDate')" width="200px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.purchaseById && new Date(row.purchaseById.purchaseDate).toLocaleString('en-GB') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Valid to" prop="validTo" sortable="custom" :class-name="getSortClass('validTo')" width="200px" align="center">
+      <el-table-column :label="$t('package.validTo')" prop="validTo" sortable="custom" :class-name="getSortClass('validTo')" width="200px" align="center">
         <template slot-scope="{row}">
           <span>{{ new Date(row.validTo).toLocaleString('en-GB') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Status" class-name="status-col" width="100">
+      <el-table-column :label="$t('package.status')" class-name="status-col" width="100">
         <template slot-scope="{row}">
           <el-tag :type="row.expired | statusFilter">
-            {{ row.expired ? 'Expired' : 'Valid' }}
+            {{ row.expired ? $t('package.expired') : $t('package.valid') }}
           </el-tag>
         </template>
       </el-table-column>
-      <!--      <el-table-column align="center" label="Actions" width="150px" class-name="small-padding fixed-width">-->
+      <!--      <el-table-column align="center" :label="Actions" width="150px" class-name="small-padding fixed-width">-->
       <!--        <template slot-scope="scope">-->
       <!--          <router-link :to="'/purchase/detail/'+scope.row.id">-->
       <!--            <el-button type="primary" size="small" icon="el-icon-s-order">-->

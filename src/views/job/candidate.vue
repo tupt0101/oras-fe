@@ -6,21 +6,18 @@
           <strong style="font-size: 36px">{{ job && job.title }}</strong><br>
           <div style="padding: 10px 0px">
             <strong>{{ job && job.accountByCreatorId.companyById.name }}</strong>
-            <!-- <strong>Company name</strong> -->
-            <!-- <span style="margin-left: 30px">Posted: {{ job.createDate | parseTime('{y}-{m}-{d}') }}</span>
-            <span style="margin-left: 30px">Deadline: {{ job.applyTo | parseTime('{y}-{m}-{d}') }}</span> -->
-            <span style="margin-left: 30px">Posted: {{ job && (new Date(job.createDate)).toLocaleString('en-GB') }}</span>
-            <span style="margin-left: 30px">Deadline: {{ job && (new Date(job.applyTo)).toLocaleString('en-GB') }}</span>
+            <span style="margin-left: 30px">{{ $t('job.published') }}: {{ job && (new Date(job.createDate)).toLocaleString('en-GB') }}</span>
+            <span style="margin-left: 30px">{{ $t('job.deadline') }}: {{ job && (new Date(job.applyTo)).toLocaleString('en-GB') }}</span>
           </div>
         </div>
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="filter-container">
-          <el-input v-model="listQuery.name" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" :maxlength="fmaxLength.nameLength" @keyup.enter.native="handleFilter" />
+          <el-input v-model="listQuery.name" :placeholder="$t('job.plName')" style="width: 250px; margin-right: 10px" class="filter-item" :maxlength="fmaxLength.nameLength" @keyup.enter.native="handleFilter" />
           <!-- <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
             <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
           </el-select> -->
-          <el-select v-model="listQuery.status" placeholder="Status" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
+          <el-select v-model="listQuery.status" :placeholder="$t('job.status')" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
             <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
           </el-select>
           <!-- <el-select v-model="listQuery.applyDate" style="width: 140px" class="filter-item" @change="handleFilter">
@@ -30,7 +27,7 @@
             <el-option v-for="item in sortRate" :key="item.key" :label="item.label" :value="item.key" />
           </el-select> -->
           <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-            Search
+            {{ $t('job.search') }}
           </el-button>
           <!-- <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
             Add
@@ -46,27 +43,27 @@
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="filter-container" style="float: right">
           <el-button class="filter-item" type="primary" @click="refresh">
-            Get application
+            {{ $t('job.get') }}
           </el-button>
           <el-button class="filter-item" type="warning" @click="rankCV">
-            Rank CV
+            {{ $t('job.rank') }}
           </el-button>
 
         </div>
       </el-col>
     </el-row>
 
-    <el-table v-if="!list" v-loading="listLoading" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="No." width="80" />
-      <el-table-column label="Full name" min-width="150px" />
-      <el-table-column label="Email" align="center" width="240px" />
-      <el-table-column label="Phone number" align="center" width="160px" />
-      <el-table-column label="Apply date" width="200px" align="center" />
-      <el-table-column label="Source" width="180px" align="center" />
-      <el-table-column label="Status" class-name="status-col" width="100" />
-      <el-table-column align="center" label="Resume" width="90px" class-name="small-padding fixed-width" />
-      <el-table-column align="center" label="Matching Rank" width="180px" />
-    </el-table>
+    <!-- <el-table v-if="!list" v-loading="listLoading" border fit highlight-current-row style="width: 100%">
+      <el-table-column align="center" :label="No." width="80" />
+      <el-table-column :label="Full name" min-width="150px" />
+      <el-table-column :label="Email" align="center" width="240px" />
+      <el-table-column :label="Phone number" align="center" width="160px" />
+      <el-table-column :label="Apply date" width="200px" align="center" />
+      <el-table-column :label="Source" width="180px" align="center" />
+      <el-table-column :label="Status" class-name="status-col" width="100" />
+      <el-table-column align="center" :label="Resume" width="90px" class-name="small-padding fixed-width" />
+      <el-table-column align="center" :label="Matching Rank" width="180px" />
+    </el-table> -->
     <el-table
       v-if="list"
       v-loading="listLoading"
@@ -77,46 +74,46 @@
       style="width: 100%"
       @sort-change="sortChange"
     >
-      <el-table-column type="index" align="center" label="No." width="80">
+      <el-table-column type="index" align="center" :label="$t('job.no')" width="80">
         <template slot-scope="scope">
           <span>{{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Full name" prop="fullname" sortable="custom" min-width="150px" :class-name="getSortClass('fullname')">
+      <el-table-column :label="$t('job.fullname')" prop="fullname" sortable="custom" min-width="150px" :class-name="getSortClass('fullname')">
         <template slot-scope="{row}">
           <div class="link-type" @click="viewDetail(row)">
             <span style="white-space: nowrap">{{ row.candidateByCandidateId.fullname }}</span>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="Email" align="center" width="240px">
+      <el-table-column :label="$t('job.email')" align="center" width="240px">
         <template slot-scope="{row}">
           <span>{{ row.candidateByCandidateId.email }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Phone number" align="center" width="160px">
+      <el-table-column :label="$t('job.phoneNo')" align="center" width="160px">
         <template slot-scope="{row}">
           <span>{{ row.candidateByCandidateId.phoneNo }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Apply date" prop="applyDate" sortable="custom" width="200px" align="center" :class-name="getSortClass('applyDate')">
+      <el-table-column :label="$t('job.applyDate')" prop="applyDate" sortable="custom" width="200px" align="center" :class-name="getSortClass('applyDate')">
         <template slot-scope="{row}">
           <span>{{ (new Date(row.applyDate)).toLocaleString('en-GB') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Source" width="180px" align="center">
+      <el-table-column :label="$t('job.source')" width="180px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.source }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Status" class-name="status-col" width="100">
+      <el-table-column :label="$t('job.status')" class-name="status-col" width="100">
         <template slot-scope="{row}">
           <el-tag :type="row.status | statusFilter">
             {{ row.status }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Resume" width="90px" class-name="small-padding fixed-width">
+      <el-table-column align="center" :label="$t('job.resume')" width="90px" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
           <el-tooltip content="View resume" placement="top">
             <el-button type="primary" size="small" icon="el-icon-paperclip" @click="openCV(row.cv)">
@@ -125,14 +122,14 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Matching Rate" prop="matchingRate" sortable="custom" width="180px" :class-name="getSortClass('matchingRate')">
+      <el-table-column align="center" :label="$t('job.match')" prop="matchingRate" sortable="custom" width="180px" :class-name="getSortClass('matchingRate')">
         <template slot-scope="{row}">
           <span>{{ row.matchingRate }}%</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Actions" width="100px">
+      <el-table-column align="center" :label="$t('job.actions')" width="100px">
         <template slot-scope="scope">
-          <el-tooltip content="Hire candidate" placement="top">
+          <el-tooltip :content="$t('job.ttHire')" placement="top">
             <el-button v-if="scope.row.status !== 'Hired'" type="success" size="small" icon="el-icon-circle-check" @click="handleHireCandidate(scope.row.id)">
               <!-- Hire -->
             </el-button>
@@ -143,36 +140,36 @@
 
     <el-dialog title="Candidate Detail" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
       <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="width: 90%; margin-left:50px;">
-        <el-form-item label="Full name:" label-width="150px" style="margin-bottom: 0px">
+        <el-form-item :label="$t('job.fullname') + ':'" label-width="150px" style="margin-bottom: 0px">
           <span>{{ temp.candidateByCandidateId.fullname }}</span>
         </el-form-item>
-        <el-form-item label="Email:" label-width="150px" style="margin-bottom: 0px">
+        <el-form-item :label="$t('job.email') + ':'" label-width="150px" style="margin-bottom: 0px">
           <span>{{ temp.candidateByCandidateId.email }}</span>
         </el-form-item>
-        <el-form-item label="Phone number:" label-width="150px" style="margin-bottom: 0px">
+        <el-form-item :label="$t('job.phoneNo') + ':'" label-width="150px" style="margin-bottom: 0px">
           <span>{{ temp.candidateByCandidateId.phoneNo }}</span>
         </el-form-item>
-        <el-form-item label="Address:" label-width="150px" style="margin-bottom: 0px">
+        <el-form-item :label="$t('job.address') + ':'" label-width="150px" style="margin-bottom: 0px">
           <span>{{ temp.candidateByCandidateId.address }}</span>
         </el-form-item>
-        <el-form-item label="Status: " label-width="150px" style="margin-bottom: 0px">
+        <el-form-item :label="$t('job.status') + ':'" label-width="150px" style="margin-bottom: 0px">
           <el-tag :type="temp.status | statusFilter">
             {{ temp.status }}
           </el-tag>
         </el-form-item>
-        <el-form-item label="Comment:" label-width="150px" style="margin-bottom: 0px;">
-          <el-input v-model="temp.comment" type="textarea" :rows="5" :maxLength="fmaxLength.cmtLength" />
+        <el-form-item :label="$t('job.comment') + ':'" label-width="150px" style="margin-bottom: 0px;">
+          <el-input v-model="temp.comment" type="textarea" :rows="5" :max-length="fmaxLength.cmtLength" />
         </el-form-item>
-        <!-- <el-form-item label="" label-width="120px" style="margin-bottom: 0px; max-height: 320px; overflow-y: scroll">
+        <!-- <el-form-item :label="" label-width="120px" style="margin-bottom: 0px; max-height: 320px; overflow-y: scroll">
           <span v-html="temp.description" />
         </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">
-          Close
+          {{ $t('job.close') }}
         </el-button>
         <el-button :loading="listLoading" type="success" @click="handleComment(temp)">
-          Save
+          {{ $t('job.save') }}
         </el-button>
       </div>
     </el-dialog>
