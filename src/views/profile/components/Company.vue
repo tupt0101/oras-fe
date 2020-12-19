@@ -28,7 +28,7 @@
       </el-col>
       <el-col :lg="24">
         <el-form-item :label="$t('profile.desc')" prop="description">
-          <el-input v-model="company.description" :maxlength="fmaxLength.compDesLength" />
+          <el-input v-model="company.description" type="textarea" :rows="5" :maxlength="fmaxLength.compDesLength" />
         </el-form-item>
       </el-col>
       <el-col :lg="24">

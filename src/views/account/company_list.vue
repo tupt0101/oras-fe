@@ -3,17 +3,17 @@
     <el-row>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 24}" :xl="{span: 24}">
         <div class="title-container">
-          <strong style="font-size: 36px">Company List</strong><br>
+          <strong style="font-size: 36px">{{ $t('account.cTitle') }}</strong><br>
         </div>
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="filter-container">
-          <el-input v-model="listQuery.name" :max-length="fmaxLength.compNameLength" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
-          <el-select v-model="listQuery.status" placeholder="Status" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
+          <el-input v-model="listQuery.name" :max-length="fmaxLength.compNameLength" :placeholder="$t('account.compName')" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
+          <el-select v-model="listQuery.status" :placeholder="$t('account.status')" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
             <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
           </el-select>
           <el-button class="filter-item" type="primary" icon="el-icon-search" style="margin-right: 10px" @click="handleFilter">
-            Search
+            {{ $t('account.search') }}
           </el-button>
           <!-- <router-link :to="'/job/create'">
             <el-button class="filter-item" type="primary" icon="el-icon-edit">
@@ -25,13 +25,13 @@
     </el-row>
 
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%" @sort-change="sortChange">
-      <el-table-column align="center" label="No." width="80">
+      <el-table-column align="center" :label="$t('account.no')" width="80">
         <template slot-scope="scope">
           <span>{{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column min-width="250px" label="Company name" align="left" prop="name" sortable="custom" :class-name="getSortClass('name')">
+      <el-table-column min-width="250px" :label="$t('account.compName')" align="left" prop="name" sortable="custom" :class-name="getSortClass('name')">
         <template slot-scope="{row}">
           <div class="link-type" @click="viewDetail(row)">
             <span>{{ row && row.companyById.name }}</span>
@@ -39,43 +39,43 @@
         </template>
       </el-table-column>
 
-      <el-table-column width="200px" align="center" label="Registrant">
+      <el-table-column width="200px" align="center" :label="$t('account.registrant')">
         <template slot-scope="{row}">
           <span>{{ row && row.fullname }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="200px" align="center" label="Location">
+      <el-table-column width="200px" align="center" :label="$t('account.location')">
         <template slot-scope="{row}">
           <span>{{ row && row.companyById.location }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="200px" align="center" label="Email">
+      <el-table-column width="200px" align="center" :label="$t('account.compEmail')">
         <template slot-scope="{row}">
           <span>{{ row && row.companyById.email }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="160px" align="center" label="Phone Number">
+      <el-table-column width="160px" align="center" :label="$t('account.phoneNo')">
         <template slot-scope="{row}">
           <span>{{ row && row.companyById.phoneNo }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="150px" align="center" label="Tax Code">
+      <el-table-column width="150px" align="center" :label="$t('account.tax')">
         <template slot-scope="{row}">
           <span>{{ row && row.companyById.taxCode }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="170px" align="center" label="Register Date">
+      <el-table-column width="170px" align="center" :label="$t('account.createDate')">
         <template slot-scope="{row}">
           <span>{{ (new Date(row.createDate)).toLocaleString('en-GB') }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column class-name="status-col" label="Status" width="120">
+      <el-table-column class-name="status-col" :label="$t('account.status')" width="120">
         <template slot-scope="{row}">
           <el-tag :type="row && row.companyById.verified | statusFilter">
             {{ row && row.companyById.verified ? 'Verified' : 'Unverified' }}
@@ -83,7 +83,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="Actions" width="100px">
+      <el-table-column align="center" :label="$t('account.actions')" width="100px">
         <template slot-scope="scope">
           <router-link :to="'/account/company/edit/'+ (scope.row && scope.row.companyById.id)">
             <el-button type="primary" size="small" icon="el-icon-edit">
@@ -101,28 +101,28 @@
 
     <el-dialog title="Company Detail" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 90%; margin-left:50px;">
-        <el-form-item label="Company name:" label-width="150px" style="margin-bottom: 0px">
+        <el-form-item :label="$t('account.compName') + ':'" label-width="150px" style="margin-bottom: 0px">
           <span>{{ temp.companyById.name }}</span>
         </el-form-item>
-        <el-form-item label="Location:" label-width="150px" style="margin-bottom: 0px">
+        <el-form-item :label="$t('account.location') + ':'" label-width="150px" style="margin-bottom: 0px">
           <span>{{ temp.companyById.location }}</span>
         </el-form-item>
-        <el-form-item label="Email:" label-width="150px" style="margin-bottom: 0px">
+        <el-form-item :label="$t('account.compEmail') + ':'" label-width="150px" style="margin-bottom: 0px">
           <span>{{ temp.companyById.email }}</span>
         </el-form-item>
-        <el-form-item label="Phone Number:" label-width="150px" style="margin-bottom: 0px">
+        <el-form-item :label="$t('account.phoneNo') + ':'" label-width="150px" style="margin-bottom: 0px">
           <span>{{ temp.companyById.phoneNo }}</span>
         </el-form-item>
-        <el-form-item label="Tax code:" label-width="150px" style="margin-bottom: 0px">
+        <el-form-item :label="$t('account.tax') + ':'" label-width="150px" style="margin-bottom: 0px">
           <span>{{ temp.companyById.taxCode }}</span>
         </el-form-item>
-        <el-form-item label="Description:" label-width="150px" style="margin-bottom: 0px;">
+        <el-form-item :label="$t('account.desc') + ':'" label-width="150px" style="margin-bottom: 0px;">
           <span v-html="temp.companyById.description" />
         </el-form-item>
-        <el-form-item label="Register date:" label-width="150px" style="margin-bottom: 0px">
+        <el-form-item :label="$t('account.createDate') + ':'" label-width="150px" style="margin-bottom: 0px">
           <span>{{ (new Date(temp.createDate)).toLocaleString('en-GB') }}</span>
         </el-form-item>
-        <el-form-item label="Status: " label-width="150px" style="margin-bottom: 0px">
+        <el-form-item :label="$t('account.status') + ':'" label-width="150px" style="margin-bottom: 0px">
           <el-tag :type="temp.companyById.verified | statusFilter">
             {{ temp.companyById.verified ? 'Verified' : 'Unverified' }}
           </el-tag>
@@ -130,10 +130,10 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">
-          Close
+          {{ $t('account.close') }}
         </el-button>
         <el-button v-if="!temp.companyById.verified" type="success" :loading="listLoading" @click="handleVerifyCompany(temp.companyById.id, temp.email)">
-          Verify
+          {{ $t('account.verify') }}
         </el-button>
       </div>
     </el-dialog>

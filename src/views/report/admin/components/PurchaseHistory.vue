@@ -1,37 +1,37 @@
 <template>
   <div>
     <el-table v-loading="listLoading" :data="list" style="width: 100%;padding-top: 15px;">
-      <el-table-column label="No." width="50">
+      <el-table-column :label="$t('reportAdmin.no')" width="50">
         <template slot-scope="scope">
           {{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}
         </template>
       </el-table-column>
-      <el-table-column label="Package name" width="200">
+      <el-table-column :label="$t('reportAdmin.name')" width="200">
         <template slot-scope="scope">
           {{ scope.row.packageById.name }} Package
         </template>
       </el-table-column>
-      <el-table-column label="Num of Posts" width="115" align="center">
+      <el-table-column :label="$t('reportAdmin.numOfPost')" width="115" align="center">
         <template slot-scope="scope">
           {{ scope.row.packageById.numOfPost }}
         </template>
       </el-table-column>
-      <el-table-column label="Amount" width="190" align="center">
+      <el-table-column :label="$t('reportAdmin.amount')" width="190" align="center">
         <template slot-scope="scope">
           USD {{ scope.row.purchaseById && scope.row.purchaseById.amount | toThousandFilter }}
         </template>
       </el-table-column>
-      <el-table-column label="Purchase Date" width="195" align="center">
+      <el-table-column :label="$t('reportAdmin.date')" width="195" align="center">
         <template slot-scope="scope">
           {{ scope.row.purchaseById && new Date(scope.row.purchaseById.purchaseDate).toLocaleString('en-GB') }}
         </template>
       </el-table-column>
-      <el-table-column label="Valid to" width="195" align="center">
+      <el-table-column :label="$t('reportAdmin.validTo')" width="195" align="center">
         <template slot-scope="scope">
           {{ new Date(scope.row.validTo).toLocaleString('en-GB') }}
         </template>
       </el-table-column>
-      <el-table-column label="Status" width="100" align="center">
+      <el-table-column :label="$t('reportAdmin.purchaseStatus')" width="100" align="center">
         <template slot-scope="{row}">
           <el-tag :type="row.expired | statusFilter">
             {{ row.expired ? 'Expired' : 'Valid' }}
