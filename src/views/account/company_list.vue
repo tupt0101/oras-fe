@@ -85,7 +85,7 @@
 
       <el-table-column align="center" label="Actions" width="100px">
         <template slot-scope="scope">
-          <router-link :to="'/account/company/edit/'+ (scope.row && scope.row.id)">
+          <router-link :to="'/account/company/edit/'+ (scope.row && scope.row.companyById.id)">
             <el-button type="primary" size="small" icon="el-icon-edit">
               <!-- Edit -->
             </el-button>
@@ -132,7 +132,7 @@
         <el-button @click="dialogFormVisible = false">
           Close
         </el-button>
-        <el-button v-if="!temp.companyById.verified" type="success" :loading="listLoading" @click="handleVerifyCompany(temp.companyById.id)">
+        <el-button v-if="!temp.companyById.verified" type="success" :loading="listLoading" @click="handleVerifyCompany(temp.companyById.id, temp.email)">
           Verify
         </el-button>
       </div>
@@ -213,9 +213,9 @@ export default {
       // this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogFormVisible = true
     },
-    handleVerifyCompany(id) {
+    handleVerifyCompany(id, email) {
       this.listLoading = true
-      verifyCompany(id, this.email).then(response => {
+      verifyCompany(id, email).then(() => {
         this.listLoading = false
         this.dialogFormVisible = false
         this.getCompanyList()
