@@ -23,7 +23,7 @@
       </el-col>
       <el-col :lg="12">
         <el-form-item :label="$t('profile.tax')" prop="taxCode">
-          <el-input v-model.trim="company.taxCode" :maxlength="fmaxLength.taxCodeLength" />
+          <el-input v-model.trim="company.taxCode" :maxlength="fmaxLength.taxCodeLength" :readonly="true" />
         </el-form-item>
       </el-col>
       <el-col :lg="24">
@@ -96,13 +96,6 @@ export default {
         callback()
       }
     }
-    const validateTaxCode = (rule, value, callback) => {
-      if (!validDigits(this.company.taxCode)) {
-        callback(new Error('The tax code only contains digits.'))
-      } else {
-        callback()
-      }
-    }
     const validateDescription = (rule, value, callback) => {
       if (this.company.description.length === 0) {
         callback(new Error('The description can not be empty.'))
@@ -119,7 +112,6 @@ export default {
         location: [{ required: true, trigger: 'blur', validator: validateLocation }],
         compEmail: [{ required: true, trigger: 'blur', validator: validateCompEmail }],
         compPhone: [{ required: true, trigger: 'blur', validator: validatePhoneNo }],
-        taxCode: [{ required: true, trigger: 'blur', validator: validateTaxCode }],
         description: [{ required: true, trigger: 'blur', validator: validateDescription }]
       }
     }
@@ -131,7 +123,7 @@ export default {
     submit() {
       this.$refs.infoForm.validate(valid => {
         if (valid) {
-          updateCompany(this.company).then(response => {
+          updateCompany(this.company).then(() => {
             this.$message({
               message: 'Company information has been updated successfully',
               type: 'success',

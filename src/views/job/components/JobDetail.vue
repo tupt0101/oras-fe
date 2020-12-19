@@ -364,13 +364,7 @@ export default {
             type: 'success',
             duration: 2000
           })
-          if (this.isReopen) {
-            this.$router.push('/job/edit/' + response.data.id)
-          } else if (!this.isEdit) {
-            this.$router.push('/job/list')
-          } else {
-            this.fetchData(response.data.id)
-          }
+          this.$router.push('/job/list')
           // end Create job successful
         }
         this.loading = false

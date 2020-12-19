@@ -29,6 +29,7 @@
             placeholder="Enter your current password"
             name="password"
             :maxlength="fmaxLength.passwordLength"
+            tabindex="1"
             @keyup.native="checkCapslock"
             @blur="capsTooltip = false"
           />
@@ -43,6 +44,7 @@
             type="password"
             placeholder="Enter new password"
             name="password"
+            tabindex="2"
             :maxlength="fmaxLength.passwordLength"
             @keyup.native="checkCapslock"
             @blur="capsTooltip = false"
@@ -56,6 +58,7 @@
             ref="confirmPwd"
             v-model="confirmPwd"
             type="password"
+            tabindex="3"
             placeholder="Confirm your new password"
             :maxlength="fmaxLength.passwordLength"
             @keyup.native="checkCapslock"
@@ -63,9 +66,7 @@
           />
         </el-form-item>
       </el-tooltip>
-      <el-form-item>
-        <el-button type="primary" @click="changePassword">Change password</el-button>
-      </el-form-item>
+      <el-button type="primary" @click="changePassword">Change password</el-button>
     </el-form>
   </div>
 </template>

@@ -10,51 +10,126 @@
 
       <div class="createPost-main-container">
         <el-row>
-          <el-col :span="24">
+          <el-col :span="12">
             <h4 style="margin-left: 130px">COMPANY INFORMATION</h4>
-            <el-row>
-              <el-col :span="12">
-                <el-form-item prop="compName" label-width="130px" label="Company:" class="postInfo-container-item">
-                  <el-input v-model="postForm.name" :maxlength="fmaxLength.compNameLength" autocomplete="on" tabindex="6" style="width: 300px" placeholder="Please enter the company name" />
-                </el-form-item>
-              </el-col>
+            <div v-if="postForm.role !== 'admin'" class="company-info">
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item prop="compName" label-width="150px" label="Company name:" class="postInfo-container-item">
+                    <el-input ref="compName" v-model="postForm.companyById.name" autocomplete="on" tabindex="6" style="width: 300px" :maxlength="fmaxLength.compNameLength" placeholder="Please enter the company name" />
+                  </el-form-item>
+                </el-col>
+              </el-row>
 
-              <el-col :span="12">
-                <el-form-item prop="compEmail" label-width="150px" label="Company email:" class="postInfo-container-item">
-                  <el-input v-model="postForm.email" autocomplete="on" tabindex="9" type="text" :maxlength="fmaxLength.emailLength" style="width: 300px" placeholder="Please enter the company email" />
-                </el-form-item>
-              </el-col>
-            </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item prop="compEmail" label-width="150px" label="Company email:" class="postInfo-container-item">
+                    <el-input v-model="postForm.companyById.email" autocomplete="on" tabindex="9" type="text" :maxlength="fmaxLength.emailLength" style="width: 300px" placeholder="Please enter the company email" />
+                  </el-form-item>
+                </el-col>
+              </el-row>
 
-            <el-row>
-              <el-col :span="12">
-                <el-form-item prop="taxCode" label-width="130px" label="Tax code:" class="postInfo-container-item">
-                  <el-input v-model="postForm.taxCode" autocomplete="on" tabindex="7" style="width: 300px" type="text" :maxlength="fmaxLength.taxCodeLength" placeholder="Please enter the tax code" />
-                </el-form-item>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item prop="compPhone" label-width="150px" label="Phone number:" class="postInfo-container-item">
+                    <el-input v-model="postForm.companyById.phoneNo" autocomplete="on" tabindex="10" type="text" :maxlength="fmaxLength.phoneLength" autosize style="width: 300px" placeholder="Please enter the company phone number" />
+                  </el-form-item>
+                </el-col>
+              </el-row>
 
-              </el-col>
-              <el-col :span="12">
-                <el-form-item prop="compPhone" label-width="150px" label="Phone number:" class="postInfo-container-item">
-                  <el-input v-model="postForm.phoneNo" autocomplete="on" tabindex="10" type="text" :maxlength="fmaxLength.phoneLength" autosize style="width: 300px" placeholder="Please enter the company phone number" />
-                </el-form-item>
-              </el-col>
-            </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item prop="location" label-width="150px" label="Location:" class="postInfo-container-item">
+                    <el-input v-model="postForm.companyById.location" autocomplete="on" :maxlength="fmaxLength.locationLength" tabindex="8" style="width: 300px" placeholder="Please enter the company's location" />
+                  </el-form-item>
+                </el-col>
+              </el-row>
 
-            <el-row>
-              <el-col :span="24">
-                <el-form-item prop="location" label-width="130px" label="Location:" class="postInfo-container-item">
-                  <el-input v-model="postForm.location" :maxlength="fmaxLength.locationLength" autocomplete="on" tabindex="8" style="width: 300px" placeholder="Please enter the company's location" />
-                </el-form-item>
-              </el-col>
-            </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item prop="taxCode" label-width="150px" label="Tax code:" class="postInfo-container-item">
+                    <el-input v-model="postForm.companyById.taxCode" autocomplete="on" tabindex="7" style="width: 300px" type="text" :maxlength="fmaxLength.taxCodeLength" placeholder="Please enter the tax code" :disabled="isEdit"/>
+                  </el-form-item>
+                </el-col>
+              </el-row>
 
-            <el-row>
-              <el-col :span="24">
-                <el-form-item prop="description" label-width="130px" label="Description:">
-                  <el-input v-model="postForm.description" :rows="1" :maxlength="fmaxLength.compDesLength" tabindex="11" autocomplete="on" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" />
-                </el-form-item>
-              </el-col>
-            </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item prop="description" label-width="150px" label="Description:">
+                    <el-input v-model="postForm.companyById.description" :rows="1" tabindex="11" :maxlength="fmaxLength.compDesLength" autocomplete="on" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <h4 style="margin-left: 130px">ACCOUNT INFORMATION</h4>
+            <div class="postInfo-container">
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item prop="fullname" label-width="130px" label="Full name:" class="postInfo-container-item">
+                    <el-input
+                      ref="fullname"
+                      v-model="postForm.fullname"
+                      style="width: 300px"
+                      :placeholder="$t('register.fullname')"
+                      name="fullname"
+                      type="text"
+                      :maxlength="fmaxLength.nameLength"
+                      tabindex="1"
+                      autocomplete="on"
+                      :disabled="isEdit"
+                    />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item prop="phoneNo" label-width="130px" label="Phone number:" class="postInfo-container-item">
+                    <el-input
+                      ref="phoneNo"
+                      v-model="postForm.phoneNo"
+                      style="width: 300px"
+                      :placeholder="$t('register.phoneNo')"
+                      name="phoneNo"
+                      type="text"
+                      :maxlength="fmaxLength.phoneLength"
+                      tabindex="1"
+                      autocomplete="on"
+                      :disabled="isEdit"
+                    />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item prop="email" label-width="130px" label="Email:" class="postInfo-container-item">
+                    <el-input
+                      ref="email"
+                      v-model="postForm.email"
+                      style="width: 300px"
+                      :placeholder="$t('register.email')"
+                      name="email"
+                      type="text"
+                      :maxlength="fmaxLength.emailLength"
+                      tabindex="2"
+                      autocomplete="on"
+                      :disabled="isEdit"
+                    />
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="12">
+                  <el-form-item prop="role" label-width="130px" label="Role:" class="postInfo-container-item">
+                    <el-select v-model="postForm.role" tabindex="3" :remote-method="getRoleList" style="width: 300px" filterable default-first-option remote placeholder="Select a role" :disabled="isEdit">
+                      <el-option v-for="(item,index) in roleListOptions" :key="item+index" :label="item" :value="item.toLowerCase()"/>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </div>
           </el-col>
         </el-row>
       </div>
@@ -70,21 +145,29 @@ import Sticky from '@/components/Sticky' // 粘性header组件
 // import { getUserId } from '../../../utils/auth'
 
 // @ la ref toi root folder do
-import { checkCompanyName, fetchCompany, updateCompany } from '../../../api/account'
+import { checkCompanyName, fetchAccountCompany, updateCompany, updateCompanyByAdmin } from '../../../api/account'
 import { validDigits, validEmail } from '../../../utils/validate'
 import { maxLength } from '../../../store'
 const defaultForm = {
-  // content_short: '',
   source_uri: '',
   image_uri: '',
   display_time: undefined,
-  id: undefined,
-  name: '',
+  id: '',
+  fullname: '',
   email: '',
-  taxCode: '',
   phoneNo: '',
-  location: '',
-  description: ''
+  password: '',
+  role: 'User',
+  avatar: 'https://paailajob.com/uploads/employer/profileImg/default.jpg',
+  companyById: {
+    id: '',
+    name: '',
+    email: '',
+    taxCode: '',
+    phoneNo: '',
+    location: '',
+    description: ''
+  }
 }
 
 export default {
@@ -101,17 +184,17 @@ export default {
   },
   data() {
     const validatePhoneNo = (rule, value, callback) => {
-      if (!validDigits(this.postForm.phoneNo)) {
+      if (!validDigits(this.postForm.companyById.phoneNo)) {
         callback(new Error('The phone number only contains digits.'))
       } else {
         callback()
       }
     }
     const validateCompName = (rule, value, callback) => {
-      if (this.postForm.name.length === 0) {
+      if (this.postForm.companyById.name.length === 0) {
         callback(new Error('The company name can not be empty.'))
       } else {
-        const data = { 'id': this.company.id, 'name': this.company.name }
+        const data = { 'id': this.postForm.companyById.id, 'name': this.postForm.companyById.name }
         checkCompanyName(data).then(() => {
           callback()
         })
@@ -121,22 +204,15 @@ export default {
       }
     }
     const validateLocation = (rule, value, callback) => {
-      if (this.postForm.location.length === 0) {
+      if (this.postForm.companyById.location.length === 0) {
         callback(new Error('The location can not be empty.'))
       } else {
         callback()
       }
     }
     const validateCompEmail = (rule, value, callback) => {
-      if (!validEmail(this.postForm.email)) {
+      if (!validEmail(this.postForm.companyById.email)) {
         callback(new Error('Please enter a valid email.'))
-      } else {
-        callback()
-      }
-    }
-    const validateTaxCode = (rule, value, callback) => {
-      if (!validDigits(this.postForm.taxCode)) {
-        callback(new Error('The tax code only contains digits.'))
       } else {
         callback()
       }
@@ -145,13 +221,13 @@ export default {
       fmaxLength: maxLength,
       postForm: Object.assign({}, defaultForm),
       loading: false,
+      roleListOptions: [],
       rules: {
         phoneNo: [{ required: true, trigger: 'blur', validator: validatePhoneNo }],
         compName: [{ required: true, trigger: 'blur', validator: validateCompName }],
         location: [{ required: true, trigger: 'blur', validator: validateLocation }],
         compEmail: [{ required: true, trigger: 'blur', validator: validateCompEmail }],
-        compPhone: [{ required: true, trigger: 'blur', validator: validatePhoneNo }],
-        taxCode: [{ required: true, trigger: 'blur', validator: validateTaxCode }]
+        compPhone: [{ required: true, trigger: 'blur', validator: validatePhoneNo }]
       },
       tempRoute: {}
     }
@@ -165,11 +241,11 @@ export default {
     this.tempRoute = Object.assign({}, this.$route)
   },
   mounted() {
-    this.$refs.name.focus()
+    this.$refs.compName.focus()
   },
   methods: {
     fetchData(id) {
-      fetchCompany(id).then(response => {
+      fetchAccountCompany(id).then(response => {
         // auto fill data when edit
         this.postForm = response.data
         // set tagsview title
@@ -183,7 +259,7 @@ export default {
     },
     setTagsViewTitle() {
       const title = 'Edit Company'
-      const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.postForm.id}` })
+      const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.postForm.companyById.id}` })
       this.$store.dispatch('tagsView/updateVisitedView', route)
     },
     setPageTitle() {
@@ -194,7 +270,7 @@ export default {
       this.$refs.postForm.validate(valid => {
         if (valid) {
           this.loading = true
-          updateCompany(this.postForm).then(response => {
+          updateCompanyByAdmin(this.postForm.companyById).then(() => {
             this.$notify({
               title: 'Success',
               message: 'Update company successfully',
@@ -211,6 +287,9 @@ export default {
           return false
         }
       })
+    },
+    getRoleList(query) {
+      this.roleListOptions = ['Admin', 'User'].map(v => v)
     }
   }
 }

@@ -37,6 +37,14 @@ export function updateAccount(data) {
   })
 }
 
+export function updateAccountByAdmin(data) {
+  return request({
+    url: '/v1/account-management/account-by-admin',
+    method: 'put',
+    data: data
+  })
+}
+
 export function changePassword(data) {
   return request({
     url: '/v1/account-management/change-password-account',
@@ -74,6 +82,14 @@ export function updateCompany(data) {
   })
 }
 
+export function updateCompanyByAdmin(data) {
+  return request({
+    url: '/v1/company-management/company-by-admin',
+    method: 'put',
+    data: data
+  })
+}
+
 export function verifyCompany(id, email) {
   return request({
     url: '/v1/company-management/company/verify?id=' + id + '&email=' + email,
@@ -86,5 +102,12 @@ export function checkCompanyName(data) {
     url: '/v1/company-management/check-company-name',
     method: 'get',
     params: data
+  })
+}
+
+export function fetchAccountCompany(id) {
+  return request({
+    url: '/v1/company-management/company/account-company/' + id,
+    method: 'get'
   })
 }
