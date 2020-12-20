@@ -84,8 +84,8 @@
             </div>
           </el-col>
           <el-col :span="12">
-            <h4 style="margin-left: 130px">{{ $t('account.companyTitle') }}</h4>
             <div v-if="postForm.role !== 'admin'" class="company-info">
+              <h4 style="margin-left: 130px">{{ $t('account.companyTitle') }}</h4>
               <el-row>
                 <el-col :span="12">
                   <el-form-item prop="compName" label-width="130px" :label="$t('account.compName') + ':'" class="postInfo-container-item">

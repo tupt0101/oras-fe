@@ -76,7 +76,7 @@ export function fetchCompany(id) {
 
 export function updateCompany(data) {
   return request({
-    url: '/v1/company-management/company',
+    url: '/v1/company-management/company-by-user',
     method: 'put',
     data: data
   })
