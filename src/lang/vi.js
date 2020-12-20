@@ -263,6 +263,15 @@ export default {
     expired: 'Hết hạn',
     valid: 'Còn hạn'
   },
+  billing: {
+    title: 'Gói hiện tại',
+    history: 'Lịch sử mua',
+    packName: 'Tên gói',
+    post: 'Số bài đăng còn lại',
+    expiry: 'Ngày hết hạn',
+    expire: 'Hết hạn lúc ',
+    numOfPost: 'Số bài đăng còn lại là '
+  },
   btn: {
     publish: 'Đăng tin',
     draft: 'Lưu nháp',
@@ -278,7 +287,8 @@ export default {
     saveComment: 'Lưu',
     new: 'Tạo mới',
     confirm: 'Xác nhận',
-    change: 'Đổi mật khẩu'
+    change: 'Đổi mật khẩu',
+    cancelPack: 'Hủy gói'
   },
   cf: {
     titleDiscard: 'Xác nhận hủy thay đổi',

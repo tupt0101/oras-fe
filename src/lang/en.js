@@ -263,6 +263,15 @@ export default {
     expired: 'Expired',
     valid: 'Valid'
   },
+  billing: {
+    title: 'Your Current Package',
+    history: 'Payment History',
+    packName: 'Package name',
+    post: 'Remaining posts',
+    expiry: 'Expiry date',
+    expire: 'Expired at ',
+    numOfPost: 'Number of remaining posts was '
+  },
   btn: {
     publish: 'Publish',
     draft: 'Draft',
@@ -278,7 +287,8 @@ export default {
     saveComment: 'Save Comment',
     new: 'New',
     confirm: 'Confirm',
-    change: 'Change Password'
+    change: 'Change Password',
+    cancelPack: 'Cancel Package'
   },
   cf: {
     titleDiscard: 'Confirm Discard Changes',

@@ -7,7 +7,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Total Jobs
+            {{ $t('reportAdmin.totalJob') }}
           </div>
           <count-to :start-val="0" :end-val="panelData && panelData.totalJob" :duration="2000" class="card-panel-num" />
         </div>
@@ -20,7 +20,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Open Jobs
+            {{ $t('reportAdmin.openJob') }}
           </div>
           <count-to :start-val="0" :end-val="panelData && panelData.totalPublishJob" :duration="2400" class="card-panel-num" />
         </div>
@@ -33,7 +33,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Total Applications
+            {{ $t('reportAdmin.totalApp') }}
           </div>
           <count-to :start-val="0" :end-val="panelData && panelData.totalCandidate" :duration="2800" class="card-panel-num" />
         </div>
@@ -46,7 +46,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Hired
+            {{ $t('report.hired') }}
           </div>
           <count-to :start-val="0" :end-val="panelData && panelData.totalHiredCandidate" :duration="3200" class="card-panel-num" />
         </div>
