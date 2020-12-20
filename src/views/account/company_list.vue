@@ -41,7 +41,9 @@
 
       <el-table-column width="200px" align="center" :label="$t('account.registrant')">
         <template slot-scope="{row}">
-          <span>{{ row && row.fullname }}</span>
+          <div class="link-type" @click="viewAccountDetail(row)">
+            <span>{{ row && row.fullname }}</span>
+          </div>
         </template>
       </el-table-column>
 
@@ -71,7 +73,7 @@
 
       <el-table-column width="170px" align="center" :label="$t('account.modifyDate')" prop="modifyDate" sortable="custom" :class-name="getSortClass('modifyDate')">
         <template slot-scope="{row}">
-          <span>{{ (new Date(row.createDate)).toLocaleString('en-GB') }}</span>
+          <span>{{ (new Date(row.companyById.modifyDate)).toLocaleString('en-GB') }}</span>
         </template>
       </el-table-column>
 
@@ -165,6 +167,37 @@
       </div>
     </el-dialog>
 
+    <el-dialog title="Account Detail" :visible.sync="dialogAccountVisible">
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 90%; margin-top: 53px; margin-left:50px;">
+            <el-form-item :label="$t('account.fullname') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <span>{{ temp.fullname }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('account.email') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <span>{{ temp.email }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('account.phoneNo') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <span>{{ temp.phoneNo }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('account.createDate') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <span>{{ (new Date(temp.createDate)).toLocaleString('en-GB') }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('account.status') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <el-tag :type="temp.active | statusFilter">
+                {{ temp.active ? 'Active' : 'Inactive' }}
+              </el-tag>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogAccountVisible = false">
+          {{ $t('btn.close') }}
+        </el-button>
+      </div>
+    </el-dialog>
+
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getCompanyList" />
   </div>
 </template>
@@ -217,7 +250,8 @@ export default {
         phoneNo: '',
         role: ''
       },
-      dialogFormVisible: false
+      dialogFormVisible: false,
+      dialogAccountVisible: false
     }
   },
   computed: {
@@ -237,10 +271,13 @@ export default {
         this.listLoading = false
       })
     },
-    viewDetail(company) {
-      this.temp = Object.assign({}, company) // copy obj
-      // this.temp.timestamp = new Date(this.temp.timestamp)
+    viewDetail(temp) {
+      this.temp = Object.assign({}, temp) // copy obj
       this.dialogFormVisible = true
+    },
+    viewAccountDetail(temp) {
+      this.temp = Object.assign({}, temp) // copy obj
+      this.dialogAccountVisible = true
     },
     handleVerifyCompany(id, email) {
       this.listLoading = true
