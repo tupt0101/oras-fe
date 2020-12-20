@@ -100,34 +100,68 @@
     </el-table>
 
     <el-dialog title="Company Detail" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 90%; margin-left:50px;">
-        <el-form-item :label="$t('account.compName') + ':'" label-width="150px" style="margin-bottom: 0px">
-          <span>{{ temp.companyById.name }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('account.location') + ':'" label-width="150px" style="margin-bottom: 0px">
-          <span>{{ temp.companyById.location }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('account.compEmail') + ':'" label-width="150px" style="margin-bottom: 0px">
-          <span>{{ temp.companyById.email }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('account.phoneNo') + ':'" label-width="150px" style="margin-bottom: 0px">
-          <span>{{ temp.companyById.phoneNo }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('account.tax') + ':'" label-width="150px" style="margin-bottom: 0px">
-          <span>{{ temp.companyById.taxCode }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('account.desc') + ':'" label-width="150px" style="margin-bottom: 0px;">
-          <span v-html="temp.companyById.description" />
-        </el-form-item>
-        <el-form-item :label="$t('account.createDate') + ':'" label-width="150px" style="margin-bottom: 0px">
-          <span>{{ (new Date(temp.createDate)).toLocaleString('en-GB') }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('account.status') + ':'" label-width="150px" style="margin-bottom: 0px">
-          <el-tag :type="temp.companyById.verified | statusFilter">
-            {{ temp.companyById.verified ? 'Verified' : 'Unverified' }}
-          </el-tag>
-        </el-form-item>
-      </el-form>
+      <el-row>
+        <el-col :span="12">
+          <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 90%; margin-left:50px;">
+            <el-form-item :label="$t('account.compName') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <span>{{ temp.companyById.name }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('account.location') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <span>{{ temp.companyById.location }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('account.compEmail') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <span>{{ temp.companyById.email }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('account.phoneNo') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <span>{{ temp.companyById.phoneNo }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('account.tax') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <span>{{ temp.companyById.taxCode }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('account.desc') + ':'" label-width="150px" style="margin-bottom: 0px;">
+              <span v-html="temp.companyById.description" />
+            </el-form-item>
+            <el-form-item :label="$t('account.createDate') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <span>{{ (new Date(temp.createDate)).toLocaleString('en-GB') }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('account.status') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <el-tag :type="temp.companyById.verified | statusFilter">
+                {{ temp.companyById.verified ? 'Verified' : 'Unverified' }}
+              </el-tag>
+            </el-form-item>
+          </el-form>
+        </el-col>
+        <el-col :span="12">
+          <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 90%; margin-left:50px;">
+            <el-form-item :label="$t('account.compName') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <span>{{ temp.companyById.name }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('account.location') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <span>{{ temp.companyById.location }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('account.compEmail') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <span>{{ temp.companyById.email }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('account.phoneNo') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <span>{{ temp.companyById.phoneNo }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('account.tax') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <span>{{ temp.companyById.taxCode }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('account.desc') + ':'" label-width="150px" style="margin-bottom: 0px;">
+              <span v-html="temp.companyById.description" />
+            </el-form-item>
+            <el-form-item :label="$t('account.createDate') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <span>{{ (new Date(temp.createDate)).toLocaleString('en-GB') }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('account.status') + ':'" label-width="150px" style="margin-bottom: 0px">
+              <el-tag :type="temp.companyById.verified | statusFilter">
+                {{ temp.companyById.verified ? 'Verified' : 'Unverified' }}
+              </el-tag>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">
           {{ $t('btn.close') }}

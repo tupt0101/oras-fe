@@ -14,7 +14,7 @@
 
         <lang-select class="set-language right-menu-item hover-effect" />
 
-        <!-- <notification class="right-menu-item hover-effect" /> -->
+        <notification class="right-menu-item hover-effect" />
 
         <!-- <el-tooltip content="Global Size" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
@@ -73,7 +73,7 @@ import Hamburger from '@/components/Hamburger'
 // import Screenfull from '@/components/Screenfull'
 // import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
-// import Notification from '@/components/Notification'
+import Notification from '@/components/Notification'
 import LangSelect from '@/components/LangSelect'
 
 export default {
@@ -84,7 +84,7 @@ export default {
     // Screenfull,
     // SizeSelect,
     Search,
-    // Notification,
+    Notification,
     LangSelect
   },
   data() {
