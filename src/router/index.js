@@ -203,13 +203,13 @@ export const asyncRoutes = [
       {
         path: 'create',
         component: () => import('@/views/account/create'),
-        name: 'CreateJob',
+        name: 'CreateAccount',
         meta: { title: 'createAccount', icon: 'edit' }
       },
       {
         path: 'edit/:id(\\d+)',
         component: () => import('@/views/account/edit'),
-        name: 'EditJob',
+        name: 'EditAccount',
         meta: { title: 'editAccount', noCache: true, activeMenu: '/example/list' },
         hidden: true
       },
@@ -223,7 +223,7 @@ export const asyncRoutes = [
       {
         path: 'list',
         component: () => import('@/views/account/list'),
-        name: 'JobList',
+        name: 'AccountList',
         meta: { title: 'accountList', icon: 'peoples' }
       },
       {

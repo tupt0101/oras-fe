@@ -69,7 +69,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column width="170px" align="center" :label="$t('account.createDate')">
+      <el-table-column width="170px" align="center" :label="$t('account.modifyDate')" prop="modifyDate" sortable="custom" :class-name="getSortClass('modifyDate')">
         <template slot-scope="{row}">
           <span>{{ (new Date(row.createDate)).toLocaleString('en-GB') }}</span>
         </template>
@@ -77,8 +77,8 @@
 
       <el-table-column class-name="status-col" :label="$t('account.status')" width="120">
         <template slot-scope="{row}">
-          <el-tag :type="row && row.companyById.verified | statusFilter">
-            {{ row && row.companyById.verified ? 'Verified' : 'Unverified' }}
+          <el-tag :type="row.buffCompany ? 'warning' : row.companyById.verified | statusFilter">
+            {{ row.buffCompany ? 'Modified' : row.companyById.verified ? 'Verified' : 'Unverified' }}
           </el-tag>
         </template>
       </el-table-column>
@@ -100,9 +100,9 @@
     </el-table>
 
     <el-dialog title="Company Detail" :visible.sync="dialogFormVisible">
-      <el-row>
+      <el-row :gutter="20">
         <el-col :span="12">
-          <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 90%; margin-left:50px;">
+          <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 90%; margin-top: 53px; margin-left:50px;">
             <el-form-item :label="$t('account.compName') + ':'" label-width="150px" style="margin-bottom: 0px">
               <span>{{ temp.companyById.name }}</span>
             </el-form-item>
@@ -125,39 +125,32 @@
               <span>{{ (new Date(temp.createDate)).toLocaleString('en-GB') }}</span>
             </el-form-item>
             <el-form-item :label="$t('account.status') + ':'" label-width="150px" style="margin-bottom: 0px">
-              <el-tag :type="temp.companyById.verified | statusFilter">
-                {{ temp.companyById.verified ? 'Verified' : 'Unverified' }}
+              <el-tag :type="temp.buffCompany ? 'warning' : temp.companyById.verified | statusFilter">
+                {{ temp.buffCompany ? 'Modified' : temp.companyById.verified ? 'Verified' : 'Unverified' }}
               </el-tag>
             </el-form-item>
           </el-form>
         </el-col>
-        <el-col :span="12">
-          <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 90%; margin-left:50px;">
-            <el-form-item :label="$t('account.compName') + ':'" label-width="150px" style="margin-bottom: 0px">
-              <span>{{ temp.companyById.name }}</span>
+        <el-col v-if="temp.buffCompany" :span="12">
+          <h3>Changed information</h3>
+          <el-form ref="dataForm" label-position="left" style="width: 100%;">
+            <el-form-item style="margin-bottom: 0px">
+              <span>{{ temp.companyById.name !== temp.buffCompany.name ? temp.buffCompany.name : ' ' }}</span>
             </el-form-item>
-            <el-form-item :label="$t('account.location') + ':'" label-width="150px" style="margin-bottom: 0px">
-              <span>{{ temp.companyById.location }}</span>
+            <el-form-item style="margin-bottom: 0px">
+              <span>{{ temp.companyById.location !== temp.buffCompany.location ? temp.buffCompany.location : ' ' }}</span>
             </el-form-item>
-            <el-form-item :label="$t('account.compEmail') + ':'" label-width="150px" style="margin-bottom: 0px">
-              <span>{{ temp.companyById.email }}</span>
+            <el-form-item style="margin-bottom: 0px">
+              <span>{{ temp.companyById.email !== temp.buffCompany.email ? temp.buffCompany.email : ' ' }}</span>
             </el-form-item>
-            <el-form-item :label="$t('account.phoneNo') + ':'" label-width="150px" style="margin-bottom: 0px">
-              <span>{{ temp.companyById.phoneNo }}</span>
+            <el-form-item style="margin-bottom: 0px">
+              <span>{{ temp.companyById.phoneNo !== temp.buffCompany.phoneNo ? temp.buffCompany.phoneNo : ' ' }}</span>
             </el-form-item>
-            <el-form-item :label="$t('account.tax') + ':'" label-width="150px" style="margin-bottom: 0px">
-              <span>{{ temp.companyById.taxCode }}</span>
+            <el-form-item style="margin-bottom: 0px">
+              <span>{{ temp.companyById.taxCode !== temp.buffCompany.taxCode ? temp.buffCompany.taxCode : ' ' }}</span>
             </el-form-item>
-            <el-form-item :label="$t('account.desc') + ':'" label-width="150px" style="margin-bottom: 0px;">
-              <span v-html="temp.companyById.description" />
-            </el-form-item>
-            <el-form-item :label="$t('account.createDate') + ':'" label-width="150px" style="margin-bottom: 0px">
-              <span>{{ (new Date(temp.createDate)).toLocaleString('en-GB') }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('account.status') + ':'" label-width="150px" style="margin-bottom: 0px">
-              <el-tag :type="temp.companyById.verified | statusFilter">
-                {{ temp.companyById.verified ? 'Verified' : 'Unverified' }}
-              </el-tag>
+            <el-form-item style="margin-bottom: 0px;">
+              <span v-html="temp.companyById.description !== temp.buffCompany.description ? temp.buffCompany.description : ' '" />
             </el-form-item>
           </el-form>
         </el-col>
@@ -190,7 +183,7 @@ export default {
       const statusMap = {
         true: 'success',
         false: 'danger',
-        null: 'danger'
+        'warning': 'warning'
       }
       return statusMap[status]
     }
@@ -207,12 +200,14 @@ export default {
         name: '',
         status: '',
         role: '',
-        sort: '+name'
+        sort: '-modifyDate'
       },
       sortNameTemp: 'ascending',
+      sortDateTemp: 'descending',
       statusOptions: ['Verified', 'Unverified'],
       temp: {
         id: undefined,
+        buffCompany: null,
         active: false,
         companyById: {},
         confirmMail: 0,
@@ -265,6 +260,14 @@ export default {
         }
         console.log(order, this.sortNameTemp)
         this.sortByName(this.sortNameTemp)
+      } else if (prop === 'modifyDate') {
+        if (this.sortDateTemp === 'ascending') {
+          this.sortDateTemp = 'descending'
+        } else {
+          this.sortDateTemp = 'ascending'
+        }
+        console.log(order, this.sortDateTemp)
+        this.sortByDate(this.sortDateTemp)
       }
     },
     sortByName(order) {
@@ -272,6 +275,14 @@ export default {
         this.listQuery.sort = '+name'
       } else {
         this.listQuery.sort = '-name'
+      }
+      this.handleFilter()
+    },
+    sortByDate(order) {
+      if (order === 'ascending') {
+        this.listQuery.sort = '+modifyDate'
+      } else {
+        this.listQuery.sort = '-modifyDate'
       }
       this.handleFilter()
     },

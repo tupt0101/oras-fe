@@ -29,10 +29,11 @@ export default {
     profile: 'Thông Tin Cá Nhân'
   },
   navbar: {
-    welcome: 'Chào mừng',
+    welcome: 'Chào',
     profile: 'Thông tin cá nhân',
     manage: 'Quản lý',
     jobList: 'Tin tuyển dụng',
+    accList: 'Người dùng hệ thống',
     report: 'Báo cáo',
     logOut: 'Đăng xuất'
   },
@@ -229,6 +230,7 @@ export default {
     status: 'Trạng thái',
     no: 'Số',
     createDate: 'Ngày tạo',
+    modifyDate: 'Ngày sửa',
     actions: 'Hành động',
     ttDeactivate: 'Hủy kích hoạt tài khoản',
     ttActivate: 'Kích hoạt tài khoản',

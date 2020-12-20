@@ -4,14 +4,19 @@
       <div class="icon">
         <svg-icon class-name="noti-icon" :icon-class="notiList ? 'notification_new' : 'notification'" />
       </div>
-      <el-dropdown-menu slot="dropdown">
+      <el-dropdown-menu v-if="notiList" slot="dropdown">
         <span v-for="(item, index) of notiList" :key="index" @click="updateNotification(item.id)">
           <router-link :to="item.type ==='Apply' ? '/job/candidates/' + item.targetId : '/account/company'">
             <el-dropdown-item class="dd-item">
-              {{ item.type === 'Apply' ? 'Your job id ' + item.targetId + ' has new applications.' : 'There are some new register.' }}
+              {{ item.type === 'Apply' ? 'Your job id ' + item.targetId + ' has new applications.' : item.type === 'Modify' ? 'Someone has just changed company information.' : 'New registers.' }}
             </el-dropdown-item>
           </router-link>
         </span>
+      </el-dropdown-menu>
+      <el-dropdown-menu v-if="!notiList" slot="dropdown">
+        <el-dropdown-item class="dd-item">
+          No notification.
+        </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </div>

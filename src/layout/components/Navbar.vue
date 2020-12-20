@@ -28,9 +28,6 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
-          <!-- <router-link to="/">
-            <el-dropdown-item>Dashboard</el-dropdown-item>
-          </router-link> -->
           <el-dropdown-item>
             <strong style="font-size: 1.1em" class="disabled no-hover">{{ $t('navbar.welcome') }}, {{ accountName && accountName.split(' ')[accountName.split(' ').length - 1] }}</strong>
           </el-dropdown-item>
@@ -47,6 +44,11 @@
           <router-link to="/job/list">
             <el-dropdown-item>
               {{ $t('navbar.jobList') }}
+            </el-dropdown-item>
+          </router-link>
+          <router-link v-if="accountRole === 'admin'" to="/account/list">
+            <el-dropdown-item>
+              {{ $t('navbar.accList') }}
             </el-dropdown-item>
           </router-link>
           <router-link to="/report/index">
@@ -100,6 +102,9 @@ export default {
     ]),
     accountName() {
       return this.$store.state.user.name
+    },
+    accountRole() {
+      return this.$store.state.user.roles[0]
     }
   },
   methods: {
