@@ -13,7 +13,7 @@
             <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
           </el-select>
           <el-button class="filter-item" type="primary" icon="el-icon-search" style="margin-right: 10px" @click="handleFilter">
-            {{ $t('account.search') }}
+            {{ $t('btn.search') }}
           </el-button>
           <!-- <router-link :to="'/job/create'">
             <el-button class="filter-item" type="primary" icon="el-icon-edit">
@@ -130,10 +130,10 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">
-          {{ $t('account.close') }}
+          {{ $t('btn.close') }}
         </el-button>
         <el-button v-if="!temp.companyById.verified" type="success" :loading="listLoading" @click="handleVerifyCompany(temp.companyById.id, temp.email)">
-          {{ $t('account.verify') }}
+          {{ $t('btn.verify') }}
         </el-button>
       </div>
     </el-dialog>

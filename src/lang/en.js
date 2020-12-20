@@ -92,9 +92,6 @@ export default {
     report: 'View Report'
   },
   job: {
-    publish: 'Publish',
-    save: 'Save',
-    cancel: 'Cancel',
     title: 'Title',
     deadline: 'Deadline',
     vacancies: 'Vacancies',
@@ -105,13 +102,8 @@ export default {
     salaryTo: 'Salary To',
     currency: 'Currency',
     description: 'Job description',
-    close: 'Close',
-    continue: 'Continue',
     // job list
     status: 'Status',
-    search: 'Search',
-    export: 'Export Excel',
-    new: 'New',
     no: 'No.',
     published: 'Published',
     salary: 'Salary',
@@ -134,8 +126,7 @@ export default {
     match: 'Matching Rate',
     address: 'Address',
     comment: 'Comment',
-    ttHire: 'Hire',
-    saveComment: 'Save Comment'
+    ttHire: 'Hire'
   },
   purchase: {
     title: 'Find, contact, and hire high-quality candidates faster than ever.',
@@ -195,8 +186,7 @@ export default {
     cfPwd: 'Confirm Password',
     location: 'Location',
     tax: 'Tax Code',
-    desc: 'Description',
-    update: 'Update'
+    desc: 'Description'
   },
   package: {
     name: 'Package Name',
@@ -215,8 +205,6 @@ export default {
     title: 'Subscription List',
     fullname: 'Name',
     plPackage: 'Package',
-    search: 'Search',
-    new: 'New',
     account: 'Account Name',
     company: 'Company',
     rmPost: 'Remaining Posts',
@@ -235,28 +223,21 @@ export default {
     location: 'Location',
     tax: 'Tax Code',
     desc: 'Description',
-    save: 'Save',
-    cancel: 'Cancel',
     accountTitle: 'ACCOUNT INFORMATION',
     companyTitle: 'COMPANY INFORMATION',
     title: 'Account List',
     status: 'Status',
-    search: 'Search',
-    new: 'New',
     no: 'No.',
     createDate: 'Create Date',
     actions: 'Actions',
     ttDeactivate: 'Deactivate Account',
     ttActivate: 'Activate Account',
     ttReset: 'Reset Password',
-    confirm: 'Confirm',
     dlTitle: 'Confirmation',
     msgDeactivate: 'Do you really want to deactivate this account?',
     msgReset: 'Do you really want to reset the password of this account?',
     cTitle: 'Company List',
-    registrant: 'Registrant',
-    verify: 'Verify',
-    close: 'Close'
+    registrant: 'Registrant'
   },
   reportAdmin: {
     totalJob: 'Total Jobs',
@@ -264,7 +245,6 @@ export default {
     totalApp: 'Total Applications',
     users: 'Users',
     userMonth: 'Users by Month',
-    candidateStatus: 'Candidate Status',
     jobByCate: 'Number of Jobs by Category',
     candidateByCate: 'Number of Applications by Category',
     avgSalary: 'Average Salary ',
@@ -282,5 +262,36 @@ export default {
     purchaseStatus: 'Status',
     expired: 'Expired',
     valid: 'Valid'
+  },
+  billing: {
+    title: 'Your Current Package',
+    history: 'Payment History',
+    packName: 'Package name',
+    post: 'Remaining posts',
+    expiry: 'Expiry date',
+    expire: 'Expired at ',
+    numOfPost: 'Number of remaining posts was '
+  },
+  btn: {
+    publish: 'Publish',
+    draft: 'Draft',
+    save: 'Save',
+    discard: 'Discard',
+    cancel: 'Cancel',
+    continue: 'Continue',
+    close: 'Close',
+    search: 'Search',
+    export: 'Export Excel',
+    verify: 'Verify',
+    update: 'Update',
+    saveComment: 'Save Comment',
+    new: 'New',
+    confirm: 'Confirm',
+    change: 'Change Password',
+    cancelPack: 'Cancel Package'
+  },
+  cf: {
+    titleDiscard: 'Confirm Discard Changes',
+    msgDiscard: 'Are you sure to wish to discard the changes?<br>Once discarded the changes will be permanently lost.'
   }
 }

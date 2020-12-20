@@ -16,11 +16,11 @@
             <el-option v-for="item in roleOptions" :key="item" :label="item" :value="item" />
           </el-select>
           <el-button class="filter-item" type="primary" icon="el-icon-search" style="margin-right: 10px" @click="handleFilter">
-            {{ $t('account.search') }}
+            {{ $t('btn.search') }}
           </el-button>
-          <router-link :to="'/job/create'">
+          <router-link :to="'/account/create'">
             <el-button class="filter-item" type="primary" icon="el-icon-edit">
-              {{ $t('account.new') }}
+              {{ $t('btn.new') }}
             </el-button>
           </router-link>
         </div>
@@ -114,10 +114,10 @@
       <p v-if="action === 'reset'" class="message">{{ $t('account.msgReset') }}</p>
       <div slot="footer" class="dialog-footer">
         <el-button @click="confirmDialog = false; btnLoading = false">
-          {{ $t('account.cancel') }}
+          {{ $t('btn.cancel') }}
         </el-button>
         <el-button type="danger" :loading="btnLoading" @click="action === 'deactivate' ? handleDeactivateAccount(rowId) : handleResetPassword(rowId)">
-          {{ $t('account.confirm') }}
+          {{ $t('btn.confirm') }}
         </el-button>
       </div>
     </el-dialog>

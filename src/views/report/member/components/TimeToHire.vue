@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <h2 class="title">Time To Hire</h2>
+    <h2 class="title">{{ $t('report.timeToHire') }}</h2>
     <el-table v-if="!list" v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
       <el-table-column align="center" :label="$t('report.no')" width="80" />
       <el-table-column :label="$t('report.title')" width="300px" />
@@ -44,7 +44,7 @@
           <span>{{ (new Date(row.hiredDate)).toLocaleString('en-GB') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="timeToHire" width="200px" align="center">
+      <el-table-column :label="$t('report.timeToHire')" width="200px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.timeToHired }} days</span>
         </template>

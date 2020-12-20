@@ -3,14 +3,14 @@
     <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
 
       <sticky :z-index="10" :class-name="'sub-navbar '+ postForm.status">
-        <el-button v-loading="loading" type="info" style="width: 105px" @click="handleSubmitAction(2)">
-          {{ $t('job.cancel') }}
+        <el-button v-loading="loading" style="width: 105px" @click="handleCancelAction()">
+          {{ $t('btn.discard') }}
         </el-button>
-        <el-button v-loading="loading" type="warning" @click="handleSubmitAction(2)">
-          {{ $t('job.save') }}
+        <el-button v-loading="loading" type="warning" style="width: 105px" @click="handleSubmitAction(2)">
+          {{ $t('btn.draft') }}
         </el-button>
-        <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="handleSubmitAction(1)">
-          {{ $t('job.publish') }}
+        <el-button v-loading="loading" style="margin-left: 10px; width: 105px" type="success" @click="handleSubmitAction(1)">
+          {{ $t('btn.publish') }}
         </el-button>
       </sticky>
 
@@ -20,7 +20,7 @@
 
           <el-col :span="24">
             <el-form-item style="margin-bottom: 40px;" prop="title">
-              <MDinput v-model="postForm.title" :maxlength="fmaxLength.titleLength" name="name" required>
+              <MDinput v-model="postForm.title" :maxlength="fmaxLength.titleLength" name="name" required @change="isModified = true">
                 {{ $t('job.title') }}
               </MDinput>
             </el-form-item>
@@ -29,18 +29,18 @@
               <el-row>
                 <el-col :span="6">
                   <el-form-item label-width="110px" :label="$t('job.deadline')" class="postInfo-container-item" prop="applyTo">
-                    <el-date-picker v-model="postForm.applyTo" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="Choose date and time" />
+                    <el-date-picker v-model="postForm.applyTo" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="Choose date and time" @change="isModified = true" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
                   <el-form-item label-width="120px" :label="$t('job.vacancies')" class="postInfo-container-item">
-                    <el-input-number v-model="postForm.vacancies" placeholder="1" />
+                    <el-input-number v-model="postForm.vacancies" placeholder="1" @change="isModified = true" />
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="6">
                   <el-form-item label-width="120px" :label="$t('job.type')" class="postInfo-container-item" prop="jobType">
-                    <el-select v-model="postForm.jobType" :remote-method="getJobTypeList" filterable default-first-option remote placeholder="">
+                    <el-select v-model="postForm.jobType" :remote-method="getJobTypeList" filterable default-first-option remote placeholder="" @change="isModified = true">
                       <el-option v-for="(item,index) in jobTypeListOptions" :key="item+index" :label="item" :value="item" />
                     </el-select>
                   </el-form-item>
@@ -48,7 +48,7 @@
 
                 <el-col :span="6">
                   <el-form-item label-width="80px" :label="$t('job.category')" class="postInfo-container-item" prop="category">
-                    <el-select v-model="postForm.category" :remote-method="getCategoryList" filterable remote placeholder="" prop="category">
+                    <el-select v-model="postForm.category" :remote-method="getCategoryList" filterable remote placeholder="" prop="category" @change="isModified = true">
                       <el-option v-for="(item,index) in categoryListOptions" :key="item+index" :label="item" :value="item" />
                     </el-select>
                   </el-form-item>
@@ -57,26 +57,26 @@
               <el-row>
                 <el-col :span="6">
                   <el-form-item label-width="110px" :label="$t('job.hidden')" class="postInfo-container-item" prop="salaryHidden">
-                    <el-checkbox v-model="postForm.salaryHidden" />
+                    <el-checkbox v-model="postForm.salaryHidden" @change="isModified = true" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
                   <el-form-item label-width="120px" :label="$t('job.salaryFrom')" class="postInfo-container-item" prop="salaryFrom">
-                    <el-input-number v-model="postForm.salaryFrom" placeholder="0" :maxlength="fmaxLength.priceLength" />
+                    <el-input-number v-model="postForm.salaryFrom" placeholder="0" :maxlength="fmaxLength.priceLength" @change="isModified = true" />
                     <!--                    <money v-model="postForm.salaryFrom" v-bind="money" placeholder="0" :maxlength="fmaxLength.priceLength" />-->
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="6">
                   <el-form-item label-width="120px" :label="$t('job.salaryTo')" class="postInfo-container-item" prop="salaryTo">
-                    <el-input-number v-model="postForm.salaryTo" placeholder="0" :maxlength="fmaxLength.priceLength" />
+                    <el-input-number v-model="postForm.salaryTo" placeholder="0" :maxlength="fmaxLength.priceLength" @change="isModified = true" />
                     <!--                    <money v-model="postForm.salaryTo" v-bind="money" placeholder="0" :maxlength="fmaxLength.priceLength" />-->
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="6">
                   <el-form-item label-width="80px" :label="$t('job.currency')" class="postInfo-container-item" prop="currency">
-                    <el-select v-model="postForm.currency" :remote-method="getCurrencyList" filterable default-first-option remote placeholder="">
+                    <el-select v-model="postForm.currency" :remote-method="getCurrencyList" filterable default-first-option remote placeholder="" @change="isModified = true">
                       <el-option v-for="(item,index) in currencyListOptions" :key="item+index" :label="item" :value="item" />
                     </el-select>
                   </el-form-item>
@@ -88,7 +88,7 @@
 
         <el-form-item label-width="125px" :label="$t('job.description')" />
         <el-form-item prop="description" style="margin-bottom: 30px;">
-          <Tinymce ref="editor" v-model="postForm.description" :height="400" :maxlength="fmaxLength.jdLength" />
+          <Tinymce ref="editor" v-model="postForm.description" :height="400" :maxlength="fmaxLength.jdLength" @input="isModified = true" />
         </el-form-item>
       </div>
     </el-form>
@@ -103,10 +103,25 @@
       <p class="message" v-html="message" />
       <div slot="footer" class="dialog-footer">
         <el-button @click="showConfirmDialog = false">
-          {{ $t('job.close') }}
+          {{ $t('btn.close') }}
         </el-button>
         <el-button type="success" @click="submitForm">
-          {{ $t('job.continue') }}
+          {{ $t('btn.continue') }}
+        </el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog :visible.sync="showCancelDialog" width="33%">
+      <span slot="title"><svg-icon class-name="size-icon" :icon-class="'warning'" /> {{ $t('cf.titleDiscard') }}</span>
+      <p class="message" v-html="$t('cf.msgDiscard')" />
+      <div slot="footer" class="dialog-footer">
+        <router-link :to="'/'">
+          <el-button style="margin-right: 10px">
+            {{ $t('btn.confirm') }}
+          </el-button>
+        </router-link>
+        <el-button type="primary" @click="showCancelDialog = false">
+          {{ $t('btn.close') }}
         </el-button>
       </div>
     </el-dialog>
@@ -235,7 +250,9 @@ export default {
       confirmation: undefined,
       showConfirmDialog: false,
       action: '',
-      deadline: new Date()
+      deadline: new Date(),
+      showCancelDialog: false,
+      isModified: false
     }
   },
   computed: {
@@ -434,6 +451,13 @@ export default {
           break
       }
       return (this.postForm.salaryFrom >= min && this.postForm.salaryTo <= max)
+    },
+    handleCancelAction() {
+      if (this.isModified) {
+        this.showCancelDialog = true
+      } else {
+        this.$router.push('/')
+      }
     }
   }
 }

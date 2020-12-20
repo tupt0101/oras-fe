@@ -3,11 +3,11 @@
     <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
 
       <sticky :z-index="10" :class-name="'sub-navbar '+ postForm.status">
-        <el-button v-loading="loading" style="margin-left: 10px;" type="danger" @click="submitForm">
-          {{ $t('account.cancel') }}
+        <el-button v-loading="loading" style="width: 105px" @click="handleCancelAction()">
+          {{ $t('btn.discard') }}
         </el-button>
-        <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
-          {{ $t('account.save') }}
+        <el-button v-loading="loading" style="margin-left: 10px; width: 105px" type="success" @click="submitForm">
+          {{ $t('btn.save') }}
         </el-button>
       </sticky>
 
@@ -29,6 +29,7 @@
                       :maxlength="fmaxLength.nameLength"
                       tabindex="1"
                       autocomplete="on"
+                      @change="isModified = true"
                     />
                   </el-form-item>
                 </el-col>
@@ -47,6 +48,7 @@
                       :maxlength="fmaxLength.phoneLength"
                       tabindex="1"
                       autocomplete="on"
+                      @change="isModified = true"
                     />
                   </el-form-item>
                 </el-col>
@@ -65,6 +67,7 @@
                       tabindex="2"
                       autocomplete="on"
                       :disabled="isEdit"
+                      @change="isModified = true"
                     />
                   </el-form-item>
                 </el-col>
@@ -72,7 +75,7 @@
               <el-row>
                 <el-col :span="12">
                   <el-form-item prop="role" label-width="130px" :label="$t('account.role') + ':'" class="postInfo-container-item">
-                    <el-select v-model="postForm.role" tabindex="3" :remote-method="getRoleList" style="width: 300px" filterable default-first-option remote placeholder="Select a role" :disabled="isEdit">
+                    <el-select v-model="postForm.role" tabindex="3" :remote-method="getRoleList" style="width: 300px" filterable default-first-option remote placeholder="Select a role" :disabled="isEdit" @change="isModified = true">
                       <el-option v-for="(item,index) in roleListOptions" :key="item+index" :label="item" :value="item.toLowerCase()" />
                     </el-select>
                   </el-form-item>
@@ -86,7 +89,7 @@
               <el-row>
                 <el-col :span="12">
                   <el-form-item prop="compName" label-width="130px" :label="$t('account.compName') + ':'" class="postInfo-container-item">
-                    <el-input v-model="postForm.companyById.name" autocomplete="on" tabindex="6" style="width: 300px" :maxlength="fmaxLength.compNameLength" placeholder="Please enter the company name" :disabled="isEdit" />
+                    <el-input v-model="postForm.companyById.name" autocomplete="on" tabindex="6" style="width: 300px" :maxlength="fmaxLength.compNameLength" placeholder="Please enter the company name" :disabled="isEdit" @change="isModified = true" />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -94,7 +97,7 @@
               <el-row>
                 <el-col :span="12">
                   <el-form-item prop="compEmail" label-width="130px" :label="$t('account.compEmail') + ':'" class="postInfo-container-item">
-                    <el-input v-model="postForm.companyById.email" autocomplete="on" tabindex="9" type="text" :maxlength="fmaxLength.emailLength" style="width: 300px" placeholder="Please enter the company email" :disabled="isEdit" />
+                    <el-input v-model="postForm.companyById.email" autocomplete="on" tabindex="9" type="text" :maxlength="fmaxLength.emailLength" style="width: 300px" placeholder="Please enter the company email" :disabled="isEdit" @change="isModified = true" />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -102,7 +105,7 @@
               <el-row>
                 <el-col :span="12">
                   <el-form-item prop="compPhone" label-width="130px" :label="$t('account.phoneNo') + ':'" class="postInfo-container-item">
-                    <el-input v-model="postForm.companyById.phoneNo" autocomplete="on" tabindex="10" type="text" :maxlength="fmaxLength.phoneLength" autosize style="width: 300px" placeholder="Please enter the company phone number" :disabled="isEdit" />
+                    <el-input v-model="postForm.companyById.phoneNo" autocomplete="on" tabindex="10" type="text" :maxlength="fmaxLength.phoneLength" autosize style="width: 300px" placeholder="Please enter the company phone number" :disabled="isEdit" @change="isModified = true" />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -110,7 +113,7 @@
               <el-row>
                 <el-col :span="12">
                   <el-form-item prop="location" label-width="130px" :label="$t('account.location') + ':'" class="postInfo-container-item">
-                    <el-input v-model="postForm.companyById.location" autocomplete="on" :maxlength="fmaxLength.locationLength" tabindex="8" style="width: 300px" placeholder="Please enter the company's location" :disabled="isEdit" />
+                    <el-input v-model="postForm.companyById.location" autocomplete="on" :maxlength="fmaxLength.locationLength" tabindex="8" style="width: 300px" placeholder="Please enter the company's location" :disabled="isEdit" @change="isModified = true" />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -118,7 +121,7 @@
               <el-row>
                 <el-col :span="12">
                   <el-form-item prop="taxCode" label-width="130px" :label="$t('account.tax') + ':'" class="postInfo-container-item">
-                    <el-input v-model="postForm.companyById.taxCode" autocomplete="on" tabindex="7" style="width: 300px" type="text" :maxlength="fmaxLength.taxCodeLength" placeholder="Please enter the tax code" :disabled="isEdit" />
+                    <el-input v-model="postForm.companyById.taxCode" autocomplete="on" tabindex="7" style="width: 300px" type="text" :maxlength="fmaxLength.taxCodeLength" placeholder="Please enter the tax code" :disabled="isEdit" @change="isModified = true" />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -126,7 +129,19 @@
               <el-row>
                 <el-col :span="12">
                   <el-form-item prop="description" label-width="130px" :label="$t('account.desc') + ':'">
-                    <el-input v-model="postForm.companyById.description" :rows="1" tabindex="11" :maxlength="fmaxLength.compDesLength" autocomplete="on" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" :disabled="isEdit" />
+                    <el-input
+                      v-model="postForm.companyById.description"
+                      :rows="1"
+                      tabindex="11"
+                      :maxlength="fmaxLength.compDesLength"
+                      autocomplete="on"
+                      type="textarea"
+                      class="article-textarea"
+                      autosize
+                      placeholder="Please enter the description"
+                      :disabled="isEdit"
+                      @change="isModified = true"
+                    />
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -135,6 +150,21 @@
         </el-row>
       </div>
     </el-form>
+
+    <el-dialog :visible.sync="showCancelDialog" width="33%">
+      <span slot="title"><svg-icon class-name="size-icon" :icon-class="'warning'" /> {{ $t('cf.titleDiscard') }}</span>
+      <p class="message" v-html="$t('cf.msgDiscard')" />
+      <div slot="footer" class="dialog-footer">
+        <router-link :to="'/'">
+          <el-button style="margin-right: 10px">
+            {{ $t('btn.confirm') }}
+          </el-button>
+        </router-link>
+        <el-button type="primary" @click="showCancelDialog = false">
+          {{ $t('btn.close') }}
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -211,7 +241,9 @@ export default {
         fullname: [{ required: true, trigger: 'blur', validator: validateFullName }],
         phoneNo: [{ required: true, trigger: 'blur', validator: validatePhoneNo }]
       },
-      tempRoute: {}
+      tempRoute: {},
+      showCancelDialog: false,
+      isModified: false
     }
   },
   computed: {
@@ -304,6 +336,13 @@ export default {
     },
     getRoleList(query) {
       this.roleListOptions = ['Admin', 'User'].map(v => v)
+    },
+    handleCancelAction() {
+      if (this.isModified) {
+        this.showCancelDialog = true
+      } else {
+        this.$router.push('/')
+      }
     }
   }
 }
@@ -345,5 +384,10 @@ export default {
     border-radius: 0px;
     border-bottom: 1px solid #bfcbd9;
   }
+}
+
+.message {
+  margin-left: 10px;
+  font-size: 1.15em;
 }
 </style>

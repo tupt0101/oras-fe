@@ -33,7 +33,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            {{ $t('reportAdmin.totalApp') }}
+            {{ $t('report.totalApp') }}
           </div>
           <count-to :start-val="0" :end-val="panelData && panelData.candidate" :duration="2800" class="card-panel-num" />
         </div>
