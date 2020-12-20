@@ -3,19 +3,22 @@
     <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
 
       <sticky :z-index="10" :class-name="'sub-navbar '+ postForm.status">
+        <el-button v-loading="loading" style="margin-left: 10px;" type="danger" @click="submitForm">
+          {{ $t('account.cancel') }}
+        </el-button>
         <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
-          Save
+          {{ $t('account.save') }}
         </el-button>
       </sticky>
 
       <div class="createPost-main-container">
         <el-row>
           <el-col :span="12">
-            <h4 style="margin-left: 130px">ACCOUNT INFORMATION</h4>
+            <h4 style="margin-left: 130px">{{ $t('account.accountTitle') }}</h4>
             <div class="postInfo-container">
               <el-row>
                 <el-col :span="12">
-                  <el-form-item prop="fullname" label-width="130px" label="Full name:" class="postInfo-container-item">
+                  <el-form-item prop="fullname" label-width="130px" :label="$t('account.fullname') + ':'" class="postInfo-container-item">
                     <el-input
                       ref="fullname"
                       v-model="postForm.fullname"
@@ -33,7 +36,7 @@
 
               <el-row>
                 <el-col :span="12">
-                  <el-form-item prop="phoneNo" label-width="130px" label="Phone number:" class="postInfo-container-item">
+                  <el-form-item prop="phoneNo" label-width="130px" :label="$t('account.phoneNo') + ':'" class="postInfo-container-item">
                     <el-input
                       ref="phoneNo"
                       v-model="postForm.phoneNo"
@@ -50,7 +53,7 @@
               </el-row>
               <el-row>
                 <el-col :span="12">
-                  <el-form-item prop="email" label-width="130px" label="Email:" class="postInfo-container-item">
+                  <el-form-item prop="email" label-width="130px" :label="$t('account.email') + ':'" class="postInfo-container-item">
                     <el-input
                       ref="email"
                       v-model="postForm.email"
@@ -68,7 +71,7 @@
               </el-row>
               <el-row>
                 <el-col :span="12">
-                  <el-form-item prop="role" label-width="130px" label="Role:" class="postInfo-container-item">
+                  <el-form-item prop="role" label-width="130px" :label="$t('account.role') + ':'" class="postInfo-container-item">
                     <el-select v-model="postForm.role" tabindex="3" :remote-method="getRoleList" style="width: 300px" filterable default-first-option remote placeholder="Select a role" :disabled="isEdit">
                       <el-option v-for="(item,index) in roleListOptions" :key="item+index" :label="item" :value="item.toLowerCase()" />
                     </el-select>
@@ -78,11 +81,11 @@
             </div>
           </el-col>
           <el-col :span="12">
-            <h4 style="margin-left: 130px">COMPANY INFORMATION</h4>
+            <h4 style="margin-left: 130px">{{ $t('account.companyTitle') }}</h4>
             <div v-if="postForm.role !== 'admin'" class="company-info">
               <el-row>
                 <el-col :span="12">
-                  <el-form-item prop="compName" label-width="130px" label="Company name:" class="postInfo-container-item">
+                  <el-form-item prop="compName" label-width="130px" :label="$t('account.compName') + ':'" class="postInfo-container-item">
                     <el-input v-model="postForm.companyById.name" autocomplete="on" tabindex="6" style="width: 300px" :maxlength="fmaxLength.compNameLength" placeholder="Please enter the company name" :disabled="isEdit" />
                   </el-form-item>
                 </el-col>
@@ -90,7 +93,7 @@
 
               <el-row>
                 <el-col :span="12">
-                  <el-form-item prop="compEmail" label-width="130px" label="Company email:" class="postInfo-container-item">
+                  <el-form-item prop="compEmail" label-width="130px" :label="$t('account.compEmail') + ':'" class="postInfo-container-item">
                     <el-input v-model="postForm.companyById.email" autocomplete="on" tabindex="9" type="text" :maxlength="fmaxLength.emailLength" style="width: 300px" placeholder="Please enter the company email" :disabled="isEdit" />
                   </el-form-item>
                 </el-col>
@@ -98,7 +101,7 @@
 
               <el-row>
                 <el-col :span="12">
-                  <el-form-item prop="compPhone" label-width="130px" label="Phone number:" class="postInfo-container-item">
+                  <el-form-item prop="compPhone" label-width="130px" :label="$t('account.phoneNo') + ':'" class="postInfo-container-item">
                     <el-input v-model="postForm.companyById.phoneNo" autocomplete="on" tabindex="10" type="text" :maxlength="fmaxLength.phoneLength" autosize style="width: 300px" placeholder="Please enter the company phone number" :disabled="isEdit" />
                   </el-form-item>
                 </el-col>
@@ -106,7 +109,7 @@
 
               <el-row>
                 <el-col :span="12">
-                  <el-form-item prop="location" label-width="130px" label="Location:" class="postInfo-container-item">
+                  <el-form-item prop="location" label-width="130px" :label="$t('account.location') + ':'" class="postInfo-container-item">
                     <el-input v-model="postForm.companyById.location" autocomplete="on" :maxlength="fmaxLength.locationLength" tabindex="8" style="width: 300px" placeholder="Please enter the company's location" :disabled="isEdit" />
                   </el-form-item>
                 </el-col>
@@ -114,7 +117,7 @@
 
               <el-row>
                 <el-col :span="12">
-                  <el-form-item prop="taxCode" label-width="130px" label="Tax code:" class="postInfo-container-item">
+                  <el-form-item prop="taxCode" label-width="130px" :label="$t('account.tax') + ':'" class="postInfo-container-item">
                     <el-input v-model="postForm.companyById.taxCode" autocomplete="on" tabindex="7" style="width: 300px" type="text" :maxlength="fmaxLength.taxCodeLength" placeholder="Please enter the tax code" :disabled="isEdit" />
                   </el-form-item>
                 </el-col>
@@ -122,7 +125,7 @@
 
               <el-row>
                 <el-col :span="12">
-                  <el-form-item prop="description" label-width="130px" label="Description:">
+                  <el-form-item prop="description" label-width="130px" :label="$t('account.desc') + ':'">
                     <el-input v-model="postForm.companyById.description" :rows="1" tabindex="11" :maxlength="fmaxLength.compDesLength" autocomplete="on" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" :disabled="isEdit" />
                   </el-form-item>
                 </el-col>
@@ -136,16 +139,13 @@
 </template>
 
 <script>
-// import MDinput from '@/components/MDinput'
-import Sticky from '@/components/Sticky' // 粘性header组件
-// import Warning from './Warning'
-// import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
-// import { getUserId } from '../../../utils/auth'
+import Sticky from '@/components/Sticky'
 
 // @ la ref toi root folder do
-import { createAccount, fetchAccount, updateAccount, updateAccountByAdmin } from '../../../api/account'
-import { validDigits, validEmail } from '../../../utils/validate'
-import { maxLength } from '../../../store'
+import { fetchAccount, updateAccountByAdmin } from '@/api/account'
+import { validDigits } from '@/utils/validate'
+import { maxLength } from '@/store'
+
 const defaultForm = {
   // content_short: '',
   source_uri: '',

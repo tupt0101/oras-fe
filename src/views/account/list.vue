@@ -3,24 +3,24 @@
     <el-row>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 24}" :xl="{span: 24}">
         <div class="title-container">
-          <strong style="font-size: 36px">Account List</strong><br>
+          <strong style="font-size: 36px">{{ $t('account.title') }}</strong><br>
         </div>
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="filter-container">
-          <el-input v-model="listQuery.name" :maxLength="fmaxLength.nameLength" placeholder="Name" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
-          <el-select v-model="listQuery.status" placeholder="Status" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
+          <el-input v-model="listQuery.name" :max-length="fmaxLength.nameLength" :placeholder="$t('account.fullname')" style="width: 250px; margin-right: 10px" class="filter-item" @keyup.enter.native="handleFilter" />
+          <el-select v-model="listQuery.status" :placeholder="$t('account.status')" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
             <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
           </el-select>
-          <el-select v-model="listQuery.role" placeholder="Role" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
+          <el-select v-model="listQuery.role" :placeholder="$t('account.role')" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
             <el-option v-for="item in roleOptions" :key="item" :label="item" :value="item" />
           </el-select>
           <el-button class="filter-item" type="primary" icon="el-icon-search" style="margin-right: 10px" @click="handleFilter">
-            Search
+            {{ $t('account.search') }}
           </el-button>
           <router-link :to="'/job/create'">
             <el-button class="filter-item" type="primary" icon="el-icon-edit">
-              New
+              {{ $t('account.new') }}
             </el-button>
           </router-link>
         </div>
@@ -28,19 +28,19 @@
     </el-row>
 
     <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%" @sort-change="sortChange">
-      <el-table-column align="center" label="No." width="80">
+      <el-table-column align="center" :label="$t('account.no')" width="80">
         <template slot-scope="scope">
           <span>{{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}</span>
         </template>
       </el-table-column>
 
-      <!-- <el-table-column width="180px" align="center" label="Date">
+      <!-- <el-table-column width="180px" align="center" :label="Date">
         <template slot-scope="scope">
           <span>{{ scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column> -->
 
-      <el-table-column min-width="300px" prop="fullname" sortable="custom" :class-name="getSortClass('fullname')" label="Full name" align="left">
+      <el-table-column min-width="300px" prop="fullname" sortable="custom" :class-name="getSortClass('fullname')" :label="$t('account.fullname')" align="left">
         <template slot-scope="{row}">
           <router-link :to="'/account/edit/'+row.id" class="link-type">
             <span>{{ row.fullname }}</span>
@@ -48,31 +48,31 @@
         </template>
       </el-table-column>
 
-      <el-table-column width="300px" align="left" label="Email">
+      <el-table-column width="300px" align="left" :label="$t('account.email')">
         <template slot-scope="{row}">
           <span>{{ row.email }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="200px" align="center" label="Phone Number">
+      <el-table-column width="200px" align="center" :label="$t('account.phoneNo')">
         <template slot-scope="{row}">
           <span>{{ row.phoneNo }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="120px" align="center" label="Role">
+      <el-table-column width="120px" align="center" :label="$t('account.role')">
         <template slot-scope="{row}">
           <span>{{ row.role }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="180px" align="center" label="Create date" prop="createDate" sortable="custom" :class-name="getSortClass('createDate')">
+      <el-table-column width="180px" align="center" :label="$t('account.createDate')" prop="createDate" sortable="custom" :class-name="getSortClass('createDate')">
         <template slot-scope="{row}">
           <span>{{ (new Date(row.createDate)).toLocaleString('en-GB') }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column class-name="status-col" label="Status" width="150">
+      <el-table-column class-name="status-col" :label="$t('account.status')" width="150">
         <template slot-scope="{row}">
           <el-tag :type="row.active | statusFilter">
             {{ row.active ? 'Active' : 'Inactive' }}
@@ -80,7 +80,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="Actions" width="180">
+      <el-table-column align="left" width="180">
         <template slot-scope="scope">
           <router-link :to="'/account/edit/'+scope.row.id">
             <el-tooltip content="Edit account" placement="top" style="margin-right: 10px">
@@ -89,18 +89,18 @@
               </el-button>
             </el-tooltip>
           </router-link>
-          <el-tooltip content="Deactivate account" placement="top">
+          <el-tooltip :content="$t('account.ttDeactivate')" placement="top">
             <el-button v-if="scope.row.active" type="danger" size="small" icon="el-icon-remove-outline" @click="confirmDialog = true; action = 'deactivate'; rowId = scope.row.id">
             <!-- Deactivate account -->
             </el-button>
           </el-tooltip>
-          <el-tooltip content="Activate account" placement="top">
+          <el-tooltip :content="$t('account.ttActivate')" placement="top">
             <el-button v-if="!scope.row.active" type="success" size="small" icon="el-icon-circle-check" @click="handleActivateAccount(scope.row.id)">
             <!-- Activate account -->
             </el-button>
           </el-tooltip>
-          <el-tooltip content="Reset password" placement="top" style="margin-right: 0px">
-            <el-button type="info" size="small" icon="el-icon-refresh-left" @click="confirmDialog = true; action = 'reset'; rowId = scope.row.email">
+          <el-tooltip :content="$t('account.ttReset')" placement="top" style="margin-right: 0px">
+            <el-button v-if="scope.row.active" type="info" size="small" icon="el-icon-refresh-left" @click="confirmDialog = true; action = 'reset'; rowId = scope.row.email">
             <!-- Reset password -->
             </el-button>
           </el-tooltip>
@@ -109,15 +109,15 @@
     </el-table>
 
     <el-dialog :visible.sync="confirmDialog" width="33%">
-      <span slot="title"><svg-icon class-name="size-icon" :icon-class="'warning'" /> Confirmation</span>
-      <p v-if="action === 'deactivate'" class="message">Do you really want to deactivate this account?</p>
-      <p v-if="action === 'reset'" class="message">Do you really want to reset the password of this account?</p>
+      <span slot="title"><svg-icon class-name="size-icon" :icon-class="'warning'" /> {{ $t('account.dlTitle') }}</span>
+      <p v-if="action === 'deactivate'" class="message">{{ $t('account.msgDeactivate') }}</p>
+      <p v-if="action === 'reset'" class="message">{{ $t('account.msgReset') }}</p>
       <div slot="footer" class="dialog-footer">
         <el-button @click="confirmDialog = false; btnLoading = false">
-          Cancel
+          {{ $t('account.cancel') }}
         </el-button>
         <el-button type="danger" :loading="btnLoading" @click="action === 'deactivate' ? handleDeactivateAccount(rowId) : handleResetPassword(rowId)">
-          Confirm
+          {{ $t('account.confirm') }}
         </el-button>
       </div>
     </el-dialog>
