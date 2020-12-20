@@ -33,6 +33,7 @@ export default {
     profile: 'Profile',
     manage: 'Manage',
     jobList: 'Job List',
+    accList: 'Account List',
     report: 'Report',
     logOut: 'Sign out'
   },
@@ -229,6 +230,7 @@ export default {
     status: 'Status',
     no: 'No.',
     createDate: 'Create Date',
+    modifyDate: 'Modify Date',
     actions: 'Actions',
     ttDeactivate: 'Deactivate Account',
     ttActivate: 'Activate Account',
