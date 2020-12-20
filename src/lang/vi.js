@@ -92,9 +92,6 @@ export default {
     report: 'Xem thống kê'
   },
   job: {
-    publish: 'Đăng Bài',
-    save: 'Lưu Nháp',
-    cancel: 'Hủy',
     title: 'Tiêu đề',
     deadline: 'Hạn nộp',
     vacancies: 'Số vị trí',
@@ -105,13 +102,8 @@ export default {
     salaryTo: 'Đến',
     currency: 'Đơn vị',
     description: 'Mô tả công việc',
-    close: 'Đóng',
-    continue: 'Tiếp tục',
     // job list
     status: 'Trạng Thái',
-    search: 'Tìm Kiếm',
-    export: 'Xuất file Excel',
-    new: 'Tạo Mới',
     no: 'Số',
     published: 'Ngày đăng',
     salary: 'Mức lương',
@@ -134,8 +126,7 @@ export default {
     match: 'Tỉ lệ phù hợp',
     address: 'Địa chỉ',
     comment: 'Nhận xét',
-    ttHire: 'Tuyển',
-    saveComment: 'Lưu nhận xét'
+    ttHire: 'Tuyển'
   },
   purchase: {
     title: 'Tìm kiếm, liên hệ và tuyển ngay những ứng viên chất lượng nhanh chóng hơn bao giờ hết.',
@@ -195,8 +186,7 @@ export default {
     cfPwd: 'Xác nhận mật khẩu',
     location: 'Địa chỉ',
     tax: 'Mã số thuế',
-    desc: 'Mô tả',
-    update: 'Cập nhật'
+    desc: 'Mô tả'
   },
   package: {
     name: 'Tên gói',
@@ -215,8 +205,6 @@ export default {
     title: 'Danh sách đăng ký gói',
     fullname: 'Họ tên',
     plPackage: 'Gói',
-    search: 'Tìm kiếm',
-    new: 'Tạo mới',
     account: 'Tên tài khoản',
     company: 'Công ty',
     rmPost: 'Số lượt còn lại',
@@ -235,28 +223,21 @@ export default {
     location: 'Vị trí',
     tax: 'Mã số thuế',
     desc: 'Mô tả',
-    save: 'Lưu',
-    cancel: 'Hủy',
     accountTitle: 'THÔNG TIN TÀI KHOẢN',
     companyTitle: 'THÔNG TIN CÔNG TY',
     title: 'Danh sách tài khoản',
     status: 'Trạng thái',
-    search: 'Tìm kiếm',
-    new: 'Tạo mới',
     no: 'Số',
     createDate: 'Ngày tạo',
     actions: 'Hành động',
     ttDeactivate: 'Hủy kích hoạt tài khoản',
     ttActivate: 'Kích hoạt tài khoản',
     ttReset: 'Đặt lại mật khẩu',
-    confirm: 'Xác nhận',
     dlTitle: 'Xác nhận',
     msgDeactivate: 'Bạn có thật sự muốn hủy kích hoạt tài khoản này không?',
     msgReset: 'Bạn có thật sự muốn đặt lại mật khẩu cho tài khoản này không?',
     cTitle: 'Danh sách công ty',
-    registrant: 'Người ĐK',
-    verify: 'Xác minh',
-    close: 'Đóng'
+    registrant: 'Người ĐK'
   },
   reportAdmin: {
     totalJob: 'Tổng số tin',
@@ -281,5 +262,26 @@ export default {
     purchaseStatus: 'Trạng thái',
     expired: 'Hết hạn',
     valid: 'Còn hạn'
+  },
+  btn: {
+    publish: 'Đăng tin',
+    draft: 'Lưu nháp',
+    save: 'Lưu',
+    discard: 'Hủy',
+    cancel: 'Hủy',
+    continue: 'Tiếp',
+    close: 'Đóng',
+    search: 'Tìm kiếm',
+    export: 'Xuất Excel',
+    verify: 'Xác minh',
+    update: 'Cập nhật',
+    saveComment: 'Lưu',
+    new: 'Tạo mới',
+    confirm: 'Xác nhận',
+    change: 'Đổi mật khẩu'
+  },
+  cf: {
+    titleDiscard: 'Xác nhận hủy thay đổi',
+    msgDiscard: 'Bạn có chắc chắn muốn hủy những thay đổi này không?<br>Sau khi nhấn xác nhận thì mọi thay đổi sẽ bị xóa vĩnh viễn.'
   }
 }

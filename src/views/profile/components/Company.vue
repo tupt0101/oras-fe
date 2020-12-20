@@ -33,7 +33,7 @@
       </el-col>
       <el-col :lg="24">
         <el-form-item>
-          <el-button type="primary" @click="submit">{{ $t('profile.update') }}</el-button>
+          <el-button type="primary" @click="submit">{{ $t('btn.update') }}</el-button>
         </el-form-item>
       </el-col>
     </el-form>

@@ -27,10 +27,10 @@
             <el-option v-for="item in sortRate" :key="item.key" :label="item.label" :value="item.key" />
           </el-select> -->
           <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-            {{ $t('job.search') }}
+            {{ $t('btn.search') }}
           </el-button>
           <el-button class="filter-item" :loading="downloadLoading" type="primary" icon="el-icon-document" @click="handleDownload">
-            {{ $t('job.export') }}
+            {{ $t('btn.export') }}
           </el-button>
           <!-- <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
             Add
@@ -169,10 +169,10 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">
-          {{ $t('job.close') }}
+          {{ $t('btn.close') }}
         </el-button>
         <el-button :loading="listLoading" type="success" @click="handleComment(temp)">
-          {{ $t('job.saveComment') }}
+          {{ $t('btn.saveComment') }}
         </el-button>
       </div>
     </el-dialog>

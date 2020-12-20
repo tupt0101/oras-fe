@@ -14,7 +14,7 @@
         <el-input v-model.trim="user.phoneNo" :readonly="!checkChangeInfo" :maxlength="fmaxLength.phoneLength" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" :disabled="!checkChangeInfo" @click="submit">Update</el-button>
+        <el-button type="primary" :disabled="!checkChangeInfo" @click="submit">{{ $t('btn.update') }}</el-button>
       </el-form-item>
     </el-form>
     <el-checkbox v-model="checkChangePwd">I want to change password</el-checkbox>
@@ -66,7 +66,7 @@
           />
         </el-form-item>
       </el-tooltip>
-      <el-button type="primary" @click="changePassword">Change password</el-button>
+      <el-button type="primary" @click="changePassword">{{ $t('btn.change') }}</el-button>
     </el-form>
   </div>
 </template>

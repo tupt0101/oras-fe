@@ -16,11 +16,11 @@
             <el-option v-for="item in currencyOptions" :key="item" :label="item" :value="item" />
           </el-select> -->
           <el-button class="filter-item" type="primary" icon="el-icon-search" style="margin-right: 10px" @click="handleFilter">
-            {{ $t('job.search') }}
+            {{ $t('btn.search') }}
           </el-button>
           <router-link v-if="accountRole !== 'admin'" :to="'/job/create'">
             <el-button class="filter-item" type="primary" icon="el-icon-edit">
-              {{ $t('job.new') }}
+              {{ $t('btn.new') }}
             </el-button>
           </router-link>
         </div>

@@ -3,12 +3,12 @@
     <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
 
       <sticky :z-index="10" :class-name="'sub-navbar '+ postForm.status">
-        <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
-          Save
+        <el-button v-loading="loading" style="width: 105px" @click="handleCancelAction()">
+          {{ $t('btn.discard') }}
         </el-button>
-        <!-- <el-button v-loading="loading" type="warning" @click="draftForm">
-          Draft
-        </el-button> -->
+        <el-button v-loading="loading" style="margin-left: 10px; width: 105px" type="success" @click="submitForm">
+          {{ $t('btn.save') }}
+        </el-button>
       </sticky>
 
       <div class="createPost-main-container">
@@ -18,20 +18,20 @@
             <el-row>
               <el-col :span="24">
                 <el-form-item style="margin-bottom: 40px;" prop="name">
-                  <MDinput v-model="postForm.name" :max-length="fmaxLength.pkgNameLength" name="name" required>
+                  <MDinput v-model="postForm.name" :max-length="fmaxLength.pkgNameLength" name="name" required @change="isModified = true">
                     {{ $t('package.name') }}
                   </MDinput>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
                 <el-form-item label-width="130px" prop="tag" :label="$t('package.tag') + ':'" class="postInfo-container-item">
-                  <el-input v-model="postForm.tag" style="width: 300px" :max-length="fmaxLength.pkgTagLength" />
+                  <el-input v-model="postForm.tag" style="width: 300px" :max-length="fmaxLength.pkgTagLength" @change="isModified = true" />
                 </el-form-item>
               </el-col>
 
               <el-col :span="24">
                 <el-form-item label-width="130px" :label="$t('package.numOfPost') + ':'" class="postInfo-container-item">
-                  <el-input-number v-model="postForm.numOfPost" placeholder="0" style="width: 300px" :max="fmaxLength.postMax" />
+                  <el-input-number v-model="postForm.numOfPost" placeholder="0" style="width: 300px" :max="fmaxLength.postMax" @change="isModified = true" />
                 </el-form-item>
               </el-col>
 
@@ -49,14 +49,14 @@
               <!--              <el-row> -->
               <el-col :span="24">
                 <el-form-item label-width="130px" :label="$t('package.price') + ':'" class="postInfo-container-item">
-                  <el-input-number v-model="postForm.price" :max-length="fmaxLength.priceLength" placeholder="0" style="width: 300px" />
+                  <el-input-number v-model="postForm.price" :max-length="fmaxLength.priceLength" placeholder="0" style="width: 300px" @change="isModified = true" />
                   <!--                  <money v-model="postForm.price" v-bind="money" :maxlength="fmaxLength.priceLength" placeholder="0" style="width: 300px" />-->
                 </el-form-item>
               </el-col>
 
               <el-col :span="24">
                 <el-form-item label-width="130px" prop="currency" :label="$t('package.currency') + ':'" class="postInfo-container-item">
-                  <el-select v-model="postForm.currency" :remote-method="getCurrencyList" filterable default-first-option remote placeholder="Select currency..." style="width: 300px">
+                  <el-select v-model="postForm.currency" :remote-method="getCurrencyList" filterable default-first-option remote placeholder="Select currency..." style="width: 300px" @change="isModified = true">
                     <el-option v-for="(item,index) in currencyListOptions" :key="item+index" :label="item" :value="item" />
                   </el-select>
                 </el-form-item>
@@ -66,11 +66,26 @@
         </el-row>
 
         <el-form-item label-width="130px" :label="$t('package.desc') + ':'">
-          <el-input v-model="postForm.description" :rows="1" :max-length="fmaxLength.pkgDesLength" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" />
+          <el-input v-model="postForm.description" :rows="1" :max-length="fmaxLength.pkgDesLength" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" @change="isModified = true" />
           <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span>
         </el-form-item>
       </div>
     </el-form>
+
+    <el-dialog :visible.sync="showCancelDialog" width="33%">
+      <span slot="title"><svg-icon class-name="size-icon" :icon-class="'warning'" /> {{ $t('cf.titleDiscard') }}</span>
+      <p class="message" v-html="$t('cf.msgDiscard')" />
+      <div slot="footer" class="dialog-footer">
+        <router-link :to="'/'">
+          <el-button style="margin-right: 10px">
+            {{ $t('btn.confirm') }}
+          </el-button>
+        </router-link>
+        <el-button type="primary" @click="showCancelDialog = false">
+          {{ $t('btn.close') }}
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -151,7 +166,9 @@ export default {
         content: [{ validator: validateRequire }],
         currency: [{ validator: validateRequire }]
       },
-      tempRoute: {}
+      tempRoute: {},
+      showCancelDialog: false,
+      isModified: false
     }
   },
   computed: {
@@ -277,6 +294,13 @@ export default {
         return !(query && lowerCase.indexOf(query.toLowerCase()) < 0)
       })
       this.durationListOptions = filterList.map(v => v.name)
+    },
+    handleCancelAction() {
+      if (this.isModified) {
+        this.showCancelDialog = true
+      } else {
+        this.$router.push('/')
+      }
     }
   }
 }
@@ -318,5 +342,10 @@ export default {
     border-radius: 0px;
     border-bottom: 1px solid #bfcbd9;
   }
+}
+
+.message {
+  margin-left: 10px;
+  font-size: 1.15em;
 }
 </style>

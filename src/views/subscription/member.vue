@@ -16,13 +16,8 @@
             <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
           </el-select>
           <el-button class="filter-item" type="primary" icon="el-icon-search" style="margin-right: 10px" @click="handleFilter">
-            {{ $t('package.search') }}
+            {{ $t('btn.search') }}
           </el-button>
-          <router-link :to="'/job/create'">
-            <el-button class="filter-item" type="primary" icon="el-icon-edit">
-              {{ $t('package.new') }}
-            </el-button>
-          </router-link>
         </div>
       </el-col>
     </el-row>
