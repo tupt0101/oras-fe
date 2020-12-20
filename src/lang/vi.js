@@ -110,6 +110,7 @@ export default {
     // job list
     status: 'Trạng Thái',
     search: 'Tìm Kiếm',
+    export: 'Xuất file Excel',
     new: 'Tạo Mới',
     no: 'Số',
     published: 'Ngày đăng',
@@ -134,7 +135,7 @@ export default {
     address: 'Địa chỉ',
     comment: 'Nhận xét',
     ttHire: 'Tuyển',
-    saveCommnet: 'Lưu nhận xét'
+    saveComment: 'Lưu nhận xét'
   },
   purchase: {
     title: 'Tìm kiếm, liên hệ và tuyển ngay những ứng viên chất lượng nhanh chóng hơn bao giờ hết.',

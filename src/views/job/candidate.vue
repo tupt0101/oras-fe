@@ -29,6 +29,9 @@
           <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
             {{ $t('job.search') }}
           </el-button>
+          <el-button class="filter-item" :loading="downloadLoading" type="primary" icon="el-icon-document" @click="handleDownload">
+            {{ $t('job.export') }}
+          </el-button>
           <!-- <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
             Add
           </el-button> -->
@@ -169,7 +172,7 @@
           {{ $t('job.close') }}
         </el-button>
         <el-button :loading="listLoading" type="success" @click="handleComment(temp)">
-          {{ $t('job.saveCommnet') }}
+          {{ $t('job.saveComment') }}
         </el-button>
       </div>
     </el-dialog>
@@ -179,7 +182,7 @@
 </template>
 
 <script>
-import { fetchCandidateList, fetchApplicationFromRP, rankCV, commentOnApplication, hireCandidate } from '@/api/candidate'
+import { fetchTotalCandidate, fetchCandidateList, fetchApplicationFromRP, rankCV, commentOnApplication, hireCandidate } from '@/api/candidate'
 import { fetchJob } from '@/api/job'
 import Pagination from '@/components/Pagination'
 import { maxLength } from '../../store' // Secondary package based on el-pagination
@@ -202,8 +205,10 @@ export default {
       fmaxLength: maxLength,
       job: null,
       list: null,
+      totalList: null,
       total: 0,
-      listLoading: true,
+      listLoading: false,
+      downloadLoading: false,
       listQuery: {
         page: 1,
         limit: 10,
@@ -241,10 +246,18 @@ export default {
   },
   created() {
     this.jobId = this.$route.params && this.$route.params.id
+    this.fetchAll(this.jobId)
     this.fetchData(this.jobId)
     this.getApplications(this.jobId)
   },
   methods: {
+    fetchAll(id) {
+      fetchTotalCandidate(id).then(response => {
+        this.totalList = response.data
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     fetchData(id) {
       fetchJob(id).then(response => {
         // auto fill data when edit
@@ -411,6 +424,35 @@ export default {
         key = 'candidateByCandidateId.fullname'
       }
       return sort === `+${key}` ? 'ascending' : 'descending'
+    },
+    handleDownload() {
+      this.downloadLoading = true
+      import('@/vendor/Export2Excel').then(excel => {
+        const tHeader = ['Id', 'Full name', 'Email', 'Phone number', 'Address', 'Apply Date', 'Source', 'Status', 'Resume', 'Matching Rate', 'Comment']
+        const filterVal = ['id', 'fullname', 'email', 'phoneNo', 'address', 'applyDate', 'source', 'status', 'cv', 'matchingRate', 'comment']
+        const list = this.totalList
+        const data = this.formatJson(filterVal, list)
+        const currentTime = new Date().toLocaleString('en-GB')
+        excel.export_json_to_excel({
+          header: tHeader,
+          data,
+          filename: 'applications-of-' + this.job.title.toLowerCase().replace(' ', '-') + '-' + currentTime.replace('/', '').replace(', ', '').replace(':', ''),
+          autoWidth: this.autoWidth,
+          bookType: this.bookType
+        })
+        this.downloadLoading = false
+      })
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v => filterVal.map(j => {
+        if (j === 'applyDate') {
+          return (new Date(v[j])).toLocaleString('en-GB')
+        } else if (j === 'fullname' || j === 'email' || j === 'phoneNo' || j === 'address') {
+          return v['candidateByCandidateId'][j]
+        } else {
+          return v[j]
+        }
+      }))
     }
   }
 }

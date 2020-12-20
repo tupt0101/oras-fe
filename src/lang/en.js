@@ -110,6 +110,7 @@ export default {
     // job list
     status: 'Status',
     search: 'Search',
+    export: 'Export Excel',
     new: 'New',
     no: 'No.',
     published: 'Published',
