@@ -111,3 +111,10 @@ export function fetchAccountCompany(id) {
     method: 'get'
   })
 }
+
+export function updateCompanyAvatar(id, url) {
+  return request({
+    url: '/v1/company-management/change-avatar?id=' + id + '&avaUrl=' + url,
+    method: 'put'
+  })
+}

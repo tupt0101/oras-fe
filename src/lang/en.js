@@ -19,7 +19,6 @@ export default {
     account: 'Account',
     createAccount: 'Create Account',
     editAccount: 'Edit Account',
-    createCompany: 'Create Company',
     editCompany: 'Edit Company',
     accountList: 'Account List',
     companyList: 'Company List',
@@ -30,6 +29,7 @@ export default {
   },
   navbar: {
     welcome: 'Welcome',
+    dashboard: 'Dashboard',
     profile: 'Profile',
     manage: 'Manage',
     jobList: 'Job List',
@@ -42,9 +42,6 @@ export default {
     logIn: 'Sign in',
     username: 'Username',
     password: 'Password',
-    any: 'any',
-    thirdparty: 'Or connect with',
-    thirdpartyTips: 'Can not be simulated on local, so please combine you own business simulation! ! !',
     forgot: 'Forgot password?',
     signin: 'Try to login again.',
     signup: 'Or create your account.'
@@ -290,7 +287,8 @@ export default {
     new: 'New',
     confirm: 'Confirm',
     change: 'Change Password',
-    cancelPack: 'Cancel Package'
+    cancelPack: 'Cancel Package',
+    avatar: 'Change Avatar'
   },
   cf: {
     titleDiscard: 'Confirm Discard Changes',

@@ -89,13 +89,13 @@ export default {
         this.account = response.data
         this.user = {
           id: this.account.id,
-          name: this.account.fullname,
           fullname: this.account.fullname,
           role: this.account.role,
           email: this.account.email,
           phone: this.account.phoneNo,
           phoneNo: this.account.phoneNo,
-          avatar: this.avatar
+          avatar: this.avatar,
+          company: this.account.companyById
         }
         this.company = {
           id: this.account.companyId,

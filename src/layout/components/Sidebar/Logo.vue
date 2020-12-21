@@ -25,7 +25,6 @@ export default {
   data() {
     return {
       title: 'ORAS',
-      // logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
       logo: 'https://oras-myfile.s3-ap-southeast-1.amazonaws.com/1607931430490-logo_1.png'
     }
   }
