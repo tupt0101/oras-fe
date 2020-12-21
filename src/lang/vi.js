@@ -114,7 +114,7 @@ export default {
     // candidate
     plName: 'Tên',
     get: 'Lấy đơn ứng tuyển',
-    rank: 'Sàn lọc CV',
+    rank: 'Sàng lọc CV',
     fullname: 'Họ và Tên',
     email: 'Email',
     phoneNo: 'Số điện thoại',

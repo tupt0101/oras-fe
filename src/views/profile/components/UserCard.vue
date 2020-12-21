@@ -89,6 +89,10 @@ export default {
       console.log('-------- upload success --------')
       console.log(jsonData.url)
       this.user.avatar = jsonData.url
+      this.$store.dispatch('user/updateAvatar', jsonData.url)
+        .then(() => {
+          console.log('update avatar successfully!')
+        })
       updateCompanyAvatar(this.user.company.id, jsonData.url).then(response => {
         console.log(response)
       })
