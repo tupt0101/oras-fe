@@ -3,13 +3,13 @@
     <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
 
       <sticky :z-index="10" :class-name="'sub-navbar '+ postForm.status">
-        <el-button v-loading="loading" style="width: 105px" @click="handleCancelAction()">
+        <el-button :loading="loading" style="width: 105px" @click="handleCancelAction()">
           {{ $t('btn.discard') }}
         </el-button>
-        <el-button v-loading="loading" type="warning" style="width: 105px" @click="handleSubmitAction(2)">
+        <el-button :loading="loading" type="warning" style="width: 105px" @click="handleSubmitAction(2)">
           {{ $t('btn.draft') }}
         </el-button>
-        <el-button v-loading="loading" style="margin-left: 10px; width: 105px" type="success" @click="handleSubmitAction(1)">
+        <el-button :loading="loading" style="margin-left: 10px; width: 105px" type="success" @click="handleSubmitAction(1)">
           {{ $t('btn.publish') }}
         </el-button>
       </sticky>

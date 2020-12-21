@@ -109,7 +109,9 @@ export default {
     ttReopen: 'Reopen Job',
     ttPublish: 'Publish job to recruitment platform',
     ttClose: 'Close Job',
+    ttRemove: 'Remove Job',
     created: 'Created',
+    creator: 'Creator',
     actions: 'Actions',
     // candidate
     plName: 'Name',
@@ -288,7 +290,8 @@ export default {
     confirm: 'Confirm',
     change: 'Change Password',
     cancelPack: 'Cancel Package',
-    avatar: 'Change Avatar'
+    avatar: 'Change Avatar',
+    remove: 'Remove'
   },
   cf: {
     titleDiscard: 'Confirm Discard Changes',

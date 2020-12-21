@@ -104,7 +104,8 @@
     <el-dialog title="Company Detail" :visible.sync="dialogFormVisible">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 90%; margin-top: 53px; margin-left:50px;">
+          <h2 v-if="temp.buffCompany" style="margin-left: 50px">Current information</h2>
+          <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 90%; margin-left:50px;">
             <el-form-item :label="$t('account.compName') + ':'" label-width="150px" style="margin-bottom: 0px">
               <span>{{ temp.companyById.name }}</span>
             </el-form-item>
@@ -134,25 +135,25 @@
           </el-form>
         </el-col>
         <el-col v-if="temp.buffCompany" :span="12">
-          <h3>Changed information</h3>
+          <h2>Modified information</h2>
           <el-form ref="dataForm" label-position="left" style="width: 100%;">
             <el-form-item style="margin-bottom: 0px">
-              <span>{{ temp.companyById.name !== temp.buffCompany.name ? temp.buffCompany.name : ' ' }}</span>
+              <span :class="temp.companyById.name !== temp.buffCompany.name && 'modified'">{{ temp.buffCompany.name }}</span>
             </el-form-item>
             <el-form-item style="margin-bottom: 0px">
-              <span>{{ temp.companyById.location !== temp.buffCompany.location ? temp.buffCompany.location : ' ' }}</span>
+              <span :class="temp.companyById.location !== temp.buffCompany.location && 'modified'">{{ temp.buffCompany.location }}</span>
             </el-form-item>
             <el-form-item style="margin-bottom: 0px">
-              <span>{{ temp.companyById.email !== temp.buffCompany.email ? temp.buffCompany.email : ' ' }}</span>
+              <span :class="temp.companyById.email !== temp.buffCompany.email && 'modified'">{{ temp.buffCompany.email }}</span>
             </el-form-item>
             <el-form-item style="margin-bottom: 0px">
-              <span>{{ temp.companyById.phoneNo !== temp.buffCompany.phoneNo ? temp.buffCompany.phoneNo : ' ' }}</span>
+              <span :class="temp.companyById.phoneNo !== temp.buffCompany.phoneNo && 'modified'">{{ temp.buffCompany.phoneNo }}</span>
             </el-form-item>
             <el-form-item style="margin-bottom: 0px">
-              <span>{{ temp.companyById.taxCode !== temp.buffCompany.taxCode ? temp.buffCompany.taxCode : ' ' }}</span>
+              <span :class="temp.companyById.taxCode !== temp.buffCompany.taxCode && 'modified'">{{ temp.buffCompany.taxCode }}</span>
             </el-form-item>
             <el-form-item style="margin-bottom: 0px;">
-              <span v-html="temp.companyById.description !== temp.buffCompany.description ? temp.buffCompany.description : ' '" />
+              <span :class="temp.companyById.description !== temp.buffCompany.description && 'modified'" v-html="temp.buffCompany.description" />
             </el-form-item>
           </el-form>
         </el-col>
@@ -170,7 +171,7 @@
     <el-dialog title="Account Detail" :visible.sync="dialogAccountVisible">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 90%; margin-top: 53px; margin-left:50px;">
+          <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 90%; margin-left:50px;">
             <el-form-item :label="$t('account.fullname') + ':'" label-width="150px" style="margin-bottom: 0px">
               <span>{{ temp.fullname }}</span>
             </el-form-item>
@@ -343,5 +344,8 @@ export default {
   position: absolute;
   right: 15px;
   top: 10px;
+}
+.modified {
+  color: red;
 }
 </style>

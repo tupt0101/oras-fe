@@ -2,18 +2,21 @@
   <div>
     <el-dropdown trigger="click">
       <div class="icon">
-        <svg-icon class-name="noti-icon" :icon-class="notiList ? 'notification_new' : 'notification'" />
+        <svg-icon class-name="noti-icon" :icon-class="notiList.length !== 0 ? 'notification_new' : 'notification'" />
       </div>
-      <el-dropdown-menu v-if="notiList" slot="dropdown">
-        <span v-for="(item, index) of notiList" :key="index" @click="updateNotification(item.id)">
-          <router-link :to="item.type ==='Apply' ? '/job/candidates/' + item.targetId : '/account/company'">
-            <el-dropdown-item class="dd-item">
-              {{ item.type === 'Apply' ? 'Your job id ' + item.targetId + ' has new applications.' : item.type === 'Modify' ? 'Someone has just changed company information.' : 'New registers.' }}
+      <el-dropdown-menu v-if="notiList.length !== 0" slot="dropdown">
+        <span v-for="(item, index) of notiList" :key="index" @click="updateNotification(item.ids)">
+          <router-link :to="item.type ==='Apply' ? '/job/candidates/' + item.jobId : '/account/company'">
+            <el-dropdown-item class="dd-item" divided>
+              {{ item.type === 'Apply' ? item.numb + ' new applications for the job with title "' + item.jobTitle + '".'
+                : item.type === 'Modify' ? item.actor + ' has just changed their company information.'
+                  : 'There are' + item.numb + ' new registrations to the ORAS.'
+              }}<br>- {{ new Date(item.lastModify).toLocaleString('en-GB') }} -
             </el-dropdown-item>
           </router-link>
         </span>
       </el-dropdown-menu>
-      <el-dropdown-menu v-if="!notiList" slot="dropdown">
+      <el-dropdown-menu v-if="notiList.length === 0" slot="dropdown">
         <el-dropdown-item class="dd-item">
           No notification.
         </el-dropdown-item>
@@ -28,7 +31,7 @@ import { getNewNotification, setAsReadNotification } from '@/api/notification'
 export default {
   data() {
     return {
-      notiList: null,
+      notiList: [],
       timer: ''
     }
   },
@@ -56,8 +59,8 @@ export default {
         this.notiList = response.data
       })
     },
-    updateNotification(id) {
-      setAsReadNotification(id).then(response => {
+    updateNotification(ids) {
+      setAsReadNotification(ids).then(response => {
         console.log(response)
         this.fetchNotification()
       })
@@ -73,6 +76,6 @@ export default {
   vertical-align: middle;
 }
 .dd-item {
-  width: 250px;
+  width: 300px;
 }
 </style>

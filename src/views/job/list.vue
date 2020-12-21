@@ -18,25 +18,38 @@
           <el-button class="filter-item" type="primary" icon="el-icon-search" style="margin-right: 10px" @click="handleFilter">
             {{ $t('btn.search') }}
           </el-button>
-          <router-link v-if="accountRole !== 'admin'" :to="'/job/create'">
-            <el-button class="filter-item" type="primary" icon="el-icon-edit">
+          <router-link v-if="accountRole === 'user'" :to="'/job/create'">
+            <el-button class="filter-item" type="primary" icon="el-icon-edit" style="margin-right: 10px">
               {{ $t('btn.new') }}
             </el-button>
           </router-link>
+          <el-button v-if="accountRole === 'user'" class="filter-item" :loading="removeLoading" type="danger" icon="el-icon-remove-outline" @click="handleRemove">
+            {{ $t('btn.remove') }}
+          </el-button>
         </div>
       </el-col>
     </el-row>
 
-    <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%" @sort-change="sortChange">
-      <el-table-column align="center" :label="$t('job.no')" width="80">
+    <el-table
+      v-loading="listLoading"
+      :data="list"
+      border
+      fit
+      highlight-current-row
+      style="width: 100%"
+      @sort-change="sortChange"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column v-if="accountRole === 'user'" type="selection" align="center" :selectable="canSelectRow" />
+      <el-table-column align="center" :label="$t('job.no')" width="50">
         <template slot-scope="scope">
           <span>{{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('job.title')" prop="title" sortable="custom" width="280px" :class-name="getSortClass('title')">
+      <el-table-column :label="$t('job.title')" prop="title" sortable="custom" width="300px" :class-name="getSortClass('title')">
         <template slot-scope="{row}">
-          <router-link :to="'/job/candidates/' + row.id">
-            <span class="link-type">{{ row.title }}</span>
+          <router-link :to="row.status !== 'Draft' ? '/job/candidates/' + row.id : '/job/edit/' + row.id">
+            <span class="link-type" style="display: block; word-wrap: normal;" v-html="row.title" />
           </router-link>
         </template>
       </el-table-column>
@@ -45,13 +58,11 @@
           <span class="link-type" style="white-space: nowrap; color: #606266" @click="viewDetail(row)">{{ stripHtml(row.description) }}</span>
         </template>
       </el-table-column>
-      <!-- <el-table-column :label="Applications" prop="application" sortable="custom" width="130px" align="center" :class-name="getSortClass('application')">
+      <el-table-column :label="$t('job.creator')" width="150px" align="center">
         <template slot-scope="{row}">
-          <router-link :to="'/job/candidates/' + row.id">
-            <span>{{ row.totalApplication }} candidates</span>
-          </router-link>
+          <span>{{ row.accountByCreatorId.fullname }}</span>
         </template>
-      </el-table-column> -->
+      </el-table-column>
       <el-table-column :label="$t('job.published')" prop="publishDate" sortable="custom" width="120px" align="center" :class-name="getSortClass('publishDate')">
         <template slot-scope="{row}">
           <span>{{ row.applyFrom && (new Date(row.applyFrom)).toLocaleDateString('en-GB') }}</span>
@@ -79,31 +90,24 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column v-if="accountRole !== 'admin'" align="center" :label="$t('job.actions')" width="150px" class-name="small-padding fixed-width">
+      <el-table-column v-if="accountRole !== 'admin'" align="center" :label="$t('job.actions')" width="100px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <!-- alo YAnh -->
           <!-- sua router to: toi api thuc hien action crud -->
-          <router-link :to="'/job/edit/'+scope.row.id">
-            <el-tooltip :content="$t('job.ttEdit')" placement="top">
-              <el-button v-if="scope.row.status==='Draft'" type="primary" size="small" icon="el-icon-edit">
-                <!-- Edit -->
-              </el-button>
-            </el-tooltip>
-          </router-link>
           <router-link :to="'/job/reopen/'+scope.row.id">
             <el-tooltip :content="$t('job.ttReopen')" placement="top">
-              <el-button v-if="scope.row.status==='Closed'" type="primary" size="small" icon="el-icon-copy-document">
+              <el-button v-if="scope.row.status === 'Closed'" type="primary" size="small" icon="el-icon-copy-document">
                 <!-- Reopen -->
               </el-button>
             </el-tooltip>
           </router-link>
           <el-tooltip :content="$t('job.ttPublish')" placement="top">
-            <el-button v-if="scope.row.status==='Draft'" :loading="btnLoading" style="margin-left: 10px" type="success" size="small" icon="el-icon-upload2" @click="handlePublishJob(scope.row.id)">
+            <el-button v-if="scope.row.status === 'Draft'" :loading="btnLoading" type="success" size="small" icon="el-icon-upload2" @click="handlePublishJob(scope.row.id)">
               <!-- Publish -->
             </el-button>
           </el-tooltip>
           <el-tooltip :content="$t('job.ttClose')" placement="top">
-            <el-button v-if="scope.row.status==='Published'" type="danger" size="small" icon="el-icon-circle-close" @click="confirmDialog = true; rowId = scope.row.id">
+            <el-button v-if="scope.row.status === 'Published'" type="danger" size="small" icon="el-icon-circle-close" @click="confirmDialog = true; rowId = scope.row.id">
               <!-- Close -->
             </el-button>
           </el-tooltip>
@@ -174,7 +178,7 @@
 </template>
 
 <script>
-import { fetchJobListWithPagination, fetchJobByCreatorWithPagination } from '@/api/job'
+import { fetchJobListWithPagination, fetchJobByCreatorWithPagination, removeJob } from '@/api/job'
 import Pagination from '@/components/Pagination'
 import { closeJob, publishJob } from '../../api/job'
 import { maxLength } from '../../store' // Secondary package based on el-pagination
@@ -230,7 +234,9 @@ export default {
         description: '',
         status: 'published'
       },
-      dialogFormVisible: false
+      removeLoading: false,
+      dialogFormVisible: false,
+      multipleSelection: []
     }
   },
   computed: {
@@ -245,6 +251,21 @@ export default {
     this.getJobList()
   },
   methods: {
+    canSelectRow(row, index) {
+      return row.status === 'Draft'
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val
+    },
+    handleRemove() {
+      const selectId = this.multipleSelection.map(item => item.id)
+      this.removeLoading = true
+      removeJob(selectId).then(response => {
+        console.log(response.data)
+        this.getJobList()
+        this.removeLoading = false
+      })
+    },
     handlePublishJob(id) {
       this.btnLoading = true
       publishJob(id).then(response => {

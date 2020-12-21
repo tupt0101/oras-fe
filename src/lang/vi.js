@@ -109,12 +109,14 @@ export default {
     ttReopen: 'Mở lại tin',
     ttPublish: 'Đăng tải tin lên các nền tảng tuyển dụng',
     ttClose: 'Đóng tin',
+    ttRemove: 'Xóa tin',
     created: 'Ngày tạo',
+    creator: 'Người tạo',
     actions: 'Hành động',
     // candidate
     plName: 'Tên',
     get: 'Lấy đơn ứng tuyển',
-    rank: 'Sàn lọc CV',
+    rank: 'Sàng lọc CV',
     fullname: 'Họ và Tên',
     email: 'Email',
     phoneNo: 'Số điện thoại',
@@ -273,7 +275,7 @@ export default {
   },
   btn: {
     publish: 'Đăng tin',
-    draft: 'Lưu nháp',
+    draft: 'Lưu',
     save: 'Lưu',
     discard: 'Hủy',
     cancel: 'Hủy',
@@ -288,7 +290,8 @@ export default {
     confirm: 'Xác nhận',
     change: 'Đổi mật khẩu',
     cancelPack: 'Hủy gói',
-    avatar: 'Thay đổi Ảnh đại diện'
+    avatar: 'Thay đổi Ảnh đại diện',
+    remove: 'Xóa'
   },
   cf: {
     titleDiscard: 'Xác nhận hủy thay đổi',

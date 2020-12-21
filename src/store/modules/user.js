@@ -108,6 +108,14 @@ const actions = {
     })
   },
 
+  // update avatar
+  updateAvatar({ commit }, url) {
+    return new Promise(resolve => {
+      commit('SET_AVATAR', url)
+      resolve()
+    })
+  },
+
   // remove token
   resetToken({ commit }) {
     return new Promise(resolve => {

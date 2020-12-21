@@ -56,17 +56,6 @@
       </el-col>
     </el-row>
 
-    <!-- <el-table v-if="!list" v-loading="listLoading" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" :label="No." width="80" />
-      <el-table-column :label="Full name" min-width="150px" />
-      <el-table-column :label="Email" align="center" width="240px" />
-      <el-table-column :label="Phone number" align="center" width="160px" />
-      <el-table-column :label="Apply date" width="200px" align="center" />
-      <el-table-column :label="Source" width="180px" align="center" />
-      <el-table-column :label="Status" class-name="status-col" width="100" />
-      <el-table-column align="center" :label="Resume" width="90px" class-name="small-padding fixed-width" />
-      <el-table-column align="center" :label="Matching Rank" width="180px" />
-    </el-table> -->
     <el-table
       v-if="list"
       v-loading="listLoading"
@@ -76,8 +65,10 @@
       highlight-current-row
       style="width: 100%"
       @sort-change="sortChange"
+      @selection-change="handleSelectionChange"
     >
-      <el-table-column type="index" align="center" :label="$t('job.no')" width="80">
+      <el-table-column type="selection" align="center" />
+      <el-table-column type="index" align="center" :label="$t('job.no')" width="50">
         <template slot-scope="scope">
           <span>{{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}</span>
         </template>
@@ -130,7 +121,7 @@
           <span>{{ row.matchingRate }}%</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="$t('job.actions')" width="100px">
+      <el-table-column v-if="accountRole === 'user'" align="center" :label="$t('job.actions')" width="100px">
         <template slot-scope="scope">
           <el-tooltip :content="$t('job.ttHire')" placement="top">
             <el-button v-if="scope.row.status !== 'Hired'" type="success" size="small" icon="el-icon-circle-check" @click="handleHireCandidate(scope.row.id)">
@@ -163,9 +154,6 @@
         <el-form-item :label="$t('job.comment') + ':'" label-width="150px" style="margin-bottom: 0px;">
           <el-input v-model="temp.comment" type="textarea" :rows="5" :max-length="fmaxLength.cmtLength" />
         </el-form-item>
-        <!-- <el-form-item :label="" label-width="120px" style="margin-bottom: 0px; max-height: 320px; overflow-y: scroll">
-          <span v-html="temp.description" />
-        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">
@@ -241,7 +229,16 @@ export default {
         },
         jobByJobId: null
       },
-      dialogFormVisible: false
+      dialogFormVisible: false,
+      multipleSelection: []
+    }
+  },
+  computed: {
+    accountId() {
+      return this.$store.state.user.accId
+    },
+    accountRole() {
+      return this.$store.state.user.roles[0]
     }
   },
   created() {
@@ -251,6 +248,9 @@ export default {
     this.getApplications(this.jobId)
   },
   methods: {
+    handleSelectionChange(val) {
+      this.multipleSelection = val
+    },
     fetchAll(id) {
       fetchTotalCandidate(id).then(response => {
         this.totalList = response.data
@@ -430,7 +430,12 @@ export default {
       import('@/vendor/Export2Excel').then(excel => {
         const tHeader = ['Id', 'Full name', 'Email', 'Phone number', 'Address', 'Apply Date', 'Source', 'Status', 'Resume', 'Matching Rate', 'Comment']
         const filterVal = ['id', 'fullname', 'email', 'phoneNo', 'address', 'applyDate', 'source', 'status', 'cv', 'matchingRate', 'comment']
-        const list = this.totalList
+        let list = []
+        if (this.multipleSelection.length) {
+          list = this.multipleSelection
+        } else {
+          list = this.totalList
+        }
         const data = this.formatJson(filterVal, list)
         const currentTime = new Date().toLocaleString('en-GB')
         excel.export_json_to_excel({
