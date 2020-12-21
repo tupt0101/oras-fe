@@ -37,10 +37,10 @@ export function updateAccount(data) {
   })
 }
 
-export function updateAccountByAdmin(data) {
+export function updateAccountByAdmin(data, method) {
   return request({
     url: '/v1/account-management/account-by-admin',
-    method: 'put',
+    method: method,
     data: data
   })
 }

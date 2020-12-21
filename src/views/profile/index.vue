@@ -113,7 +113,11 @@ export default {
     },
     fetchUserPkg() {
       fetchTransactionOfAccount(this.accountId).then(response => {
-        this.listPackage = response.data
+        if (response.data) {
+          this.listPackage = response.data
+        } else {
+          this.listPackage = []
+        }
       })
     },
     getPackage() {
