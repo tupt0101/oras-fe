@@ -19,7 +19,6 @@ export default {
     account: 'Tài Khoản',
     createAccount: 'Tạo Tài Khoản',
     editAccount: 'Chỉnh Sửa Tài Khoản',
-    createCompany: 'Tạo Công Ty',
     editCompany: 'Chỉnh Sửa Công Ty',
     accountList: 'Danh Sách Tài Khoản',
     companyList: 'Danh Sách Công Ty',
@@ -30,6 +29,7 @@ export default {
   },
   navbar: {
     welcome: 'Chào',
+    dashboard: 'Trang chủ',
     profile: 'Thông tin cá nhân',
     manage: 'Quản lý',
     jobList: 'Tin tuyển dụng',
@@ -42,9 +42,6 @@ export default {
     logIn: 'Đăng nhập',
     username: 'Tên đăng nhập',
     password: 'Mật khẩu',
-    any: 'any',
-    thirdparty: 'Or connect with',
-    thirdpartyTips: 'Can not be simulated on local, so please combine you own business simulation! ! !',
     forgot: 'Quên mật khẩu?',
     signin: 'Thử đăng nhập lại.',
     signup: 'Hoặc tạo tài khoản của bạn.'
@@ -290,7 +287,8 @@ export default {
     new: 'Tạo mới',
     confirm: 'Xác nhận',
     change: 'Đổi mật khẩu',
-    cancelPack: 'Hủy gói'
+    cancelPack: 'Hủy gói',
+    avatar: 'Thay đổi Ảnh đại diện'
   },
   cf: {
     titleDiscard: 'Xác nhận hủy thay đổi',

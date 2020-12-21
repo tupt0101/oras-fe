@@ -8,9 +8,12 @@
       <div class="box-center">
         <pan-thumb :image="user && user.avatar" :height="'100px'" :width="'100px'" :hoverable="false" />
       </div>
-      <div class="box-center">
-        <div class="user-name text-center">{{ user && user.name }}</div>
-        <div class="user-role text-center text-muted">{{ user && user.role }}</div>
+      <div style="text-align: center">
+        <svg-icon v-if="user.role === 'user'" class="my-icon text-muted" icon-class="edit" @click="imageCropperShow = true" />
+      </div>
+      <div class="box-center" style="margin-top: 20px">
+        <div class="user-name text-center">{{ user && user.fullname }}</div>
+        <div class="user-role text-center text-muted">{{ user && user.role === 'admin' ? user.role : '' }}</div>
       </div>
     </div>
 
@@ -29,14 +32,31 @@
         </div>
       </div>
     </div>
+
+    <image-uploader
+      v-model="imageCropperShow"
+      url="https://oras-api.herokuapp.com/v1/s3-management/uploadFile"
+      method="post"
+      field="file"
+      :width="300"
+      :height="300"
+      img-format="png"
+      lang-type="en"
+      @crop-success="cropSuccess"
+      @crop-upload-success="cropUploadSuccess"
+      @crop-upload-fail="cropUploadFail"
+    />
   </el-card>
 </template>
 
 <script>
+import ImageUploader from 'vue-image-crop-upload'
 import PanThumb from '@/components/PanThumb'
 
+import { updateCompanyAvatar } from '@/api/account'
+
 export default {
-  components: { PanThumb },
+  components: { PanThumb, ImageUploader },
   props: {
     user: {
       type: Object,
@@ -46,9 +66,36 @@ export default {
           role: '',
           email: '',
           phoneNo: '',
-          avatar: ''
+          avatar: '',
+          company: ''
         }
       }
+    }
+  },
+  data() {
+    return {
+      imageCropperShow: false
+    }
+  },
+  methods: {
+    close() {
+      this.imageCropperShow = false
+    },
+    cropSuccess(imgDataUrl) {
+      console.log('-------- crop success --------')
+      this.imgDataUrl = imgDataUrl
+    },
+    cropUploadSuccess(jsonData) {
+      console.log('-------- upload success --------')
+      console.log(jsonData.url)
+      this.user.avatar = jsonData.url
+      updateCompanyAvatar(this.user.company.id, jsonData.url).then(response => {
+        console.log(response)
+      })
+    },
+    cropUploadFail(status) {
+      console.log('-------- upload fail --------')
+      console.log(status)
     }
   }
 }
@@ -65,6 +112,10 @@ export default {
 }
 
 .user-profile {
+  .my-icon {
+    cursor: pointer;
+  }
+
   .user-name {
     font-weight: bold;
   }
