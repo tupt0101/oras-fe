@@ -9,7 +9,7 @@ const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
   withCredentials: true, // send cookies when cross-domain requests
   // credentials: 'same-origin',
-  timeout: 120000 // request timeout
+  timeout: 60000 // request timeout
 })
 // request interceptor
 service.interceptors.request.use(

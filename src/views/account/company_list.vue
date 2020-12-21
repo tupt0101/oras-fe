@@ -170,7 +170,7 @@
     <el-dialog title="Account Detail" :visible.sync="dialogAccountVisible">
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 90%; margin-top: 53px; margin-left:50px;">
+          <el-form ref="dataForm" label-position="left" label-width="70px" style="width: 90%; margin-left:50px;">
             <el-form-item :label="$t('account.fullname') + ':'" label-width="150px" style="margin-bottom: 0px">
               <span>{{ temp.fullname }}</span>
             </el-form-item>

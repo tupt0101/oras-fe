@@ -77,3 +77,11 @@ export function fetchCategory() {
     method: 'get'
   })
 }
+
+export function removeJob(data) {
+  return request({
+    url: '/v1/job-management/remove',
+    method: 'delete',
+    data: data
+  })
+}

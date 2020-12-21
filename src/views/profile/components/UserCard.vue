@@ -9,7 +9,7 @@
         <pan-thumb :image="user && user.avatar" :height="'100px'" :width="'100px'" :hoverable="false" />
       </div>
       <div style="text-align: center">
-        <svg-icon v-if="user.role === 'user'" class="my-icon text-muted" icon-class="edit" @click="imageCropperShow = true" />
+        <i v-if="user.role === 'user'" class="my-icon text-muted el-icon-camera-solid" @click="imageCropperShow = true" />
       </div>
       <div class="box-center" style="margin-top: 20px">
         <div class="user-name text-center">{{ user && user.fullname }}</div>
@@ -118,6 +118,7 @@ export default {
 .user-profile {
   .my-icon {
     cursor: pointer;
+    font-size: 25px;
   }
 
   .user-name {
