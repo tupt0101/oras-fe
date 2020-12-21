@@ -29,7 +29,7 @@
               <el-row>
                 <el-col :span="6">
                   <el-form-item label-width="110px" :label="$t('job.deadline')" class="postInfo-container-item" prop="applyTo">
-                    <el-date-picker v-model="postForm.applyTo" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="Choose date and time" @change="isModified = true" />
+                    <el-date-picker v-model="postForm.applyTo" type="datetime" :picker-options="pickerOptions" format="yyyy-MM-dd HH:mm:ss" placeholder="Choose date and time" @change="isModified = true" />
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
@@ -252,7 +252,10 @@ export default {
       action: '',
       deadline: new Date(),
       showCancelDialog: false,
-      isModified: false
+      isModified: false,
+      pickerOptions: {
+        disabledDate: this.disabledDate
+      }
     }
   },
   computed: {
@@ -292,6 +295,9 @@ export default {
     this.tempRoute = Object.assign({}, this.$route)
   },
   methods: {
+    disabledDate(time) {
+      return time.getTime() < Date.now()
+    },
     fetchData(id) {
       fetchJob(id).then(response => {
         // auto fill data when edit
