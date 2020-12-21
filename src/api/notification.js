@@ -7,9 +7,10 @@ export function getNewNotification(id, role) {
   })
 }
 
-export function setAsReadNotification(id) {
+export function setAsReadNotification(ids) {
   return request({
-    url: '/v1/notification-management/read-notification/' + id,
-    method: 'put'
+    url: '/v1/notification-management/read-notification/',
+    method: 'put',
+    data: ids
   })
 }

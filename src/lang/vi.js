@@ -111,6 +111,7 @@ export default {
     ttClose: 'Đóng tin',
     ttRemove: 'Xóa tin',
     created: 'Ngày tạo',
+    creator: 'Người tạo',
     actions: 'Hành động',
     // candidate
     plName: 'Tên',

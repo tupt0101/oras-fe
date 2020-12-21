@@ -18,12 +18,12 @@
           <el-button class="filter-item" type="primary" icon="el-icon-search" style="margin-right: 10px" @click="handleFilter">
             {{ $t('btn.search') }}
           </el-button>
-          <router-link v-if="accountRole !== 'admin'" :to="'/job/create'">
+          <router-link v-if="accountRole === 'user'" :to="'/job/create'">
             <el-button class="filter-item" type="primary" icon="el-icon-edit" style="margin-right: 10px">
               {{ $t('btn.new') }}
             </el-button>
           </router-link>
-          <el-button class="filter-item" :loading="removeLoading" type="danger" icon="el-icon-remove-outline" @click="handleRemove">
+          <el-button v-if="accountRole === 'user'" class="filter-item" :loading="removeLoading" type="danger" icon="el-icon-remove-outline" @click="handleRemove">
             {{ $t('btn.remove') }}
           </el-button>
         </div>
@@ -40,13 +40,13 @@
       @sort-change="sortChange"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" align="center" :selectable="canSelectRow" />
+      <el-table-column v-if="accountRole === 'user'" type="selection" align="center" :selectable="canSelectRow" />
       <el-table-column align="center" :label="$t('job.no')" width="50">
         <template slot-scope="scope">
           <span>{{ scope.$index + 1 + (listQuery.page - 1)*listQuery.limit }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('job.title')" prop="title" sortable="custom" width="320px" :class-name="getSortClass('title')">
+      <el-table-column :label="$t('job.title')" prop="title" sortable="custom" width="300px" :class-name="getSortClass('title')">
         <template slot-scope="{row}">
           <router-link :to="row.status !== 'Draft' ? '/job/candidates/' + row.id : '/job/edit/' + row.id">
             <span class="link-type" style="display: block; word-wrap: normal;" v-html="row.title" />
@@ -56,6 +56,11 @@
       <el-table-column :label="$t('job.description')" min-width="150px">
         <template slot-scope="{row}">
           <span class="link-type" style="white-space: nowrap; color: #606266" @click="viewDetail(row)">{{ stripHtml(row.description) }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('job.creator')" width="150px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.accountByCreatorId.fullname }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('job.published')" prop="publishDate" sortable="custom" width="120px" align="center" :class-name="getSortClass('publishDate')">

@@ -111,6 +111,7 @@ export default {
     ttClose: 'Close Job',
     ttRemove: 'Remove Job',
     created: 'Created',
+    creator: 'Creator',
     actions: 'Actions',
     // candidate
     plName: 'Name',
