@@ -210,8 +210,8 @@ export default {
     rmPost: 'Số lượt còn lại',
     purchaseDate: 'Ngày mua',
     validTo: 'Hết hạn',
-    expired: 'Hết hạn',
-    valid: 'Còn hạn'
+    expired: 'Expired',
+    valid: 'Valid'
   },
   account: {
     fullname: 'Họ và tên',
@@ -261,8 +261,8 @@ export default {
     date: 'Ngày mua',
     validTo: 'Hết hạn',
     purchaseStatus: 'Trạng thái',
-    expired: 'Hết hạn',
-    valid: 'Còn hạn'
+    expired: 'Expired',
+    valid: 'Valid'
   },
   billing: {
     title: 'Gói hiện tại',
@@ -296,6 +296,8 @@ export default {
   },
   cf: {
     titleDiscard: 'Xác nhận hủy thay đổi',
-    msgDiscard: 'Bạn có chắc chắn muốn hủy những thay đổi này không?<br>Sau khi nhấn xác nhận thì mọi thay đổi sẽ bị xóa vĩnh viễn.'
+    msgDiscard: 'Bạn có chắc chắn muốn hủy những thay đổi này không?<br>Sau khi nhấn xác nhận thì mọi thay đổi sẽ bị xóa vĩnh viễn.',
+    titleRemove: 'Xác nhận xóa',
+    msgRemove: 'Bạn có thật sự muốn xóa những tin nháp này không?'
   }
 }

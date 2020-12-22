@@ -16,7 +16,6 @@
 
       <div class="createPost-main-container">
         <el-row>
-          <!-- <Warning /> -->
 
           <el-col :span="24">
             <el-form-item style="margin-bottom: 40px;" prop="title">
@@ -34,7 +33,7 @@
                 </el-col>
                 <el-col :span="6">
                   <el-form-item label-width="120px" :label="$t('job.vacancies')" class="postInfo-container-item">
-                    <el-input-number v-model="postForm.vacancies" placeholder="1" @change="isModified = true" />
+                    <el-input-number v-model="postForm.vacancies" placeholder="1" style="width: 225px" @change="isModified = true" />
                   </el-form-item>
                 </el-col>
 
@@ -62,15 +61,13 @@
                 </el-col>
                 <el-col :span="6">
                   <el-form-item label-width="120px" :label="$t('job.salaryFrom')" class="postInfo-container-item" prop="salaryFrom">
-                    <el-input-number v-model="postForm.salaryFrom" placeholder="0" :maxlength="fmaxLength.priceLength" @change="isModified = true" />
-                    <!--                    <money v-model="postForm.salaryFrom" v-bind="money" placeholder="0" :maxlength="fmaxLength.priceLength" />-->
+                    <money v-model="postForm.salaryFrom" v-bind="money" class="my-money" placeholder="0" :maxlength="fmaxLength.priceLength" />
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="6">
                   <el-form-item label-width="120px" :label="$t('job.salaryTo')" class="postInfo-container-item" prop="salaryTo">
-                    <el-input-number v-model="postForm.salaryTo" placeholder="0" :maxlength="fmaxLength.priceLength" @change="isModified = true" />
-                    <!--                    <money v-model="postForm.salaryTo" v-bind="money" placeholder="0" :maxlength="fmaxLength.priceLength" />-->
+                    <money v-model="postForm.salaryTo" v-bind="money" class="my-money" placeholder="0" :maxlength="fmaxLength.priceLength" />
                   </el-form-item>
                 </el-col>
 
@@ -115,7 +112,7 @@
       <span slot="title"><svg-icon class-name="size-icon" :icon-class="'warning'" /> {{ $t('cf.titleDiscard') }}</span>
       <p class="message" v-html="$t('cf.msgDiscard')" />
       <div slot="footer" class="dialog-footer">
-        <router-link :to="'/'">
+        <router-link :to="'/job/list'">
           <el-button style="margin-right: 10px">
             {{ $t('btn.confirm') }}
           </el-button>
@@ -131,21 +128,17 @@
 <script>
 import Tinymce from '@/components/Tinymce'
 import MDinput from '@/components/MDinput'
-import Sticky from '@/components/Sticky' // 粘性header组件
-// import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
+import Sticky from '@/components/Sticky'
 import { createJob, fetchCategory, publishJob, fetchJob } from '@/api/job'
 import { uppercaseFirst } from '../../../filters'
 import { validDigits } from '../../../utils/validate'
 import { maxLength } from '../../../store'
-// import { Money } from 'v-money'
+import { Money } from 'v-money'
 
 const defaultForm = {
   method: '',
   display_time: undefined,
   id: undefined,
-  // platforms: ['a-platform'],
-  // comment_disabled: false,
-  // importance: 0
   data: {
     status: 'Draft',
     title: '',
@@ -168,9 +161,8 @@ export default {
   components: {
     Tinymce,
     MDinput,
-    // Upload,
+    Money,
     Sticky
-    // Money
   },
   // directives: { fmoney: VMoney },
   props: {
@@ -220,8 +212,8 @@ export default {
     }
     return {
       money: {
-        decimal: ',',
-        thousands: ',',
+        decimal: this.$store.getters.language === 'vi' ? ',' : '.',
+        thousands: this.$store.getters.language === 'vi' ? '.' : ',',
         prefix: '',
         suffix: '',
         precision: 0,
@@ -510,6 +502,16 @@ export default {
 .message {
   margin-left: 10px;
   font-size: 1.15em;
+}
+
+.my-money {
+  width: 225px;
+  height: 36px;
+  line-height: 36px;
+  border-radius: 4px;
+  border: 1px solid #DCDFE6;
+  text-align: center;
+  color: #606266;
 }
 
 </style>

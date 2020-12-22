@@ -296,6 +296,8 @@ export default {
   },
   cf: {
     titleDiscard: 'Confirm Discard Changes',
-    msgDiscard: 'Are you sure to wish to discard the changes?<br>Once discarded the changes will be permanently lost.'
+    msgDiscard: 'Are you sure to wish to discard the changes?<br>Once discarded the changes will be permanently lost.',
+    titleRemove: 'Confirm Remove',
+    msgRemove: 'Do you really want to remove these jobs?'
   }
 }
