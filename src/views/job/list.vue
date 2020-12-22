@@ -23,7 +23,7 @@
               {{ $t('btn.new') }}
             </el-button>
           </router-link>
-          <el-button v-if="accountRole === 'user'" class="filter-item" :loading="removeLoading" type="danger" icon="el-icon-remove-outline" @click="handleRemove">
+          <el-button v-if="accountRole === 'user'" class="filter-item" :loading="removeLoading" type="danger" icon="el-icon-remove-outline" @click="confirmRemoveDialog = true">
             {{ $t('btn.remove') }}
           </el-button>
         </div>
@@ -165,10 +165,23 @@
       <p class="message">Do you really want to close this job?</p>
       <div slot="footer" class="dialog-footer">
         <el-button @click="confirmDialog = false">
-          Cancel
+          {{ $t('btn.cancel') }}
         </el-button>
         <el-button type="danger" :loading="btnLoading" @click="handleCloseJob(rowId)">
-          Confirm
+          {{ $t('btn.confirm') }}
+        </el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog :visible.sync="confirmRemoveDialog" width="33%">
+      <span slot="title"><svg-icon class-name="size-icon" :icon-class="'warning'" /> {{ $t('cf.titleRemove') }}</span>
+      <p class="message">{{ $t('cf.msgRemove') }}</p>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="confirmRemoveDialog = false">
+          {{ $t('btn.cancel') }}
+        </el-button>
+        <el-button type="danger" :loading="btnLoading" @click="handleRemove(rowId)">
+          {{ $t('btn.remove') }}
         </el-button>
       </div>
     </el-dialog>
@@ -236,6 +249,7 @@ export default {
       },
       removeLoading: false,
       dialogFormVisible: false,
+      confirmRemoveDialog: false,
       multipleSelection: []
     }
   },
@@ -263,6 +277,7 @@ export default {
       removeJob(selectId).then(response => {
         console.log(response.data)
         this.getJobList()
+        this.confirmRemoveDialog = false
         this.removeLoading = false
       })
     },
