@@ -3,8 +3,12 @@ import VueI18n from 'vue-i18n'
 import Cookies from 'js-cookie'
 import elementEnLocale from 'element-ui/lib/locale/lang/en' // element-ui lang
 import elementViLocale from 'element-ui/lib/locale/lang/vi' // element-ui lang
+import elementJaLocale from 'element-ui/lib/locale/lang/ja' // element-ui lang
+import elementZhLocale from 'element-ui/lib/locale/lang/zh-CN' // element-ui lang
 import enLocale from './en'
 import viLocale from './vi'
+import jaLocale from './ja'
+import zhLocale from './zh'
 
 Vue.use(VueI18n)
 
@@ -16,6 +20,14 @@ const messages = {
   vi: {
     ...viLocale,
     ...elementViLocale
+  },
+  ja: {
+    ...jaLocale,
+    ...elementJaLocale
+  },
+  zh: {
+    ...zhLocale,
+    ...elementZhLocale
   }
 }
 

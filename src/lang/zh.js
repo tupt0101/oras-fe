@@ -291,8 +291,7 @@ export default {
     change: 'Change Password',
     cancelPack: 'Cancel Package',
     avatar: 'Change Avatar',
-    remove: 'Remove',
-    reject: 'Reject'
+    remove: 'Remove'
   },
   cf: {
     titleDiscard: 'Confirm Discard Changes',

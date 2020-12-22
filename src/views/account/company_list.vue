@@ -162,6 +162,9 @@
         <el-button @click="dialogFormVisible = false">
           {{ $t('btn.close') }}
         </el-button>
+        <el-button v-if="temp.buffCompany" type="danger" :loading="listLoading" @click="handleReject(temp.companyById.id, temp.email)">
+          {{ $t('btn.reject') }}
+        </el-button>
         <el-button v-if="!temp.companyById.verified" type="success" :loading="listLoading" @click="handleVerifyCompany(temp.companyById.id, temp.email)">
           {{ $t('btn.verify') }}
         </el-button>
@@ -204,7 +207,7 @@
 </template>
 
 <script>
-import { fetchCompanyListWithPagination } from '@/api/account'
+import { fetchCompanyListWithPagination, rejectCompany } from '@/api/account'
 import Pagination from '@/components/Pagination'
 import { verifyCompany } from '../../api/account'
 import { maxLength } from '../../store' // Secondary package based on el-pagination
@@ -283,6 +286,14 @@ export default {
     handleVerifyCompany(id, email) {
       this.listLoading = true
       verifyCompany(id, email).then(() => {
+        this.listLoading = false
+        this.dialogFormVisible = false
+        this.getCompanyList()
+      })
+    },
+    handleReject(id, email) {
+      this.listLoading = true
+      rejectCompany(id, email).then(() => {
         this.listLoading = false
         this.dialogFormVisible = false
         this.getCompanyList()

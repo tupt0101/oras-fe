@@ -71,12 +71,12 @@ export default {
     signup: 'Hoặc tạo tài khoản của bạn.'
   },
   dashboard: {
-    candidate: 'Ứng Viên',
-    viewJob: 'Xem Tin',
-    salary: 'Mức Lương',
+    candidate: 'Ứng viên',
+    viewJob: 'Xem tin',
+    salary: 'Mức lương',
     vacancies: 'Số vị trí',
-    published: 'Ngày Đăng',
-    deadline: 'Hạn Nộp',
+    published: 'Ngày đăng',
+    deadline: 'Hạn nộp',
     title: 'Tiêu đề',
     created: 'Ngày tạo',
     desc: 'Mô tả'
@@ -85,7 +85,7 @@ export default {
     adminTitle: 'Chào mừng quản trị viên!',
     adminSubTitle: 'Kiểm tra nhanh<br>hoạt động của hệ thống.',
     userTitle: 'Chào mừng đến với ORAS!',
-    userSubTitle: 'Tìm kiếm, Liên hệ và Tuyển dụng<br>những ứng viên chất lượng<br>nhanh hơn bao giờ hết.',
+    userSubTitle: 'Tìm kiếm, liên hệ và tuyển dụng<br>những ứng viên chất lượng<br>nhanh hơn bao giờ hết.',
     purchase: 'Xem các gói',
     report: 'Xem thống kê'
   },
@@ -101,7 +101,7 @@ export default {
     currency: 'Đơn vị',
     description: 'Mô tả công việc',
     // job list
-    status: 'Trạng Thái',
+    status: 'Trạng thái',
     no: 'Số',
     published: 'Ngày đăng',
     salary: 'Mức lương',
@@ -136,17 +136,17 @@ export default {
     buy: 'Mua ngay',
     first: '*Chỉ đăng ký được một lần',
     monthly: '*Thanh toán hằng tháng',
-    jobs: 'Tin mỗi Tháng',
+    jobs: 'Tin mỗi tháng',
     publish: 'Đăng Tải Tin thông qua OpenJob',
-    alert: 'Thông Báo khi có Ứng Viên',
-    screen: 'Sàng Lọc CV bằng AI',
-    sort: 'Sắp Xếp và Nhận Xét Ứng Viên',
-    view: 'Xem Báo Cáo Tuyển Dụng'
+    alert: 'Thông báo khi có ứng viên',
+    screen: 'Sàng lọc CV bằng AI',
+    sort: 'Sắp xếp và nhận xét ứng viên',
+    view: 'Xem báo cáo tuyển dụng'
   },
   report: {
     candidateStatus: 'Trạng thái ứng tuyển',
-    jobByCate: 'Thống Kê Việc theo Ngành',
-    candidateByCate: 'Thống Kê Ứng Viên theo Ngành',
+    jobByCate: 'Thống kê việc theo ngành',
+    candidateByCate: 'Thống kê ứng viên theo ngành',
     avgSalary: 'Lương trung bình ',
     byCate: ' theo ngành',
     purchaseHistory: 'Lịch sử mua gói',
@@ -163,8 +163,8 @@ export default {
     date: 'Ngày mua',
     validTo: 'Hết hạn',
     purchaseStatus: 'Trạng thái',
-    expired: 'Hết hạn',
-    valid: 'Còn hạn',
+    expired: 'Expired',
+    valid: 'Valid',
     expMonth: 'Chi phí theo tháng',
     timeToHire: 'Thời gian tuyển',
     fullname: 'Tên ứng viên',
@@ -290,8 +290,9 @@ export default {
     confirm: 'Xác nhận',
     change: 'Đổi mật khẩu',
     cancelPack: 'Hủy gói',
-    avatar: 'Thay đổi Ảnh đại diện',
-    remove: 'Xóa'
+    avatar: 'Thay đổi ảnh đại diện',
+    remove: 'Xóa',
+    reject: 'Từ chối'
   },
   cf: {
     titleDiscard: 'Xác nhận hủy thay đổi',

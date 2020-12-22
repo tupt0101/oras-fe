@@ -125,7 +125,7 @@ export default {
         if (valid) {
           updateCompany(this.company).then(() => {
             this.$message({
-              message: 'Company information has been updated successfully',
+              message: 'Your change has been saved successfully. Please wait until we re-verify your information.',
               type: 'success',
               duration: 5 * 1000
             })
