@@ -80,15 +80,15 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="left" width="180">
+      <el-table-column align="left" width="120">
         <template slot-scope="scope">
-          <router-link :to="'/account/edit/'+scope.row.id">
+          <!-- <router-link :to="'/account/edit/'+scope.row.id">
             <el-tooltip content="Edit account" placement="top" style="margin-right: 10px">
               <el-button type="primary" size="small" icon="el-icon-edit">
-                <!-- Edit -->
+                Edit
               </el-button>
             </el-tooltip>
-          </router-link>
+          </router-link> -->
           <el-tooltip :content="$t('account.ttDeactivate')" placement="top">
             <el-button v-if="scope.row.active" type="danger" size="small" icon="el-icon-remove-outline" @click="confirmDialog = true; action = 'deactivate'; rowId = scope.row.id">
             <!-- Deactivate account -->

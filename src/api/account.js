@@ -97,6 +97,13 @@ export function verifyCompany(id, email) {
   })
 }
 
+export function rejectCompany(id, email) {
+  return request({
+    url: '/v1/company-management/company/reject?id=' + id + '&email=' + email,
+    method: 'put'
+  })
+}
+
 export function checkCompanyName(data) {
   return request({
     url: '/v1/company-management/check-company-name',
