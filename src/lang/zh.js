@@ -102,7 +102,7 @@ export default {
     description: 'Job description',
     // job list
     status: 'Status',
-    no: 'No.',
+    no: '号码',
     published: 'Published',
     salary: 'Salary',
     ttEdit: 'Edit Job',
