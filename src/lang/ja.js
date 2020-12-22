@@ -126,7 +126,8 @@ export default {
     match: '一致率',
     address: '住所',
     comment: 'コメント',
-    ttHire: '採用する'
+    ttHire: '候補者を採用する',
+    ttDismiss: '候補者を退出させる'
   },
   purchase: {
     title: '高質候補者を見つけ、連絡し、採用するより早く。',
@@ -291,10 +292,13 @@ export default {
     change: 'パスワードを変更',
     cancelPack: 'パッケージをキャンセル',
     avatar: 'アバターを変更',
-    remove: '解消'
+    remove: '解消',
+    reject: '拒否'
   },
   cf: {
     titleDiscard: '変更の破棄を確認',
-    msgDiscard: '変更を破棄してもよろしいですか？ 破棄されると、変更は完全に失われます。'
+    msgDiscard: '変更を破棄してもよろしいですか？ 破棄されると、変更は完全に失われます。',
+    titleRemove: '削除の確認',
+    msgRemove: 'これらのジョブを本当に削除しますか？'
   }
 }
