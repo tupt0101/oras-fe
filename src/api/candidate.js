@@ -49,3 +49,10 @@ export function hireCandidate(id) {
     method: 'put'
   })
 }
+
+export function dismissCandidate(id) {
+  return request({
+    url: '/v1/job-application-management/job-application/unhire/' + id,
+    method: 'put'
+  })
+}

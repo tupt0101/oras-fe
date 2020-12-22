@@ -14,33 +14,15 @@
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
         <div class="filter-container">
           <el-input v-model="listQuery.name" :placeholder="$t('job.plName')" style="width: 250px; margin-right: 10px" class="filter-item" :maxlength="fmaxLength.nameLength" @keyup.enter.native="handleFilter" />
-          <!-- <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
-            <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
-          </el-select> -->
           <el-select v-model="listQuery.status" :placeholder="$t('job.status')" clearable class="filter-item" style="width: 130px; margin-right: 10px" @change="handleFilter">
             <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
           </el-select>
-          <!-- <el-select v-model="listQuery.applyDate" style="width: 140px" class="filter-item" @change="handleFilter">
-            <el-option v-for="item in sortDate" :key="item.key" :label="item.label" :value="item.key" />
-          </el-select>
-          <el-select v-model="listQuery.matchingRate" style="width: 140px" class="filter-item" @change="handleFilter">
-            <el-option v-for="item in sortRate" :key="item.key" :label="item.label" :value="item.key" />
-          </el-select> -->
           <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
             {{ $t('btn.search') }}
           </el-button>
           <el-button class="filter-item" :loading="downloadLoading" type="primary" icon="el-icon-document" @click="handleDownload">
             {{ $t('btn.export') }}
           </el-button>
-          <!-- <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-            Add
-          </el-button> -->
-          <!-- <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-            Export
-          </el-button> -->
-          <!-- <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
-            reviewer
-          </el-checkbox> -->
         </div>
       </el-col>
       <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}">
@@ -128,6 +110,11 @@
               <!-- Hire -->
             </el-button>
           </el-tooltip>
+          <el-tooltip :content="$t('job.ttDismiss')" placement="top">
+            <el-button v-if="scope.row.status === 'Hired'" type="danger" size="small" icon="el-icon-circle-close" @click="handleDismissCandidate(scope.row.id)">
+              <!-- Dismiss -->
+            </el-button>
+          </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
@@ -170,7 +157,7 @@
 </template>
 
 <script>
-import { fetchTotalCandidate, fetchCandidateList, fetchApplicationFromRP, rankCV, commentOnApplication, hireCandidate } from '@/api/candidate'
+import { fetchTotalCandidate, fetchCandidateList, fetchApplicationFromRP, rankCV, commentOnApplication, hireCandidate, dismissCandidate } from '@/api/candidate'
 import { fetchJob } from '@/api/job'
 import Pagination from '@/components/Pagination'
 import { maxLength } from '../../store' // Secondary package based on el-pagination
@@ -354,6 +341,22 @@ export default {
           console.log(err)
           this.$message({
             message: 'The candidate can not be hired.',
+            type: 'fail'
+          })
+          this.listLoading = false
+        })
+    },
+    handleDismissCandidate(id) {
+      this.listLoading = true
+      dismissCandidate(id)
+        .then(response => {
+          this.listLoading = false
+          this.getApplications()
+        })
+        .catch(err => {
+          console.log(err)
+          this.$message({
+            message: 'The candidate can not be dismissed.',
             type: 'fail'
           })
           this.listLoading = false

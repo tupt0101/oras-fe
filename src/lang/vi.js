@@ -126,7 +126,8 @@ export default {
     match: 'Tỉ lệ phù hợp',
     address: 'Địa chỉ',
     comment: 'Nhận xét',
-    ttHire: 'Tuyển'
+    ttHire: 'Tuyển ứng viên',
+    ttDismiss: 'Hủy tuyển ứng viên'
   },
   purchase: {
     title: 'Tìm kiếm, liên hệ và tuyển ngay những ứng viên chất lượng nhanh chóng hơn bao giờ hết.',
