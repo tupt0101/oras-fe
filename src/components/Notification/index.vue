@@ -10,7 +10,7 @@
             <el-dropdown-item class="dd-item" divided>
               {{ item.type === 'Apply' ? item.numb + ' new applications for the job with title "' + item.jobTitle + '".'
                 : item.type === 'Modify' ? item.actor + ' has just changed their company information.'
-                  : 'There are' + item.numb + ' new registrations to the ORAS.'
+                  : item.numb + ' new registration(s) to the ORAS.'
               }}<br>- {{ new Date(item.lastModify).toLocaleString('en-GB') }} -
             </el-dropdown-item>
           </router-link>

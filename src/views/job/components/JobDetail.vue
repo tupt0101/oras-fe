@@ -462,7 +462,7 @@ export default {
       if (this.isModified) {
         this.showCancelDialog = true
       } else {
-        this.$router.push('/')
+        this.$router.push('/job/list')
       }
     }
   }
