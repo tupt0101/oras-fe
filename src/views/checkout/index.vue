@@ -124,6 +124,8 @@ export default {
           this.hasError = true
           if (err.response.data.status === 406) {
             this.message = this.$t('checkout.useUp')
+          } else {
+            this.message = 'Network is unstable. Please check your connection.'
           }
           this.showDialog = true
           this.btnLoading = false

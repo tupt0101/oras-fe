@@ -115,7 +115,7 @@ export const asyncRoutes = [
         path: 'create',
         component: () => import('@/views/job/create'),
         name: 'CreateJob',
-        meta: { title: 'newJob', icon: 'edit' }
+        meta: { title: 'newJob', icon: 'edit', roles: ['user'] }
       },
       {
         path: 'edit/:id(\\d+)',

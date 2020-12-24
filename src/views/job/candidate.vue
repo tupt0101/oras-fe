@@ -30,7 +30,7 @@
           <el-button class="filter-item" type="primary" @click="refresh">
             {{ $t('job.get') }}
           </el-button>
-          <el-button class="filter-item" type="warning" @click="rankCV">
+          <el-button v-if="accountRole === 'user'" class="filter-item" type="warning" @click="rankCV">
             {{ $t('job.rank') }}
           </el-button>
 
@@ -139,14 +139,14 @@
           </el-tag>
         </el-form-item>
         <el-form-item :label="$t('job.comment') + ':'" label-width="150px" style="margin-bottom: 0px;">
-          <el-input v-model="temp.comment" type="textarea" :rows="5" :max-length="fmaxLength.cmtLength" />
+          <el-input v-model="temp.comment" :readonly="accountRole !== 'user'" type="textarea" :rows="5" :max-length="fmaxLength.cmtLength" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">
           {{ $t('btn.close') }}
         </el-button>
-        <el-button :loading="listLoading" type="success" @click="handleComment(temp)">
+        <el-button v-if="accountRole === 'user'" :loading="listLoading" type="success" @click="handleComment(temp)">
           {{ $t('btn.saveComment') }}
         </el-button>
       </div>
@@ -194,7 +194,7 @@ export default {
       sortNameTemp: 'descending',
       sortDateTemp: 'descending',
       sortRateTemp: 'descending',
-      statusOptions: ['Applied', 'Hired', 'Rejected'],
+      statusOptions: ['Applied', 'Hired'],
       jobId: '',
       temp: {
         id: undefined,

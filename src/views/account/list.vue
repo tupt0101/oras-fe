@@ -197,7 +197,7 @@ export default {
     handleResetPassword(email) {
       this.btnLoading = true
       resetPassword(email)
-        .then(response => {
+        .then(() => {
           this.$notify({
             title: 'Success',
             message: 'Reset the password successfully',

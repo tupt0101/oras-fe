@@ -46,7 +46,7 @@ export default {
   created() {
     console.log('notification created')
     this.fetchNotification()
-    this.timer = setInterval(this.fetchNotification, 30000)
+    this.timer = setInterval(this.fetchNotification, 15000)
   },
   beforeDestroy() {
     console.log('clear timer')
