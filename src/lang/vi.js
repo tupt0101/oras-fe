@@ -23,7 +23,7 @@ export default {
     accountList: 'Danh Sách Tài Khoản',
     companyList: 'Danh Sách Công Ty',
     purchase: 'Mua Gói',
-    checkout: 'Thành Toán',
+    checkout: 'Thanh Toán',
     report: 'Báo Cáo',
     profile: 'Thông Tin Cá Nhân'
   },
@@ -102,7 +102,7 @@ export default {
     description: 'Mô tả công việc',
     // job list
     status: 'Trạng thái',
-    no: 'Số',
+    no: 'STT',
     published: 'Ngày đăng',
     salary: 'Mức lương',
     ttEdit: 'Chỉnh sửa tin',
@@ -142,7 +142,8 @@ export default {
     alert: 'Thông báo khi có ứng viên',
     screen: 'Sàng lọc CV bằng AI',
     sort: 'Sắp xếp và nhận xét ứng viên',
-    view: 'Xem báo cáo tuyển dụng'
+    view: 'Xem báo cáo tuyển dụng',
+    oneTime: 'Gói dùng thử này chỉ sử dụng một lần.<br>Hãy chọn và mua các gói khác!'
   },
   report: {
     candidateStatus: 'Trạng thái ứng tuyển',
@@ -152,7 +153,7 @@ export default {
     byCate: ' theo ngành',
     purchaseHistory: 'Lịch sử mua gói',
     selectYear: 'Vui lòng chọn năm',
-    no: 'Số',
+    no: 'STT',
     title: 'Tiêu đề công việc',
     status: 'Trạng thái',
     duration: 'Thời gian',
@@ -196,7 +197,7 @@ export default {
     price: 'Giá',
     currency: 'Đơn vị',
     desc: 'Mô tả',
-    no: 'Số',
+    no: 'STT',
     duration: 'Thời hạn',
     status: 'Trạng thái',
     actions: 'Hành động',
@@ -228,7 +229,7 @@ export default {
     companyTitle: 'THÔNG TIN CÔNG TY',
     title: 'Danh sách tài khoản',
     status: 'Trạng thái',
-    no: 'Số',
+    no: 'STT',
     createDate: 'Ngày tạo',
     modifyDate: 'Ngày sửa',
     actions: 'Hành động',
@@ -255,7 +256,7 @@ export default {
     purByPack: 'Thống kê lượng mua theo gói',
     revenueMonth: 'Thu nhập hằng tháng',
     selectYear: 'Vui lòng chọn năm',
-    no: 'Số',
+    no: 'STT',
     name: 'Tên gói',
     numOfPost: 'Số bài đăng',
     amount: 'Tổng',
@@ -272,7 +273,8 @@ export default {
     post: 'Số bài đăng còn lại',
     expiry: 'Ngày hết hạn',
     expire: 'Hết hạn lúc ',
-    numOfPost: 'Số bài đăng còn lại là '
+    numOfPost: 'Số bài đăng còn lại là ',
+    notBought: 'Bạn không có gói hợp lệ nào.'
   },
   btn: {
     publish: 'Đăng tin',
@@ -300,5 +302,16 @@ export default {
     msgDiscard: 'Bạn có chắc chắn muốn hủy những thay đổi này không?<br>Sau khi nhấn xác nhận thì mọi thay đổi sẽ bị xóa vĩnh viễn.',
     titleRemove: 'Xác nhận xóa',
     msgRemove: 'Bạn có thật sự muốn xóa những tin nháp này không?'
+  },
+  checkout: {
+    checkout: 'Thủ tục thanh toán',
+    select: 'Chọn phương thức thanh toán và xem xét các mục trong giỏ hàng của bạn.',
+    method: 'Phương thức thanh toán',
+    summary: 'Tóm tắt',
+    policy: 'ORAS được pháp luật yêu cầu thu thuế giao dịch áp dụng để mua trong một số khu vực tài phán thuế nhất định.',
+    agree: 'Bằng cách hoàn thành giao dịch mua hàng của bạn, bạn đồng ý với các <a href="#" class="bold" target="_blank" rel="noopener noreferrer">Điều khoản dịch vụ</a>.',
+    complete: 'Thực hiện thanh toán',
+    useUp: 'Bạn phải sử dụng hết số lượng bài đăng của mình hoặc hủy gói hiện tại của bạn để mua một <br> gói mới.',
+    total: 'Tổng'
   }
 }

@@ -142,7 +142,8 @@ export default {
     alert: 'Application Alerts',
     screen: 'Screen Resume using AI',
     sort: 'Sort and Comment on Candidates',
-    view: 'View Recruitment Report'
+    view: 'View Recruitment Report',
+    oneTime: 'This trial package is one-time use only.<br>Please try to select and purchase other packages!'
   },
   report: {
     candidateStatus: 'Candidate Status',
@@ -272,7 +273,8 @@ export default {
     post: 'Remaining posts',
     expiry: 'Expiry date',
     expire: 'Expired at ',
-    numOfPost: 'Number of remaining posts was '
+    numOfPost: 'Number of remaining posts was ',
+    notBought: 'You do not have any valid package.'
   },
   btn: {
     publish: 'Publish',
@@ -300,5 +302,16 @@ export default {
     msgDiscard: 'Are you sure to wish to discard the changes?<br>Once discarded the changes will be permanently lost.',
     titleRemove: 'Confirm Remove',
     msgRemove: 'Do you really want to remove these jobs?'
+  },
+  checkout: {
+    checkout: 'Checkout',
+    select: 'Select your payment method and review the items in your shopping cart.',
+    method: 'Payment method',
+    summary: 'Summary',
+    policy: 'ORAS is required by law to collect applicable transaction taxes for purchases made in certain tax jurisdictions.',
+    agree: 'By completing your purchase you agree to these <a href="#" class="bold" target="_blank" rel="noopener noreferrer">Terms of Service</a>.',
+    complete: 'Complete Payment',
+    useUp: 'You have to use up your number of posts or cancel your current package in order to purchase a new one.',
+    total: 'Total'
   }
 }

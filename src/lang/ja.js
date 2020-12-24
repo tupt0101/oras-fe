@@ -142,7 +142,8 @@ export default {
     alert: 'アプリケーションアラート',
     screen: 'AIを使用した画面再開',
     sort: '候補者の並べ替えとコメント',
-    view: '採用レポートを見る'
+    view: '採用レポートを見る',
+    oneTime: 'このトライアルパッケージは1回限りの使用です。<br>他のパッケージを選択して購入してみてください。'
   },
   report: {
     candidateStatus: '候補者の情報',
@@ -272,7 +273,8 @@ export default {
     post: '残り求人情報',
     expiry: '有効期限',
     expire: '期限切れ ',
-    numOfPost: '残り求人情報は '
+    numOfPost: '残り求人情報は ',
+    notBought: '有効なパッケージがありません。'
   },
   btn: {
     publish: '公開する',
@@ -300,5 +302,16 @@ export default {
     msgDiscard: '変更を破棄してもよろしいですか？ 破棄されると、変更は完全に失われます。',
     titleRemove: '削除の確認',
     msgRemove: 'これらのジョブを本当に削除しますか？'
+  },
+  checkout: {
+    checkout: 'チェックアウト',
+    select: 'あなたの支払い方法を選択して、あなたのショッピングカートのアイテムを確認してください。',
+    method: '支払方法',
+    summary: '概要',
+    policy: 'ORASは、特定の税法で行われた購入のために適用可能な取引税を収集するために法律によって必要です。',
+    agree: 'あなたの購入を完了することによって、あなたはこれらの<a href="#" class="bold" target="_blank" rel="noopener noreferrer">利用規約</a>に同意します。',
+    complete: '完全な支払い',
+    useUp: 'あなたはあなたの投稿の数を使う必要があります、または新しいパッケージを購入するためにあなたの現在のパッケージをキャンセルする必要があります。',
+    total: '合計'
   }
 }

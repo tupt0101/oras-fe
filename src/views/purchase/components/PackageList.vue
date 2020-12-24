@@ -130,7 +130,7 @@ export default {
           this.dialogTitle = 'Something went wrong!'
           this.hasError = true
           if (err.response.data.status === 406) {
-            this.message = 'This trial package is one-time use only.<br>Please try to select and purchase other packages!'
+            this.message = this.$t('purchase.oneTime')
           }
           this.showDialog = true
           this.btnLoading = false

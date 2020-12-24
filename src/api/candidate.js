@@ -34,6 +34,13 @@ export function rankCV(jobId, query) {
     method: 'post'
   })
 }
+// export function rankCV(jobId, query) {
+//   return service.request({
+//     url: '/calc/similarity',
+//     method: 'post',
+//     data: { 'job_id': jobId }
+//   })
+// }
 
 export function commentOnApplication(data) {
   return request({

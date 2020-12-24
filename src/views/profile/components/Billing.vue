@@ -14,7 +14,7 @@
         </el-form-item>
         <el-button type="danger" @click="cancelCurrentPackage">{{ $t('btn.cancelPack') }}</el-button>
       </el-form>
-      <p v-if="!currPackage.id" style="font-size: 1.1em"><i>You have not bought any package.</i></p>
+      <p v-if="!currPackage.id" style="font-size: 1.1em"><i>{{ $t('billing.notBought') }}</i></p>
     </div>
     <div>
       <h3>{{ $t('billing.history') }}</h3>
