@@ -2,14 +2,14 @@
   <div class="app-container">
     <div class="checkout-container">
       <div class="heading">
-        <h1 style="font-weight: 500;">Checkout</h1>
-        <p>Select your payment method and review the items in your shopping cart.</p>
+        <h1 style="font-weight: 500;">{{ $t('checkout.checkout') }}</h1>
+        <p>{{ $t('checkout.select') }}</p>
       </div>
       <el-row :gutter="40">
 
         <el-col :span="14" :xs="24">
           <div>
-            <h3 style="font-weight: 300;">Payment method</h3>
+            <h3 style="font-weight: 300;">{{ $t('checkout.method') }}</h3>
             <el-radio-group v-model="selectMethod">
               <span class="radio-button">
                 <el-radio :label="1">
@@ -26,7 +26,7 @@
         <el-col :span="10" :xs="24">
           <el-card style="margin-bottom:20px; padding: 10px">
             <div slot="header" class="clearfix">
-              <span style="font-weight: 500; font-size: 25px; color: #5D677A;">Summary</span>
+              <span style="font-weight: 500; font-size: 25px; color: #5D677A;">{{ $t('checkout.summary') }}</span>
             </div>
 
             <div class="checkout-detail">
@@ -42,24 +42,22 @@
                 <table class="total">
                   <tbody>
                     <tr>
-                      <td class="title">Total</td>
+                      <td class="title">{{ $t('checkout.total') }}</td>
                       <td class="total-amount">{{ package_ && package_.currency | currencyFilter }} {{ package_ && package_.price | toThousandFilter }}</td>
                     </tr>
                   </tbody>
                 </table>
                 <div class="legal-message">
-                  ORAS is required by law to collect applicable transaction taxes for purchases made in certain tax jurisdictions.
+                  {{ $t('checkout.policy') }}
                 </div>
               </div>
             </div>
 
             <div class="">
               <div class="legal-message">
-                <span>
-                  By completing your purchase you agree to these <a href="#" class="bold" target="_blank" rel="noopener noreferrer">Terms of Service</a>.
-                </span>
+                <p v-html="$t('checkout.agree')" />
               </div>
-              <el-button type="danger" :loading="btnLoading" class="proceed-btn" @click="proceedPaypal('v1/paypal/pay/' + (package_ && package_.price) + '?accountId=' + accountId + '&packageId=' + (package_ && package_.id))">Complete Payment</el-button>
+              <el-button type="danger" :loading="btnLoading" class="proceed-btn" @click="proceedPaypal('v1/paypal/pay/' + (package_ && package_.price) + '?accountId=' + accountId + '&packageId=' + (package_ && package_.id))">{{ $t('checkout.complete') }}</el-button>
             </div>
           </el-card>
         </el-col>
@@ -118,14 +116,14 @@ export default {
     proceedPaypal(link) {
       this.btnLoading = true
       checkValidAccount(link)
-        .then(response => {
+        .then(() => {
           window.open(this.baseURL + link, '_self')
         })
         .catch(err => {
           this.dialogTitle = 'Something went wrong!'
           this.hasError = true
           if (err.response.data.status === 406) {
-            this.message = 'You have to use up your number of posts or cancel your current package in order to purchase a new one.'
+            this.message = this.$t('checkout.useUp')
           }
           this.showDialog = true
           this.btnLoading = false

@@ -282,9 +282,11 @@ export default {
     },
     rankCV() {
       this.listLoading = true
+      console.log('st', new Date())
       rankCV(this.jobId, this.listQuery).then(response => {
         this.list = response.data.data
         this.listLoading = false
+        console.log('en', new Date())
       }).catch(err => {
         this.listLoading = false
         console.log(err)

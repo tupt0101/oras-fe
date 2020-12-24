@@ -366,8 +366,7 @@ export default {
             this.dialogTitle = err.response.data.message
             this.hasError = true
             if (err.response.data.status === 402) {
-              this.message = 'You have run out of job posts.<br>Please try to select and purchase other packages!'
-            }
+              this.message = 'You have run out of job posts.</br>Click <a href="http://localhost:9527/#/purchase/index" style="color: #0a76a4 !important;"><u>here</u></a> to select and purchase other packages!'
             this.showDialog = true
           })
           // end Publish job

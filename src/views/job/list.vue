@@ -283,7 +283,7 @@ export default {
     },
     handlePublishJob(id) {
       this.btnLoading = true
-      publishJob(id).then(response => {
+      publishJob(id).then(() => {
         this.$notify({
           title: 'Success',
           message: 'Publish the post successfully',
@@ -296,7 +296,7 @@ export default {
         this.dialogTitle = err.response.data.message
         this.hasError = true
         if (err.response.data.status === 402) {
-          this.message = 'You have run out of job posts.<br>Please try to select and purchase other packages!'
+          this.message = 'You have run out of job posts.</br>Click <a href="http://localhost:9527/#/purchase/index" style="color: #0a76a4 !important;"><u>here</u></a> to select and purchase other packages!'
         }
         this.showDialog = true
         this.btnLoading = false
@@ -304,7 +304,7 @@ export default {
     },
     handleCloseJob(id) {
       this.btnLoading = true
-      closeJob(id).then(response => {
+      closeJob(id).then(() => {
         this.$notify({
           title: 'Success',
           message: 'Close the post successfully',

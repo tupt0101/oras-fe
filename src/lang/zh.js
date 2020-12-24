@@ -272,7 +272,8 @@ export default {
     post: '其余员额',
     expiry: '到期日',
     expire: '已到期 ',
-    numOfPost: '其余员额的数量是 '
+    numOfPost: '其余员额的数量是 ',
+    notBought: '您沒有任何有效的軟件包'
   },
   btn: {
     publish: '发布',
@@ -300,5 +301,16 @@ export default {
     msgDiscard: '您确定要放弃所做的更改吗？ 一旦放弃，更改将永久丢失。',
     titleRemove: '確認刪除',
     msgRemove: '您真的要刪除這些工作嗎？'
+  },
+  checkout: {
+    checkout: '查看',
+    select: '選擇付款方式並查看購物車中的項目。',
+    method: '付款方法',
+    summary: '概要',
+    policy: '法律要求ORAS收集在某些稅收管轄區內的購買時適用的交易稅。',
+    agree: '通過完成購買，您同意這些<a href="#" class="bold" target="_blank" rel="noopener noreferrer">服務條款</a>。',
+    complete: '完成支付',
+    useUp: '您必須使用您的帖子數量或取消當前包以便購買新的帖子。',
+    total: '總'
   }
 }
