@@ -289,6 +289,12 @@ export default {
         this.listLoading = false
         this.dialogFormVisible = false
         this.getCompanyList()
+        this.$notify({
+          title: 'Success',
+          message: 'Verify company successfully!',
+          type: 'success',
+          duration: 2000
+        })
       })
     },
     handleReject(id, email) {

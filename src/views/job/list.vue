@@ -96,7 +96,7 @@
           <!-- sua router to: toi api thuc hien action crud -->
           <router-link :to="'/job/reopen/'+scope.row.id">
             <el-tooltip :content="$t('job.ttReopen')" placement="top">
-              <el-button v-if="scope.row.status === 'Closed'" type="primary" size="small" icon="el-icon-copy-document">
+              <el-button v-if="scope.row.status === 'Closed'" :loading="btnLoading" type="primary" size="small" icon="el-icon-copy-document">
                 <!-- Reopen -->
               </el-button>
             </el-tooltip>
@@ -107,7 +107,7 @@
             </el-button>
           </el-tooltip>
           <el-tooltip :content="$t('job.ttClose')" placement="top">
-            <el-button v-if="scope.row.status === 'Published'" type="danger" size="small" icon="el-icon-circle-close" @click="confirmDialog = true; rowId = scope.row.id">
+            <el-button v-if="scope.row.status === 'Published'" :loading="btnLoading" type="danger" size="small" icon="el-icon-circle-close" @click="confirmDialog = true; rowId = scope.row.id">
               <!-- Close -->
             </el-button>
           </el-tooltip>
@@ -167,7 +167,7 @@
         <el-button @click="confirmDialog = false">
           {{ $t('btn.cancel') }}
         </el-button>
-        <el-button type="danger" :loading="btnLoading" @click="handleCloseJob(rowId)">
+        <el-button type="danger" :loading="btnLoading" @click="handleCloseJob(rowId), confirmDialog = false">
           {{ $t('btn.confirm') }}
         </el-button>
       </div>
@@ -293,10 +293,12 @@ export default {
         this.btnLoading = false
         this.getJobList()
       }).catch(err => {
-        this.dialogTitle = err.response.data.message
+        this.dialogTitle = 'Something went wrong!'
         this.hasError = true
         if (err.response.data.status === 402) {
           this.message = 'You have run out of job posts.</br>Click <a href="http://localhost:9527/#/purchase/index" style="color: #0a76a4 !important;"><u>here</u></a> to select and purchase other packages!'
+        } else {
+          this.message = err.response.data.message
         }
         this.showDialog = true
         this.btnLoading = false
@@ -314,8 +316,12 @@ export default {
         this.confirmDialog = false
         this.btnLoading = false
         this.getJobList()
-      }).catch(() => {
+      }).catch(err => {
         this.btnLoading = false
+        this.dialogTitle = 'Something went wrong!'
+        this.hasError = true
+        this.message = err.response.data.message
+        this.showDialog = true
       })
     },
     stripHtml(html) {

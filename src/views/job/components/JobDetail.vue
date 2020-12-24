@@ -353,7 +353,6 @@ export default {
         this.postForm.id = response.data.id
         if (this.action === 1) {
           // API Publish job
-          this.postForm.applyFrom = new Date().toISOString()
           publishJob(this.postForm.id).then(() => {
             this.$notify({
               title: 'Success',
@@ -363,10 +362,12 @@ export default {
             })
             this.$router.push('/job/list')
           }).catch(err => {
-            this.dialogTitle = err.response.data.message
+            this.dialogTitle = 'Something went wrong!'
             this.hasError = true
             if (err.response.data.status === 402) {
               this.message = 'You have run out of job posts.</br>Click <a href="http://localhost:9527/#/purchase/index" style="color: #0a76a4 !important;"><u>here</u></a> to select and purchase other packages!'
+            } else {
+              this.message = err.response.data.message
             }
             this.showDialog = true
           })
