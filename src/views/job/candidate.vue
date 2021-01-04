@@ -139,7 +139,7 @@
           </el-tag>
         </el-form-item>
         <el-form-item :label="$t('job.comment') + ':'" label-width="150px" style="margin-bottom: 0px;">
-          <el-input v-model="temp.comment" :readonly="accountRole !== 'user'" type="textarea" :rows="5" :max-length="fmaxLength.cmtLength" />
+          <el-input v-model="temp.comment" :readonly="accountRole !== 'user'" type="textarea" :rows="5" :maxlength="fmaxLength.cmtLength" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
