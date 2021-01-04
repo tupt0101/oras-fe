@@ -18,14 +18,14 @@
             <el-row>
               <el-col :span="24">
                 <el-form-item style="margin-bottom: 40px;" prop="name">
-                  <MDinput v-model="postForm.name" :max-length="fmaxLength.pkgNameLength" name="name" required @change="isModified = true">
+                  <MDinput v-model="postForm.name" :maxlength="fmaxLength.pkgNameLength" name="name" required @change="isModified = true">
                     {{ $t('package.name') }}
                   </MDinput>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
                 <el-form-item label-width="130px" prop="tag" :label="$t('package.tag') + ':'" class="postInfo-container-item">
-                  <el-input v-model="postForm.tag" style="width: 300px" :max-length="fmaxLength.pkgTagLength" @change="isModified = true" />
+                  <el-input v-model="postForm.tag" style="width: 300px" :maxlength="fmaxLength.pkgTagLength" @change="isModified = true" />
                 </el-form-item>
               </el-col>
 
@@ -66,7 +66,7 @@
         </el-row>
 
         <el-form-item label-width="130px" :label="$t('package.desc') + ':'">
-          <el-input v-model="postForm.description" :rows="1" :max-length="fmaxLength.pkgDesLength" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" @change="isModified = true" />
+          <el-input v-model="postForm.description" :rows="1" :maxlength="fmaxLength.pkgDesLength" type="textarea" class="article-textarea" autosize placeholder="Please enter the description" @change="isModified = true" />
           <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}words</span>
         </el-form-item>
       </div>
